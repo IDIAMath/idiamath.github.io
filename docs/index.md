@@ -6,3 +6,5 @@ layout: home
 ---
 
 # Front page - sketches
+
++ [JSXGraph in Moodle](https://moodle.oulu.fi/question/type/stack/doc/doc.php/Authoring/JSXGraph.md)
