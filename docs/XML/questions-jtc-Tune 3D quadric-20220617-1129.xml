@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 813  -->
+  <question type="stack">
+    <name>
+      <text>Tune 3D quadric</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p style="display: none">[[input:ansa]] [[validation:ansa]]</p>
+<p style="display: none">[[input:ansb]] [[validation:ansb]]</p>
+<p style="display: none">[[input:ansc]] [[validation:ansc]]</p>
+<p style="display: none">[[input:ansd]] [[validation:ansd]]</p>
+<p style="display: none">[[input:ansf]] [[validation:ansf]]</p>
+<p style="display: none">[[input:ansg]] [[validation:ansg]]</p>
+
+Vi har funksjonen \(F(x,y) = {@fxy@}\) hvor parameterene \({@simplode(params,",")@}\) er ukjente. Plottet under viser funksjonen med riktige parametre, og med parametere du kan stille med sliderene. Finn de riktige parameterene, ved å manipulere figuren.
+
+[[jsxgraph input-ref-ansa="ansaRef" input-ref-ansb="ansbRef" input-ref-ansc="anscRef" input-ref-ansd="ansdRef" input-ref-ansf="ansfRef" input-ref-ansg="ansgRef"]]
+(function () {
+
+		    var board = JXG.JSXGraph.initBoard(divid, {
+		        boundingbox: [-8, 8, 8, -8],
+		        keepaspectratio: false,
+		        axis: false
+		    });
+
+		    var box = [-2, 2];
+                    var boxx = {#xrang#};
+                    var boxy = {#yrang#};
+		    var view = board.create('view3d', [[-6, -3], [8, 8], [boxx, boxy, box]], {
+		        xPlaneRear: {visible: false},
+		        yPlaneRear: {visible: false},
+		    });
+
+                   var pnames = {#split(simplode(params,","),",")#}; //Array of strings containing the names of the tunable parameters ["a", "c",...]
+                   var sliders = []; //Array holding a reference to sliders - not used at the moment
+                   var slider_shift = 0 //For several sliders, we need to shift the y-position so they don't overlap
+                   
+                    // Iterate over the the names of the tunable parameters
+                   for (var i=0; i<pnames.length; i++){
+
+                       switch (pnames[i]){
+                           case "a":
+                              // Create slider with span and initial value from maxima's variable a_rs
+                              sliders.push(board.create('slider',  [[-7, -6-slider_shift], [5, -6-slider_shift], {#a_rs#}], { name: pnames[i] }));
+                              slider_shift++; //Shift y-position for next slider
+                              stack_jxg.bind_slider(ansaRef,sliders[i]); //Bind slider value to stack's answer variable
+                              break;
+                           case "b":
+                              sliders.push(board.create('slider',  [[-7, -6-slider_shift], [5, -6-slider_shift], {#b_rs#}], { name: pnames[i] }));
+                              slider_shift++;
+                             stack_jxg.bind_slider(ansbRef,sliders[i]);
+                             break;
+                           case "c":
+                              sliders.push(board.create('slider',  [[-7, -6-slider_shift], [5, -6-slider_shift], {#c_rs#}], { name: pnames[i] }));
+                              slider_shift++;
+                             stack_jxg.bind_slider(anscRef,sliders[i]);
+                             break;
+                           case "d":
+                              sliders.push(board.create('slider',  [[-7, -6-slider_shift], [5, -6-slider_shift], {#d_rs#}], { name: pnames[i] }));
+                              slider_shift++;
+                             stack_jxg.bind_slider(ansdRef,sliders[i]);
+                             break;
+                           case "f":
+                              sliders.push(board.create('slider',  [[-7, -6-slider_shift], [5, -6-slider_shift], {#f_rs#}], { name: pnames[i] }));
+                              slider_shift++;
+                             stack_jxg.bind_slider(ansfRef,sliders[i]);
+                             break;
+                           case "g":
+                              sliders.push(board.create('slider',  [[-7, -6-slider_shift], [5, -6-slider_shift], {#g_rs#}], { name: pnames[i] }));
+                              slider_shift++;
+                             stack_jxg.bind_slider(ansgRef,sliders[i]);
+                             break;
+                        }
+                      board.update();
+                  }
+
+                  var nonpnames = {#split(simplode(non_params,","),",")#}; //Array of strings containing the names of the non-tunable parameters ["c", "f" ...]
+
+                  // Iterate over the names of the non-tunable parameters
+                  for (var i=0; i<nonpnames.length; i++){
+                    
+                     switch(nonpnames[i]){
+                         case "a":
+                            var ansa=document.getElementById(ansaRef); // Get reference to stack's answer variable for the non-tunable parameter
+                            ansa.value = "{#a#}"; // Set the value to of the ans-variable to the correct value from maxima
+                            break;
+                         case "b":
+                            var ansb=document.getElementById(ansbRef);
+                            ansb.value = "{#b#}";
+                            break;
+                         case "c":
+                            var ansc=document.getElementById(anscRef);
+                            ansc.value = "{#c#}";
+                            break;
+                         case "d":
+                            var ansd=document.getElementById(ansdRef);
+                            ansd.value = "{#d#}";
+                            break;  
+                         case "f":
+                            var ansf=document.getElementById(ansfRef);
+                            ansf.value = "{#f#}";
+                            break;  
+                         case "g":
+                            var ansg=document.getElementById(ansgRef);
+                            ansg.value = "{#g#}";
+                            break;    
+                     }
+                  }
+                 board.update();
+
+		        var f = board.jc.snippet('{#fxy#}', true, 'x,y', true);  // JessieCode parsing of maxima function - tunable
+
+                        //Create 3D tunable surface
+		        view.create('functiongraph3d', [f, boxx, boxy], {
+		            strokeColor: JXG.palette.blue,
+		            stepsU: 50, stepsV: 50, strokeWidth: 0.5
+		        });
+
+                       
+                        var g = board.jc.snippet('{#fxy2#}', true, 'x,y', true); //JessieCode parsing of maxima function - non-tunable
+		        var func_g = view.create('functiongraph3d', [g, boxx, boxy], {
+		            strokeColor: JXG.palette.red,
+		            stepsU: 50, stepsV: 50, strokeWidth: 0.5
+		        });
+                 board.create('text', [3, 8, function () { return 'f(x,y) =' + f; }]);
+
+              // Set event listener for button that allows student to split the tunable and non-tunable surfaces into different figures
+               var button = document.getElementById('split-button');
+               button.addEventListener('click', function() { 
+                                if (button.value == "0"){                // If value=0 we hide the graph and show the other figure
+                                   func_g.hide();                             //hide target function 
+                                   button.value = "1";                     //toggle button value
+                                  button.textContent = "Merge"; //Toggle button text
+                                   document.getElementById("stack-jsxgraph-2").style.display = "block"; //Show plot of target graph in separate figure
+                                }
+                                else {
+                                  func_g.show();
+                                  button.value="0";
+                                  button.textContent = "Split";
+                                  document.getElementById("stack-jsxgraph-2").style.display = "none";
+                                }
+});
+
+		})();	
+[[/jsxgraph]]
+
+<button type="button" value="0" id="split-button"> Split </button>
+
+[[jsxgraph]]
+(function () {
+
+
+		    var board = JXG.JSXGraph.initBoard(divid, {
+		        boundingbox: [-8, 8, 8, -8],
+		        keepaspectratio: false,
+		        axis: false
+		    });
+
+		    var box = [-3, 3];
+                    var boxx = {#xrang#};
+                    var boxy = {#yrang#};
+		    var view = board.create('view3d', [[-6, -3], [8, 8], [boxx, boxy, box]], {
+		        xPlaneRear: {visible: false},
+		        yPlaneRear: {visible: false},
+		    });
+                      var g = board.jc.snippet('{#fxy2#}', true, 'x,y', true);
+		        view.create('functiongraph3d', [g, boxx, boxy], {
+		            strokeColor: JXG.palette.red,
+		            stepsU: 50, stepsV: 50, strokeWidth: 0.5
+		        });
+                   board.update();
+                   document.getElementById(divid).style.display="none";
+})();
+
+[[/jsxgraph]]]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2022060100</text>
+    </stackversion>
+    <questionvariables>
+      <text>coef: random_permutation(append([0,0],makelist(rand_with_prohib(-4,4,[0]),4)));
+all_params: [a,b,c,d,f,g];
+func_list: [x^2,y^2,x*y,x,y,1];
+params: rand_selection(all_params,2);
+non_params: delete(params[1],delete(params[2],all_params));
+a: coef[1];
+b:coef[2];
+c:coef[3]:
+d:coef[4];
+f:coef[5];
+g:coef[6];
+fxy:0
+for i: 1 thru 6 do
+  if member(all_params[i],params) then fxy:fxy+all_params[i]*func_list[i] else fxy:fxy+ev(all_params[i]*func_list[i]);
+
+xrang:[-7,7];
+yrang:[-7,7];
+a_rs:[-4,0,4];
+b_rs:[-4,0,4];
+c_rs:[-4,0,4];
+d_rs:[-4,0,4];
+f_rs:[-4,0,4];
+g_rs:[-4,0,4];
+
+
+
+fxy2:ev(fxy);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>{@fxy@}</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ansa</name>
+      <type>numerical</type>
+      <tans>a</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ansb</name>
+      <type>numerical</type>
+      <tans>b</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ansc</name>
+      <type>numerical</type>
+      <tans>c</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ansd</name>
+      <type>numerical</type>
+      <tans>d</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ansf</name>
+      <type>numerical</type>
+      <tans>f</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ansg</name>
+      <type>numerical</type>
+      <tans>g</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ansa+ansb+ansc+ansd+ansf+ansg</sans>
+        <tans>a+b+c+d+f+g</tans>
+        <testoptions>0.4</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text>Riktig!</text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>Ikke riktig...</text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>

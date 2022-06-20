@@ -9,3 +9,6 @@ title: Front page
 # Front page - sketches
 
 + [JSXGraph in Moodle](https://moodle.oulu.fi/question/type/stack/doc/doc.php/Authoring/JSXGraph.md)
++ Two examples from Jonas 17 June 2022
+    - [Tune 3D](XML/questions-jtc-Tune 3D-20220617-1129.xml)
+    - [Tune 3D Quadric](XML/questions-jtc-Tune 3D quadric-20220617-1129.xml)
