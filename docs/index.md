@@ -8,7 +8,7 @@ title: Front page
 
 # Front page - sketches
 
-+ [JSXGraph]() sandbox
++ [JSXGraph](JSXGraph) sandbox
 + [JSXGraph in Moodle](https://moodle.oulu.fi/question/type/stack/doc/doc.php/Authoring/JSXGraph.md)
 + Two examples from Jonas 17 June 2022
     - [Tune 3D](XML/questions-jtc-Tune 3D-20220617-1129.xml)
