@@ -1,7 +1,10 @@
 ---
 title: JSXGraph Sandbox
-usemathjax: true
 ---
+
+```
+usemathjax: true
+```
 
 # Read Some Properties From A Graph
 
