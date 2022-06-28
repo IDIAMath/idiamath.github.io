@@ -11,7 +11,7 @@ The student is given a plot of a function of the form
 
 $$ f(x,y) = by^2 + axy + cx^2$$
 
-where $$b$ and $$c$$ are known constants, randomly instantiated, and
+where $$b$$ and $$c$$ are known constants, randomly instantiated, and
 $$a$$ is an unknown constant to be determined by the student.
 
 The student sees two superimposed surface plots.
