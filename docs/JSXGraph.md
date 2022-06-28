@@ -45,7 +45,3 @@ For local max there is no local max so the answer would be just two square paren
 + May provide inaccurate feedback, when the provided answer is half wrong (part 2).
 + 'select' a point on graph there is a multitude of problems not thought through with this idea.
 + Does not support trig functions, or any predefined functions such as log, ln, e...
-
-
-
-# Give an example of a function with certain properties

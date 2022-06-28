@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 1383  -->
+  <question type="stack">
+    <name>
+      <text>Question 2 define function with certain properties</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p></p>
+<p onclick="myFunction()">Give an example of a function where all partial derivatives at the coordinates ({#a#},{#b#}) are positive<br></p>
+
+[[jsxgraph height='850px' width='850px']]
+
+//elements created
+let btn = document.createElement("button");
+btn.innerHTML = "Click to draw function";
+btn.setAttribute("type","button");
+let br = document.createElement("br");
+
+//set attributes
+
+
+//append to document
+document.getElementsByClassName("clearfix")[0].appendChild(br);
+document.getElementsByClassName("clearfix")[0].appendChild(br);
+document.getElementsByClassName("clearfix")[0].appendChild(btn);
+
+
+btn.addEventListener("click", myFunction);
+
+var board = JXG.JSXGraph.initBoard(divid, {
+boundingbox: [-8, 8, 8, -8],
+keepaspectratio: false,
+axis: false
+});
+
+
+var box = [-5, 5];
+var view = board.create('view3d',
+[
+[-6, -3], [8, 8],
+[box, box, box]
+],
+{
+xPlaneRear: {visible: false},
+yPlaneRear: {visible: false},
+});
+view.D3.az_slide._smax = 12;
+
+
+//var F = (x,y) =&gt; y*x;
+var funcExpr = '0';
+
+var F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
+// 3D surface
+
+var fGraph = view.create('functiongraph3d', [
+F,
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+
+function myFunction() {
+var ans1n = document.getElementsByClassName('algebraic')[0];
+
+funcExpr = ans1n.value;
+
+board.removeObject(fGraph,false);
+
+F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
+fGraph =view.create('functiongraph3d', [
+F,
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+board.update();
+
+
+}
+
+
+
+
+
+[[/jsxgraph]]
+<p></p>
+<p><span>Your function = [[input:ans1]][[validation:ans1]] </span></p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2022060100</text>
+    </stackversion>
+    <questionvariables>
+      <text>a:rand_with_prohib(-5,5,[0]);
+b:rand_with_prohib(-5,5,[0]);
+
+</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>h</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>5</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[f:ans1;
+fx:diff(f,x);
+fy:diff(f,y);
+fxy:diff(fy,x);
+score:0;
+sa1:if ev(fx,x=a,y=b) >0 then score:score+1;
+sa2:if ev(fy,x=a,y=b) > 0 then score:score+1;
+sa3:if ev(fxy,x=a,y=b) > 0 then score:score+1;
+ta: if score =3 then ans1 else [rand(50)+10000,rand(50)+10000];
+]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>
