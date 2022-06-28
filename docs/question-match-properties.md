@@ -27,11 +27,95 @@ Although simple, this question demonstrates how STACK and JSXGraph can be comple
 ## Question CODE
 
 ### Question Variables
+a and b variables are the x and y coordinates.
+```html
+a:rand_with_prohib(-5,5,[0]);
+b:rand_with_prohib(-5,5,[0]);
+```
 
 ### Question Text
+```html
+<p></p>
+<p onclick="myFunction()">Give an example of a function where all partial derivatives at the coordinates ({#a#},{#b#}) are positive<br></p>
+
+[[jsxgraph height='850px' width='850px']]
+
+//elements created
+let btn = document.createElement("button");
+btn.innerHTML = "Draw Function";
+btn.setAttribute("type","button");
+let br = document.createElement("br");
+
+//set attributes
+
+
+//append to document
+document.getElementsByClassName("clearfix")[0].appendChild(br);
+document.getElementsByClassName("clearfix")[0].appendChild(br);
+document.getElementsByClassName("clearfix")[0].appendChild(btn);
+
+//eventlisteners
+btn.addEventListener("click", myFunction);
+
+var board = JXG.JSXGraph.initBoard(divid, {
+boundingbox: [-8, 8, 8, -8],
+keepaspectratio: false,
+axis: false
+});
+
+var box = [-5, 5];
+var view = board.create('view3d',[
+[-6, -3], [8, 8],
+[box, box, box]
+],
+{ xPlaneRear: {visible: false}, yPlaneRear: {visible: false},});
+
+view.D3.az_slide._smax = 12;
+
+var funcExpr = '0';
+
+var F = board.jc.snippet(funcExpr, true, 'x,y', true);
+
+var fGraph = view.create('functiongraph3d', [
+F,
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+],
+{ strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+
+function myFunction() {
+var ans1n = document.getElementsByClassName('algebraic')[0];
+
+funcExpr = ans1n.value;
+
+board.removeObject(fGraph,false);
+
+F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
+fGraph =view.create('functiongraph3d', [
+F,
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+],
+{ strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+board.update();}
+
+[[/jsxgraph]]
+<p></p>
+<p><span>Your function = [[input:ans1]][[validation:ans1]] </span></p>
+```
 
 ### Specific feedback
-
+```html
+f:ans1;
+fx:diff(f,x);
+fy:diff(f,y);
+fxy:diff(fy,x);
+score:0;
+sa1:if ev(fx,x=a,y=b) >0 then score:score+1;
+sa2:if ev(fy,x=a,y=b) > 0 then score:score+1;
+sa3:if ev(fxy,x=a,y=b) > 0 then score:score+1;
+ta: if score =3 then ans1 else [rand(50)+10000,rand(50)+10000];
+```
 
 
 
