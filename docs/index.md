@@ -3,7 +3,7 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 title: Front page
-# layout: home
+theme: minima
 ---
 
 # Front page - sketches

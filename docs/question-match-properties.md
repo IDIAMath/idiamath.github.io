@@ -1,5 +1,7 @@
 ---
 title: Question - find a function with given properties
+usemathjax: true
+theme: minima
 ---
 
 
