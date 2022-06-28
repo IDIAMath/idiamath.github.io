@@ -1,5 +1,6 @@
 ---
 title: JSXGraph Sandbox
+usemathjax: true
 ---
 
 # Read Some Properties From A Graph
