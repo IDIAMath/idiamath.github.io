@@ -104,7 +104,7 @@ board.update();}
 <p><span>Your function = [[input:ans1]][[validation:ans1]] </span></p>
 ```
 
-### Specific feedback
+### Feedback variables
 ```html
 f:ans1;
 fx:diff(f,x);
