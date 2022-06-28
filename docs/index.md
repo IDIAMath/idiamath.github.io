@@ -8,6 +8,7 @@ title: Front page
 
 # Front page - sketches
 
++ Question [question-match-properties](question-match-properties.md)
 + [JSXGraph](JSXGraph) sandbox
 + [JSXGraph in Moodle](https://moodle.oulu.fi/question/type/stack/doc/doc.php/Authoring/JSXGraph.md)
 + Two examples from Jonas 17 June 2022
