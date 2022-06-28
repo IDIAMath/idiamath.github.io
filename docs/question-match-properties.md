@@ -15,6 +15,9 @@ Random x, y coordinates are generated, the user is asked to provide a function t
 
 Although simple, this question demonstrates how STACK and JSXGraph can be complementary. STACK works to provide the user with input feedback in realtime. For example the user may type xy instead of x*y, stack will highlight this error. This is useful as it omits the need for string manipulation in JS, saves time.
 
++ [Moodle XML](questions-majd testing-Question 2 define function with certain properties-20220628-0956 (1).xml)
+
+
 
 ## Question Improvements (Upcoming)
 - Random property questions, for example sometimes the question demands the user provde a function where partial derivatives at all points with coordinates (t,t) are positive sometimes **NEGATIVE** ..and more and more similar random questions.
