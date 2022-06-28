@@ -12,7 +12,7 @@ although i could create 2 PRT's as you can tell in part 2.
 
 ## Question Interpretation
 
-> Given a a surface defined by \(z=f(x,y)\), where exact expression for \(f\) is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero. Given the same, ask the user to select local maxima/minima.
+> Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero. Given the same, ask the user to select local maxima/minima.
 
 I interpret this as: find a point on the functions where one of the three derivatives gives a positive number, another gives a negative and the third gives 0. For example, you could have a point that gives Fxy=1, Fx = 0, Fy=-1, that would be a solution.
 
@@ -23,7 +23,7 @@ It can also be interpreted as: select a point on the function where ALL partial 
 + [Moodle XML](questions-majd testing-Question#1 part 1 unknown F-20220626-1354.xml)
 
 Example functions:
-$$F(x,y) = x*y^2-x$$
+$$F(x,y) = x\cdot y^2-x$$
 
 The answer would be for example `[ any_negative_number, 1]`
 
@@ -33,7 +33,7 @@ The answer would be for example `[ any_negative_number, 1]`
 + [Moodle XML](questions-majd testing-Question#1 part 2 local minmax-20220626-1355.xml)
 
 Example functions:
-$$F(x,y)=2*x^4+2*y^4-8*x*y+12$$
+$$F(x,y)=2\cdot x^4+2\cdot y^4-8\cdot x\cdot y+12$$
 
 The answer for local min would be: `[[-1,-1],[1,1]]`
 
