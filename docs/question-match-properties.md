@@ -8,6 +8,10 @@ title: Question - find a function with given properties
 >
 > Property example: partial derivatives at all points with coordinates (t,t) are positive.
 
-## H2 Test
+## Question description
+Random x, y coordinates are generated, the user is asked to provide a function that will result in positive output for all first derivatives of the given function at the generated coordinates. The user may choose to draw the provided function by clicking on the 'Draw Function' button.
 
-![image](https://user-images.githubusercontent.com/43517080/176140661-ec183cc5-a31b-45b2-bbc7-af7a4a352713.png)
+Although simple, this question demonstrates how STACK and JSXGraph can be complementary. STACK works to provide the user with input feedback in realtime. For example the user may type xy instead of x*y, stack will highlight this error. This is useful as it omits the need for string manipulation in JS, saves time.
+
+
+
