@@ -24,3 +24,15 @@ Although simple, this question demonstrates how STACK and JSXGraph can be comple
 - When user submits/checks answer, they are provided with graphs of Fx, Fy, and Fxy (partial derivatives). The graphs will be highlighted in green or red depending on the result of the answer.
 
 
+## Question CODE
+
+### Question Variables
+
+### Question Text
+
+### Specific feedback
+
+
+
+
+
