@@ -1,6 +1,7 @@
 ---
 title: JSXGraph Sandbox
 usemathjax: true
+theme: minima
 ---
 
 # Read Some Properties From A Graph
