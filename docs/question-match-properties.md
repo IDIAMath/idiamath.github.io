@@ -10,3 +10,4 @@ title: Question - find a function with given properties
 
 ## H2 Test
 
+![image](https://user-images.githubusercontent.com/43517080/176140661-ec183cc5-a31b-45b2-bbc7-af7a4a352713.png)
