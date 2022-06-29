@@ -30,12 +30,14 @@ a and b variables are the x and y coordinates.
 ```html
 a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0]);
+rand_question:rand_with_prohib(0,3,[0]);
+question_text:if (rand_question = 1) then positive else if (rand_question = 2) then negative else "different (either yield positive, negative or zero as a result but never the same as another derivative)";
 ```
 
 ### Question Text
 ```html
 <p></p>
-<p onclick="myFunction()">Give an example of a function where all partial derivatives at the coordinates ({#a#},{#b#}) are positive<br></p>
+<p onclick="myFunction()">Give an example of a function where all partial derivatives at the coordinates ({#a#},{#b#}) are {#question_text#} <br></p>
 
 [[jsxgraph height='850px' width='850px']]
 
@@ -53,7 +55,7 @@ document.getElementsByClassName("clearfix")[0].appendChild(br);
 document.getElementsByClassName("clearfix")[0].appendChild(br);
 document.getElementsByClassName("clearfix")[0].appendChild(btn);
 
-//eventlisteners
+
 btn.addEventListener("click", myFunction);
 
 var board = JXG.JSXGraph.initBoard(divid, {
@@ -62,25 +64,29 @@ keepaspectratio: false,
 axis: false
 });
 
+
 var box = [-5, 5];
-var view = board.create('view3d',[
+var view = board.create('view3d',
+[
 [-6, -3], [8, 8],
 [box, box, box]
 ],
-{ xPlaneRear: {visible: false}, yPlaneRear: {visible: false},});
-
+{
+xPlaneRear: {visible: false},
+yPlaneRear: {visible: false},
+});
 view.D3.az_slide._smax = 12;
 
-var funcExpr = '0';
+var funcExpr = '';
 
-var F = board.jc.snippet(funcExpr, true, 'x,y', true);
+var F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
+// 3D surface
 
 var fGraph = view.create('functiongraph3d', [
 F,
 box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-],
-{ strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
 
 function myFunction() {
 var ans1n = document.getElementsByClassName('algebraic')[0];
@@ -94,9 +100,9 @@ fGraph =view.create('functiongraph3d', [
 F,
 box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-],
-{ strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
-board.update();}
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+board.update();
+}
 
 [[/jsxgraph]]
 <p></p>
@@ -110,10 +116,14 @@ fx:diff(f,x);
 fy:diff(f,y);
 fxy:diff(fy,x);
 score:0;
-sa1:if ev(fx,x=a,y=b) >0 then score:score+1;
-sa2:if ev(fy,x=a,y=b) > 0 then score:score+1;
-sa3:if ev(fxy,x=a,y=b) > 0 then score:score+1;
-ta: if score =3 then ans1 else [rand(50)+10000,rand(50)+10000];
+evfx:ev(fx,x=a,y=b);
+evfy:ev(fy,x=a,y=b);
+evfxy:ev(fxy,x=a,y=b);
+
+question_procedure: if (rand_question =1) then (sa1:if evfx >0 then score:score+1, sa2:if evfy > 0 then score:score+1, sa3:if evfxy > 0 then score:score+1) else if (rand_question = 2) then (sa1:if evfx <0 then score:score+1, sa2:if evfy < 0 then score:score+1, sa3:if evfxy < 0 then score:score+1) else (sa1:if evfx <0 then score:score+1 else if evfx>0 then score:score + 3 else score:score+6 , sa2:if evfy < 0 then score:score+1 else if evfy>0 then score:score + 3 else score:score+6 , sa3:if evfxy < 0 then score:score+1  else if evfxy >0 then score:score + 3 else score:score+6 );
+
+ta: if (score =3 and (rand_question = 1 or rand_question = 2))then ans1 else if (score = 10 and rand_question = 3 ) then ans1;
+
 ```
 
 
