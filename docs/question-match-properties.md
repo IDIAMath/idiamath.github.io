@@ -20,12 +20,7 @@ Although simple, this question demonstrates how STACK and JSXGraph can be comple
 
 
 ## Question Improvements (Upcoming)
-- Random property questions, for example sometimes the question demands the user provde a function where partial derivatives at all points with coordinates (t,t) are positive sometimes **NEGATIVE** ..and more and more similar random questions.
 - When user submits/checks answer, they are provided with graphs of Fx, Fy, and Fxy (partial derivatives). The graphs will be highlighted in green or red depending on the result of the answer.
-
-
-
-
 
 
 ## Question CODE
