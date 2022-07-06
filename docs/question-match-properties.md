@@ -20,7 +20,7 @@ Although simple, this question demonstrates how STACK and JSXGraph can be comple
 
 
 ## Question Improvements (Upcoming)
-- When user submits/checks answer, they are provided with graphs of Fx, Fy, and Fxy (partial derivatives). The graphs will be highlighted in green or red depending on the result of the answer.
+- When the user clicks draw the function and the derivatives of that function are drawn (4 functions in total on chart), an option (checkbox) if crossed would make it so that if a student were to hover on one function, all other functions disapear. Adittionally a checkbox for each function that if checked, would make the graph corresponding the given checkbox invisible - **This has been achieved without stack, the goal now is to implement in stack questions**
 
 
 ## Question CODE
