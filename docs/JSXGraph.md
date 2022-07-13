@@ -167,7 +167,7 @@ var FxyGraph = view.create('functiongraph3d', [
 Fxy,
 box,
 box,
-], { strokeWidth: 0.5, stepsU: 70, stepsV: 70});
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70, color:'orange'});
 
 functionArr.push(FxyGraph);
 FxyGraph.setLabel(FxyExpr);
