@@ -20,7 +20,7 @@ It can also be interpreted as: select a point on the function where ALL partial 
 
 ## Part 1
 
-+ [Moodle XML](questions-majd testing-Question#1 part 1 unknown F-20220626-1354.xml)
++ [Moodle XML](questions-majd testing-Question#1 part 1 unknown F (original).xml)
 
 Example functions:
 $$F(x,y) = x\cdot y^2-x$$
