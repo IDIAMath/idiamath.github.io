@@ -37,6 +37,9 @@ Check this box if you want all other graphs to become invisible when you hover o
 Check this box if you want to hide a given graph
 
 
+### problems with code
+- There is no eleemnt/ object tracing in jsxgraph forcing me to find and push the desired graphs manually, so creating new graphs would make it so that you have to copy paste some code.
+- Adding too many graphs can easily slow down the visible on hover functionality
 
 ## Part 2
 
