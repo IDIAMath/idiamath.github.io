@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
-<!-- question: 1557  -->
+<!-- question: 1558  -->
   <question type="stack">
     <name>
       <text>Question#1 part 1 unknown F (original)</text>
@@ -78,7 +78,7 @@ var FxyGraph = view.create('functiongraph3d', [
 Fxy,
 box,
 box,
-], { strokeWidth: 0.5, stepsU: 70, stepsV: 70});
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70,color:'orange'});
 
 functionArr.push(FxyGraph);
 FxyGraph.setLabel(FxyExpr);
