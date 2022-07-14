@@ -19,8 +19,9 @@ It can also be interpreted as: select a point on the function where ALL partial 
 
 
 ## Part 1
-![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG)
-
+| ![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG) |
+|:--:|
+| *This image shows the students first view of the question* |
 + [Moodle XML](questions-majd testing-Question#1 part 1 unknown F (original).xml)
 
 Example functions:
@@ -42,7 +43,7 @@ Check this box if you want all other graphs to become invisible when you hover o
 #### Show/hide
 Check this box if you want to hide a given graph
 | ![hiddenGraph](https://user-images.githubusercontent.com/43517080/178970723-a23680ae-f859-4c6d-92b7-7bf311f77f45.PNG) |
-|:--:| 
+|:--:|
 | *The above image displays how the student can check a checkbox corresponding to a given graph, to set change the mentioned graphs visibility* |
 
 ### Teacher perspective
