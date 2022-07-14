@@ -11,15 +11,20 @@ theme: minima
 > Property example: partial derivatives at all points with coordinates (t,t) are positive.
 
 ## Question description
-Random x, y coordinates are generated, the user is asked to provide a function that will result in positive output for all first derivatives of the given function at the generated coordinates. The user may choose to draw the provided function by clicking on the 'Draw Function' button.
 
-Although simple, this question demonstrates how STACK and JSXGraph can be complementary. STACK works to provide the user with input feedback in realtime. For example the user may type xy instead of x*y, stack will highlight this error. This is useful as it omits the need for string manipulation in JS, saves time.
+Random $$(x, y)$$ coordinates are generated, the user is asked to provide a function that will result in positive output for all first derivatives of the given function at the generated coordinates. The user may choose to draw the provided function by clicking on the 'Draw Function' button.
+
+Although simple, this question demonstrates how STACK and JSXGraph can
+be complementary. STACK works to provide the user with input feedback
+in realtime. For example the user may type `xy` instead of `x*y`,
+STACK will highlight this error. This is useful as it omits the need for string manipulation in JS, saves time.
 
 + [Moodle XML](questions-majd testing-Question 2 define function with certain properties-20220628-0956 (1).xml)
 
 
 
 ## Question Improvements (Upcoming)
+
 - When the user clicks draw the function and the derivatives of that function are drawn (4 functions in total on chart), an option (checkbox) if crossed would make it so that if a student were to hover on one function, all other functions disapear. Adittionally a checkbox for each function that if checked, would make the graph corresponding the given checkbox invisible - **This has been achieved without stack, the goal now is to implement in stack questions**
 
 
