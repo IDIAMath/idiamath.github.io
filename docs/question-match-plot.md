@@ -105,9 +105,12 @@ while (z< length(zpdvalues)) do (z:z+1, if (zpdvalues[z])> 0 and zpfxxvalues[z]>
 
 
 <p></p>
-<p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), where exact expression for f is unknown. Select a point where partial derivatives are positive/negative/zero</span><br></p>
+<p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where partial derivatives are positive/negative/zero</span><br></p>
 
-[[jsxgraph height='850px' width='1850px']]
+[[jsxgraph height='750px' width='1550px']]
+
+// set the value of input field to []
+document.getElementsByClassName("algebraic")[0].value = "[x,y]";
 
 // checkbox visibility on hover creation
 
@@ -171,7 +174,7 @@ var FxyGraph = view.create('functiongraph3d', [
 Fxy,
 box,
 box,
-], { strokeWidth: 0.5, stepsU: 70, stepsV: 70, color:'orange'});
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70,color:'orange'});
 
 functionArr.push(FxyGraph);
 FxyGraph.setLabel(FxyExpr);
