@@ -24,11 +24,13 @@ STACK will highlight this error. This is useful as it omits the need for string 
 + [Moodle XML](questions-majd testing-Question 2 define function with certain properties-20220628-0956 (1).xml)
 
 ### Student perspective
-The student will type in the function that fits the criteria of the random question (1 of the3) generated for them
+The student will type in the function that fits the criteria of the random question (1 of the 3) generated for them by clicking the **Draw** button.
 ![image](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png)
 
 
 ### Teacher perspective
+The teacher's do not have to change anything unless they wish to change the randomly generated x and y coordinates for the question. Then they may change the a (x) and b (y) variables.
+![image](https://user-images.githubusercontent.com/43517080/178966516-76b3ca53-d0c1-4d1e-a627-7ba8a0c61326.png)
 
 ## Question CODE
 
