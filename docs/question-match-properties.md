@@ -31,8 +31,10 @@ STACK will highlight this error. This is useful as it omits the need for string 
 ## Question CODE
 
 ### Question Variables
+
 a and b variables are the x and y coordinates.
-```html
+
+```maxima
 a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0]);
 rand_question:rand_with_prohib(0,3,[0]);
@@ -40,6 +42,7 @@ question_text:if (rand_question = 1) then positive else if (rand_question = 2) t
 ```
 
 ### Question Text
+
 ```html
 <p></p>
 <p onclick="myFunction()">Give an example of a function where all partial derivatives at the coordinates ({#a#},{#b#}) are {#question_text#} <br></p>
@@ -53,7 +56,6 @@ btn.setAttribute("type","button");
 let br = document.createElement("br");
 
 //set attributes
-
 
 //append to document
 document.getElementsByClassName("clearfix")[0].appendChild(br);
@@ -115,7 +117,8 @@ board.update();
 ```
 
 ### Feedback variables
-```html
+
+```maxima
 f:ans1;
 fx:diff(f,x);
 fy:diff(f,y);
