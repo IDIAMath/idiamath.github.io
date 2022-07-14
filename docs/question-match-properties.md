@@ -11,9 +11,9 @@ theme: minima
 ## Question description
 
 Random $$(x, y)$$ coordinates are generated, the user is asked 1 of 3 randomly generated questions: 
-+ 1. to provide a function that will result in positive output for all first derivatives of the given function at the generated coordinates.
-+ 2. to provide a function that will result in negative output for all first derivatives of the given function at the generated coordinates.
-+ 3. to provide a function that will result in unique number **SIGN** (0, -, 0 are unique signs)
+1. to provide a function that will result in positive output for all first derivatives of the given function at the generated coordinates.
+2. to provide a function that will result in negative output for all first derivatives of the given function at the generated coordinates.
+3. to provide a function that will result in unique number **SIGN** (0, -, 0 are unique signs)
 The user may choose to draw the provided function by clicking on the 'Draw Function' button.
 
 Although simple, this question demonstrates how STACK and JSXGraph can
