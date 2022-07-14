@@ -3,6 +3,7 @@ title: Question - find a function with given properties
 usemathjax: true
 theme: minima
 ---
+![image](https://user-images.githubusercontent.com/43517080/178961020-cc25f8cd-f7a1-4c6a-8625-91b20c85339a.png)
 
 
 
