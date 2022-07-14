@@ -10,7 +10,11 @@ theme: minima
 
 ## Question description
 
-Random $$(x, y)$$ coordinates are generated, the user is asked to provide a function that will result in positive output for all first derivatives of the given function at the generated coordinates. The user may choose to draw the provided function by clicking on the 'Draw Function' button.
+Random $$(x, y)$$ coordinates are generated, the user is asked 1 of 3 randomly generated questions: 
+1. to provide a function that will result in positive output for all first derivatives of the given function at the generated coordinates.
+2. to provide a function that will result in negative output for all first derivatives of the given function at the generated coordinates.
+3. to provide a function that will result in unique number **SIGN** (0, -, 0 are unique signs)
+The user may choose to draw the provided function by clicking on the 'Draw Function' button.
 
 Although simple, this question demonstrates how STACK and JSXGraph can
 be complementary. STACK works to provide the user with input feedback
@@ -19,6 +23,12 @@ STACK will highlight this error. This is useful as it omits the need for string 
 
 + [Moodle XML](questions-majd testing-Question 2 define function with certain properties-20220628-0956 (1).xml)
 
+### Student perspective
+The student will type in the function that fits the criteria of the random question (1 of the3) generated for them
+![image](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png)
+
+
+### Teacher perspective
 
 ## Question CODE
 
