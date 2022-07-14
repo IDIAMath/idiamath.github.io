@@ -8,9 +8,18 @@ theme: minima
 
 # Front page - sketches
 
-+ Question [question-match-properties](question-match-properties.md)
+## Question Tutorials under Construction
+
++ Question 1 [question-match-plot](question-match-plot.md)
++ Question 2 [question-match-properties](question-match-properties.md)
+
+## Notes
+
 + [JSXGraph](JSXGraph) sandbox
-+ [JSXGraph in Moodle](https://moodle.oulu.fi/question/type/stack/doc/doc.php/Authoring/JSXGraph.md)
 + Two examples from Jonas 17 June 2022
     - [Tune 3D](Tune 3D)
     - [Tune 3D Quadric](XML/questions-jtc-Tune 3D quadric-20220617-1129.xml)
+
+## Documentation
+
++ [JSXGraph in Moodle](https://moodle.oulu.fi/question/type/stack/doc/doc.php/Authoring/JSXGraph.md)
