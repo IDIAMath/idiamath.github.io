@@ -1,5 +1,5 @@
 ---
-title: JSXGraph Sandbox
+title: STACK Question - Function to match given properties
 usemathjax: true
 theme: minima
 ---
