@@ -22,12 +22,6 @@ STACK will highlight this error. This is useful as it omits the need for string 
 + [Moodle XML](questions-majd testing-Question 2 define function with certain properties-20220628-0956 (1).xml)
 
 
-
-## Question Improvements (Upcoming)
-
-- When the user clicks draw the function and the derivatives of that function are drawn (4 functions in total on chart), an option (checkbox) if crossed would make it so that if a student were to hover on one function, all other functions disapear. Adittionally a checkbox for each function that if checked, would make the graph corresponding the given checkbox invisible - **This has been achieved without stack, the goal now is to implement in stack questions**
-
-
 ## Question CODE
 
 ### Question Variables
