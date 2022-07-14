@@ -13,12 +13,13 @@ although i could create 2 PRT's as you can tell in part 2.
 ## Question Interpretation
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero. Given the same, ask the user to select local maxima/minima.
-
 I interpret this as: find a point on the functions where one of the three derivatives gives a positive number, another gives a negative and the third gives 0. For example, you could have a point that gives Fxy=1, Fx = 0, Fy=-1, that would be a solution.
 
 It can also be interpreted as: select a point on the function where ALL partial derivatives would give a negative positive or 0. If so, this would be very similar to the provided solution and it would be an easy task change the solution to accommodate the following interpretation.
 
+
 ## Part 1
+![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG)
 
 + [Moodle XML](questions-majd testing-Question#1 part 1 unknown F (original).xml)
 
@@ -28,19 +29,27 @@ $$F(x,y) = x\cdot y^2-x$$
 The answer would be for example `[ any_negative_number, 1]`
 
 
+### Student perspective
 
-### Visible on hover
+#### Visible on hover
 Check this box if you want all other graphs to become invisible when you hover on one graph
 
+| ![cursorHover](https://user-images.githubusercontent.com/43517080/178970454-c67b02e0-ce4a-4d4c-a747-53f26593c972.PNG) |
+|:--:| 
+| *The above image shows the visible on hover functionality, where the student is able to hover on one graph to make all other graphs invisible* |
 
-### Show/hide
+
+#### Show/hide
 Check this box if you want to hide a given graph
+| ![hiddenGraph](https://user-images.githubusercontent.com/43517080/178970723-a23680ae-f859-4c6d-92b7-7bf311f77f45.PNG) |
+|:--:| 
+| *The above image displays how the student can check a checkbox corresponding to a given graph, to set change the mentioned graphs visibility* |
 
-
-### problems with code
-- There is no eleemnt/ object tracing in jsxgraph forcing me to find and push the desired graphs manually, so creating new graphs would make it so that you have to copy paste some code.
-- Adding too many graphs can easily slow down the visible on hover functionality
-- There is a problem with adding different colors to graphs, some colors will make the graph much thicker
+### Teacher perspective
+The teacher does not have to change anything, but they may choose to add or delete constants or chanage the function itself.
+| ![Teacher1](https://user-images.githubusercontent.com/43517080/178971463-1a2bb5bc-2684-43f1-ae9f-790470e8c54d.PNG) |
+|:--:| 
+| *the above image shows what the teacher may choose to change, the function itself, the range of the random constants and which of the constants are aaprt of the function* |
 
 ## Part 2
 
@@ -52,13 +61,6 @@ $$F(x,y)=2\cdot x^4+2\cdot y^4-8\cdot x\cdot y+12$$
 The answer for local min would be: `[[-1,-1],[1,1]]`
 
 For local max there is no local max so the answer would be just two square parenthesis: []
-
-
-## Question Problems
-
-+ May provide inaccurate feedback, when the provided answer is half wrong (part 2).
-+ 'select' a point on graph there is a multitude of problems not thought through with this idea.
-+ Does not support trig functions, or any predefined functions such as log, ln, e...
 
 ## Quesion code
 
@@ -285,3 +287,17 @@ ta: if score =10 then ans1 else [rand(50)+10000,rand(50)+10000];
 
 ### Node 1 
 AnswerTest: AlgEquiv, SAns:Ans1, TAns:ta
+
+
+
+## problems with code
+- There is no eleemnt/ object tracing in jsxgraph forcing me to find and push the desired graphs manually, so creating new graphs would make it so that you have to copy paste some code.
+- Adding too many graphs can easily slow down the visible on hover functionality
+- There is a problem with adding different colors to graphs, some colors will make the graph much thicker
+- 
+### Question Problems
+
++ May provide inaccurate feedback, when the provided answer is half wrong (part 2).
++ Does not support trig functions, or any predefined functions such as log, ln, e...
+
+
