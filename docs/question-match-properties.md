@@ -30,8 +30,7 @@ The student will type in the function that fits the criteria of the random quest
 
 ### Teacher perspective
 The teacher's do not have to change anything unless they wish to change the randomly generated x and y coordinates for the question. Then they may change the a (x) and b (y) variables.
-![image](https://user-images.githubusercontent.com/43517080/178966516-76b3ca53-d0c1-4d1e-a627-7ba8a0c61326.png)
-
+![image](https://user-images.githubusercontent.com/43517080/178966711-719fea4b-25c1-46e5-a0c6-6d1b9f908dba.png)
 ## Question CODE
 
 ### Question Variables
