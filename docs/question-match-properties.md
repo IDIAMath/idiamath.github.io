@@ -3,8 +3,7 @@ title: Question - find a function with given properties
 usemathjax: true
 theme: minima
 ---
-![Capture](https://user-images.githubusercontent.com/43517080/178961226-62c7f050-571c-49be-a01d-3c077ec951b1.PNG)
-
+![image](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png)
 > Ask the user to enter a function defined by algebraic expression such that certain properties are in place. Use graphics to plot the surface with corresponding properties before it is evaluated formally.
 >
 > Property example: partial derivatives at all points with coordinates (t,t) are positive.
