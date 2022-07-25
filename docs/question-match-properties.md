@@ -21,7 +21,7 @@ be complementary. STACK works to provide the user with input feedback
 in realtime. For example the user may type `xy` instead of `x*y`,
 STACK will highlight this error. This is useful as it omits the need for string manipulation in JS, saves time.
 
-+ [Moodle XML](questions-majd testing-Question 2 define function with certain properties-20220628-0956 (1).xml)
+- [XML Code](XML/questions-majd testing-Question 2 define function with certain properties-20220715-1208.xml)
 
 ### Student perspective
 The student will type in the function that fits the criteria of the random question (1 of the 3) generated for them by clicking the **Draw** button.
