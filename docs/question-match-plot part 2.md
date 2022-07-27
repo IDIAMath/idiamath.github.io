@@ -18,4 +18,4 @@ I interpret this as: find a point on the functions where one of the three deriva
 It can also be interpreted as: select a point on the function where ALL partial derivatives would give a negative positive or 0. If so, this would be very similar to the provided solution and it would be an easy task change the solution to accommodate the following interpretation.
 
 
-## Part 1
+## Part 2
