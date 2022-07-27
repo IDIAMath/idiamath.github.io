@@ -52,16 +52,6 @@ The teacher does not have to change anything, but they may choose to add or dele
 |:--:| 
 | *the above image shows what the teacher may choose to change, the function itself, the range of the random constants and which of the constants are aaprt of the function* |
 
-## Part 2
-
-+ [Moodle XML](questions-majd testing-Question#1 part 2 local minmax-20220626-1355.xml)
-
-Example functions:
-$$F(x,y)=2\cdot x^4+2\cdot y^4-8\cdot x\cdot y+12$$
-
-The answer for local min would be: `[[-1,-1],[1,1]]`
-
-For local max there is no local max so the answer would be just two square parenthesis: []
 
 ## Quesion code
 
@@ -71,28 +61,11 @@ For local max there is no local max so the answer would be just two square paren
 ```html
 a:rand_with_prohib(-10,10,[0]);
 b:rand_with_prohib(-10,10,[0]);
-f:x^2*y;
+f:x*y^2-x;
+
 fx:diff(f,x);
 fy:diff(f,y);
-fxx:diff(fx,x);
-fyy:diff(fy,y);
 fxy:diff(fy,x);
-D: fxx*fyy-(fxy)^2;
-/*pushing all valid zero points into a seperate array*/
-zp:solve([fx,fy],[x,y]);
-zpl:length(zp);
-n:0;
-zpclean:[];
-zpdvalues:[];
-zpfxxvalues:[];
-/* a while loop that checks if a zp element contains imaginary number-> omits it, checks if it contains %r -> omits it. Further evaluates fxx values at valid zp points and pushes them to a list. Further removes the x and y variables along their = sign and pushes to zpclean. */
-while (n<zpl) do (n:n+1, if (freeof(%i,zp[n]) = true) and (imagpart(zp[n][1]) = (0 = 0)) and (imagpart(zp[n][2]) = (0 = 0)) then (push(ev(D,zp[n][1],zp[n][2]),zpdvalues),push(ev(fxx,zp[n][1],zp[n][2]),zpfxxvalues),push([rhs(zp[n][1]),rhs(zp[n][2])],zpclean)) );
-
-/* classify local min and max */
-localmin:[];
-localmax:[];
-z:0;
-while (z< length(zpdvalues)) do (z:z+1, if (zpdvalues[z])> 0 and zpfxxvalues[z]>0 then (push(zpclean[z],localmin)) else if (zpdvalues[z] > 0 and zpfxxvalues[z]<0) then push(zpclean[z],localmax));
 ```
 
 
@@ -291,17 +264,3 @@ ta: if score =10 then ans1 else [rand(50)+10000,rand(50)+10000];
 
 ### Node 1 
 AnswerTest: AlgEquiv, SAns:Ans1, TAns:ta
-
-
-
-## problems with code
-- There is no eleemnt/ object tracing in jsxgraph forcing me to find and push the desired graphs manually, so creating new graphs would make it so that you have to copy paste some code.
-- Adding too many graphs can easily slow down the visible on hover functionality
-- There is a problem with adding different colors to graphs, some colors will make the graph much thicker
-- 
-### Question Problems
-
-+ May provide inaccurate feedback, when the provided answer is half wrong (part 2).
-+ Does not support trig functions, or any predefined functions such as log, ln, e...
-
-
