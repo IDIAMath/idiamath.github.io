@@ -22,7 +22,7 @@ It can also be interpreted as: select a point on the function where ALL partial 
 | ![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG) |
 |:--:|
 | *This image shows the students first view of the question* |
-- [XML Code](XML/questions-majd testing-Question#1 part 1 unknown F - 20220727-1213.xml)
+- [XML Code](XML/Question 1 part 1 unknown F - 202207.xml)
 
 Example functions:
 $$F(x,y) = x\cdot y^2-x$$
