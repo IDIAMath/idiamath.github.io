@@ -19,6 +19,10 @@ It can also be interpreted as: select a point on the function where ALL partial 
 
 
 ## Part 2
+| ![capture](https://user-images.githubusercontent.com/43517080/181220416-58f6716e-236e-41e1-8c63-632be8a72b93.PNG) |
+|:-:|
+| *This image shows the students first view of the question* |
+- [XML Code](XML/questions-majd testing-Question#1 part 2 local minmax (Jonas edit) (FULL ORIGINAL)-20220727-1203.xml)
 
 ## Quesion code
 
