@@ -28,6 +28,7 @@ It can also be interpreted as: select a point on the function where ALL partial 
 | ![controll](https://user-images.githubusercontent.com/43517080/181227525-8b141065-1284-443d-9b36-85d12b8c490e.PNG) |
 |:-:|
 | * The above image shows the 2D plane where the student can move the points to match approximately with the local min/max* |
+
 The funciton may have any amount of local min/max, in return The student will be given a certain amount of min/max point on the 2D graph which they have to match approximately to the  local min/max of the given function.
 
 ## Quesion code
