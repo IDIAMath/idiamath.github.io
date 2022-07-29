@@ -25,12 +25,18 @@ STACK will highlight this error. This is useful as it omits the need for string 
 
 ### Student perspective
 The student will type in the function that fits the criteria of the random question (1 of the 3) generated for them by clicking the **Draw** button.
-![image](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png)
+
+| ![image](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
+|:--:|
+| * The students first impression of the question* |
 
 
 ### Teacher perspective
 The teacher's do not have to change anything unless they wish to change the range for the randomly generated x and y coordinates for the question. Then they may change the a (x) and b (y) variables.
-![image](https://user-images.githubusercontent.com/43517080/178967095-ebeb45e4-ff61-45bd-b06a-fbebd3aa9143.png)
+
+| ![image](https://user-images.githubusercontent.com/43517080/178967095-ebeb45e4-ff61-45bd-b06a-fbebd3aa9143.png) |
+|:--:|
+| * The above image shows Which values the teacher may wish to change* |
 
 ## Question CODE
 
