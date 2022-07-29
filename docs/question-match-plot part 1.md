@@ -19,9 +19,11 @@ It can also be interpreted as: select a point on the function where ALL partial 
 
 
 ## Part 1
+
 | ![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG) |
 |:--:|
 | *This image shows the students first view of the question* |
+
 - [XML Code](XML/Question 1 part 1 unknown F - 202207.xml)
 
 Example functions:
@@ -52,7 +54,7 @@ The teacher does not have to change anything, but they may choose to add or dele
 
 | ![image](https://user-images.githubusercontent.com/43517080/178975348-eeeacdce-7cac-47bc-ac33-68953c929989.png) |
 |:--:| 
-| *the above image shows what the teacher may choose to change, the function itself, the range of the random constants and which of the constants are aaprt of the function* |
+| *the above image shows which values the teacher may choose to change* |
 
 
 ## Quesion code
