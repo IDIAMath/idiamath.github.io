@@ -40,6 +40,7 @@ The teacher may change the actual function and the a and b values wich correspon
 | ![teachers perspective](https://user-images.githubusercontent.com/43517080/181707763-eaf17699-7d77-4149-a96b-f9b8f7da6e25.PNG) |
 |:--:|
 | * The above image shows which values the teacher may choose to change* |
+
 #### Max error
 The max error is how far away the point can be from the actual local min local max value and still be correct.
 
