@@ -6,10 +6,6 @@ theme: minima
 
 # Read Some Properties From A Graph
 
-I split the following question into two problems for now
-due to a problem with creating 3 PRT's,
-although i could create 2 PRT's as you can tell in part 2.
-
 ## Question Interpretation
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero. Given the same, ask the user to select local maxima/minima.
