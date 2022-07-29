@@ -11,10 +11,11 @@ theme: minima
 ## Question description
 
 Random $$(x, y)$$ coordinates are generated, the user is asked 1 of 3 randomly generated questions: 
-1. to provide a function that will result in positive output for all first derivatives of the given function at the generated coordinates.
-2. to provide a function that will result in negative output for all first derivatives of the given function at the generated coordinates.
-3. to provide a function that will result in unique number **SIGN** (0, -, 0 are unique signs)
-The user may choose to draw the provided function by clicking on the 'Draw Function' button.
+1. to provide a function that will result in positive output for all first partial derivatives (Fx,Fy and Fxy) of the given function at the generated coordinates.
+2. to provide a function that will result in negative output for all first partial derivatives (Fx,Fy and Fxy)  of the given function at the generated coordinates.
+3. to provide a function that will result in unique number's **SIGN's** (1, -1, and 0 are unique numbers with different signs) at the generated coordinates for all partial derivatives.
+4. 
+The user may choose to draw the provided function by clicking on the **'Draw Function'** button.
 
 Although simple, this question demonstrates how STACK and JSXGraph can
 be complementary. STACK works to provide the user with input feedback
@@ -37,6 +38,8 @@ The teacher's do not have to change anything unless they wish to change the rang
 | ![image](https://user-images.githubusercontent.com/43517080/178967095-ebeb45e4-ff61-45bd-b06a-fbebd3aa9143.png) |
 |:--:|
 | * The above image shows Which values the teacher may wish to change* |
+
+### question's and answers examples
 
 ## Question CODE
 
