@@ -42,9 +42,11 @@ The teacher's do not have to change anything unless they wish to change the rang
 ### Question's and answers examples
 #### Question variant 1.
 > "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are positive"
+
 Answer: `y^2*x^2`
 #### Question variant 2.
 > "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are negative"
+
 Answer: `-y^2*x^2`
 #### Question variant 3.
 >"Give an example of a function where all partial derivatives at the coordinates (2,-3) are "different in regards to the sign infront of them, example: fx = -5 fy =-1 fxy = 0. is not valid because -1 and -5 are both negative""
