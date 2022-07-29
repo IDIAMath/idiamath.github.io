@@ -42,12 +42,14 @@ Check this box if you want all other graphs to become invisible when you hover o
 
 #### Show/hide
 Check this box if you want to hide a given graph
+
 | ![hiddenGraph](https://user-images.githubusercontent.com/43517080/178970723-a23680ae-f859-4c6d-92b7-7bf311f77f45.PNG) |
 |:--:|
 | *The above image displays how the student can check a checkbox corresponding to a given graph, to set change the mentioned graphs visibility* |
 
 ### Teacher perspective
 The teacher does not have to change anything, but they may choose to add or delete constants or chanage the function itself.
+
 | ![image](https://user-images.githubusercontent.com/43517080/178975348-eeeacdce-7cac-47bc-ac33-68953c929989.png) |
 |:--:| 
 | *the above image shows what the teacher may choose to change, the function itself, the range of the random constants and which of the constants are aaprt of the function* |
