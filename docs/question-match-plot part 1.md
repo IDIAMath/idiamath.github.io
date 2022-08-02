@@ -32,7 +32,7 @@ The answer would be for example `[ any_negative_number, 1]`
 The student has to type in the correct answer in the `[x,y]` input field.
 
 #### Visible on hover
-Check this box if you want all other graphs to become invisible when you hover on one graph
+Check this box if you want all other graphs to become invisible when you hover over one graph
 
 | ![cursorHover](https://user-images.githubusercontent.com/43517080/178970454-c67b02e0-ce4a-4d4c-a747-53f26593c972.PNG) |
 |:--:| 
