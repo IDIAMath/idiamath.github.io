@@ -16,7 +16,8 @@ theme: minima
 | ![capture](https://user-images.githubusercontent.com/43517080/181220416-58f6716e-236e-41e1-8c63-632be8a72b93.PNG) |
 |:-:|
 | *This image shows the students first view of the question* |
-
+### Question description
+The student has to find all local min and local max of the given function
 - [XML Code](XML/Question 1 part 2 local minmax (Jonas edit) -2022027.xml)
 
 ### Student perspective
@@ -25,7 +26,7 @@ theme: minima
 |:-:|
 | *The above image shows the 2D plane where the student can move the points to match approximately with the local min/max* |
 
-The function may contain any amount of local min/max, in return the student will be given the corresponding amount of min/max points on the 2D plane, which they have to match approximately to the local min/max of the given function.
+The function may contain any amount of local min/max, in return the student will be supplied with the corresponding amount of min/max points on the 2D plane, which they have to match approximately to the local min/max of the given function.
 
 ### Teacher's perspective
 The teacher may change the actual function and the `a` and `b` values which correspond to the randomly generated numbers.
