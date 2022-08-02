@@ -6,7 +6,9 @@ theme: minima
 > Ask the user to enter a function defined by algebraic expression such that certain properties are in place. Use graphics to plot the surface with corresponding properties before it is evaluated formally.
 >
 > Property example: partial derivatives at all points with coordinates (t,t) are positive.
-![image](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png)
+| ![image](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png) |
+|:--:|
+| *Students first impression of the question* |
 
 ## Question description
 
@@ -29,7 +31,7 @@ The student will type in the function that fits the criteria of the random quest
 
 | ![image](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
 |:--:|
-| *The students first impression of the question* |
+| *When the student types in the function and clicks the **Draw** button * |
 
 
 ### Teacher perspective
