@@ -55,11 +55,9 @@ Here if we can get Fx to be any positive number, then we have two options left f
 
 Answer: `x+y^2`
 The answer is such because;
-`
-Fx:1
+`Fx:1
 Fy:-6
-Fxy:0
-`
+Fxy:0`
 
 ## Question CODE
 
