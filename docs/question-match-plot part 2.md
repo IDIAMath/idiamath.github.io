@@ -25,7 +25,7 @@ theme: minima
 |:-:|
 | *The above image shows the 2D plane where the student can move the points to match approximately with the local min/max* |
 
-The funciton may have any amount of local min/max, in return The student will be given a certain amount of min/max point on the 2D graph which they have to match approximately to the  local min/max of the given function.
+The funciton may have any amount of local min/max, in return The student will be given a certain amount of min/max point on the 2D plane which they have to match approximately to the  local min/max of the given function.
 
 ### Teacher's perspective
 The teacher may change the actual function and the a and b values wich correspond to the randomly generated numbers.
