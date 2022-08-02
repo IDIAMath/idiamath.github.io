@@ -10,10 +10,6 @@ theme: minima
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero (Part 1). Given the same, ask the user to select local maxima/minima (part 2).
 
-I interpret this as: find a point on the functions where one of the three derivatives gives a positive number, another gives a negative and the third gives 0/neutral. For example, you could have a point that gives Fxy=1, Fx = 0, Fy=-1, which would be a solution.
-
-
-
 ## Part 1
 
 | ![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG) |
