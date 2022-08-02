@@ -36,7 +36,7 @@ The teacher may change the actual function and the `a` and `b` values which corr
 | *The above image shows which values the teacher may choose to change* |
 
 #### Max error
-The max error is how far away the point can be from the actual local min local max value and still be correct.
+The max error is how far away the point can be from the actual local min or local max value and stil be considered correct on evaluation.
 
 ## Quesion code
 
