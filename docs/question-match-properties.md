@@ -39,7 +39,7 @@ The teacher's do not have to change anything unless they wish to change the rang
 
 | ![image](https://user-images.githubusercontent.com/43517080/178967095-ebeb45e4-ff61-45bd-b06a-fbebd3aa9143.png) |
 |:--:|
-| *The above image shows Which values the teacher may wish to change* |
+| *The above image shows which values the teacher may wish to change* |
 
 ### Question's and answers examples
 #### Question variant 1.
