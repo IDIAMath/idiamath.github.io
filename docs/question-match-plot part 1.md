@@ -17,7 +17,7 @@ theme: minima
 | *This image shows the students first view of the question* |
 
 ### Question description
-Find a point on the functions where one of the three derivatives gives a positive number, another gives a negative and the third gives 0/neutral. For example, you could have a point that gives Fxy=1, Fx = 0, Fy=-1, which would be a solution. All signs `(+, -, 0/neutral)` infront of derivatve values have to be unique from each other.
+Find a point on the functions where all first order partial derivative (Fx,Fy,Fxy) values on the corresponding point provide unique signs from each other `(+, -, 0/neutral)`.
 
 - [XML Code](XML/Question 1 part 1 unknown F - 202207.xml)
 
