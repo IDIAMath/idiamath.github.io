@@ -41,7 +41,7 @@ Check this box if you want all other graphs to become invisible when you hover o
 
 | ![cursorHover](https://user-images.githubusercontent.com/43517080/178970454-c67b02e0-ce4a-4d4c-a747-53f26593c972.PNG) |
 |:--:| 
-| *The above image shows the visible on hover functionality, where the student is able to hover on one graph to make all other graphs invisible* |
+| *The above image shows the visible on hover functionality, where the student is able to hover over one graph to make all other graphs invisible* |
 
 
 #### Show/hide
