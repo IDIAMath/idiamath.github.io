@@ -26,7 +26,7 @@ It can also be interpreted as: select a point on the function where ALL partial 
 
 | ![controll](https://user-images.githubusercontent.com/43517080/181227525-8b141065-1284-443d-9b36-85d12b8c490e.PNG) |
 |:-:|
-| * The above image shows the 2D plane where the student can move the points to match approximately with the local min/max* |
+| *The above image shows the 2D plane where the student can move the points to match approximately with the local min/max* |
 
 The funciton may have any amount of local min/max, in return The student will be given a certain amount of min/max point on the 2D graph which they have to match approximately to the  local min/max of the given function.
 
@@ -35,7 +35,7 @@ The teacher may change the actual function and the a and b values wich correspon
 
 | ![teachers perspective](https://user-images.githubusercontent.com/43517080/181707763-eaf17699-7d77-4149-a96b-f9b8f7da6e25.PNG) |
 |:--:|
-| * The above image shows which values the teacher may choose to change* |
+| *The above image shows which values the teacher may choose to change* |
 
 #### Max error
 The max error is how far away the point can be from the actual local min local max value and still be correct.
