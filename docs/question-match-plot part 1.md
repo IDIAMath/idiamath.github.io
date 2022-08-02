@@ -29,7 +29,7 @@ The answer would be for example `[ any_negative_number, 1]`
 
 
 ### Student perspective
-The student has to type in the correct answer in the ``[x,y]` input field.
+The student has to type in the correct answer in the `[x,y]` input field.
 
 #### Visible on hover
 Check this box if you want all other graphs to become invisible when you hover on one graph
