@@ -16,7 +16,7 @@ theme: minima
 Random $$(x, y)$$ coordinates are generated, the user is asked 1 of 3 randomly generated questions: 
 1. to provide a function that will result in positive output for all first partial derivatives (Fx,Fy and Fxy) of the given function at the generated coordinates.
 2. to provide a function that will result in negative output for all first partial derivatives (Fx,Fy and Fxy)  of the given function at the generated coordinates.
-3. to provide a function that will result in unique **SIGN's** (1, -1, and 0 are numbers with unique signs) at the generated coordinates for all partial derivatives.
+3. to provide a function that will result in unique **SIGN's** from each other `(1, -1, 0/neutral)` at the generated coordinates for all partial derivatives.
 
 The user may choose to draw the provided function by clicking on the **'Draw Function'** button.
 
@@ -54,7 +54,7 @@ Answer: `-y^2*x^2`
 #### Question variant 3.
 >"Give an example of a function where all partial derivatives at the coordinates (2,-3) are "different in regards to the sign infront of them, example:` fx = -5 fy =-1 fxy = 0`. is not valid because -1 and -5 are both negative""
 
-Here if we can get Fx to be any positive number, then we have two options left for Fy and Fxy. The options are a negative number or 0; Fy can be a negative number, then Fxy has to be 0. Fy can be 0, then Fxy has to be a negative number. The point is the sign's for all partial derivative values have to be different.
+Here if we can get Fx to be any positive number, then we have two options left for Fy and Fxy. The options are a negative number or 0; Fy can be a negative number, then Fxy has to be 0. Fy can be 0, then Fxy has to be a negative number. The point is the sign's for all partial derivative values have to be unique from each other.
 
 Answer: `x+y^2`
 The answer is such because;
