@@ -28,7 +28,7 @@ theme: minima
 The funciton may have any amount of local min/max, in return the student will be given the corresponding amount of min/max points on the 2D plane which they have to match approximately to the local min/max of the given function.
 
 ### Teacher's perspective
-The teacher may change the actual function and the a and b values wich correspond to the randomly generated numbers.
+The teacher may change the actual function and the `a` and `b` values wich correspond to the randomly generated numbers.
 
 | ![teachers perspective](https://user-images.githubusercontent.com/43517080/181707763-eaf17699-7d77-4149-a96b-f9b8f7da6e25.PNG) |
 |:--:|
