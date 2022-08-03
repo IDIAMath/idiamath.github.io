@@ -35,8 +35,15 @@ Grading allows for a limited error, and the teacher may set the tolerance.
 
 ## Question code
 
-
 ### Question variables
+
+The following maxima code should be entered into the Question Variables field.
+
+**Caveats**
+
+1.  It does not use random variables.  The function `f` has to be hand-coded.
+2.  The code should be refactored, using a more functional approach,
+    for the sake of readability.
 
 ```
 xrang:[-2,2];
@@ -58,26 +65,41 @@ zpclean:[];
 zpdvalues:[];
 zpfxxvalues:[];
 
-/* a while loop that checks if a zp element contains imaginary number-> omits it, checks if it contains %r -> omits it. Further evaluates fxx values at valid zp points and pushes them to a list. Further removes the x and y variables along their = sign and pushes to zpclean. */
-while (n<zpl) do (n:n+1, if (freeof(%i,zp[n]) = true) and (imagpart(zp[n][1]) = (0 = 0)) and (imagpart(zp[n][2]) = (0 = 0)) then (push(ev(D,zp[n][1],zp[n][2]),zpdvalues),push(ev(fxx,zp[n][1],zp[n][2]),zpfxxvalues),push([rhs(zp[n][1]),rhs(zp[n][2])],zpclean)) );
+/* a while loop that checks if a zp element contains imaginary 
+number-> omits it, checks if it contains %r -> omits it.
+Further evaluates fxx values at valid zp points and pushes them to a list.
+Further removes the x and y variables along their = sign and pushes 
+to zpclean. */
+
+while (n<zpl) do
+   (n:n+1, 
+      if (freeof(%i,zp[n]) = true) and
+         (imagpart(zp[n][1]) = (0 = 0)) and
+         (imagpart(zp[n][2]) = (0 = 0)) 
+      then (push(ev(D,zp[n][1],zp[n][2]),zpdvalues),
+            push(ev(fxx,zp[n][1],zp[n][2]),zpfxxvalues),
+            push([rhs(zp[n][1]),rhs(zp[n][2])],zpclean)) 
+   );
 
 /* classify local min and max */
 localmin:[];
 localmax:[];
 z:0;
 /*push the clean localmin and localmax values in the form [x,y]*/
-while (z< length(zpdvalues)) do (z:z+1, if (zpdvalues[z])> 0 and zpfxxvalues[z]>0 then (push(zpclean[z],localmin)) else if (zpdvalues[z] > 0 and zpfxxvalues[z]<0) then push(zpclean[z],localmax));
+while (z< length(zpdvalues)) do
+    (z:z+1,
+       if (zpdvalues[z])> 0 and zpfxxvalues[z]>0 
+       then (push(zpclean[z],localmin)) 
+       else if (zpdvalues[z] > 0 and zpfxxvalues[z]<0) 
+            then push(zpclean[z],localmax)
+    );
 ```
 
-The teacher may change the actual function and the `a` and `b` values which correspond to the randomly generated numbers.
+Some lines should be changed by the teacher:
 
-| ![teachers perspective](https://user-images.githubusercontent.com/43517080/181707763-eaf17699-7d77-4149-a96b-f9b8f7da6e25.PNG) |
-|:--:|
-| *The above image shows which values the teacher may choose to change* |
-
-#### Max error
-The max error is how far away the point can be from the actual local min or local max value and stil be considered correct on evaluation.
-
+1.  The function `f` to be plotted.
+2.  The error tolerance `maxError` which defines how accurately the student
+    has to answer.
 
 ### Question text
 
