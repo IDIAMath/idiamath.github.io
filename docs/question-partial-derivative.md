@@ -1,14 +1,14 @@
 ---
-title: STACK Question - Function to match given properties part 1
+title: STACK Question - Interpret partial derivatives
 usemathjax: true
 theme: minima
 ---
 
-# Read Some Properties From A Graph
+# Interpret partial derivatives
 
 ## Question Interpretation
 
-> Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero (Part 1). Given the same, ask the user to select local maxima/minima (part 2).
+> Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero.
 
 ## Part 1
 

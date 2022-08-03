@@ -10,7 +10,7 @@ theme: minima
 
 ## Question Tutorials under Construction
 
-+ Question 1 [question-match-plot part 1](question-match-plot part 1.md)
++ Question 1 [Interpret partial derivatives](question-partial-derivative.md)
 + Question 2 [question-match-properties](question-match-properties.md)
 + Question 3 [Select maxima/minima on a plot](question-select-extremal.md)
 
