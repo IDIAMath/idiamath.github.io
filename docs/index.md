@@ -13,13 +13,12 @@ theme: minima
 + Question 1 [Interpret partial derivatives](question-partial-derivative.md)
 + Question 2 [question-match-properties](question-match-properties.md)
 + Question 3 [Select maxima/minima on a plot](question-select-extremal.md)
++ Question 4 [Tune 3D](Tune 3D)
++ Question 5 (XML only) [Tune 3D Quadric](XML/questions-jtc-Tune 3D quadric-20220617-1129.xml)
 
 ## Notes
 
 + [JSXGraph](JSXGraph) sandbox
-+ Two examples from Jonas 17 June 2022
-    - [Tune 3D](Tune 3D)
-    - [Tune 3D Quadric](XML/questions-jtc-Tune 3D quadric-20220617-1129.xml)
 
 ## Documentation
 
