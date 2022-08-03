@@ -9,7 +9,7 @@ theme: minima
 ## Question Interpretation
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$
-> is unknown to a user, ask the user to select local maxima/minima on the
+> is unknown to a user, ask the user to select all local maxima/minima on the
 > surface plot.
 
 
