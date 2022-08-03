@@ -172,12 +172,19 @@ for (let i=0; i<localmax.length; i++){
 
 ```
 ### Specific feedback
+
+We define two partial response trees for this question.
+
 ```html
 [[feedback:prt1]]
 [[feedback:prt2]]
 ```
-### Feedback variabels PRT1
-```html
+
+### Feedback Variables 
+
+#### Feedback variabels PRT1
+
+```
 lenlocalmin:length(localmin);
 lenans1:length(ans1);
 
@@ -194,8 +201,9 @@ indices_OK:map(lambda([x], x[2]), errors_OK);
 correct_mins:length(unique(indices_OK));
 ```
 
-### Feedback variabels PRT2
-```html
+#### Feedback variabels PRT2
+
+```
 lenlocalmax:length(localmax);
 lenans2:length(ans2);
 
@@ -211,3 +219,5 @@ errors2_OK:sublist(error2_indices, lambda([x],x[1]<maxError));
 indices2_OK:map(lambda([x],x[2]), errors2_OK);
 correct_max:length(unique(indices2_OK));
 ```
+
+### Partial Response Trees
