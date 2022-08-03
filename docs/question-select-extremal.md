@@ -6,24 +6,20 @@ theme: minima
 
 # STACK Question 3.  Select maxima/minma on a plot
 
-## Question Interpretation
-
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$
 > is unknown to a user, ask the user to select all local maxima/minima on the
 > surface plot.
 
+- [XML Code](XML/Question 1 part 2 local minmax (Jonas edit) -2022027.xml)
 
-## Part 2
+## What the student sees
 
 | ![capture](https://user-images.githubusercontent.com/43517080/181220416-58f6716e-236e-41e1-8c63-632be8a72b93.PNG) |
 |:-:|
 | *This image shows the students first view of the question* |
 
-### Question description
-The student has to find all local min and local max of the given function
-- [XML Code](XML/Question 1 part 2 local minmax (Jonas edit) -2022027.xml)
 
-### Student perspective
+### What the student has to do
 
 | ![controll](https://user-images.githubusercontent.com/43517080/181227525-8b141065-1284-443d-9b36-85d12b8c490e.PNG) |
 |:-:|
@@ -31,22 +27,12 @@ The student has to find all local min and local max of the given function
 
 The function may contain any amount of local min/max, in return the student will be supplied with the corresponding amount of min/max points on the 2D plane, which they have to match approximately to the local min/max of the given function.
 
-### Teacher's perspective
-The teacher may change the actual function and the `a` and `b` values which correspond to the randomly generated numbers.
-
-| ![teachers perspective](https://user-images.githubusercontent.com/43517080/181707763-eaf17699-7d77-4149-a96b-f9b8f7da6e25.PNG) |
-|:--:|
-| *The above image shows which values the teacher may choose to change* |
-
-#### Max error
-The max error is how far away the point can be from the actual local min or local max value and stil be considered correct on evaluation.
-
 ## Question code
 
 
 ### Question variables
 
-```html
+```
 xrang:[-2,2];
 yrang:[-2,2];
 zrang:[-1,3];
@@ -76,6 +62,15 @@ z:0;
 /*push the clean localmin and localmax values in the form [x,y]*/
 while (z< length(zpdvalues)) do (z:z+1, if (zpdvalues[z])> 0 and zpfxxvalues[z]>0 then (push(zpclean[z],localmin)) else if (zpdvalues[z] > 0 and zpfxxvalues[z]<0) then push(zpclean[z],localmax));
 ```
+
+The teacher may change the actual function and the `a` and `b` values which correspond to the randomly generated numbers.
+
+| ![teachers perspective](https://user-images.githubusercontent.com/43517080/181707763-eaf17699-7d77-4149-a96b-f9b8f7da6e25.PNG) |
+|:--:|
+| *The above image shows which values the teacher may choose to change* |
+
+#### Max error
+The max error is how far away the point can be from the actual local min or local max value and stil be considered correct on evaluation.
 
 
 ### Question text
