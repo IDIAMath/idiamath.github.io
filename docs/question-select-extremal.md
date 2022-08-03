@@ -21,11 +21,17 @@ theme: minima
 
 ### What the student has to do
 
+
+The function may have any amount of local extremal points,
+The 2D figure shows one red point for each extremal point, and the student
+have to move them to the correct co-ordinate position to identify extramal
+points on the surface in the 3D plot.
+
 | ![controll](https://user-images.githubusercontent.com/43517080/181227525-8b141065-1284-443d-9b36-85d12b8c490e.PNG) |
 |:-:|
 | *The above image shows the 2D plane where the student can move the points to match approximately with the local min/max* |
 
-The function may contain any amount of local min/max, in return the student will be supplied with the corresponding amount of min/max points on the 2D plane, which they have to match approximately to the local min/max of the given function.
+Grading allows for a limited error, and the teacher may set the tolerance.
 
 ## Question code
 
