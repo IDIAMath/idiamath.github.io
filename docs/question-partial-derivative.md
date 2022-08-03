@@ -4,8 +4,6 @@ usemathjax: true
 theme: minima
 ---
 
-# Interpret partial derivatives
-
 ## Question Interpretation
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero.
