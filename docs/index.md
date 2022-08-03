@@ -10,9 +10,9 @@ theme: minima
 
 ## Question Tutorials under Construction
 
-+ Question 1A [question-match-plot part 1](question-match-plot part 1.md)
-+ Question 1B [question-match-plot part 2](question-match-plot part 2.md)
++ Question 1 [question-match-plot part 1](question-match-plot part 1.md)
 + Question 2 [question-match-properties](question-match-properties.md)
++ Question 3 [Select maxima/minima on a plot](question-match-plot part 2.md)
 
 ## Notes
 

@@ -1,14 +1,16 @@
 ---
-title: STACK Question - Function to match given properties part 2
+title: STACK Question 3.  Select maxima/minma on a plot
 usemathjax: true
 theme: minima
 ---
 
-# Read Some Properties From A Graph
+# STACK Question 3.  Select maxima/minma on a plot
 
 ## Question Interpretation
 
-> Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero (Part 1). Given the same, ask the user to select local maxima/minima (Part 2).
+> Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$
+> is unknown to a user, ask the user to select local maxima/minima on the
+> surface plot.
 
 
 ## Part 2
@@ -39,10 +41,10 @@ The teacher may change the actual function and the `a` and `b` values which corr
 #### Max error
 The max error is how far away the point can be from the actual local min or local max value and stil be considered correct on evaluation.
 
-## Quesion code
+## Question code
 
 
-### Quesion variables
+### Question variables
 
 ```html
 xrang:[-2,2];
@@ -76,7 +78,7 @@ while (z< length(zpdvalues)) do (z:z+1, if (zpdvalues[z])> 0 and zpfxxvalues[z]>
 ```
 
 
-### Quesion text
+### Question text
 
 ```html
 <p><span style="font-size: 0.9375rem;">Given a surface defined by z=f(x,y), where exact expression for f is unknown. Determine local min and max</span><br></p>
