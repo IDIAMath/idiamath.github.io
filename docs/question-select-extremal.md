@@ -35,7 +35,7 @@ In addition the controls in the lower right hand corner lets the student move th
 |:-:|
 | *The above image shows the 2D plane where the student can move the points to match approximately with the local min/max* |
 
-Grading allows for a limited error, and the teacher may set the tolerance.
+Grading allows for a limited error, and the teacher should set a tolerance appropriate to the resolution on the x/y-axes.
 
 ## Question code
 
@@ -46,57 +46,50 @@ The following maxima code should be entered into the Question Variables field.
 **Caveats**
 
 1.  It does not use random variables.  The function `f` has to be hand-coded.
-2.  The code should be refactored, using a more functional approach,
-    for the sake of readability.
+2.  The x, y, and z ranges (xrang, yrang, zrang) have to be hand-coded.
+3.  The tolerance (maxError) is absolute (as opposed to relative) and have to be set to a reasonable value
 
 ```
-xrang:[-2,2];
-yrang:[-2,2];
-zrang:[-1,3];
-maxError:0.3;
-f:2*x^4+2*y^4-8*x*y+12;
+xrang:[-2,5];  
+yrang:[-2,4];
+zrang:[-1,10];
+
+maxError:0.3; /*Tolerance (absolute) */
+
+/*Easy example*/
+f:(2*x^4+2*y^4-8*x*y+12);
+
+/*Hard example*/
+/*f:expand((x-3)*(x+1)*(y-2)*(y+2)*(x*y+3));*/
+
+/*Partial derivatives*/
 fx:diff(f,x);
 fy:diff(f,y);
 fxx:diff(fx,x);
 fyy:diff(fy,y);
 fxy:diff(fy,x);
 D: fxx*fyy-(fxy)^2;
-/*pushing all valid zero points into a seperate array*/
-zp:solve([fx,fy],[x,y]);
-zpl:length(zp);
-n:0;
-zpclean:[];
-zpdvalues:[];
-zpfxxvalues:[];
 
-/* a while loop that checks if a zp element contains imaginary 
-number-> omits it, checks if it contains %r -> omits it.
-Further evaluates fxx values at valid zp points and pushes them to a list.
-Further removes the x and y variables along their = sign and pushes 
-to zpclean. */
+/*Solve for critical points*/
+critical:solve([fx,fy],[x,y]);
 
-while (n<zpl) do
-   (n:n+1, 
-      if (freeof(%i,zp[n]) = true) and
-         (imagpart(zp[n][1]) = (0 = 0)) and
-         (imagpart(zp[n][2]) = (0 = 0)) 
-      then (push(ev(D,zp[n][1],zp[n][2]),zpdvalues),
-            push(ev(fxx,zp[n][1],zp[n][2]),zpfxxvalues),
-            push([rhs(zp[n][1]),rhs(zp[n][2])],zpclean)) 
-   );
+/*Function noDegen takes a list 'l' of solutions [ [x=a, y=b], ...] and returns a list of solutions not containing 'r'*/
+noDegen(l,r):=sublist(l, lambda([ll], freeof(r,ll)));
+/*Remove degenerate solutions (solutions with free variables stored in %rnum_list)*/
+critical_nd: lreduce(noDegen,  %rnum_list,     critical);
 
-/* classify local min and max */
-localmin:[];
-localmax:[];
-z:0;
-/*push the clean localmin and localmax values in the form [x,y]*/
-while (z< length(zpdvalues)) do
-    (z:z+1,
-       if (zpdvalues[z])> 0 and zpfxxvalues[z]>0 
-       then (push(zpclean[z],localmin)) 
-       else if (zpdvalues[z] > 0 and zpfxxvalues[z]<0) 
-            then push(zpclean[z],localmax)
-    );
+/*Function isNotImag returns true if a solution sol ([x=a,y=b]) has no imaginary part*/
+isNotImag(sol):=is(equal(imagpart(sol),[0=0,0=0]));
+/*Remove complex solutions*/
+critical_nd_real:sublist(critical_nd, isNotImag);
+
+/*Classify critical points and collect local max/min */
+localmin_expr:sublist(critical_nd_real, lambda([p], ev(fxx,p) >0 and ev(D,p)>0));
+localmax_expr:sublist(critical_nd_real, lambda([p], ev(fxx,p) < 0 and ev(D,p)>0));
+
+/*Store min/max in [a,b] form, instead of [x=a, y=b] form*/
+localmin:float(map(lambda([x], map(rhs, x)),localmin_expr));
+localmax:float(map(lambda([x], map(rhs, x)), localmax_expr));
 ```
 
 Some lines should be changed by the teacher:
@@ -104,6 +97,7 @@ Some lines should be changed by the teacher:
 1.  The function `f` to be plotted.
 2.  The error tolerance `maxError` which defines how accurately the student
     has to answer.
+3.  The arrays xrang ([x_min,x_max]), yrang and zrang - The axis ranges for the plots
 
 ### Question text
 
