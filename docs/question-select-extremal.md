@@ -234,51 +234,52 @@ There are a couple of parts in the jsxgraph block that might need some tuning fr
 
 ### Specific feedback
 
-We define two partial response trees for this question.
-
-```html
-[[feedback:prt1]]
-[[feedback:prt2]]
-```
-
+We define one partial response tree for this question. The teacher could create seperate response trees for the minimas and maximas
 ### Feedback Variables 
 
 #### Feedback variabels PRT1
 
 ```
 lenlocalmin:length(localmin);
-lenans1:length(ans1);
-
-dist(u,v):=float(sqrt((u[1]-v[1])^2+(u[2]-v[2])^2));
-dists(a,b):=map(lambda([x],dist(a,x)), b);
-errors:map(lambda([x],dists(x,localmin)),ans1);
-errors_best:map(lmin,errors);
-find_ind(e, errs):=first(sublist_indices(errs, lambda([x], x=e)));
-indices:map(lambda([x], find_ind(errors_best[x], errors[x])), makelist(i,i,lenlocalmin));
-zip(a,b):=map(lambda([x], [a[x],b[x]]), makelist(i,i,length(a)));
-error_indices:zip(errors_best,indices);
-errors_OK:sublist(error_indices, lambda([x], x[1]<maxError));
-indices_OK:map(lambda([x], x[2]), errors_OK);
-correct_mins:length(unique(indices_OK));
-```
-
-#### Feedback variabels PRT2
-
-```
 lenlocalmax:length(localmax);
-lenans2:length(ans2);
 
+/*Function dist(u,v) returns the distance between points u and v*/
 dist(u,v):=float(sqrt((u[1]-v[1])^2+(u[2]-v[2])^2));
-dists(a,b):=map(lambda([x],dist(a,x)), b);
+
+/*Function dists(u,l) takes a point 'u' and a list of points 'l', and returns a list with the distances between 'u' and the points in 'l'*/
+dists(u,l):=map(lambda([x],dist(u,x)), l);
+
+/*'errors' holds the distances from the points the student found, to all the minimums*/
+errors:map(lambda([x],dists(x,localmin)),ans1);
+
+/*bestErrorWithIndex takes a list 'e' of errors, and returns a list with the smallest error and its index*/
+bestErrorWithIndex(e):=[lmin(e), first(sublist_indices(e, lambda([x], x=lmin(e))))];
+
+/*Find the smallest distance from all the student's points to the minimums, along with the minimums index*/
+errors_best:map(bestErrorWithIndex, errors);
+
+/*Find which of the best errors are smaller than maxError*/
+errors_OK:sublist(errors_best, lambda([x], x[1]<maxError));
+
+/*List containing the indices of approved errors*/
+indices_OK:map(lambda([x],x[2]), errors_OK);
+
+/*Number of correctly indentified minimums correspond to the number of unique indices in indices_OK*/
+correct_mins:length(unique(indices_OK));
+
+/*Same procedure for local max*/
 errors2:map(lambda([x],dists(x,localmax)),ans2);
-errors2_best:map(lmin,errors2);
-find_ind(e, errs):=first(sublist_indices(errs, lambda([x], x=e)));
-indices2:map(lambda([x], find_ind(errors2_best[x], errors2[x])), makelist(i,i,lenlocalmax));
-zip(a,b):=map(lambda([x], [a[x],b[x]]), makelist(i,i,length(a)));
-error2_indices:zip(errors2_best,indices2);
-errors2_OK:sublist(error2_indices, lambda([x],x[1]<maxError));
-indices2_OK:map(lambda([x],x[2]), errors2_OK);
-correct_max:length(unique(indices2_OK));
+errors_best2:map(bestErrorWithIndex, errors2);
+errors_OK2:sublist(errors_best2, lambda([x], x[1]<maxError));
+indices_OK2:map(lambda([x],x[2]), errors_OK2);
+correct_max:length(unique(indices_OK2));
 ```
 
-### Partial Response Trees
+In the "feedback variables" form, we executes some maxima code after the student has submitted their answer.
+We check which extremal value the points the student has submitted are closest to and remove the ones that are further away than `maxError` from an extremal value.
+Finally we count how many unique extremas the student has found, and store the correct numbers found in `correct_mins` and `correct_max`.
+
+This question utilizes a single response tree for ease and flexibility. 
+Should the teacher to wish create seperate response trees for min/max values, they would need to copy the first two and last 5 lines, along with the functions `dist`, `dists`, and `bestErrorWithIndex` over to the "feedback variables" field in the new response tree.
+
+### Partial Response Tree
