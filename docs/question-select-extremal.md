@@ -106,6 +106,7 @@ Some lines should be changed by the teacher:
 <p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
 <p style="display:none">[[input:ans2]][[validation:ans2]]</p>
 [[jsxgraph height='500px' width='700px' input-ref-ans1="points_min_out" input-ref-ans2="points_max_out"]]```
+
 ```javascript
    var divid2="stack-jsxgraph-2"; //div id for the bottom figure
 
@@ -214,7 +215,6 @@ Some lines should be changed by the teacher:
      answer_max.value=JSON.stringify(pout2); 
    });
 ```
-```html
 [[/jsxgraph]]
 
 [[jsxgraph width="500px" height="300px"]]
