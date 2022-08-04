@@ -283,3 +283,15 @@ This question utilizes a single response tree for ease and flexibility.
 Should the teacher to wish create seperate response trees for min/max values, they would need to copy the first two and last 5 lines, along with the functions `dist`, `dists`, and `bestErrorWithIndex` over to the "feedback variables" field in the new response tree.
 
 ### Partial Response Tree
+![node1](question-select-extremal-prt-node1.png)
+![node2](question-select-extremal-prt-node2.png)
+
+#### Node 1
+The response tree consists of two nodes. 
+Node 1 uses the CasEqual answer test to check if the student's total number of correct extremal values equals the actual total number of extremal values.
+If so, the student has found all the extremal values, and is told so and awarded full points. 
+In addition we use a if-block [[if test="expr"]] ... [[/if]] supplied by stack to show a list of the correct values only when there exists minimas or maximas.
+
+#### Node 2
+If node 1 is false we move to node 2, where we utilize the NumAbsolute test. We check if the student has found at least 1 extremal value and, if so award half the points.
+By using if blocks again, we can give the student feedback as to how many correct maximas or minimas they have found and excluding feedback regarding minimas or maximas if there are none to be found.
