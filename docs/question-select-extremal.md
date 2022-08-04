@@ -105,69 +105,120 @@ Some lines should be changed by the teacher:
 <p><span style="font-size: 0.9375rem;">Given a surface defined by z=f(x,y), where exact expression for f is unknown. Determine local min and max</span><br></p>
 <p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
 <p style="display:none">[[input:ans2]][[validation:ans2]]</p>
-[[jsxgraph height='500px' width='700px' input-ref-ans1="points_min_out" input-ref-ans2="points_max_out"]]
+[[jsxgraph height='500px' width='700px' input-ref-ans1="points_min_out" input-ref-ans2="points_max_out"]]```
+```javascript
+   var divid2="stack-jsxgraph-2"; //div id for the bottom figure
 
-var divid2="stack-jsxgraph-2";
-var xrang = {#xrang#};
-var yrang = {#yrang#};
-var zrang = {#zrang#};
+   // Ranges for x,y,z from maxima
+   var xrang = {#xrang#};
+   var yrang = {#yrang#};
+   var zrang = {#zrang#};
 
-var board = JXG.JSXGraph.initBoard(divid, {
-boundingbox: [xrang[0]-4,yrang[1]+4,xrang[1]+4,yrang[0]-4],
-keepaspectratio: false,
-axis: false
-});
-var board2 = JXG.JSXGraph.initBoard(divid2, {boundingbox: [xrang[0],yrang[1],xrang[1],yrang[0]], axis: true});
-board2.addChild(board);
-var p1min=[];
-var p1max=[];
-var p2min=[];
-var p2max=[];
-var p3=[];
-var localmin = {#localmin#};
-var localmax = {#localmax#};
+   //Create 3D-board
+   // Boundingbox sets the vertical and horizontal units and the position of the origin of the figure
+   // For instance a boundingbox [-5,10,5,-10] has upper left corner at (-5,10) and lower right corner at (5,-10)
+   var board = JXG.JSXGraph.initBoard(divid, {
+   boundingbox: [xrang[0]-4,yrang[1]+4,xrang[1]+4,yrang[0]-4],
+   keepaspectratio: false,
+   axis: false
+   });
 
-/* how much of the graph is visible, you will be able to change the x and y position of the point in accordance to the range provided in the box variable. the answer does not have to be confined to this, yuo can give[15,-9] as the answer for the question. you can also change it to whichever part of the graph you wish to be visible*/
+   //Create the 2D board
+   var board2 = JXG.JSXGraph.initBoard(divid2, {boundingbox: [xrang[0],yrang[1],xrang[1],yrang[0]], axis: true});
 
-var box = [-10,10];
-var view = board.create('view3d', [[xrang[0], yrang[0]], [xrang[1]-xrang[0],yrang[1]-yrang[0]],[xrang, yrang, zrang]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
+   //Add the 3D board as a child of the 2D board, such that the 3D figure updates when we manipulate the 2D figure
+   board2.addChild(board);
 
-view.D3.az_slide._smax = 12;
-var z_scale = board.create('slider', [[-3,-5], [3,-5],[0,0.2,2]], {name: "Skaler z-akse"});
+   //Arrays holding the min/max points in the 2D figure
+   var p1min=[];
+   var p1max=[];
+
+   //Arrays holding the min/max points in the base of the 3D figure (xy-plane)
+   var p2min=[];
+   var p2max=[];
+
+   //Arrays holding the correct max/min points
+   var localmin = {#localmin#};
+   var localmax = {#localmax#};
+  
+   // Create the 3D view: -------
+   /*The large array is of form [ [x,y], [w,h], [[x1,x2], [y1,y2], [z1,z2]] ]. 
+   The arrays [x, y] and [w, h] define the 2D frame into which the 3D cube is (roughly) projected. 
+   [[x1, x2], [y1, y2], [z1, z2]] determines the coordinate ranges of the 3D cube. */
+
+   var view = board.create('view3d', [[xrang[0], yrang[0]], [xrang[1]-xrang[0],yrang[1]-yrang[0]],[xrang, yrang, zrang]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
+
+//-----------
+
+   //Create a slider that scales the z-values
+   var z_scale = board.create('slider', [[-3,-5], [3,-5],[0,0.2,2]], {
+      name: "Skaler z-akse",
+      point1: {frozen: true},
+      point2: {frozen: true}
+   });
+
+   var FF = board.jc.snippet('{#f#}', true, 'x,y', true); //Jessiecode parsing of function from maxima
+
+   var F = (x,y)=>z_scale.Value()*FF(x,y); //Scale function value by multiplying with z_scale slider value
+
+   //Create the surface plot
+   var c = view.create('functiongraph3d',[F,xrang,yrang], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
 
 
-var FF = board.jc.snippet('{#f#}', true, 'x,y', true);
-var F = (x,y)=&gt;z_scale.Value()*FF(x,y);
-var c = view.create('functiongraph3d',[F,xrang,yrang], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+   // Create points for every minimum the students musts find
+   for (let i=0; i<localmin.length; i++){
+      p1min[i] = board2.create('point', [i,i], {name: "Min"+(i+1), color: "red"}); //Point in 2D plane
+  
+      //Create the corresponding point in the bottom of the 3D plot - values bound to the 2D plot
+      p2min[i] = view.create('point3d', [()=>p1min[i].X(), ()=>p1min[i].Y(), zrang[0]], {name: "Min"+(i+1), color: "red"});
 
-for (let i=0; i<localmin.length; i++){
-   p1min[i] = board2.create('point', [i,i], {name: "Min"+(i+1), color: "red"});
-   p2min[i] = view.create('point3d', [()=>p1min[i].X(), ()=>p1min[i].Y(), zrang[0]], {name: "Min"+(i+1), color: "red"});
-   var ptemp = view.create('point3d', [()=>p1min[i].X(), ()=>p1min[i].Y(), ()=>F(p1min[i].X(), p1min[i].Y())], {withLabel: false});
-   view.create('line3d', [p2min[i], ptemp], {dash: 1});
-}
-for (let i=0; i<localmax.length; i++){
-   p1max[i] = board2.create('point', [i,i], {name: "Max"+(i+1), color: "blue"});
-   p2max[i] = view.create('point3d', [()=>p1max[i].X(), ()=>p1max[i].Y(), zrang[0]], {name: "Max"+(i+1), color: "blue"});
-   var ptemp = view.create('point3d', [()=>p1max[i].X(), ()=>p1max[i].Y(), ()=>F(p1max[i].X(), p1max[i].Y())], {withLabel: false});
-   view.create('line3d', [p2max[i], ptemp], {dash: 1});
-}
+      //Create corresponding point on the surface plot - bound by the function value, and (x,y) of the 2D point
+      var ptemp = view.create('point3d', [()=>p1min[i].X(), ()=>p1min[i].Y(), ()=>F(p1min[i].X(), p1min[i].Y())], {withLabel: false});
 
-        board.update();
-
-        var answer_min = document.getElementById(points_min_out);
-        var answer_max=document.getElementById(points_max_out);
-        board.on('update', function() {
-        var pout = [];
-        var pout2 = [];
-        for(let i=0; i<p1max.length; i++){
-     pout2[i] = [p1max[i].X(), p1max[i].Y()];
-  }
-        for (let i=0; i<p1min.length; i++){
-       pout[i] = [p1min[i].X(), p1min[i].Y()];
+      //Lastly, create a dashed line from the base point to the point on the surface plot
+      view.create('line3d', [p2min[i], ptemp], {dash: 1});
    }
-  });
 
+   //Same procedure for the maximal values
+   for (let i=0; i<localmax.length; i++){
+      p1max[i] = board2.create('point', [i,i], {name: "Max"+(i+1), color: "blue"});
+      p2max[i] = view.create('point3d', [()=>p1max[i].X(), ()=>p1max[i].Y(), zrang[0]], {name: "Max"+(i+1), color: "blue"});
+      var ptemp = view.create('point3d', [()=>p1max[i].X(), ()=>p1max[i].Y(), ()=>F(p1max[i].X(), p1max[i].Y())], {withLabel: false});
+      view.create('line3d', [p2max[i], ptemp], {dash: 1});
+   }
+
+   board.update();
+
+   //Obtain references to the answer variables in stack
+   var answer_min = document.getElementById(points_min_out);
+   var answer_max=document.getElementById(points_max_out);
+
+   //Set an update function that sets the answer variables in stack to the points the student has selected
+   board.on('update', function() {
+
+      //Arrays of min/max points
+      var pout =  [];
+      var pout2 = [];
+
+      //Collect minimum points
+      for (let i=0; i<p1min.length; i++){
+       pout[i] = [p1min[i].X(), p1min[i].Y()];
+      }
+      //Set answer variable in stack to the current points selected by students in jsxgraph
+      answer_min.value=JSON.stringify(pout);
+
+     //Same procedure for max points
+     for(let i=0; i<p1max.length; i++){
+        pout2[i] = [p1max[i].X(), p1max[i].Y()];
+     }
+     answer_max.value=JSON.stringify(pout2); 
+   });
+```
+```html
+[[/jsxgraph]]
+
+[[jsxgraph width="500px" height="300px"]]
+[[/jsxgraph]]
 ```
 ### Specific feedback
 
