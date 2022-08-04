@@ -23,9 +23,13 @@ theme: minima
 
 
 The function may have any amount of local extremal points,
-The 2D figure shows one red point for each extremal point, and the student
-have to move them to the correct co-ordinate position to identify extramal
+The 2D figure shows one red point for each minima, and one blue point for each maxima.
+The student has to move them to the correct co-ordinate position to identify extramal
 points on the surface in the 3D plot.
+
+Depending on the function, the student will need to manipulate the 3D-figure extensively to identify the extremal values.
+The sliders control the cameras azimuthal angle (az), elevation (el) and scales the z-axis.
+In addition the controls in the lower right hand corner lets the student move the camera position and zoom in/out.
 
 | ![controll](https://user-images.githubusercontent.com/43517080/181227525-8b141065-1284-443d-9b36-85d12b8c490e.PNG) |
 |:-:|
