@@ -10,7 +10,7 @@ theme: minima
 > is unknown to a user, ask the user to select all local maxima/minima on the
 > surface plot.
 
-- [XML Code](XML/Question 1 part 2 local minmax (Jonas edit) -2022027.xml)
+- [XML Code](XML/question-select-extremal.xml)
 
 ## What the student sees
 
