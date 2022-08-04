@@ -101,13 +101,12 @@ Some lines should be changed by the teacher:
 
 ### Question text
 
-```html
+```
 <p><span style="font-size: 0.9375rem;">Given a surface defined by z=f(x,y), where exact expression for f is unknown. Determine local min and max</span><br></p>
 <p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
 <p style="display:none">[[input:ans2]][[validation:ans2]]</p>
 [[jsxgraph height='500px' width='700px' input-ref-ans1="points_min_out" input-ref-ans2="points_max_out"]]```
 
-```javascript
    var divid2="stack-jsxgraph-2"; //div id for the bottom figure
 
    // Ranges for x,y,z from maxima
@@ -149,7 +148,7 @@ Some lines should be changed by the teacher:
 
    var view = board.create('view3d', [[xrang[0], yrang[0]], [xrang[1]-xrang[0],yrang[1]-yrang[0]],[xrang, yrang, zrang]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
 
-//-----------
+   //-----------
 
    //Create a slider that scales the z-values
    var z_scale = board.create('slider', [[-3,-5], [3,-5],[0,0.2,2]], {
@@ -214,7 +213,6 @@ Some lines should be changed by the teacher:
      }
      answer_max.value=JSON.stringify(pout2); 
    });
-```
 [[/jsxgraph]]
 
 [[jsxgraph width="500px" height="300px"]]
