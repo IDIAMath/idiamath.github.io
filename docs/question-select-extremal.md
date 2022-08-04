@@ -46,8 +46,8 @@ The following maxima code should be entered into the Question Variables field.
 **Caveats**
 
 1.  It does not use random variables.  The function `f` has to be hand-coded.
-2.  The x, y, and z ranges (xrang, yrang, zrang) have to be hand-coded.
-3.  The tolerance (maxError) is absolute (as opposed to relative) and have to be set to a reasonable value
+2.  The x, y, and z ranges (`xrang`, `yrang`, `zrang`) have to be hand-coded.
+3.  The tolerance (`maxError`) is absolute (as opposed to relative) and have to be set to a reasonable value
 
 ```
 xrang:[-2,5];  
@@ -97,7 +97,7 @@ Some lines should be changed by the teacher:
 1.  The function `f` to be plotted.
 2.  The error tolerance `maxError` which defines how accurately the student
     has to answer.
-3.  The arrays xrang ([x_min,x_max]), yrang and zrang - The axis ranges for the plots
+3.  The arrays `xrang` (`[x_min,x_max]`), `yrang` and `zrang` which sets axis ranges for the plots
 
 ### Question text
 
