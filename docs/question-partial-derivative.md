@@ -68,6 +68,9 @@ fy:diff(f,y);
 fxy:diff(fy,x);
 ```
 
+The function to displayed is
+\[ f(x,y) = a\cdot x\cdot y^2 - b\cdot x \]
+
 
 ### Quesion text
 
