@@ -10,7 +10,7 @@ theme: minima
 
 | ![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG) |
 |:--:|
-| *This image shows the students first view of the question* |
+| *Students first impression of the question* |
 
 ### Question description
 Find a point on the functions where all first order partial derivative `(Fx,Fy,Fxy)` values on the corresponding point provide unique signs from each other `(+, -, 0/neutral)`.
