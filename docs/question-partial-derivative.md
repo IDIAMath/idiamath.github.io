@@ -8,8 +8,6 @@ theme: minima
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero.
 
-## Part 1
-
 | ![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG) |
 |:--:|
 | *This image shows the students first view of the question* |
@@ -53,10 +51,10 @@ The teacher does not have to change anything, but they may choose to add or dele
 | *the above image shows which values the teacher may choose to change* |
 
 
-## Quesion code
+## Question code
 
 
-### Quesion variables
+### Question variables
 
 ```html
 a:rand_with_prohib(-10,10,[0]);
@@ -69,7 +67,7 @@ fxy:diff(fy,x);
 ```
 
 
-### Quesion text
+### Question text
 
 ```html
 <p>drag the black point to move the red point on the graph</p>
