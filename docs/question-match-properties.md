@@ -9,7 +9,7 @@ theme: minima
 
 | ![image](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png) |
 |:--:|
-| *Students first impression of the question* |
+| * First impression of the question* |
 
 ## Question description
 
@@ -67,7 +67,8 @@ Fxy:0`
 ### Question Variables
 
 a and b variables are the x and y coordinates.
-
+The rand_question generates a random value between 0-3, that value is further utilized in the question_text variable.
+The question_text variable checks which random value was generated and displays the message that coreesponds to the question value.
 ```maxima
 a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0]);
@@ -83,15 +84,14 @@ question_text:if (rand_question = 1) then positive else if (rand_question = 2) t
 
 [[jsxgraph height='850px' width='850px']]
 
-//elements created
+//SEGMENT 1 _________elements created_______________
 let btn = document.createElement("button");
 btn.innerHTML = "Draw Function";
 btn.setAttribute("type","button");
 let br = document.createElement("br");
+// END SEGMENT 1 ___
 
-//set attributes
-
-//append to document
+//SEGMENT 2 _________apend to document_______________
 document.getElementsByClassName("clearfix")[0].appendChild(br);
 document.getElementsByClassName("clearfix")[0].appendChild(br);
 document.getElementsByClassName("clearfix")[0].appendChild(btn);
