@@ -78,15 +78,15 @@ question_text:if (rand_question = 1) then positive else if (rand_question = 2) t
 
 ### Question Text
 The code is divided into segments, each of which is explained
-- Segment 1 we create a **button**, give it atrributes.
+- 1 Segment we create a **button**, give it atrributes.
 
-- Segment 2 we append the button to the page in the appropriate location which is in a div that has class name **'Clearfix'**.
+- 2 Segment we append the button to the page in the appropriate location which is in a div that has class name **'Clearfix'**.
 
-- Segment 3 we create one eventlistener that is attached to the button that was created. Everytime we click the button then the function called **"myFunction"** will run.
+- 3 Segment we create one eventlistener that is attached to the button that was created. Everytime we click the button then the function called **"myFunction"** will run.
 
-- Segment 4 this is default code for creating the 3D room and the plane with x,y and z axis.
+- 4 Segment this is default code for creating the 3D room and the plane with x,y and z axis.
 
-- Segment 5 the function myFunction is created. It recieves the input from an input element in the DOM which has the class name "algebraic", then we remove any previously drawn graphs/3d functions and draw a new graph/3d function based on the recieved user input.
+- 5 Segment the function myFunction is created. It recieves the input from an input element in the DOM which has the class name "algebraic", then we remove any previously drawn graphs/3d functions and draw a new graph/3d function based on the recieved user input.
 
 ```html
 <p></p>
