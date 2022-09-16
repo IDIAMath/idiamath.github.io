@@ -67,7 +67,9 @@ Fxy:0`
 ### Question Variables
 
 a and b variables are the x and y coordinates.
+
 The **rand_question generates** a random value between 0-3, that value is further utilized in the **question_text** variable.
+
 The question_text variable checks which random value was generated and displays the message that coreesponds to the question value.
 ```maxima
 a:rand_with_prohib(-5,5,[0]);
@@ -164,8 +166,13 @@ board.update();
 
 ### Feedback variables
 We retrieve the student answer (function expression) and store it in the variable f. 
+
 We then find the partial derivatives of the provided expression and create a **score** variable set it to 0.
-We evaluate the function at the randomly generate x and y values (which we named 'a' and 'b' in this case)
+
+the provided function is evaluated at the randomly generate x and y values (which we named 'a' and 'b' in this case)
+
+The variable question_procedure checks which of the 3 random questions that has been picked and further. we further increase the score if all three conditions of that question are met.
+
 
 ```maxima
 f:ans1;
