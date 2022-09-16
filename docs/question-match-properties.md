@@ -67,7 +67,7 @@ Fxy:0`
 ### Question Variables
 
 a and b variables are the x and y coordinates.
-The rand_question generates a random value between 0-3, that value is further utilized in the question_text variable.
+The **rand_question generates** a random value between 0-3, that value is further utilized in the **question_text** variable.
 The question_text variable checks which random value was generated and displays the message that coreesponds to the question value.
 ```maxima
 a:rand_with_prohib(-5,5,[0]);
@@ -77,7 +77,11 @@ question_text:if (rand_question = 1) then positive else if (rand_question = 2) t
 ```
 
 ### Question Text
-
+Segment 1 we create a **button**, give it atrributes.
+Segment 2 we append the button to the page in the appropriate location which is in a div that has class name **'Clearfix'**.
+Segment 3 we create one eventlistener that is attached to the button that was created. Everytime we click the button then the function called **"myFunction"** will run.
+Segment 4 this is default code for creating the 3D room and the plane with x,y and z axis.
+Segment 5 the function myFunction is created. It recieves the input from an input element in the DOM which has the class name "algebraic", then we remove any previously drawn graphs/3d functions and draw a new graph/3d function based on the recieved user input.
 ```html
 <p></p>
 <p onclick="myFunction()">Give an example of a function where all partial derivatives at the coordinates ({#a#},{#b#}) are {#question_text#} <br></p>
@@ -89,16 +93,16 @@ let btn = document.createElement("button");
 btn.innerHTML = "Draw Function";
 btn.setAttribute("type","button");
 let br = document.createElement("br");
-// END SEGMENT 1 ___
 
 //SEGMENT 2 _________apend to document_______________
 document.getElementsByClassName("clearfix")[0].appendChild(br);
 document.getElementsByClassName("clearfix")[0].appendChild(br);
 document.getElementsByClassName("clearfix")[0].appendChild(btn);
 
-
+//SEGMENT 3 _________Add eventlisteners_______________
 btn.addEventListener("click", myFunction);
 
+//SEGMENT 4 _________Create the 3D room and the plane with x,y and z axis._______________
 var board = JXG.JSXGraph.initBoard(divid, {
 boundingbox: [-8, 8, 8, -8],
 keepaspectratio: false,
@@ -129,6 +133,8 @@ box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 ], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
 
+
+//SEGMENT 5 _________ Create function that gets function expression and draws graph_______________
 function myFunction() {
 var ans1n = document.getElementsByClassName('algebraic')[0];
 
