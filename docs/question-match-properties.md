@@ -163,6 +163,9 @@ board.update();
 ```
 
 ### Feedback variables
+We retrieve the student answer (function expression) and store it in the variable f. 
+We then find the partial derivatives of the provided expression and create a **score** variable set it to 0.
+We evaluate the function at the randomly generate x and y values (which we named 'a' and 'b' in this case)
 
 ```maxima
 f:ans1;
