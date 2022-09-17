@@ -165,13 +165,15 @@ board.update();
 ```
 
 ### Feedback variables
-We retrieve the student answer (function expression) and store it in the variable f. 
+We retrieve the student answer (function expression) and store it in the variable **f**. 
 
 We then find the partial derivatives of the provided expression and create a **score** variable set it to 0.
 
-the provided function is evaluated at the randomly generate x and y values (which we named 'a' and 'b' in this case)
+The provided function is evaluated at the randomly generate x and y values (which we named **'a'** and **'b'* in this case)
 
-The variable question_procedure checks which of the 3 random questions that has been picked and further. we further increase the score if all three conditions of that question are met.
+Variable **question_procedure** checks which of the 3 random questions that has been picked and further. we further increase the score if all three conditions of that question are met.
+
+The **ta** variable check wether the score matches the required score to pass the selected question, if it is, then its set to the student retrived input because its the correct answer. It bascally checks if the answer is correct and stores it.
 
 
 ```maxima
