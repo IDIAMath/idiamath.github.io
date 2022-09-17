@@ -66,7 +66,7 @@ Fxy:0`
 
 ### Question Variables
 
-a and b variables are the x and y coordinates.
+**a** and **b** variables are the x and y coordinates.
 
 The **rand_question generates** a random value between 0-3, that value is further utilized in the **question_text** variable.
 
@@ -88,7 +88,7 @@ The code is divided into segments, each of which is explained
 
 - 4 Segment this is default code for creating the 3D room and the plane with x,y and z axis.
 
-- 5 Segment the function myFunction is created. It recieves the input from an input element in the DOM which has the class name "algebraic", then we remove any previously drawn graphs/3d functions and draw a new graph/3d function based on the recieved user input.
+- 5 Segment the function myFunction is created. It recieves the input from an input element in the DOM which has the class name **"algebraic"**, then we remove any previously drawn graphs/3d functions and draw a new graph/3d function based on the recieved user input.
 
 ```html
 <p></p>
