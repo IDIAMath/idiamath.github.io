@@ -88,7 +88,8 @@ The code is divided into segments, each of which is explained
 
 ```html
 <p></p>
-<p onclick="myFunction()">Give an example of a function where all partial derivatives at the coordinates ({#a#},{#b#}) are {#question_text#} <br></p>
+<p onclick="myFunction()">Give an example of a function where all partial derivatives at the
+  coordinates ({#a#},{#b#}) are {#question_text#} <br></p>
 
 [[jsxgraph height='850px' width='850px']]
 
