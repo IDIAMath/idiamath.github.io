@@ -191,7 +191,7 @@ ta: if (score =3 and (rand_question = 1 or rand_question = 2))then ans1 else if 
 
 | ![image](https://user-images.githubusercontent.com/43517080/191792093-1f2181ef-cad3-412b-b566-48303d98a658.png) |
 |:--:|
-| *Values of node 1* |
+| *Values of **node 1*** |
 
 #### Node 1
 The answer test is set to AlgEquiv which checks if the user input algebriac expression is equivelant to the required expression to pass the question criteria.
