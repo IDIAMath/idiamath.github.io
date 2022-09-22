@@ -8,7 +8,7 @@ theme: minima
 > Property example: partial derivatives at all points with coordinates (t,t) are positive.
 | ![image](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png) |
 |:--:|
-| * First impression of the question* |
+| *First impression of the question* |
 
 ## Question description
 
@@ -187,4 +187,9 @@ question_procedure: if (rand_question =1) then (sa1:if evfx >0 then score:score+
 else (sa1:if evfx <0 then score:score+1 else if evfx>0 then score:score + 3 else score:score+6 , sa2:if evfy < 0 then score:score+1 else if evfy>0 then score:score + 3 else score:score+6 , sa3:if evfxy < 0 then score:score+1  else if evfxy >0 then score:score + 3 else score:score+6 );
 ta: if (score =3 and (rand_question = 1 or rand_question = 2))then ans1 else if (score = 10 and rand_question = 3 ) then ans1;
 ```
+### Partial response tree
+| ![image](https://user-images.githubusercontent.com/43517080/191792093-1f2181ef-cad3-412b-b566-48303d98a658.png) |
+|:--:|
+| *Values of node 1* |
+
 
