@@ -239,7 +239,7 @@ We define one partial response tree for this question. The teacher could create 
 
 #### Feedback variabels PRT1
 
-```sql
+```text
 lenlocalmin:length(localmin);
 lenlocalmax:length(localmax);
 
