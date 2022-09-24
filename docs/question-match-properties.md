@@ -173,7 +173,7 @@ Variable **question_procedure** checks which of the 3 random questions that has 
 The **ta** variable check wether the score matches the required score to pass the selected question, if it is, then its set to the student retrived input because its the correct answer. It bascally checks if the answer is correct and stores it.
 
 
-```rust
+```makefile
 f:ans1;
 fx:diff(f,x);
 fy:diff(f,y);
