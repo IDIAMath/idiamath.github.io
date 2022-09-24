@@ -67,7 +67,7 @@ Fxy:0`
 The **rand_question generates** a random value between 0-3, that value is further utilized in the **question_text** variable.
 
 The question_text variable checks which random value was generated and displays the message that coreesponds to the question value.
-```maxima
+```md
 a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0]);
 rand_question:rand_with_prohib(0,3,[0]);
@@ -173,7 +173,7 @@ Variable **question_procedure** checks which of the 3 random questions that has 
 The **ta** variable check wether the score matches the required score to pass the selected question, if it is, then its set to the student retrived input because its the correct answer. It bascally checks if the answer is correct and stores it.
 
 
-```maxima
+```md
 f:ans1;
 fx:diff(f,x);
 fy:diff(f,y);
