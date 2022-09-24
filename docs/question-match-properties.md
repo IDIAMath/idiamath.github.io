@@ -67,7 +67,7 @@ Fxy:0`
 The **rand_question generates** a random value between 0-3, that value is further utilized in the **question_text** variable.
 
 The question_text variable checks which random value was generated and displays the message that coreesponds to the question value.
-```md
+```sourceslist
 a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0]);
 rand_question:rand_with_prohib(0,3,[0]);
