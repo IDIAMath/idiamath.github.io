@@ -239,7 +239,7 @@ We define one partial response tree for this question. The teacher could create 
 
 #### Feedback variabels PRT1
 
-```
+```yaml
 lenlocalmin:length(localmin);
 lenlocalmax:length(localmax);
 
