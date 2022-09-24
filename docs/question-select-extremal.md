@@ -49,7 +49,7 @@ The following maxima code should be entered into the Question Variables field.
 2.  The x, y, and z ranges (`xrang`, `yrang`, `zrang`) have to be hand-coded.
 3.  The tolerance (`maxError`) is absolute (as opposed to relative) and have to be set to a reasonable value
 
-```md
+```rust
 xrang:[-2,5];  
 yrang:[-2,4];
 zrang:[-1,10];
@@ -239,7 +239,7 @@ We define one partial response tree for this question. The teacher could create 
 
 #### Feedback variabels PRT1
 
-```md
+```rust
 lenlocalmin:length(localmin);
 lenlocalmax:length(localmax);
 
