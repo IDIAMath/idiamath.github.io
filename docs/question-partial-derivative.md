@@ -69,7 +69,7 @@ fxy:diff(fy,x);
 
 ### Question text
 
-```java
+```javascript
 <p>drag the black point to move the red point on the graph</p>
 
 
@@ -250,7 +250,7 @@ selectedGraph(functionArr[c]);
 ```
 
 ### Feedback variabels
-```¨rust
+```rust
 score:0;
 sa1:if ev(fx,x=ans1[1],y=ans1[2]) = 0 then score: score+6 else if ev(fx,x=ans1[1],y=ans1[2]) >0 then score: score+3 else if ev(fx,x=ans1[1],y=ans1[2]) <0 then score:score +1; 
 sa2:if ev(fy,x=ans1[1],y=ans1[2]) = 0 then score: score+6 else if ev(fy,x=ans1[1],y=ans1[2]) >0 then score: score+3 else if ev(fy,x=ans1[1],y=ans1[2]) <0 then score:score +1; 
