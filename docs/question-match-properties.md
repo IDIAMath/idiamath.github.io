@@ -56,7 +56,8 @@ The teacher's do not have to change anything unless they wish to change the rang
 >
 >Here if we can get Fx to be any positive number, then we have two options left for Fy and Fxy. The options are a negative number or 0; Fy can be a negative number, then Fxy has to be 0. Fy can be 0, then Fxy has to be a negative number. The point is the sign's for all partial derivative values have to be unique from each other.
 Answer: `x+y^2`
-The answer is such because;
+>
+>The answer is such because;
 `Fx:1
 Fy:-6
 Fxy:0`
