@@ -6,6 +6,7 @@ theme: minima
 > Ask the user to enter a function defined by algebraic expression such that certain properties are in place. Use graphics to plot the surface with corresponding properties before it is evaluated formally.
 >
 > Property example: partial derivatives at all points with coordinates (t,t) are positive.
+
 | ![image](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png) |
 |:--:|
 | *First impression of the question* |
