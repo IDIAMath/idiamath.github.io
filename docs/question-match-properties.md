@@ -7,7 +7,7 @@ theme: minima
 >
 > Property example: partial derivatives at all points with coordinates (t,t) are positive.
 
-| ![image](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png) |
+| ![First impression](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png) |
 |:--:|
 | *First impression of the question* |
 
@@ -30,7 +30,7 @@ STACK will highlight this error. This is useful as it omits the need for string 
 ### Student perspective
 The student will type in the function that fits the criteria of the random question (1 of the 3) generated for them by clicking the **Draw** button.
 
-| ![image](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
+| ![Click draw button](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
 |:--:|
 | *When the student types in the function and clicks the **Draw** button* |
 
@@ -38,7 +38,7 @@ The student will type in the function that fits the criteria of the random quest
 ### Teacher perspective
 The teacher's do not have to change anything unless they wish to change the range for the randomly generated x and y coordinates for the question. Then they may change the a (x) and b (y) variables inside the **Question variables** box.
 
-| ![image](https://user-images.githubusercontent.com/43517080/191801405-a9083b67-b488-4c80-8fa2-1928e6b8aae5.png) |
+| ![values the teacher can change](https://user-images.githubusercontent.com/43517080/191801405-a9083b67-b488-4c80-8fa2-1928e6b8aae5.png) |
 |:--:|
 | *The above image shows which values the teacher may wish to change (highlighted in yellow)* |
 
@@ -193,7 +193,7 @@ ta: if (score =3 and (rand_question = 1 or rand_question = 2))then ans1 else if 
 ```
 ### Partial response tree
 
-| ![image](https://user-images.githubusercontent.com/43517080/191792093-1f2181ef-cad3-412b-b566-48303d98a658.png) |
+| ![Node 1](https://user-images.githubusercontent.com/43517080/191792093-1f2181ef-cad3-412b-b566-48303d98a658.png) |
 |:--:|
 | *Values of **node 1*** |
 
