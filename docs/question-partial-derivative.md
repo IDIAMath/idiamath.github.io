@@ -8,7 +8,7 @@ theme: minima
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero.
 
-| ![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG) |
+| ![image](https://user-images.githubusercontent.com/43517080/193473705-113236f8-2727-444c-867e-23f526f04407.png) |
 |:--:|
 | * First impression of the question* |
 
@@ -28,18 +28,10 @@ The answer would be for example `[ any_negative_number, 1]`
 ### Student perspective
 The student has to type in the correct answer in the `[x,y]` input field.
 
-#### Visible on hover
-Check this box if you want all other graphs to become invisible when you hover over one graph
-
-| ![cursorHover](https://user-images.githubusercontent.com/43517080/178970454-c67b02e0-ce4a-4d4c-a747-53f26593c972.PNG) |
-|:--:| 
-| *The above image shows the visible on hover functionality, where the student is able to hover over one graph to make all other graphs invisible* |
-
-
 #### Show/hide
 Check this box if you want to hide a given graph
 
-| ![hiddenGraph](https://user-images.githubusercontent.com/43517080/178970723-a23680ae-f859-4c6d-92b7-7bf311f77f45.PNG) |
+| ![hiddenGraph](https://user-images.githubusercontent.com/43517080/193473928-6575d055-597d-4abc-8163-dc32fed5b3a2.png) |
 |:--:|
 | *The above image displays how the student can check a checkbox corresponding to a given graph, to set change the mentioned graphs visibility* |
 
@@ -72,9 +64,6 @@ fxy:diff(fy,x);
 ```javascript
 <p>drag the black point to move the red point on the graph</p>
 
-
-
-
 <p></p>
 <p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where partial derivatives are positive/negative/zero</span><br></p>
 
@@ -82,23 +71,6 @@ fxy:diff(fy,x);
 
 // set the value of input field to []
 document.getElementsByClassName("algebraic")[0].value = "[x,y]";
-
-// checkbox visibility on hover creation
-
-var checkbox = document.createElement("input");
-var span = document.createElement("span");
-var br = document.createElement("br");
-var br2 = document.createElement("br");
-
-checkbox.setAttribute("type","checkbox");
-span.innerHTML = `Visible on hover`;
-document.getElementsByClassName("clearfix")[0].appendChild(span);
-document.getElementsByClassName("clearfix")[0].appendChild(checkbox);
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(br2);
-
-
-checkbox.addEventListener("change",graphHoverVisibility);
 
 //constants
 var functionArr = [];
@@ -128,8 +100,6 @@ functionArr.push(FGraph);
 FGraph.setLabel(FExpr);
 labelArr.push(FExpr);
 
-
-
 //the point that controlls the point on the graph;
 var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
 
@@ -150,14 +120,6 @@ box,
 functionArr.push(FxyGraph);
 FxyGraph.setLabel(FxyExpr);
 labelArr.push(FxyExpr);
-
-
-
-
-
-
-
-
 
 
 /* create checkbox for every function3d .
@@ -181,7 +143,6 @@ input.addEventListener("change",graphSelectVisibility);
 }
 
 /* on/off graph toggle*/
-
 function graphSelectVisibility() {
 
 var input = document.getElementsByClassName('graphToggle');
@@ -190,59 +151,9 @@ if(input[i].checked == true) {
 functionArr[i].setAttribute({visible:false});
 } else {
 functionArr[i].setAttribute({visible:true});
+  }
+ }
 }
-}
-}
-
-FxGraph.setAttribute({highlightStrokeColor:'#f5ad42'});
-FGraph.setAttribute({highlightStrokeColor:'#00ccff'})
-
-
-/*this function hides all other graphs
-*/
-function selectedGraph(graph) {
-graph.on('mouseover', function(){
-if(!selected) {
-if (checkbox.checked ===false) {
-selected = true;
-
-if(graph.getAttribute(highlight) == true) {
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i]
-}
-}
-
-}else {
-graph.setAttribute({highlight:true});
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i].setAttribute({visible:false});
-}
-
-graph.setAttribute({visible:true});
-
-
-graph.on('mouseout', function(){
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i].setAttribute({visible:true});
-}
-selected = false;
-})
-}
-
-}
-})
-}
-
-
-function graphHoverVisibility() {
-
-if (checkbox.checked ===true) {
-
-for(var c =0; !(c == functionArr.length); c++) {
-selectedGraph(functionArr[c]);
-}
-}//end if
-}//end functionvisibility
 
 [[/jsxgraph]]
 <p></p>
