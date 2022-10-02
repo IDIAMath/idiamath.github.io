@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
-<!-- question: 1684  -->
+<!-- question: 4830  -->
   <question type="stack">
     <name>
       <text>Question#1 part 1 unknown F (original)</text>
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>drag the black point to move the red point on the graph</p>
-
-
-
 
 <p></p>
 <p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where partial derivatives are positive/negative/zero</span><br></p>
@@ -18,23 +15,6 @@
 
 // set the value of input field to []
 document.getElementsByClassName("algebraic")[0].value = "[x,y]";
-
-// checkbox visibility on hover creation
-
-var checkbox = document.createElement("input");
-var span = document.createElement("span");
-var br = document.createElement("br");
-var br2 = document.createElement("br");
-
-checkbox.setAttribute("type","checkbox");
-span.innerHTML = `Visible on hover`;
-document.getElementsByClassName("clearfix")[0].appendChild(span);
-document.getElementsByClassName("clearfix")[0].appendChild(checkbox);
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(br2);
-
-
-checkbox.addEventListener("change",graphHoverVisibility);
 
 //constants
 var functionArr = [];
@@ -64,8 +44,6 @@ functionArr.push(FGraph);
 FGraph.setLabel(FExpr);
 labelArr.push(FExpr);
 
-
-
 //the point that controlls the point on the graph;
 var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
 
@@ -86,14 +64,6 @@ box,
 functionArr.push(FxyGraph);
 FxyGraph.setLabel(FxyExpr);
 labelArr.push(FxyExpr);
-
-
-
-
-
-
-
-
 
 
 /* create checkbox for every function3d .
@@ -117,7 +87,6 @@ input.addEventListener("change",graphSelectVisibility);
 }
 
 /* on/off graph toggle*/
-
 function graphSelectVisibility() {
 
 var input = document.getElementsByClassName('graphToggle');
@@ -129,56 +98,6 @@ functionArr[i].setAttribute({visible:true});
 }
 }
 }
-
-FxGraph.setAttribute({highlightStrokeColor:'#f5ad42'});
-FGraph.setAttribute({highlightStrokeColor:'#00ccff'})
-
-
-/*this function hides all other graphs
-*/
-function selectedGraph(graph) {
-graph.on('mouseover', function(){
-if(!selected) {
-if (checkbox.checked ===false) {
-selected = true;
-
-if(graph.getAttribute(highlight) == true) {
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i]
-}
-}
-
-}else {
-graph.setAttribute({highlight:true});
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i].setAttribute({visible:false});
-}
-
-graph.setAttribute({visible:true});
-
-
-graph.on('mouseout', function(){
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i].setAttribute({visible:true});
-}
-selected = false;
-})
-}
-
-}
-})
-}
-
-
-function graphHoverVisibility() {
-
-if (checkbox.checked ===true) {
-
-for(var c =0; !(c == functionArr.length); c++) {
-selectedGraph(functionArr[c]);
-}
-}//end if
-}//end functionvisibility
 
 [[/jsxgraph]]
 <p></p>
@@ -192,7 +111,7 @@ selectedGraph(functionArr[c]);
     <hidden>0</hidden>
     <idnumber></idnumber>
     <stackversion>
-      <text>2022060100</text>
+      <text>2022082900</text>
     </stackversion>
     <questionvariables>
       <text>a:rand_with_prohib(-10,10,[0]);
