@@ -14,7 +14,7 @@ theme: minima
 
 ## What the student sees
 
-| ![capture](https://user-images.githubusercontent.com/43517080/181220416-58f6716e-236e-41e1-8c63-632be8a72b93.PNG) |
+| ![First impression](https://user-images.githubusercontent.com/43517080/181220416-58f6716e-236e-41e1-8c63-632be8a72b93.PNG) |
 |:-:|
 | *This image shows the students first view of the question* |
 
@@ -290,7 +290,7 @@ Should the teacher to wish create seperate response trees for min/max values, th
 The response tree consists of two nodes. 
 Node 1 uses the CasEqual answer test to check if the student's total number of correct extremal values equals the actual total number of extremal values.
 If so, the student has found all the extremal values, and is told so and awarded full points. 
-In addition we use a if-block [[if test="expr"]] ... [[/if]] supplied by stack to show a list of the correct values only when there exists minimas or maximas.
+In addition we use a if-block `[[if test="expr"]] ... [[/if]]` supplied by stack to show a list of the correct values only when there exists minimas or maximas.
 
 #### Node 2
 If node 1 is false we move to node 2, where we utilize the NumAbsolute test. We check if the student has found at least 1 extremal value and, if so award half the points.
