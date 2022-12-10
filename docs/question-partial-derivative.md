@@ -179,7 +179,7 @@ The objectives here is:
 Procedure:
 We need to check for each partial derivative, which sign it provides on the provided user coordinates. give a score of 6 if a partial derivative is equal to zero, a score of 3 if it is a positive number, and a score of 1 if it is a negative number. If the values from partial derivatives are unique (unique signs infront of all 3 values), then they should add up to 10. The numbers 1, 3 and 6 are not chosen randomley, rather strategically (think combinatorics).
 
-Lastley if the score adds up to 10 we set the student answer to be the correct answer. Otherwise we set a random long integer to be the right answer, this is because we are required to insert an answer for the question. Ideally we would compute all the possible coordinates that would satisfy the correct answer requirements (unique signs), but it is almost impossible to do; so, we choose this approach instead.
+Lastley if the score adds up to 10 we set the student answer to be the correct answer. Otherwise we set a random long integer to be the correct answer, this is because we are required to insert an answer for the question. Ideally we would compute all the possible coordinates that would satisfy the requirements for a correct answer (unique signs), but it is almost impossible to do; so, we choose this approach instead.
 ```rust
 score:0;
 sa1:if ev(fx,x=ans1[1],y=ans1[2]) = 0 then score: score+6 else if ev(fx,x=ans1[1],y=ans1[2]) >0 then score: score+3 else if ev(fx,x=ans1[1],y=ans1[2]) <0 then score:score +1; 
