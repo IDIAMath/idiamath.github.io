@@ -47,7 +47,9 @@ The teacher does not have to change anything, but they may choose to add or dele
 
 
 ### Question variables
-
+We create 2 variables a and b that have a random number ranging between 10 and -10. These numbers can be multiplied by the function to achieve a level of 'randomness'.
+The **f** variable is where we store the function.
+variables: `fy`,`fx` and `fxy` give us the needed partial derivatives for the function **f**.
 ```rust
 a:rand_with_prohib(-10,10,[0]);
 b:rand_with_prohib(-10,10,[0]);
@@ -60,6 +62,13 @@ fxy:diff(fy,x);
 
 
 ### Question text
+The objectives here are the following:
+- Display the main function and the derived partial derivatives from the main function. 
+- Be able to hide any given function from the graph either by hovering over it, or choosing it explicitly via a checkbox.
+
+The proposed objectives can be achieved these procedures:
+We need to store all functions in an array; This allowes us to access and manipulate them collectivley, it also allowes us to  create elements such as checkbox that refrence them individually and depend on their existence
+... More text here
 
 ```javascript
 <p>drag the black point to move the red point on the graph</p>
