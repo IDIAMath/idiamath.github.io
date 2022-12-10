@@ -63,25 +63,29 @@ fxy:diff(fy,x);
 
 ### Question text
 The objectives here are the following:
-- Display the main function and the derived partial derivatives from the main function. 
-- Be able to hide any given function from the graph either by hovering over it, or choosing it explicitly via a checkbox.
+- Display the main function and its desired partial derivatives. 
+- Be able to hide any given function by crossing a checkbox
 
-The proposed objectives can be achieved these procedures:
-We need to store all functions in an array; This allowes us to access and manipulate them collectivley, it also allowes us to  create elements such as checkbox that refrence them individually and depend on their existence
-... More text here
+The proposed objectives can be achieved following these procedures:
+- **Segment 1** We create and plot the functions, then we store them in an array 
+- **Segment 2** Here a for loop is used to create a checkbox for each function.
+- **Segment 3** The **'graphSelectVisibility'** function detects weather a checkbox element is checked or unchecked. It's activated when a user clicks on input element of type 'checkbox'.
+
+
 
 ```javascript
 <p>drag the black point to move the red point on the graph</p>
 
 <p></p>
-<p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where partial derivatives are positive/negative/zero</span><br></p>
+<p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where
+partialt derivatives are positive/negative/zero</span><br></p>
 
 [[jsxgraph height='750px' width='1550px']]
 
 // set the value of input field to []
 document.getElementsByClassName("algebraic")[0].value = "[x,y]";
 
-//constants
+//SEGMENT 1 _________ Creating and storing functions_______________
 var functionArr = [];
 var labelArr = [];
 var selected = false;
@@ -92,7 +96,7 @@ keepaspectratio: false,
 axis: false
 });
 
-/* how much of the graph is visible, you will be able to change the x and y position of the point in accordance to the range provided in the box variable. the answer does not have to be confined to this, yuo can give[15,-9] as the answer for the question. you can also change it to whichever part of the graph you wish to be visible*/
+/* x, y and z axis scale and visibility*/
 
 var box = [-10,10];
 var view = board.create('view3d', [[-6, -3], [8, 8],[box, box, box]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
@@ -113,7 +117,8 @@ labelArr.push(FExpr);
 var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
 
 //the point reflected on the graph
-var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
+var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
+function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
 
 //graph fxy
 var FxyExpr = '{#fxy#}';
@@ -130,11 +135,8 @@ functionArr.push(FxyGraph);
 FxyGraph.setLabel(FxyExpr);
 labelArr.push(FxyExpr);
 
-
-/* create checkbox for every function3d .
-the 'advantage' of lack of element tracing is
-i know in which order i created the graphs
-*/
+//SEGMENT 2 _________ Checkbox elements created_______________
+// create checkbox for every stored function in the array 
 for(var i = 0; !(i == functionArr.length);i++) {
 var input = document.createElement("input");
 var span = document.createElement("span");
@@ -150,7 +152,7 @@ document.getElementsByClassName("clearfix")[0].appendChild(br);
 input.addEventListener("change",graphSelectVisibility);
 
 }
-
+//SEGMENT 3 _________ Hide/show function_______________
 /* on/off graph toggle*/
 function graphSelectVisibility() {
 
