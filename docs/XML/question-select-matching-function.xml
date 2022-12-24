@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 5440  -->
+  <question type="stack">
+    <name>
+      <text>Select matching function(original, NYEST)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Select the function expression matching the function on the graph</p>
+<div class="checkbox-container" style="float:left">
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[1]#}" id="A">\[ {#inputs[1]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[2]#}" id="B">\[ {#inputs[2]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[3]#}" id="C">\[ {#inputs[3]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[4]#}" id="C">\[ {#inputs[4]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[5]#}" id="C" checked="checked">\[ None\: of\: the\: above\]</label><br>
+</div>
+
+[[jsxgraph height='850px' width='850px']]
+const head = document.querySelector('head');
+const style = document.createElement('style');
+style.setAttribute('type', 'text/css');
+style.innerHTML = `input[type="radio"] {
+position: relative;
+}
+
+input[type="radio"]:before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+border: 2px solid grey;
+background-color: white;
+}
+
+input[type="radio"]:after {
+content: "";
+position: absolute;
+top: 5px;
+left: 5px;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+background-color: grey;
+}
+
+input[type="radio"]:checked:before {
+border-color: blue;
+}
+
+input[type="radio"]:checked:after {
+background-color: blue;
+}
+`;
+
+head.appendChild(style);
+
+
+var board = JXG.JSXGraph.initBoard(divid, {
+boundingbox: [-8, 8, 8, -8],
+keepaspectratio: false,
+axis: false
+});
+
+var box = [-10,10];
+var view = board.create('view3d', [[-6, -3], [8, 8],[box, box, box]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
+
+view.D3.az_slide._smax = 12;
+
+// Draw function
+
+var F = board.jc.snippet('{#random_function#}', true, 'x,y', true); // JessieCode parsing
+
+var fGraph =view.create('functiongraph3d', [
+F,
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+board.update();
+
+
+//the point that controlls the point on the graph;
+var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
+
+//the point reflected on the graph
+
+var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
+function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
+
+
+//optimize the view to best suit most functions in general
+
+view.D3.az_slide.setValue(0.87);
+view.D3.el_slide.setValue(1.5);
+board.update();
+
+//set the input value equal to the default selected checkbox
+
+const checkboxArray = document.querySelectorAll('.checkbox-class');
+const checkboxArrayLength = checkboxArray.length;
+var ans1n = document.getElementsByClassName('algebraic')[0].value=checkboxArray[checkboxArrayLength-1].value;
+
+
+//change the input value when the user selects a different checkbox
+
+const checkboxContainer = document.querySelector('.checkbox-container');
+checkboxContainer.addEventListener('change', setValue);
+function setValue(event) {
+const checkbox = event.target;
+if (checkbox.classList.contains('checkbox-class')) {
+var ans1n = document.getElementsByClassName('algebraic')[0].value=checkbox.value;
+
+}
+}
+[[/jsxgraph]]
+
+
+
+
+
+<p style="display:none">[[input:ans1]] [[validation:ans1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;"></p><p dir="ltr"></p><br><p></p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2022082900</text>
+    </stackversion>
+    <questionvariables>
+      <text>/*random variables to randomize functions*/
+a:rand_with_prohib(-3,3,[0]);
+b:rand_with_prohib(-3,3,[0]);
+
+/* Function expressions one of which corresponds to the answer*/
+f1:a*3*x+b*4*y;
+f2:a*2*x-b*5*y;
+f3:a*1*x^2+b*2*y^2;
+f4:a*4*x^2+b*1*y^2;
+f5:a*2*x^2+b*1*y;
+
+/*insert all the function expressions in an array*/
+inputs :[f1,f2,f3,f4,f5];
+
+/*Select a random function expression  from the array of functions*/
+k:rand_with_prohib(1,length(inputs),[0]);
+random_function:inputs[k];
+
+</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>k</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;"><span><i></i></span>&nbsp;Correct answer, well done.<br></p>]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">&nbsp;Your answer is partially correct.<br></p>]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">&nbsp;Incorrect answer.<br></p>]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>random_function</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>ta: random_function;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>ta</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1.0000000</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p dir="ltr" style="text-align: left;">You have found the correct function expression!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p dir="ltr" style="text-align: left;">Try dragging the point on the graph, and see which output for x and y values are consistent with a provided function expressions.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>
