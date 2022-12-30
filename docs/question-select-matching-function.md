@@ -1,5 +1,5 @@
 ---
-title: STACK Question - Select matching function
+title: STACK Question - Select matching partial derivative
 usemathjax: true
 theme: minima
 ---
@@ -15,7 +15,9 @@ theme: minima
 ### Question description
 Student has to select function expression that matches the partial derivative of the provided function with respect to x
 
-- [XML Code](XML/question-select-matching-function.xml)
+
+##The below xml code is not for this question, as its still under construction.
+- [XML Code](XML/question-select-matching-function.xml) 
 
 #### Example
 
