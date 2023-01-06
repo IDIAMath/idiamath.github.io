@@ -1,12 +1,12 @@
 ---
-title: STACK Question - Select matching partial derivative
+title: STACK Question - Select matching function
 usemathjax: true
 theme: minima
 ---
 
 ## Question Interpretation
 
-> Given a function drawn on the 3D room, select its partial derivative with respect to X
+> Given a function drawn on the 3D room, select the matching function expression
 
 | ![image](https://user-images.githubusercontent.com/43517080/211090094-c650cfde-c43b-4fce-b678-20c316ee8931.png) |
 |:--:|
