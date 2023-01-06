@@ -8,7 +8,7 @@ theme: minima
 
 > Given a function drawn on the 3D room, select the matching partial derivative
 
-| ![image](https://user-images.githubusercontent.com/43517080/211090094-c650cfde-c43b-4fce-b678-20c316ee8931.png) |
+| ![image](https://user-images.githubusercontent.com/43517080/210074812-a0b0480e-6703-4143-a6cd-2d64b93860c0.png) |
 |:--:|
 | *First impression of the question* |
 
