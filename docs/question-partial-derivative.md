@@ -8,7 +8,7 @@ theme: minima
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero.
 
-| ![image](https://user-images.githubusercontent.com/43517080/193473705-113236f8-2727-444c-867e-23f526f04407.png) |
+| ![image](https://user-images.githubusercontent.com/43517080/212041412-d46e3d60-d03b-41d1-ac42-201546c67ecf.png) |
 |:--:|
 | * First impression of the question* |
 
@@ -40,7 +40,7 @@ Check this box if you want to hide a given graph
 ### Teacher perspective
 The teacher does not have to change anything, but they may choose to add or delete constants or chanage the function itself.
 
-| ![image](https://user-images.githubusercontent.com/43517080/178975348-eeeacdce-7cac-47bc-ac33-68953c929989.png) |
+| ![image](https://user-images.githubusercontent.com/43517080/212041555-9bfa098b-bbb0-4b13-afb3-0e64f0db4580.png) |
 |:--:| 
 | *the above image shows which values the teacher may choose to change* |
 
@@ -67,7 +67,7 @@ fxy:diff(fy,x);
 The objectives here are the following:
 - Display the main function and its desired partial derivatives. 
 - Be able to hide any given function by crossing a checkbox
-
+## the below description is OUTDATED (will upadte soon)
 The proposed objectives can be achieved following these procedures:
 - **1 Segment** We create and plot the functions, then we store them in an array 
 - **2 Segment** Here a for loop is used to create a checkbox for each function.
@@ -76,21 +76,15 @@ The proposed objectives can be achieved following these procedures:
 
 
 ```javascript
-<p>drag the black point to move the red point on the graph</p>
+<p>drag the black point to move the red point on the graph {#p#}</p>
 
 <p></p>
-<p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where
-partialt derivatives are positive/negative/zero</span><br></p>
+<p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where partial derivatives are positive/negative/zero</span><br></p>
 
 [[jsxgraph height='750px' width='1550px']]
 
 // set the value of input field to []
 document.getElementsByClassName("algebraic")[0].value = "[x,y]";
-
-//SEGMENT 1 _________ Creating and storing functions_______________
-var functionArr = [];
-var labelArr = [];
-var selected = false;
 
 var board = JXG.JSXGraph.initBoard(divid, {
 boundingbox: [-8, 8, 8, -8],
@@ -98,7 +92,7 @@ keepaspectratio: false,
 axis: false
 });
 
-/* x, y and z axis scale and visibility*/
+/* how much of the graph is visible, you will be able to change the x and y position of the point in accordance to the range provided in the box variable. the answer does not have to be confined to this, yuo can give[15,-9] as the answer for the question. you can also change it to whichever part of the graph you wish to be visible*/
 
 var box = [-10,10];
 var view = board.create('view3d', [[-6, -3], [8, 8],[box, box, box]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
@@ -111,16 +105,13 @@ var FExpr = '{#f#}';
 
 var F = board.jc.snippet(FExpr, true, 'x,y', true);
 var FGraph = view.create('functiongraph3d',[F,box,box,], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
-functionArr.push(FGraph);
-FGraph.setLabel(FExpr);
-labelArr.push(FExpr);
 
 //the point that controlls the point on the graph;
 var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
 
 //the point reflected on the graph
-var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
-function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
+var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
+
 
 //graph fxy
 var FxyExpr = '{#fxy#}';
@@ -133,41 +124,35 @@ box,
 box,
 ], { strokeWidth: 0.5, stepsU: 70, stepsV: 70,color:'orange'});
 
-functionArr.push(FxyGraph);
-FxyGraph.setLabel(FxyExpr);
-labelArr.push(FxyExpr);
 
-//SEGMENT 2 _________ Checkbox elements created_______________
-// create checkbox for every stored function in the array 
-for(var i = 0; !(i == functionArr.length);i++) {
-var input = document.createElement("input");
-var span = document.createElement("span");
-var br = document.createElement("br");
+// checkbox to show/hide main function {#f#} main function
+var checkboxF = board.create('checkbox', [0, 4, 'Toggle {#f#}']);
 
+JXG.addEvent(checkboxF.rendNodeCheckbox, 'change', function() {
+if (this.Value()) {
+FGraph.setAttribute({visible:false});
 
-input.setAttribute("type","checkbox");
-input.setAttribute("class","graphToggle");
-span.innerHTML = "hide/show "+ labelArr[i];
-document.getElementsByClassName("clearfix")[0].appendChild(span);
-document.getElementsByClassName("clearfix")[0].appendChild(input);
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-input.addEventListener("change",graphSelectVisibility);
-
-}
-//SEGMENT 3 _________ Hide/show function_______________
-/* on/off graph toggle*/
-function graphSelectVisibility() {
-
-var input = document.getElementsByClassName('graphToggle');
-for(var i =0; !(i == functionArr.length);i++){
-if(input[i].checked == true) {
-functionArr[i].setAttribute({visible:false});
 } else {
-functionArr[i].setAttribute({visible:true});
-  }
- }
+FGraph.setAttribute({visible:true});
 }
+}, checkboxF);
 
+
+// checkbox to show/hide main partial derivative {#fxy#} function
+var checkboxFxy = board.create('checkbox', [0, 6, 'Toggle {#fxy#} ']);
+
+JXG.addEvent(checkboxFxy.rendNodeCheckbox, 'change', function() {
+if (this.Value()) {
+FxyGraph.setAttribute({visible:false});
+
+} else {
+FxyGraph.setAttribute({visible:true});
+}
+}, checkboxFxy);
+
+[[/jsxgraph]]
+<p></p>
+<p><span>The point = [[input:ans1]][[validation:ans1]] </span></p>
 [[/jsxgraph]]
 <p></p>
 <p><span>The point = [[input:ans1]][[validation:ans1]] </span></p>
