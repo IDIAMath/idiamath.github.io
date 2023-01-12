@@ -33,14 +33,14 @@ The student has to type in the correct answer in the `[x,y]` input field.
 #### Show/hide
 Check this box if you want to hide a given graph
 
-| ![hiddenGraph](https://user-images.githubusercontent.com/43517080/193473928-6575d055-597d-4abc-8163-dc32fed5b3a2.png) |
+| ![HiddenGraph](https://user-images.githubusercontent.com/43517080/212041555-9bfa098b-bbb0-4b13-afb3-0e64f0db4580.png) |
 |:--:|
 | *The above image displays how the student can check a checkbox corresponding to a given graph, to set change the mentioned graphs visibility* |
 
 ### Teacher perspective
 The teacher does not have to change anything, but they may choose to add or delete constants or chanage the function itself.
 
-| ![image](https://user-images.githubusercontent.com/43517080/212041555-9bfa098b-bbb0-4b13-afb3-0e64f0db4580.png) |
+| ![image](https://user-images.githubusercontent.com/43517080/178975348-eeeacdce-7cac-47bc-ac33-68953c929989.png) |
 |:--:| 
 | *the above image shows which values the teacher may choose to change* |
 
