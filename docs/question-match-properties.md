@@ -88,11 +88,11 @@ The code is divided into segments, each of which is explained
 
 - **2 Segment** this is default code for creating the 3D room and the plane with x,y and z axis.
 
-- **3 Segment** the function myFunction is created. It recieves the input from an input element in the DOM which has the class name **"algebraic"**, then we remove any previously drawn functions and draw a new function based on the recieved user input.
+- **3 Segment** the function drawFunction is created. It recieves the input from an input element in the DOM which has the class name **"algebraic"**, then we remove any previously drawn functions and draw a new function based on the recieved user input.
 
 ```javascript
 <p></p>
-<p onclick="myFunction()">Give an example of a function where all partial derivatives at the
+<p>Give an example of a function where all partial derivatives at the
   coordinates ({#a#},{#b#}) are {#question_text#} <br></p>
 
 [[jsxgraph height='850px' width='850px']]
@@ -107,7 +107,7 @@ document.getElementsByClassName("clearfix")[0].appendChild(br);
 document.getElementsByClassName("clearfix")[0].appendChild(br);
 document.getElementsByClassName("clearfix")[0].appendChild(btn);
 
-btn.addEventListener("click", myFunction);
+btn.addEventListener("click", drawFunction);
 
 //SEGMENT 2 _________Create the 3D room and the plane with x,y and z axis._______________
 var board = JXG.JSXGraph.initBoard(divid, {
