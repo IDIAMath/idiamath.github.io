@@ -119,7 +119,6 @@ The first jsxgraphblock contains all the javascript code for both figures, and t
 
 #### Jsxgraph code
 ```javascript
-ans2="points_max_out" input-ref-stateStore="stateRef"]]
 
 //Get divid for bottom jsxgraph figure by incrementing number in divid of top figure
 var regexMatchNumber = /([1-9][0-9]|[1-9])/g;  //Regex that matches number between 1-99
