@@ -119,7 +119,12 @@ The first jsxgraphblock contains all the javascript code for both figures, and t
 
 #### Jsxgraph code
 ```javascript
-var divid2="stack-jsxgraph-2"; //div id for the bottom figure
+ans2="points_max_out" input-ref-stateStore="stateRef"]]
+
+//Get divid for bottom jsxgraph figure by incrementing number in divid of top figure
+var regexMatchNumber = /([1-9][0-9]|[1-9])/g;  //Regex that matches number between 1-99
+var nextDivNum = Number(divid.match(regexMatchNumber))+1;
+var divid2 = divid.replace(regexMatchNumber, nextDivNum);
 
 // Ranges for x,y,z from maxima
 var xrang = {#xrang#};
@@ -152,17 +157,17 @@ var p2max=[];
 //Arrays holding the correct max/min points
 var localmin = {#localmin#};
 var localmax = {#localmax#};
-
+  
 // Create the 3D view: -------
-/*The large array is of form [ [x,y], [w,h], [[x1,x2], [y1,y2], [z1,z2]] ].
-The arrays [x, y] and [w, h] define the 2D frame into which the 3D cube is (roughly) projected.
+/*The large array is of form [ [x,y], [w,h], [[x1,x2], [y1,y2], [z1,z2]] ]. 
+The arrays [x, y] and [w, h] define the 2D frame into which the 3D cube is (roughly) projected. 
 [[x1, x2], [y1, y2], [z1, z2]] determines the coordinate ranges of the 3D cube. */
 
 var view = board.create('view3d', [[xrang[0], yrang[0]], [xrang[1]-xrang[0],yrang[1]-yrang[0]],[xrang, yrang, zrang]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
 
 //-----------
 
-//Create a slider that scales the z-values
+//Create a slider that scales the z-values [0,0.2,2] are the [min,start,max] values of sliders
 var z_scale = board.create('slider', [[-3,-5], [3,-5],[0,0.2,2]], {
    name: "Skaler z-akse",
    point1: {frozen: true},
@@ -180,7 +185,7 @@ var c = view.create('functiongraph3d',[F,xrang,yrang], { strokeWidth: 0.5, steps
 // Create points for every minimum the students musts find
 for (let i=0; i<localmin.length; i++){
    p1min[i] = board2.create('point', [i,i], {name: "Min"+(i+1), color: "red"}); //Point in 2D plane
-
+  
    //Create the corresponding point in the bottom of the 3D plot - values bound to the 2D plot
    p2min[i] = view.create('point3d', [()=>p1min[i].X(), ()=>p1min[i].Y(), zrang[0]], {name: "Min"+(i+1), color: "red"});
 
@@ -199,11 +204,31 @@ for (let i=0; i<localmax.length; i++){
    view.create('line3d', [p2max[i], ptemp], {dash: 1});
 }
 
-board.update();
+
 
 //Obtain references to the answer variables in stack
 var answer_min = document.getElementById(points_min_out);
 var answer_max=document.getElementById(points_max_out);
+var state = document.getElementById(stateRef);
+
+//Check if student has started manipulated the boards earlier, and load the state of the graph
+if (state.value && state.value != "")
+{
+   var newState = JSON.parse(state.value);
+   var pout = newState['pout'];
+   console.log("saved out", pout);
+   for (let i=0; i<p1min.length; i++){
+       p1min[i].setPositionDirectly(JXG.COORDS_BY_USER, [pout[i][0], pout[i][1]]);
+   }
+   for (let i=0; i<p1max.length; i++){
+       p1max[i].setPositionDirectly(JXG.COORDS_BY_USER, [pout2[i][0], pout2[i][1]]);
+   }
+   z_scale.setValue(newState["z_scale"]);
+   view.D3.el_slide.setValue(newState["el_slider"]);
+   view.D3.az_slide.setValue(newState["az_slider"]);
+}
+
+board2.update();
 
 //Set an update function that sets the answer variables in stack to the points the student has selected
 board.on('update', function() {
@@ -211,6 +236,9 @@ board.on('update', function() {
    //Arrays of min/max points
    var pout =  [];
    var pout2 = [];
+
+   //JSON object containing the state of the boards
+   var newState = {};
 
    //Collect minimum points
    for (let i=0; i<p1min.length; i++){
@@ -223,7 +251,16 @@ board.on('update', function() {
   for(let i=0; i<p1max.length; i++){
      pout2[i] = [p1max[i].X(), p1max[i].Y()];
   }
-  answer_max.value=JSON.stringify(pout2);
+  answer_max.value=JSON.stringify(pout2); 
+
+//Save state of board to STACK answerfield
+newState.pout = pout;
+newState.pout2 = pout2;
+newState.z_scale = z_scale.Value();
+newState.el_slider = view.D3.el_slide.Value();
+newState.az_slider = view.D3.az_slide.Value();
+state.value = JSON.stringify(newState);
+
 });
 ```
 There are a couple of parts in the jsxgraph block that might need some tuning from the teacher:
