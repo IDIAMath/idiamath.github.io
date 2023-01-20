@@ -171,7 +171,7 @@ view.D3.az_slide.setValue(state['az_slide']);
 view.D3.el_slide.setValue(state['el_slide']);
 board.update();
 
-//store the value fo the az and el scale when user changes it
+//store the value fo the az and el scale when user adjusts it
 view.D3.az_slide.on('drag', function() {
 var az_slide_value = view.D3.az_slide.Value();
 state.az_slide = az_slide_value;
