@@ -47,7 +47,7 @@ random_function:inputs[k];
 ```
 ### Question text
 
-```css
+```html
 <p style="font-size:1.3em">Select the partial derivative Fx for the function \[ {#random_function_f#}\]
     <!--</p-->
 </p>
@@ -58,13 +58,21 @@ random_function:inputs[k];
     <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[4]#}">\[ {#inputs_fx[4]#}\]</label><br>
     <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[5]#}" checked="">\[ None\: of\: the\: above\]</label><br>
 </div>
+```
+#### CSS
+We can sneak in some CSS by adding a style element to the head of the document.
+
+```css
 
 [[jsxgraph height='850px' width='850px' input-ref-stateStore="stateRef"]]
 
 const head = document.querySelector('head');
 const style = document.createElement('style');
 style.setAttribute('type', 'text/css');
-style.innerHTML = `input[type="radio"] {
+
+style.innerHTML = `
+
+input[type="radio"] {
 position: relative;
 }
 
@@ -101,6 +109,10 @@ background-color: red;
 `;
 
 head.appendChild(style);
+```
+### continue with javascript
+```javascript
+
 
 
 var board = JXG.JSXGraph.initBoard(divid, {
