@@ -57,7 +57,10 @@ random_function:inputs[k];
     <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[5]#}" id="C" checked="checked">\[ None\: of\: the\: above\]</label><br>
 </div>
 
-[[jsxgraph height='850px' width='850px']]
+<p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
+<p>[[input:stateStore]] [[validation:stateStore]]</p>
+
+[[jsxgraph height='850px' width='850px' input-ref-stateStore="stateRef"]]
 const head = document.querySelector('head');
 const style = document.createElement('style');
 style.setAttribute('type', 'text/css');
@@ -122,21 +125,59 @@ box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 ], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
 board.update();
 
+let inputs = document.getElementsByClassName("checkbox-class");
+var state = {'x':2, 'y':2, 'z':-5, 'az_slide':0.87 , 'el_slide':1.5, 'selected':inputs[inputs.length-1].value};
+var stateInput = document.getElementById(stateRef);
+if (stateInput.value){
+if(stateInput.value != '') {
+state = JSON.parse(stateInput.value);
+}
+}
+
+// check the previousley selected radio button
+for (let i=0; !(i==inputs.length);i++) {
+if(inputs[i].value == state.selected) {
+inputs[i].checked = true;
+}
+}
 
 //the point that controlls the point on the graph;
-var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
+var Axy = view.create('point3d', [state['x'], state['y'], state['z']], { withLabel: false, color:'gray',strokeWidth:5 });
+
+// Update the stored state when the position of the point Axy changes.
+Axy.on('drag', function() {
+state.x = Axy.X();
+state.y = Axy.Y();
+stateInput.value = JSON.stringify(state);
+});
 
 //the point reflected on the graph
 
 var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
 function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
 
-
-//optimize the view to best suit most functions in general
-
-view.D3.az_slide.setValue(0.87);
-view.D3.el_slide.setValue(1.5);
+//optimize the el and az scale
+view.D3.az_slide.setValue(state['az_slide']);
+view.D3.el_slide.setValue(state['el_slide']);
 board.update();
+
+//store the value fo the az and el scale when user adjusts it
+view.D3.az_slide.on('drag', function() {
+var az_slide_value = view.D3.az_slide.Value();
+state.az_slide = az_slide_value;
+stateInput.value = JSON.stringify(state);
+});
+
+view.D3.el_slide.on('drag', function() {
+var el_slide_value = view.D3.el_slide.Value();
+state.el_slide = el_slide_value;
+stateInput.value = JSON.stringify(state);
+});
+
+
+var t1 = board.create('text',[0,1,Axy.D3.X()]);
+
+
 
 //set the input value equal to the default selected checkbox
 
@@ -153,16 +194,12 @@ function setValue(event) {
 const checkbox = event.target;
 if (checkbox.classList.contains('checkbox-class')) {
 var ans1n = document.getElementsByClassName('algebraic')[0].value=checkbox.value;
+state.selected = checkbox.value;
+stateInput.value = JSON.stringify(state);
 
 }
 }
 [[/jsxgraph]]
-
-
-
-
-
-<p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
 ```
 ### Feedback variables
 
