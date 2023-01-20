@@ -47,7 +47,7 @@ random_function:inputs[k];
 ```
 ### Question text
 
-```javascript
+```css
 <p style="font-size:1.3em">Select the partial derivative Fx for the function \[ {#random_function_f#}\]
     <!--</p-->
 </p>
