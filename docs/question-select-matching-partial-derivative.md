@@ -47,17 +47,20 @@ random_function:inputs[k];
 ```
 ### Question text
 
-```rust
-<p style="font-size:1.3em">Select the function expression matching the function on the graph</p>
+```JavaScript
+<p style="font-size:1.3em">Select the partial derivative Fx for the function \[ {#random_function_f#}\]
+    <!--</p-->
+</p>
 <div class="checkbox-container" style="float:left">
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[1]#}" id="A">\[ {#inputs[1]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[2]#}" id="B">\[ {#inputs[2]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[3]#}" id="C">\[ {#inputs[3]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[4]#}" id="C">\[ {#inputs[4]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[5]#}" id="C" checked="checked">\[ None\: of\: the\: above\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[1]#}">\[ {#inputs_fx[1]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[2]#}">\[ {#inputs_fx[2]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[3]#}">\[ {#inputs_fx[3]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[4]#}">\[ {#inputs_fx[4]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[5]#}" checked="">\[ None\: of\: the\: above\]</label><br>
 </div>
 
-[[jsxgraph height='850px' width='850px']]
+[[jsxgraph height='850px' width='850px' input-ref-stateStore="stateRef"]]
+
 const head = document.querySelector('head');
 const style = document.createElement('style');
 style.setAttribute('type', 'text/css');
@@ -89,11 +92,11 @@ background-color: grey;
 }
 
 input[type="radio"]:checked:before {
-border-color: blue;
+border-color: red;
 }
 
 input[type="radio"]:checked:after {
-background-color: blue;
+background-color: red;
 }
 `;
 
@@ -113,7 +116,7 @@ view.D3.az_slide._smax = 12;
 
 // Draw function
 
-var F = board.jc.snippet('{#random_function#}', true, 'x,y', true); // JessieCode parsing
+var F = board.jc.snippet('{#random_function_f#}', true, 'x,y', true); // JessieCode parsing
 
 var fGraph =view.create('functiongraph3d', [
 F,
@@ -122,6 +125,14 @@ box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 ], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
 board.update();
 
+let inputs = document.getElementsByClassName("checkbox-class");
+var state = {'x':2, 'y':2, 'z':-5, 'az_slide':0.87 , 'el_slide':1.5, 'selected':inputs[inputs.length-1].value};
+var stateInput = document.getElementById(stateRef);
+if (stateInput.value){
+if(stateInput.value != '') {
+state = JSON.parse(stateInput.value);
+}
+}
 
 //the point that controlls the point on the graph;
 var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
@@ -132,29 +143,103 @@ var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){retur
 function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
 
 
-//optimize the view to best suit most functions in general
-
-view.D3.az_slide.setValue(0.87);
-view.D3.el_slide.setValue(1.5);
-board.update();
-
 //set the input value equal to the default selected checkbox
 
 const checkboxArray = document.querySelectorAll('.checkbox-class');
 const checkboxArrayLength = checkboxArray.length;
 var ans1n = document.getElementsByClassName('algebraic')[0].value=checkboxArray[checkboxArrayLength-1].value;
+var cGraph="";
+var funcExpr="";
+function drawChecked(checkBoxValue){
+funcExpr = checkBoxValue;
 
+F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
+cGraph =view.create('functiongraph3d', [
+F,
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+], {strokeWidth: 0.5, stepsU: 70, stepsV: 70, color:'red' });
+board.update();
+}
 
 //change the input value when the user selects a different checkbox
 
-const checkboxContainer = document.querySelector('.checkbox-container');
-checkboxContainer.addEventListener('change', setValue);
+const checkboxContainers = document.querySelectorAll('.checkbox-container');
+for (let container of checkboxContainers) {
+container.addEventListener('change', setValue);
+}
+var firstEntry=true;
 function setValue(event) {
 const checkbox = event.target;
 if (checkbox.classList.contains('checkbox-class')) {
 var ans1n = document.getElementsByClassName('algebraic')[0].value=checkbox.value;
+state.selected= checkbox.value;
+stateInput.value = JSON.stringify(state);
+
+
+//this is to connect the point to main function when the 'None of the above' checkbox is checked
+//if its the last element (if user selects the 'None' option)
+if({#inputs_fx[length(inputs_fx)]#}==checkbox.value) {
+
+//remove everything
+board.removeObject(cGraph,false);
+board.removeObject(fGraph,false);
+board.update();
+
+// redraw main graph
+F = board.jc.snippet('{#random_function_f#}', true, 'x,y', true); // JessieCode parsing
+
+fGraph =view.create('functiongraph3d', [
+F,
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+box, // () =&gt; [-s.Value()*5, s.Value() * 5],
+], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+board.update();
+} else{
+board.removeObject(cGraph,false);
+drawChecked(checkbox.value);
+}
+}
 
 }
+
+
+// check the previousley selected radio button
+for (let i=0; !(i==inputs.length);i++) {
+if(inputs[i].value == state.selected) {
+inputs[i].checked = true;
+//check if none is selected, then dont display it
+if (!(inputs[i].value ==inputs[inputs.length-1].value) ) {
+drawChecked(inputs[i].value);
+}
+}
+}
+
+
+view.D3.az_slide.setValue(state['az_slide']);
+view.D3.el_slide.setValue(state['el_slide']);
+board.update();
+
+view.D3.az_slide.on('drag', function() {
+var az_slide_value = view.D3.az_slide.Value();
+state.az_slide = az_slide_value;
+stateInput.value = JSON.stringify(state);
+});
+
+view.D3.el_slide.on('drag', function() {
+var el_slide_value = view.D3.el_slide.Value();
+state.el_slide = el_slide_value;
+stateInput.value = JSON.stringify(state);
+});
+
+
+var t1 = board.create('text',[0,1,Axy.D3.X()]);
+
+
+[[/jsxgraph]]
+
+<p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
+<p>[[input:stateStore]] [[validation:stateStore]]</p>
 }
 [[/jsxgraph]]
 
