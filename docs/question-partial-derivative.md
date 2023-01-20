@@ -81,7 +81,7 @@ The proposed objectives can be achieved following these procedures:
 <p></p>
 <p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where partial derivatives are positive/negative/zero</span><br></p>
 
-[[jsxgraph height='750px' width='1550px']]
+[[jsxgraph height='750px' width='1550px' input-ref-stateStore="stateRef"]]
 
 // set the value of input field to []
 document.getElementsByClassName("algebraic")[0].value = "[x,y]";
@@ -106,8 +106,16 @@ var FExpr = '{#f#}';
 var F = board.jc.snippet(FExpr, true, 'x,y', true);
 var FGraph = view.create('functiongraph3d',[F,box,box,], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
 
+var state = {'x':2, 'y':2, 'z':-5, 'az_slide':0.87 , 'el_slide':1.5};
+var stateInput = document.getElementById(stateRef);
+if (stateInput.value){
+if(stateInput.value != '') {
+state = JSON.parse(stateInput.value);
+}
+}
+
 //the point that controlls the point on the graph;
-var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
+var Axy = view.create('point3d', [state['x'], state['y'], state['z']], { withLabel: false, color:'gray',strokeWidth:5 });
 
 //the point reflected on the graph
 var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
@@ -150,12 +158,39 @@ FxyGraph.setAttribute({visible:true});
 }
 }, checkboxFxy);
 
+
+// Update the stored state when the position of the point Axy changes.
+Axy.on('drag', function() {
+state.x = Axy.X();
+state.y = Axy.Y();
+stateInput.value = JSON.stringify(state);
+});
+
+//optimize the el and az scale
+view.D3.az_slide.setValue(state['az_slide']);
+view.D3.el_slide.setValue(state['el_slide']);
+board.update();
+
+//store the value fo the az and el scale when user changes it
+view.D3.az_slide.on('drag', function() {
+var az_slide_value = view.D3.az_slide.Value();
+state.az_slide = az_slide_value;
+stateInput.value = JSON.stringify(state);
+});
+
+view.D3.el_slide.on('drag', function() {
+var el_slide_value = view.D3.el_slide.Value();
+state.el_slide = el_slide_value;
+stateInput.value = JSON.stringify(state);
+});
+
+var t1 = board.create('text',[0,1,Axy.D3.X()]);
+
+
 [[/jsxgraph]]
 <p></p>
 <p><span>The point = [[input:ans1]][[validation:ans1]] </span></p>
-[[/jsxgraph]]
-<p></p>
-<p><span>The point = [[input:ans1]][[validation:ans1]] </span></p>
+<p>[[input:stateStore]] [[validation:stateStore]]</p>
 ```
 
 ### Feedback variabels
