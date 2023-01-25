@@ -43,18 +43,17 @@ theme: minima
       faces = [];
   // Create the points for the cube
 var phi = (1 + Math.sqrt(5)) * 0.5;
-  var pos_x = 0, pos_y = 0, pos_z = 0;
-  var size_x = 1, size_y = 1, size_z = 1;
-  var pointCoords = [ 
-    [-x, -y, -z],
-    [-x, y, -z],
-    [x, y, -z],
-    [x, -y, -z],
-    [-x, -y, z],
-    [-x, y, z],
-    [x, y, z],
-    [x, -y, z],
-
+  var pos_x = x, pos_y = y, pos_z = z;
+  var size_x = width, size_y = height, size_z = 1;
+   var pointCoords = [    
+    [pos_x-phi*size_x, pos_y-phi*size_y, pos_z-phi*size_z],
+    [pos_x-phi*size_x, pos_y+phi*size_y, pos_z-phi*size_z],
+    [pos_x+phi*size_x, pos_y+phi*size_y, pos_z-phi*size_z],
+    [pos_x+phi*size_x, pos_y-phi*size_y, pos_z-phi*size_z],
+    [pos_x-phi*size_x, pos_y-phi*size_y, pos_z+phi*size_z],
+    [pos_x-phi*size_x, pos_y+phi*size_y, pos_z+phi*size_z],
+    [pos_x+phi*size_x, pos_y+phi*size_y, pos_z+phi*size_z],
+    [pos_x+phi*size_x, pos_y-phi*size_y, pos_z+phi*size_z],
   ];
   for (var i = 0; i < 8; i++) {
     var point = view.create('point3d', pointCoords[i], point_attr);
@@ -63,7 +62,7 @@ var phi = (1 + Math.sqrt(5)) * 0.5;
 
   // Create the faces for the cube
   var facesArray = [   
-	 [0, 1, 2, 3],
+    [0, 1, 2, 3],
     [4, 5, 6, 7],
     [0, 1, 5, 4],
     [2, 3, 7, 6],
@@ -79,7 +78,7 @@ var phi = (1 + Math.sqrt(5)) * 0.5;
     faces: faces
   };
 }	
-create3DCube(board,1,1,2,2,2)
+create3DCube(board,1,1,1,5,3)
 		    
 [[/jsxgraph]]
 
