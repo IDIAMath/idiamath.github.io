@@ -17,6 +17,8 @@ theme: minima
 + Question 5 (XML only) [Tune 3D Quadric](XML/questions-jtc-Tune 3D quadric-20220617-1129.xml)
 + Question 6 [Select matching function](question-select-matching-function.md)
 + Question 7 [Select matching partial derivative](question-select-matching-partial-derivative.md)
++ Question 8 [3d-cube-transformations](question-3d-cube-transformations.md)
+
 
 
 ## Notes
