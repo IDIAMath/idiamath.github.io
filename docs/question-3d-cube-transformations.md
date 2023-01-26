@@ -9,7 +9,7 @@ theme: minima
 
 
 ```javascript
-<p></p>
+<p id="p"></p>
 [[jsxgraph height='850px' width='850px']]
 
  var board = JXG.JSXGraph.initBoard(divid, {
@@ -30,12 +30,12 @@ theme: minima
 		    
 
 		    
-   
-				function create3DCube(board, height, width, x, y, z) {
-					var point_attr = { withLabel: false, fixed:true, label: { offset: [5, 5] } },
+   		    var names =["A","B","C","D","E","F","G","H","i"];
+
+				function create3DCube(board, height, width,depth, x, y, z) {
+					var point_attr = { fixed:true, label: { offset: [5, 5] } },
 		        // Cube
 
-		        // Icosahedron
 		        phi = (1 + Math.sqrt(5)) * 0.5,
 		        pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: 'red' },
 		        
@@ -43,19 +43,19 @@ theme: minima
       faces = [];
   // Create the points for the cube
 var phi = (1 + Math.sqrt(5)) * 0.5;
-  var pos_x = x, pos_y = y, pos_z = z;
-  var size_x = width, size_y = height, size_z = 1;
    var pointCoords = [    
-    [pos_x-phi*size_x, pos_y-phi*size_y, pos_z-phi*size_z],
-    [pos_x-phi*size_x, pos_y+phi*size_y, pos_z-phi*size_z],
-    [pos_x+phi*size_x, pos_y+phi*size_y, pos_z-phi*size_z],
-    [pos_x+phi*size_x, pos_y-phi*size_y, pos_z-phi*size_z],
-    [pos_x-phi*size_x, pos_y-phi*size_y, pos_z+phi*size_z],
-    [pos_x-phi*size_x, pos_y+phi*size_y, pos_z+phi*size_z],
-    [pos_x+phi*size_x, pos_y+phi*size_y, pos_z+phi*size_z],
-    [pos_x+phi*size_x, pos_y-phi*size_y, pos_z+phi*size_z],
+    [x-phi*width, y-phi*height, z-phi*depth],
+    [x-phi*width, y+phi*height, z-phi*depth],
+    [x+phi*width, y+phi*height, z-phi*depth],
+    [x+phi*width, y-phi*height, z-phi*depth],
+    [x-phi*width, y-phi*height, z+phi*depth],
+    [x-phi*width, y+phi*height, z+phi*depth],
+    [x+phi*width, y+phi*height, z+phi*depth],
+    [x+phi*width, y-phi*height, z+phi*depth],
   ];
+
   for (var i = 0; i < 8; i++) {
+    point_attr = { fixed:true, name:names[i],label: { offset: [5, 5] } }
     var point = view.create('point3d', pointCoords[i], point_attr);
     points.push(point);
   }
@@ -78,8 +78,27 @@ var phi = (1 + Math.sqrt(5)) * 0.5;
     faces: faces
   };
 }	
-create3DCube(board,1,1,1,5,3)
-		    
+var cube1 = create3DCube(board,0.4,0.4,0.4,1,5,3);
+var p =document.getElementById("p");
+var cubeX = cube1.points[0].X();
+p.innerHTML = ` ${cubeX}`;
+
+function moveTo(cube, x, y, z) {
+  var points = cube.points;
+var phi = 1.6018,
+ width= 0.4,
+height =0.4,
+ depth= 0.4;
+  for (var i = 0; i < points.length; i++) {
+    points[i].moveTo([x + points[i].X() - phi*width, y + points[i].Y() - phi*height, z + points[i].Z() - phi*depth], 1);
+  }
+board.update();
+view.update();
+}
+
+moveTo(cube1,15,15,15);
+
+board.update();
 [[/jsxgraph]]
 
 <p>[[input:ans1]] [[validation:ans1]]</p>
