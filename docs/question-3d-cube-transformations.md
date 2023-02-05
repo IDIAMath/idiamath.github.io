@@ -85,19 +85,31 @@ var phi = (1 + Math.sqrt(5)) * 0.5;
   }
   
   return {
-    points: points,
+  points: points,
     faces: faces,
     width:width,
     height:height,
-    depth:depth
+    depth:depth,
+    x,
+    y,
+    z
   };
 }	
 var cube1 = create3DCube(board,0.4,0.4,0.4,1,5,3);
 
 
 
-function goTo(cube,[x,y,z]) {
-		var point_attr = { withLabel: true, fixed:true, label: { offset: [5, 5] } },
+function transform(cube,coordinates,scale) {
+  coordinates = coordinates || [cube.x, cube.y, cube.z];
+  scale = scale || [cube.width, cube.height, cube.depth];
+
+  //destructuring: if provided wrong number of elements, allow it but set missing element value to 0
+  let [x = cube.x, y = cube.y, z = cube.z] = coordinates;
+  let [scaleX = cube.width, scaleY = cube.height, scaleZ = cube.depth] = scale;
+
+
+
+					var point_attr = { withLabel: true, fixed:true, label: { offset: [5, 5] } },
 		        
 
 		        pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: 'red' },
@@ -106,14 +118,14 @@ function goTo(cube,[x,y,z]) {
   // Create the points for the cube 
  phi = (1 + Math.sqrt(5)) * 0.5;
    var pointCoords = [    
-    [x-phi*cube.width, y-phi*cube.height, z-phi*cube.depth],
-    [x-phi*cube.width, y+phi*cube.height, z-phi*cube.depth],
-    [x+phi*cube.width, y+phi*cube.height, z-phi*cube.depth],
-    [x+phi*cube.width, y-phi*cube.height, z-phi*cube.depth],
-    [x-phi*cube.width, y-phi*cube.height, z+phi*cube.depth],
-    [x-phi*cube.width, y+phi*cube.height, z+phi*cube.depth],
-    [x+phi*cube.width, y+phi*cube.height, z+phi*cube.depth],
-    [x+phi*cube.width, y-phi*cube.height, z+phi*cube.depth],
+    [x-phi*scaleX, y-phi*scaleY, z-phi*scaleZ],
+    [x-phi*scaleX, y+phi*scaleY, z-phi*scaleZ],
+    [x+phi*scaleX, y+phi*scaleY, z-phi*scaleZ],
+    [x+phi*scaleX, y-phi*scaleY, z-phi*scaleZ],
+    [x-phi*scaleX, y-phi*scaleY, z+phi*scaleZ],
+    [x-phi*scaleX, y+phi*scaleY, z+phi*scaleZ],
+    [x+phi*scaleX, y+phi*scaleY, z+phi*scaleZ],
+    [x+phi*scaleX, y-phi*scaleY, z+phi*scaleZ],
   ];
 
   board.removeObject(cube.points)
@@ -141,7 +153,7 @@ function goTo(cube,[x,y,z]) {
     points:points,
     faces:faces,
     cube:cube,
-    pointCoords:[x,y,z]
+    coordinates:coordinates
 
   };
 }	
@@ -160,17 +172,16 @@ const debounce = (func, delay) => {
     }, delay);
   };
 };
-
 let position =[];
+let scale = []; 
 for(let z=0; z< elements.length;z++) {
     elements[z].id=elementId[z];
     elements[z].value=0;
+        //add input value restrictions here
 
-    if(z < 3) {
         //give a className to inputs
         elements[z].className=classNames[0];
 
-        //add input value restrictions here
 
 
         //add for loop that sets input value equal to cube value here
@@ -181,22 +192,17 @@ for(let z=0; z< elements.length;z++) {
         elements[z].addEventListener('input', debounce(function() {
           console.log("s");
                position = [0,0,0];
+               scale = [0,0,0]; 
             for(let i=0; i<3;i++) {
-                position[i] = parseInt(document.getElementsByClassName(classNames[0])[i].value);
+                position[i] = parseFloat(document.getElementsByClassName(classNames[0])[i].value);
+                scale[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+3].value);
+
             }
-            goTo(cube1,[position[0],position[1],position[2]]);
+            transform(cube1,[position[0],position[1],position[2]],[scale[0],scale[1],scale[2]]);
             },500));
-    }else if(z > 5) {
-        elements[z].className="scale";
-        elements[z].addEventListener('input', function() {
-        console.log("test2");
-    });
-    }else {
-        elements[z].className="rotate";
-        elements[z].addEventListener('input', function() {
-        console.log("test3");
-    });
-    }
+
+    
+    
     
 }
 [[/jsxgraph]]
