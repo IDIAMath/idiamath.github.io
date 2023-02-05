@@ -166,12 +166,11 @@ let position =[];
 for(let z=0; z< elements.length;z++) {
     elements[z].id=elementId[z];
     elements[z].value=0;
+        //add input value restrictions here
 
     if(z < 3) {
         //give a className to inputs
         elements[z].className=classNames[0];
-
-        //add input value restrictions here
 
 
         //add for loop that sets input value equal to cube value here
@@ -190,12 +189,12 @@ for(let z=0; z< elements.length;z++) {
     }else if(z > 5) {
         elements[z].className="scale";
         elements[z].addEventListener('input', function() {
-        console.log("test2");
+        console.log("under construction");
     });
     }else {
         elements[z].className="rotate";
         elements[z].addEventListener('input', function() {
-        console.log("test3");
+        console.log("under construction");
     });
     }
     
