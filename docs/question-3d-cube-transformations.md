@@ -5,11 +5,14 @@ theme: minima
 ---
 # Question under construction
 
+### Question variables
+```rust
+M:matrix([1,2,3],[3,4,5],[6,7,8]);
+```
+
 ### Question Text
 
-
 ```javascript
-<input type="text" id="fname" name="fname" placeholder="Input..." oninput="myFunction()">
 [[jsxgraph height='850px' width='850px']]
 
 //element id's list and select which inputs to change id
@@ -93,27 +96,26 @@ var cube1 = create3DCube(board,0.4,0.4,0.4,1,5,3);
 
 
 
-function goTo(cube,x, y, z) {
-					var point_attr = { withLabel: true, fixed:true, label: { offset: [5, 5] } },
-		        // Cube
+function goTo(cube,cubeCoords) {
+		var point_attr = { withLabel: true, fixed:true, label: { offset: [5, 5] } },
+		        
 
-		        // Icosahedron
-		        phi = (1 + Math.sqrt(5)) * 0.5,
 		        pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: 'red' },
 		        
       
   // Create the points for the cube 
  phi = (1 + Math.sqrt(5)) * 0.5;
    var pointCoords = [    
-    [x-phi*cube.width, y-phi*cube.height, z-phi*cube.depth],
-    [x-phi*cube.width, y+phi*cube.height, z-phi*cube.depth],
-    [x+phi*cube.width, y+phi*cube.height, z-phi*cube.depth],
-    [x+phi*cube.width, y-phi*cube.height, z-phi*cube.depth],
-    [x-phi*cube.width, y-phi*cube.height, z+phi*cube.depth],
-    [x-phi*cube.width, y+phi*cube.height, z+phi*cube.depth],
-    [x+phi*cube.width, y+phi*cube.height, z+phi*cube.depth],
-    [x+phi*cube.width, y-phi*cube.height, z+phi*cube.depth],
+    [cubeCoords[0]-phi*cube.width, cubeCoords[1]-phi*cube.height, cubeCoords[2]-phi*cube.depth],
+    [cubeCoords[0]-phi*cube.width, cubeCoords[1]+phi*cube.height, cubeCoords[2]-phi*cube.depth],
+    [cubeCoords[0]+phi*cube.width, cubeCoords[1]+phi*cube.height, cubeCoords[2]-phi*cube.depth],
+    [cubeCoords[0]+phi*cube.width, cubeCoords[1]-phi*cube.height, cubeCoords[2]-phi*cube.depth],
+    [cubeCoords[0]-phi*cube.width, cubeCoords[1]-phi*cube.height, cubeCoords[2]+phi*cube.depth],
+    [cubeCoords[0]-phi*cube.width, cubeCoords[1]+phi*cube.height, cubeCoords[2]+phi*cube.depth],
+    [cubeCoords[0]+phi*cube.width, cubeCoords[1]+phi*cube.height, cubeCoords[2]+phi*cube.depth],
+    [cubeCoords[0]+phi*cube.width, cubeCoords[1]-phi*cube.height, cubeCoords[2]+phi*cube.depth],
   ];
+
 
   board.removeObject(cube.points)
   for (var i = 0; i < 8; i++) {
@@ -140,15 +142,31 @@ function goTo(cube,x, y, z) {
     points:points,
     faces:faces,
     cube:cube,
-    x:x,
-    y:y,
-    z:z
+    pointCoords:pointCoords
+
   };
 }	
+
+
+//debounce function for input optimization
+const debounce = (func, delay) => {
+  let timerId;
+  return function(...args) {
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+    timerId = setTimeout(() => {
+      func(...args);
+      timerId = null;
+    }, delay);
+  };
+};
+
 let position =[];
-//Give elements an Id and className
 for(let z=0; z< elements.length;z++) {
     elements[z].id=elementId[z];
+    elements[z].value=0;
+
     if(z < 3) {
         //give a className to inputs
         elements[z].className=classNames[0];
@@ -161,14 +179,14 @@ for(let z=0; z< elements.length;z++) {
         
 
         //function to transform cube when input changes
-        elements[z].addEventListener('input', function() {
-             position = [0,0,0];
-            for(let i=0; i<2;i++) {
-                position[i] = document.getElementsByClassName(classNames[0])[i].value;
+        elements[z].addEventListener('input', debounce(function() {
+          console.log("s");
+               position = [0,0,0];
+            for(let i=0; i<3;i++) {
+                position[i] = parseInt(document.getElementsByClassName(classNames[0])[i].value);
             }
-            goTo(cube1,position[0],position[1],position[2]);
-            
-});
+            goTo(cube1,[position[0],position[1],position[2]]);
+            },500));
     }else if(z > 5) {
         elements[z].className="scale";
         elements[z].addEventListener('input', function() {
