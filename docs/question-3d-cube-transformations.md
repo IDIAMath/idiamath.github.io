@@ -96,7 +96,7 @@ var cube1 = create3DCube(board,0.4,0.4,0.4,1,5,3);
 
 
 
-function goTo(cube,cubeCoords) {
+function goTo(cube,[x,y,z]) {
 		var point_attr = { withLabel: true, fixed:true, label: { offset: [5, 5] } },
 		        
 
@@ -106,16 +106,15 @@ function goTo(cube,cubeCoords) {
   // Create the points for the cube 
  phi = (1 + Math.sqrt(5)) * 0.5;
    var pointCoords = [    
-    [cubeCoords[0]-phi*cube.width, cubeCoords[1]-phi*cube.height, cubeCoords[2]-phi*cube.depth],
-    [cubeCoords[0]-phi*cube.width, cubeCoords[1]+phi*cube.height, cubeCoords[2]-phi*cube.depth],
-    [cubeCoords[0]+phi*cube.width, cubeCoords[1]+phi*cube.height, cubeCoords[2]-phi*cube.depth],
-    [cubeCoords[0]+phi*cube.width, cubeCoords[1]-phi*cube.height, cubeCoords[2]-phi*cube.depth],
-    [cubeCoords[0]-phi*cube.width, cubeCoords[1]-phi*cube.height, cubeCoords[2]+phi*cube.depth],
-    [cubeCoords[0]-phi*cube.width, cubeCoords[1]+phi*cube.height, cubeCoords[2]+phi*cube.depth],
-    [cubeCoords[0]+phi*cube.width, cubeCoords[1]+phi*cube.height, cubeCoords[2]+phi*cube.depth],
-    [cubeCoords[0]+phi*cube.width, cubeCoords[1]-phi*cube.height, cubeCoords[2]+phi*cube.depth],
+    [x-phi*cube.width, y-phi*cube.height, z-phi*cube.depth],
+    [x-phi*cube.width, y+phi*cube.height, z-phi*cube.depth],
+    [x+phi*cube.width, y+phi*cube.height, z-phi*cube.depth],
+    [x+phi*cube.width, y-phi*cube.height, z-phi*cube.depth],
+    [x-phi*cube.width, y-phi*cube.height, z+phi*cube.depth],
+    [x-phi*cube.width, y+phi*cube.height, z+phi*cube.depth],
+    [x+phi*cube.width, y+phi*cube.height, z+phi*cube.depth],
+    [x+phi*cube.width, y-phi*cube.height, z+phi*cube.depth],
   ];
-
 
   board.removeObject(cube.points)
   for (var i = 0; i < 8; i++) {
@@ -142,7 +141,7 @@ function goTo(cube,cubeCoords) {
     points:points,
     faces:faces,
     cube:cube,
-    pointCoords:pointCoords
+    pointCoords:[x,y,z]
 
   };
 }	
@@ -166,11 +165,12 @@ let position =[];
 for(let z=0; z< elements.length;z++) {
     elements[z].id=elementId[z];
     elements[z].value=0;
-        //add input value restrictions here
 
     if(z < 3) {
         //give a className to inputs
         elements[z].className=classNames[0];
+
+        //add input value restrictions here
 
 
         //add for loop that sets input value equal to cube value here
@@ -189,12 +189,12 @@ for(let z=0; z< elements.length;z++) {
     }else if(z > 5) {
         elements[z].className="scale";
         elements[z].addEventListener('input', function() {
-        console.log("under construction");
+        console.log("test2");
     });
     }else {
         elements[z].className="rotate";
         elements[z].addEventListener('input', function() {
-        console.log("under construction");
+        console.log("test3");
     });
     }
     
