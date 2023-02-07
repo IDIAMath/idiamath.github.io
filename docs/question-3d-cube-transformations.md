@@ -4,6 +4,7 @@ usemathjax: true
 theme: minima
 ---
 # Question under construction
+![image](https://user-images.githubusercontent.com/43517080/217234579-f3d005ca-a0a7-472d-b2a0-4c764f7147d7.png)
 
 ### Question variables
 ```rust
