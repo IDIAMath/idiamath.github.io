@@ -4,18 +4,38 @@ usemathjax: true
 theme: minima
 ---
 # Question under construction
-![image](https://user-images.githubusercontent.com/43517080/217853631-9f85c393-c3c5-49a0-94a9-0b9b6ee83d1a.png)
+
+| ![image](https://user-images.githubusercontent.com/43517080/218731835-1a9b6279-3bb8-42df-9af5-0e89ce1655bd.png) |
+|:--:|
+| * First impression of the question* |
 
 ### Question variables
 ```rust
-M:matrix([1,2,3],[3,4,5],[6,7,8]);
+/* Default task cube parameters */
+MPosition:[1,5,3];
+MScale:[1,1,1];
+MRotation:[45,15,100];
+color:"green";
+
+M:matrix(MPosition,MScale,MRotation);
+
+/* User controlled cube parameters */
+MPosition_user:[-2,-1,-2];
+MScale_user:[0.5,0.4,0.7];
+MRotation_user:[45,0,0];
+color_user:"skyblue";
 ```
 
 ### Question Text
 
 ```javascript
-<p>Transform the given cube</p>
+<p id="p">Transform the {#color_user#} cube into the {#color#} cube</p>
 [[jsxgraph height='850px' width='850px']]
+
+//remove qoutation marks from html<p> element
+  let p =document.getElementById("p");
+  p.innerHTML = p.innerHTML.replace(/"/g, '');
+
 
 //element id's list and select which inputs to change id
 let elementId =["x","y","z","rotX","rotY","rotZ","scaleX","scaleY","scaleZ"];
@@ -94,7 +114,7 @@ let elements = mainElement.getElementsByTagName("input");
 
 
 
-				function create3DCube(position , scale, rotation) {
+				function create3DCube(position , scale, rotation, color) {
           
            // require x,y, and z coordinates from user
            if (!Array.isArray(position) || position.length !== 3) {
@@ -103,11 +123,12 @@ let elements = mainElement.getElementsByTagName("input");
           rotation = rotation || [0, 0, 0];
           position = position || [0, 0, 0];
           scale = scale || [0.5, 0.5, 0.5];
+          color = color || "blue";
 
-					var point_attr = { withLabel: false, fixed:true, label: { offset: [5, 5] } },
+					var point_attr = { withLabel: false, fixed:true, fillColor: 'red' ,label: { offset: [5, 5] } },
 		        // Cube
             
-		        pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: 'red' },
+		        pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: color },
 		        
       faces = [];
       points = [];
@@ -135,7 +156,7 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
 
 // Create the points for the cube 
   for (var i = 0; i < 8; i++) {
-    point_attr = { fixed:true, name:namesr[i],label: { offset: [5, 5] } }
+    point_attr = { fixed:true,size:2, name:namesr[i], label: { offset: [5, 5] } }
     var point = view.create('point3d', pointCoords[i], point_attr);
     points.push(point);
   }
@@ -150,7 +171,7 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
     [0, 3, 7, 4]
   ];
   for (var i = 0; i < facesArray.length; i++) {
-    faces.push(board.create('polygon', [points[facesArray[i][0]], points[facesArray[i][1]], points[facesArray[i][2]], points[facesArray[i][3]]], {fillColor: 'red', borders: { strokeWidth: 0.5 }}));
+    faces.push(board.create('polygon', [points[facesArray[i][0]], points[facesArray[i][1]], points[facesArray[i][2]], points[facesArray[i][3]]], {fillColor: color, borders: { strokeWidth: 0.5 }}));
   }
   
   return {
@@ -159,16 +180,20 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
     faces: faces,
     scale:scale,
     rotation:rotation,
-    position:position
+    position:position,
+    color:color
   };
 }	
-var cube1 = create3DCube([1,5,3],0,[45,5,5]);
+var cube2 = create3DCube({#MPosition#},{#MScale#},{#MRotation#},{#color#});
+var cube1 = create3DCube({#MPosition_user#}, {#MScale_user#}, {#MRotation_user#},{#color_user#});
 
 
-function transform(cube,position,scale,rotation) {
+
+function transform(cube,position,scale,rotation,color) {
   position = position || [cube.position[0], cube.position[1], cube.position[2]];
   scale = scale || [cube.scale[0], cube.scale[1], cube.scale[2]];
   rotation = rotation || [cube.rotation[0], cube.rotation[1], cube.rotation[2]];
+  color = color ||cube.color;
 
 
   //destructuring: if provided wrong number of elements, allow it but set missing element value to original cube value
@@ -182,7 +207,7 @@ function transform(cube,position,scale,rotation) {
 					var point_attr = { withLabel: true, fixed:true, label: { offset: [5, 5] } },
 		        
 
-		        pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: 'red' };
+		        pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: color };
 		        
   // Create the points for the cube 
 
@@ -209,7 +234,7 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
 
   board.removeObject(cube.points)
   for (var i = 0; i < 8; i++) {
-    point_attr = { fixed:true, name:namesr[i],label: { offset: [5, 5] } }
+    point_attr = { fixed:true,name:namesr[i],label: { offset: [5, 5] } }
     var point = view.create('point3d', pointCoords[i], point_attr);
     points.shift();
     points.push(point);
@@ -225,7 +250,7 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
     [0, 3, 7, 4]
   ];
   for (var i = 0; i < facesArray.length; i++) {
-    faces.push(board.create('polygon', [points[facesArray[i][0]], points[facesArray[i][1]], points[facesArray[i][2]], points[facesArray[i][3]]], {fillColor: 'red', borders: { strokeWidth: 0.5 }}));
+    faces.push(board.create('polygon', [points[facesArray[i][0]], points[facesArray[i][1]], points[facesArray[i][2]], points[facesArray[i][3]]],  {fillColor: color, borders: { strokeWidth: 0.5 }}));
   }
 
   return {
@@ -261,11 +286,13 @@ let scale=[];
 let rotation =[];
 for(let z=0; z< elements.length;z++) {
     elements[z].id=elementId[z];
+    elements[z].placeholder=elementId[z];
     elements[z].value=0;
         //add input value restrictions here
 
         //give a className to inputs
         elements[z].className=classNames[0];
+
 
 
 
@@ -299,3 +326,7 @@ for(let z=0; z< elements.length;z++) {
 
 <p>[[input:ans1]] [[validation:ans1]]</p>
 ```
+
+### PRT
+![image](https://user-images.githubusercontent.com/43517080/218732173-727fe660-760a-4d39-9ec6-47804989068d.png)
+
