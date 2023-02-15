@@ -29,7 +29,6 @@ color_user:"skyblue";
 ### Question Text
 
 ```javascript
-
 <p id="p">Transform the {#color_user#} cube into the {#color#} cube</p>
 [[jsxgraph height='850px' width='850px']]
 
@@ -185,19 +184,19 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
     rotation: rotation,
     position: position,
     color: color,
-    tran: function(newPosition, newScale, newRotation, newColor) {
+    transform: function(newPosition, newScale, newRotation, newColor) {
       this.position = newPosition || this.position;
       this.scale = newScale || this.scale;
       this.rotation = newRotation || this.rotation;
       this.color = newColor || this.color;
 
-      // remove existing points and faces
+      //remove previous points and faces
       board.removeObject(this.points);
       for (var i = 0; i < this.faces.length; i++) {
         board.removeObject(this.faces[i]);
       }
 
-      // create new points and faces
+      //create points and faces for new cube
       var newCube = create3DCube(this.position, this.scale, this.rotation, this.color);
       this.pointCoords = newCube.pointCoords;
       this.points = newCube.points;
@@ -261,7 +260,7 @@ for(var z=0; z< elements.length;z++) {
 
 
             }
-            cube1.tran(position,scale,rotation);
+            cube1.transform(position,scale,rotation);
             },500));
 
     
