@@ -3,12 +3,37 @@ title: STACK Question -  3d-cube-transformations
 usemathjax: true
 theme: minima
 ---
-# Question under construction
+# STACK Question 8 Interpretation
 
-| ![image](https://user-images.githubusercontent.com/43517080/218731835-1a9b6279-3bb8-42df-9af5-0e89ce1655bd.png) |
+> Two figures showing a 3D object and a rotation and/or translation of the same object.
+> Enter a matrix which transforms the first figure into the second.
+
+- [XML Code](XML/question-select-extremal.xml)
+
+
+
+| ![image](https://user-images.githubusercontent.com/43517080/219105972-62f44e65-ac71-4fd8-9d56-305405474e1c.png) |
 |:--:|
-| * First impression of the question* |
+| <sup>*-  figure 1:*</sup> *First impression of the question* |
 
+## Question description
+The user is given a skyblue cube, they need to transform it into the green cube. The cube transforms when the user updates the input fields.
+
+## Student perspective
+
+| ![image](https://user-images.githubusercontent.com/43517080/219118766-bedebf56-67bd-4df1-838b-b98a4393ba89.png) |
+|:--:|
+| <sup>*-  figure 2:*</sup>  *When the user updates the input fields* |
+
+When the user updates the input field the cube is transformed
+
+| ![image](https://user-images.githubusercontent.com/43517080/219126215-cf5d8695-bebe-4ece-ab42-366c2fdeb3a7.png) |
+|:--:|
+| <sup>*-  figure 3:*</sup> *When the user submits the question* |
+
+When the user submits the question, STACK highlights the wrong matrix entries in red
+
+## Question code
 ### Question variables
 ```rust
 /* Default task cube parameters */
@@ -17,6 +42,7 @@ MScale:[1,1,1];
 MRotation:[45,15,100];
 color:"green";
 
+/*input this variable into the model answer if its not */
 M:matrix(MPosition,MScale,MRotation);
 
 /* User controlled cube parameters */
@@ -226,38 +252,32 @@ const debounce = (func, delay) => {
 
 
 //Give elements an Id and className
-var position =[];
-var scale=[];
-var rotation =[];
+var position =cube1.position;
+var scale=cube1.scale;
+var rotation =cube1.rotation;
+
+// sets input value equal to cube value here
+for (var f=0; f<3;f++) {
+    elements[f].value=position[f];
+    elements[f+3].value=scale[f];
+    elements[f+6].value= rotation[f];
+}
+
 for(var z=0; z< elements.length;z++) {
     elements[z].id=elementId[z];
     elements[z].placeholder=elementId[z];
-    elements[z].value=0;
-        //add input value restrictions here
 
         //give a className to inputs
         elements[z].className=classNames[0];
-
-
-
-
-        //add for loop that sets input value equal to cube value here
-
         
 
         //function to transform cube when input changes
         elements[z].addEventListener('input', debounce(function() {
-          console.log("s");
-               position = [0,0,0];
-               scale = [0,0,0];
-               rotation = [0,0,0]; 
- 
+
             for(var i=0; i<3;i++) {
                 position[i] = parseFloat(document.getElementsByClassName(classNames[0])[i].value);
                 scale[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+3].value);
                 rotation[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+6].value);
-
-
 
             }
             cube1.transform(position,scale,rotation);
