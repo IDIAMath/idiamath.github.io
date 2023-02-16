@@ -142,7 +142,7 @@ var elements = mainElement.getElementsByTagName("input");
 
 
 // creates a 3D cube
-				function create3DCube(position , scale, rotation, color) {
+function create3DCube(position , scale, rotation, color) {
           
            // require x,y, and z coordinates from user
            if (!Array.isArray(position) || position.length !== 3) {
@@ -234,8 +234,10 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
 
   return cubeProperties;
 }	
-var cube2 = create3DCube({#MPosition#},{#MScale#},{#MRotation#},{#color#});
-var cube1 = create3DCube({#MPosition_user#}, {#MScale_user#}, {#MRotation_user#},{#color_user#});
+var cube2 = 
+create3DCube({#MPosition#},{#MScale#},{#MRotation#},{#color#});
+var cube1 = 
+create3DCube({#MPosition_user#}, {#MScale_user#}, {#MRotation_user#},{#color_user#});
 
 //debounce function for input optimization
 const debounce = (func, delay) => {
@@ -250,7 +252,6 @@ const debounce = (func, delay) => {
     }, delay);
   };
 };
-
 
 
 //Give elements an Id and className
@@ -269,24 +270,20 @@ for(var z=0; z< elements.length;z++) {
     elements[z].id=elementId[z];
     elements[z].placeholder=elementId[z];
 
-        //give a className to inputs
-        elements[z].className=classNames[0];
+    //give a className to inputs
+    elements[z].className=classNames[0];
         
+    //function to transform cube when input changes
+    elements[z].addEventListener('input', debounce(function() {
 
-        //function to transform cube when input changes
-        elements[z].addEventListener('input', debounce(function() {
-
-            for(var i=0; i<3;i++) {
-                position[i] = parseFloat(document.getElementsByClassName(classNames[0])[i].value);
-                scale[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+3].value);
-                rotation[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+6].value);
+    for(var i=0; i<3;i++) {
+        position[i] = parseFloat(document.getElementsByClassName(classNames[0])[i].value);
+        scale[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+3].value);
+        rotation[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+6].value);
 
             }
             cube1.transform(position,scale,rotation);
             },500));
-
-    
-    
     
 }
 [[/jsxgraph]]
