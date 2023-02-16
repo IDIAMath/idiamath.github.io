@@ -48,15 +48,21 @@ random_function:inputs[k];
 ### Question text
 
 ```html
-<p style="font-size:1.3em">Select the partial derivative Fx for the function \[ {#random_function_f#}\]
+<p style="font-size:1.3em">Select the partial derivative Fx for the function 
+    \[ {#random_function_f#}\]
     <!--</p-->
 </p>
 <div class="checkbox-container" style="float:left">
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[1]#}">\[ {#inputs_fx[1]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[2]#}">\[ {#inputs_fx[2]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[3]#}">\[ {#inputs_fx[3]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[4]#}">\[ {#inputs_fx[4]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs_fx[5]#}" checked="">\[ None\: of\: the\: above\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class"
+     value="{#inputs_fx[1]#}">\[ {#inputs_fx[1]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+     value="{#inputs_fx[2]#}">\[ {#inputs_fx[2]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+     value="{#inputs_fx[3]#}">\[ {#inputs_fx[3]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+     value="{#inputs_fx[4]#}">\[ {#inputs_fx[4]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+     value="{#inputs_fx[5]#}" checked="">\[ None\: of\: the\: above\]</label><br>
 </div>
 ```
 #### CSS
@@ -122,13 +128,14 @@ axis: false
 });
 
 var box = [-10,10];
-var view = board.create('view3d', [[-6, -3], [8, 8],[box, box, box]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
+var view = board.create('view3d', [[-6, -3], [8, 8],[box, box, box]],
+{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
 
 view.D3.az_slide._smax = 12;
 
 // Draw function
 
-var F = board.jc.snippet('{#random_function_f#}', true, 'x,y', true); // JessieCode parsing
+var F = board.jc.snippet('{#random_function_f#}', true, 'x,y', true);
 
 var fGraph =view.create('functiongraph3d', [
 F,
@@ -138,7 +145,9 @@ box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 board.update();
 
 let inputs = document.getElementsByClassName("checkbox-class");
-var state = {'x':2, 'y':2, 'z':-5, 'az_slide':0.87 , 'el_slide':1.5, 'selected':inputs[inputs.length-1].value};
+var state = 
+{'x':2, 'y':2, 'z':-5, 'az_slide':0.87 , 'el_slide':1.5,
+'selected':inputs[inputs.length-1].value};
 var stateInput = document.getElementById(stateRef);
 if (stateInput.value){
 if(stateInput.value != '') {
@@ -147,11 +156,13 @@ state = JSON.parse(stateInput.value);
 }
 
 //the point that controlls the point on the graph;
-var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
+var Axy = view.create(
+'point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
 
 //the point reflected on the graph
 
-var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
+var A = view.create(
+'point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
 function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
 
 
@@ -159,13 +170,15 @@ function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' }
 
 const checkboxArray = document.querySelectorAll('.checkbox-class');
 const checkboxArrayLength = checkboxArray.length;
-var ans1n = document.getElementsByClassName('algebraic')[0].value=checkboxArray[checkboxArrayLength-1].value;
+var ans1n = 
+document.getElementsByClassName('algebraic')[0].value=
+checkboxArray[checkboxArrayLength-1].value;
 var cGraph="";
 var funcExpr="";
 function drawChecked(checkBoxValue){
 funcExpr = checkBoxValue;
 
-F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
+F = board.jc.snippet(funcExpr, true, 'x,y', true);
 cGraph =view.create('functiongraph3d', [
 F,
 box, // () =&gt; [-s.Value()*5, s.Value() * 5],
@@ -176,7 +189,8 @@ board.update();
 
 //change the input value when the user selects a different checkbox
 
-const checkboxContainers = document.querySelectorAll('.checkbox-container');
+const checkboxContainers = 
+document.querySelectorAll('.checkbox-container');
 for (let container of checkboxContainers) {
 container.addEventListener('change', setValue);
 }
@@ -184,12 +198,14 @@ var firstEntry=true;
 function setValue(event) {
 const checkbox = event.target;
 if (checkbox.classList.contains('checkbox-class')) {
-var ans1n = document.getElementsByClassName('algebraic')[0].value=checkbox.value;
+var ans1n =
+document.getElementsByClassName('algebraic')[0].value=
+checkbox.value;
 state.selected= checkbox.value;
 stateInput.value = JSON.stringify(state);
 
 
-//this is to connect the point to main function when the 'None of the above' checkbox is checked
+//connect the point to main function if the 'None of the above' checkbox is checked
 //if its the last element (if user selects the 'None' option)
 if({#inputs_fx[length(inputs_fx)]#}==checkbox.value) {
 
@@ -199,7 +215,7 @@ board.removeObject(fGraph,false);
 board.update();
 
 // redraw main graph
-F = board.jc.snippet('{#random_function_f#}', true, 'x,y', true); // JessieCode parsing
+F = board.jc.snippet('{#random_function_f#}', true, 'x,y', true);
 
 fGraph =view.create('functiongraph3d', [
 F,
