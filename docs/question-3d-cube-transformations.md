@@ -153,7 +153,7 @@ function create3DCube(position , scale, rotation, color) {
           scale = scale || [0.5, 0.5, 0.5];
           color = color || "blue";
 
-var point_attr = { withLabel: false, fixed:true, fillColor: 'red' ,label: { offset: [5, 5] } },
+var point_attr = { withLabel: false, fixed:true, fillColor: 'red',label:{offset:[5, 5]}},
 pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: color },
 		        
       faces = [];
@@ -197,7 +197,7 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
     [0, 3, 7, 4]
   ];
   for (var i = 0; i < facesArray.length; i++) {
-    faces.push(board.create('polygon', [points[facesArray[i][0]], points[facesArray[i][1]],
+    faces.push(board.create('polygon',[points[facesArray[i][0]],points[facesArray[i][1]],
     points[facesArray[i][2]], points[facesArray[i][3]]], {fillColor: color, borders: 
     { strokeWidth: 0.5 }}));
   }
@@ -277,9 +277,9 @@ for(var z=0; z< elements.length;z++) {
     elements[z].addEventListener('input', debounce(function() {
 
     for(var i=0; i<3;i++) {
-        position[i] = parseFloat(document.getElementsByClassName(classNames[0])[i].value);
-        scale[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+3].value);
-        rotation[i] = parseFloat(document.getElementsByClassName(classNames[0])[i+6].value);
+      position[i]= parseFloat(document.getElementsByClassName(classNames[0])[i].value);
+      scale[i]= parseFloat(document.getElementsByClassName(classNames[0])[i+3].value);
+      rotation[i]= parseFloat(document.getElementsByClassName(classNames[0])[i+6].value);
 
             }
             cube1.transform(position,scale,rotation);
