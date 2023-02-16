@@ -50,11 +50,17 @@ random_function:inputs[k];
 ```javascript
 <p style="font-size:1.3em">Select the function expression matching the function on the graph</p>
 <div class="checkbox-container" style="float:left">
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[1]#}" id="A">\[ {#inputs[1]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[2]#}" id="B">\[ {#inputs[2]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[3]#}" id="C">\[ {#inputs[3]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[4]#}" id="C">\[ {#inputs[4]#}\]</label><br>
-    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[5]#}" id="C" checked="checked">\[ None\: of\: the\: above\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+    value="{#inputs[1]#}" id="A">\[ {#inputs[1]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+    value="{#inputs[2]#}" id="B">\[ {#inputs[2]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+    value="{#inputs[3]#}" id="C">\[ {#inputs[3]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+    value="{#inputs[4]#}" id="C">\[ {#inputs[4]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" 
+    value="{#inputs[5]#}" id="C" checked="checked">
+    \[ None\: of\: the\: above\]</label><br>
 </div>
 
 <p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
@@ -110,13 +116,14 @@ axis: false
 });
 
 var box = [-10,10];
-var view = board.create('view3d', [[-6, -3], [8, 8],[box, box, box]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
+var view = board.create('view3d', [[-6, -3], [8, 8],[box, box, box]],
+{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
 
 view.D3.az_slide._smax = 12;
 
 // Draw function
 
-var F = board.jc.snippet('{#random_function#}', true, 'x,y', true); // JessieCode parsing
+var F = board.jc.snippet('{#random_function#}', true, 'x,y', true);
 
 var fGraph =view.create('functiongraph3d', [
 F,
@@ -126,7 +133,9 @@ box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 board.update();
 
 let inputs = document.getElementsByClassName("checkbox-class");
-var state = {'x':2, 'y':2, 'z':-5, 'az_slide':0.87 , 'el_slide':1.5, 'selected':inputs[inputs.length-1].value};
+var state = {'x':2, 'y':2, 'z':-5, 'az_slide':0.87 , 'el_slide':1.5,
+'selected':inputs[inputs.length-1].value};
+
 var stateInput = document.getElementById(stateRef);
 if (stateInput.value){
 if(stateInput.value != '') {
@@ -142,7 +151,8 @@ inputs[i].checked = true;
 }
 
 //the point that controlls the point on the graph;
-var Axy = view.create('point3d', [state['x'], state['y'], state['z']], { withLabel: false, color:'gray',strokeWidth:5 });
+var Axy = view.create('point3d', [state['x'], state['y'], state['z']],
+{ withLabel: false, color:'gray',strokeWidth:5 });
 
 // Update the stored state when the position of the point Axy changes.
 Axy.on('drag', function() {
@@ -153,8 +163,9 @@ stateInput.value = JSON.stringify(state);
 
 //the point reflected on the graph
 
-var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
-function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
+var A = view.create(
+'point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
+function(){return F(Axy.D3.X(),Axy.D3.Y())}],{ withLabel:false,color:'red'});
 
 //optimize the el and az scale
 view.D3.az_slide.setValue(state['az_slide']);
@@ -183,7 +194,8 @@ var t1 = board.create('text',[0,1,Axy.D3.X()]);
 
 const checkboxArray = document.querySelectorAll('.checkbox-class');
 const checkboxArrayLength = checkboxArray.length;
-var ans1n = document.getElementsByClassName('algebraic')[0].value=checkboxArray[checkboxArrayLength-1].value;
+var ans1n = document.getElementsByClassName('algebraic')[0].value=
+checkboxArray[checkboxArrayLength-1].value;
 
 
 //change the input value when the user selects a different checkbox
@@ -193,7 +205,8 @@ checkboxContainer.addEventListener('change', setValue);
 function setValue(event) {
 const checkbox = event.target;
 if (checkbox.classList.contains('checkbox-class')) {
-var ans1n = document.getElementsByClassName('algebraic')[0].value=checkbox.value;
+var ans1n = 
+document.getElementsByClassName('algebraic')[0].value=checkbox.value;
 state.selected = checkbox.value;
 stateInput.value = JSON.stringify(state);
 
