@@ -64,7 +64,7 @@ color_user:"skyblue";
 
 
 //element id's list and select which inputs to change id
-var elementId =["x","y","z","rotX","rotY","rotZ","scaleX","scaleY","scaleZ"];
+var elementId =["x","y","z","scaleX","scaleY","scaleZ","rotX","rotY","rotZ"];
 var classNames =["position","scale","rotate"];
 var mainElement =document.getElementsByClassName("matrixtable")[0];
 var elements = mainElement.getElementsByTagName("input");
@@ -150,7 +150,7 @@ function create3DCube(position , scale, rotation, color) {
           
   //require x,y, and z coordinates from user (may remove)
 if (!Array.isArray(position) || position.length !== 3) {
-   throw new Error('The "coordinates" parameter must be an array with three elements.');
+  throw new Error('The "coordinates" parameter must be an array with three elements.');
  }
  
  // give defualt values for optional parameters
@@ -160,7 +160,7 @@ scale = scale || [0.5, 0.5, 0.5];
 color = color || "blue";
 
 // attributes for the points, and faces
-var point_attr = { withLabel: false, fixed:true, fillColor: 'red',label:{offset:[5, 5]}},
+var point_attr = { withLabel:false,fixed:true,fillColor:'red',label:{offset:[5, 5]}},
 pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: color},	        
 faces = [];
 points = [];
