@@ -69,42 +69,47 @@ var classNames =["position","scale","rotate"];
 var mainElement =document.getElementsByClassName("matrixtable")[0];
 var elements = mainElement.getElementsByTagName("input");
 
-        var board = JXG.JSXGraph.initBoard(divid, {
-		        boundingbox: [-8, 8, 8, -8],
-		        keepaspectratio: false,
-		        axis: false
-		    });
+//create a jsxgraph board
+var board = JXG.JSXGraph.initBoard(divid,{
+boundingbox: [-8, 8, 8, -8],
+keepaspectratio: false,
+axis: false
+});
 
-        var view = board.create('view3d',
-		        [[-6, -3], [8, 8],
-		        [[-5, 5], [-5, 5], [-5, 5]]],
-		        {
-		            xPlaneRear: {visible: false},
-		            yPlaneRear: {visible: false},
-		            zPlaneRear: {visible: false}
-		        });
+//create a 3D view
+var view = board.create('view3d',
+[[-6, -3], [8, 8],
+[[-5, 5], [-5, 5], [-5, 5]]],
+{
+xPlaneRear: {visible: false},
+yPlaneRear: {visible: false},
+zPlaneRear: {visible: false}
+});
 
-			    var points =[];
-        var faces = [];
-		    var namesr =["A","B","C","D","E","F","G","H","i"];
+var points =[];
+var faces = [];
+var namesr =["A","B","C","D","E","F","G","H","i"];
 		    
-        //create rotation matrices geometry related
-        function getRotationMatrices(rotation) {
+//create rotation matrices geometry related
+function getRotationMatrices(rotation) {
   var radX = -rotation[0] * Math.PI / 180;
   var radY = -rotation[1] * Math.PI / 180;
   var radZ = -rotation[2] * Math.PI / 180;
 
-  var xRotation = [    [1, 0, 0],
+  var xRotation = [    
+    [1, 0, 0],
     [0, Math.cos(radX), -Math.sin(radX)],
     [0, Math.sin(radX), Math.cos(radX)],
   ];
 
-  var yRotation = [    [Math.cos(radY), 0, Math.sin(radY)],
+  var yRotation = [    
+    [Math.cos(radY), 0, Math.sin(radY)],
     [0, 1, 0],
     [-Math.sin(radY), 0, Math.cos(radY)],
   ];
 
-  var zRotation = [    [Math.cos(radZ), -Math.sin(radZ), 0],
+  var zRotation = [    
+    [Math.cos(radZ), -Math.sin(radZ), 0],
     [Math.sin(radZ), Math.cos(radZ), 0],
     [0, 0, 1],
   ];
@@ -113,9 +118,8 @@ var elements = mainElement.getElementsByTagName("input");
 }
 
 
-//translate a cube to origin, add the rotation matrices to rotate it
-//then retranslates it back to the original user provided coords
-  function rotateMatrix(pointCoords, position, rotMat, rotation) {
+//function to rotate a cube/matrix
+function rotateMatrix(pointCoords, position, rotMat, rotation) {
 
     //set cube coordinates to (0,0,0) in order to rotate the cube
   for (var i = 0; i < pointCoords.length; i++) {
@@ -144,23 +148,25 @@ var elements = mainElement.getElementsByTagName("input");
 // creates a 3D cube
 function create3DCube(position , scale, rotation, color) {
           
-           // require x,y, and z coordinates from user
-           if (!Array.isArray(position) || position.length !== 3) {
-    throw new Error('The "coordinates" parameter must be an array with three elements.');
-  }
-          rotation = rotation || [0, 0, 0];
-          position = position || [0, 0, 0];
-          scale = scale || [0.5, 0.5, 0.5];
-          color = color || "blue";
+  //require x,y, and z coordinates from user (may remove)
+if (!Array.isArray(position) || position.length !== 3) {
+   throw new Error('The "coordinates" parameter must be an array with three elements.');
+ }
+ 
+ // give defualt values for optional parameters
+rotation = rotation || [0, 0, 0];
+position = position || [0, 0, 0];
+scale = scale || [0.5, 0.5, 0.5];
+color = color || "blue";
 
+// attributes for the points, and faces
 var point_attr = { withLabel: false, fixed:true, fillColor: 'red',label:{offset:[5, 5]}},
-pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: color },
-		        
-      faces = [];
-      points = [];
+pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: color},	        
+faces = [];
+points = [];
 
 var rotMat =getRotationMatrices(rotation)
-
+//all 8 points for cube
 var phi = (1 + Math.sqrt(5)) * 0.5;
 var pointCoords = [  
   [position[0]-phi*scale[0], position[1]-phi*scale[1], position[2]-phi*scale[2]],
@@ -182,12 +188,12 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
 
 // Create the points for the cube 
   for (var i = 0; i < 8; i++) {
-    point_attr = { fixed:true,size:2, name:namesr[i], label: { offset: [5, 5] } }
+    point_attr = {fixed:true,size:2, name:namesr[i], label: { offset: [5, 5]}}
     var point = view.create('point3d', pointCoords[i], point_attr);
     points.push(point);
   }
 
-  // Create the faces for the cube
+  // coordinates for cube faces
   var facesArray = [   
     [0, 1, 2, 3],
     [4, 5, 6, 7],
@@ -196,9 +202,12 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
     [1, 2, 6, 5],
     [0, 3, 7, 4]
   ];
+  
+  //create cube faces
   for (var i = 0; i < facesArray.length; i++) {
-    faces.push(board.create('polygon',[points[facesArray[i][0]],points[facesArray[i][1]],
-    points[facesArray[i][2]], points[facesArray[i][3]]], {fillColor: color, borders: 
+    faces.push(board.create(
+    'polygon',[points[facesArray[i][0]],points[facesArray[i][1]],
+    points[facesArray[i][2]],points[facesArray[i][3]]],{fillColor:color, borders: 
     { strokeWidth: 0.5 }}));
   }
   
@@ -254,36 +263,44 @@ const debounce = (func, delay) => {
 };
 
 
-//Give elements an Id and className
+// get the cube matrix values
 var position =cube1.position;
 var scale=cube1.scale;
 var rotation =cube1.rotation;
 
-// sets input value equal to cube value here
+
 for (var f=0; f<3;f++) {
+ // sets starting input values equal to cube value here
     elements[f].value=position[f];
     elements[f+3].value=scale[f];
     elements[f+6].value= rotation[f];
+    
+ // give inputs appropriate classNames
+    elements[f].className=classNames[0];
+    elements[f+3].className=classNames[1];
+    elements[f+6].className=classNames[2];
+
 }
-//change inputfield id, classname, and add function to handle user input
+
+//change inputfield id, and add function to handle user input
 for(var z=0; z< elements.length;z++) {
+//give inputs ids
     elements[z].id=elementId[z];
     elements[z].placeholder=elementId[z];
-
-    //give a className to inputs
-    elements[z].className=classNames[0];
         
     //function to transform cube when input changes
     elements[z].addEventListener('input', debounce(function() {
-
+    
+     //get new cube coordinates
     for(var i=0; i<3;i++) {
-      position[i]= parseFloat(document.getElementsByClassName(classNames[0])[i].value);
-      scale[i]= parseFloat(document.getElementsByClassName(classNames[0])[i+3].value);
-      rotation[i]= parseFloat(document.getElementsByClassName(classNames[0])[i+6].value);
+      position[i] = parseFloat(document.getElementById(elementId[i]).value);
+      scale[i] = parseFloat(document.getElementById(elementId[i+3]).value);
+      rotation[i] = parseFloat(document.getElementById(elementId[i+6]).value);
 
-            }
-            cube1.transform(position,scale,rotation);
-            },500));
+      }
+      //apply new coordinates
+    cube1.transform(position,scale,rotation);
+  },500));
     
 }
 [[/jsxgraph]]
