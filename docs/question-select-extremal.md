@@ -133,8 +133,9 @@ var yrang = {#yrang#};
 var zrang = {#zrang#};
 
 //Create 3D-board
-// Boundingbox sets the vertical and horizontal units and the position of the origin of the figure
-// For instance a boundingbox [-5,10,5,-10] has upper left corner at (-5,10) and lower right corner at (5,-10)
+// Boundingbox sets the vertical and horizontal units and the position of the origin of 
+//the figure. For instance a boundingbox [-5,10,5,-10] has upper left corner at (-5,10)
+//and lower right corner at (5,-10)
 var board = JXG.JSXGraph.initBoard(divid, {
 boundingbox: [xrang[0]-4,yrang[1]+4,xrang[1]+4,yrang[0]-4],
 keepaspectratio: false,
@@ -164,7 +165,8 @@ var localmax = {#localmax#};
   
 // Create the 3D view: -------
 /*The large array is of form [ [x,y], [w,h], [[x1,x2], [y1,y2], [z1,z2]] ]. 
-The arrays [x, y] and [w, h] define the 2D frame into which the 3D cube is (roughly) projected. 
+The arrays [x, y] and [w, h] define the 2D frame into which the 3D cube is
+(roughly) projected.
 [[x1, x2], [y1, y2], [z1, z2]] determines the coordinate ranges of the 3D cube. */
 
 var view = 
@@ -197,9 +199,11 @@ view.create('functiongraph3d',
 // Create points for every minimum the students musts find
 for (let i=0; i<localmin.length; i++){
 
-   p1min[i] = board2.create('point', [i,i], {name: "Min"+(i+1), color: "red"}); //Point in 2D plane
+//Point in 2D plane
+   p1min[i] = board2.create('point', [i,i], {name: "Min"+(i+1), color: "red"}); 
   
-   //Create the corresponding point in the bottom of the 3D plot - values bound to the 2D plot
+  //Create the corresponding point in the bottom of
+  //the 3D plot - values bound to the 2D plot
    p2min[i] = 
    view.create('point3d',
    [()=>p1min[i].X(), ()=>p1min[i].Y(), zrang[0]],{name: "Min"+(i+1), color: "red"});
@@ -333,8 +337,8 @@ errors_OK:sublist(errors_best, lambda([x], x[1]<maxError));
 /*List containing the indices of approved errors*/
 indices_OK:map(lambda([x],x[2]), errors_OK);
 
-/*Number of correctly indentified minimums correspond to the number of unique indices in
-indices_OK*/
+/*Number of correctly indentified minimums correspond to the number of unique
+indices in indices_OK*/
 correct_mins:length(unique(indices_OK));
 
 /*Same procedure for local max*/
