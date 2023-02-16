@@ -113,7 +113,8 @@ var elements = mainElement.getElementsByTagName("input");
 }
 
 
-//rotate the cube
+//translate a cube to origin, add the rotation matrices to rotate it
+//then retranslates it back to the original user provided coords
   function rotateMatrix(pointCoords, position, rotMat, rotation) {
 
     //set cube coordinates to (0,0,0) in order to rotate the cube
@@ -140,7 +141,7 @@ var elements = mainElement.getElementsByTagName("input");
 
 
 
-//must provide position. The other parameters are optional
+// creates a 3D cube
 				function create3DCube(position , scale, rotation, color) {
           
            // require x,y, and z coordinates from user
@@ -152,10 +153,8 @@ var elements = mainElement.getElementsByTagName("input");
           scale = scale || [0.5, 0.5, 0.5];
           color = color || "blue";
 
-					var point_attr = { withLabel: false, fixed:true, fillColor: 'red' ,label: { offset: [5, 5] } },
-		        // Cube
-            
-		        pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: color },
+var point_attr = { withLabel: false, fixed:true, fillColor: 'red' ,label: { offset: [5, 5] } },
+pol_attr = { borders: { strokeWidth: 0.5 }, fillColor: color },
 		        
       faces = [];
       points = [];
@@ -198,7 +197,9 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
     [0, 3, 7, 4]
   ];
   for (var i = 0; i < facesArray.length; i++) {
-    faces.push(board.create('polygon', [points[facesArray[i][0]], points[facesArray[i][1]], points[facesArray[i][2]], points[facesArray[i][3]]], {fillColor: color, borders: { strokeWidth: 0.5 }}));
+    faces.push(board.create('polygon', [points[facesArray[i][0]], points[facesArray[i][1]],
+    points[facesArray[i][2]], points[facesArray[i][3]]], {fillColor: color, borders: 
+    { strokeWidth: 0.5 }}));
   }
   
  
@@ -210,6 +211,7 @@ pointCoords = rotateMatrix(pointCoords,position,rotMat,rotation);
     rotation: rotation,
     position: position,
     color: color,
+    // transforms the 3Dcube
     transform: function(newPosition, newScale, newRotation, newColor) {
       this.position = newPosition || this.position;
       this.scale = newScale || this.scale;
@@ -262,7 +264,7 @@ for (var f=0; f<3;f++) {
     elements[f+3].value=scale[f];
     elements[f+6].value= rotation[f];
 }
-
+//change inputfield id, classname, and add function to handle user input
 for(var z=0; z< elements.length;z++) {
     elements[z].id=elementId[z];
     elements[z].placeholder=elementId[z];
