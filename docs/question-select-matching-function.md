@@ -48,7 +48,8 @@ random_function:inputs[k];
 ### Question text
 
 ```javascript
-<p style="font-size:1.3em">Select the function expression matching the function on the graph</p>
+<p style="font-size:1.3em">
+Select the function expression matching the function on the graph</p>
 <div class="checkbox-container" style="float:left">
     <label><input type="radio" name="answer" class="checkbox-class" 
     value="{#inputs[1]#}" id="A">\[ {#inputs[1]#}\]</label><br>
