@@ -73,7 +73,8 @@ D: fxx*fyy-(fxy)^2;
 /*Solve for critical points*/
 critical:solve([fx,fy],[x,y]);
 
-/*Function noDegen takes a list 'l' of solutions [ [x=a, y=b], ...] and returns a list of solutions not containing 'r'*/
+/*Function noDegen takes a list 'l' of solutions [ [x=a, y=b], ...] and returns a list of 
+solutions not containing 'r'*/
 noDegen(l,r):=sublist(l, lambda([ll], freeof(r,ll)));
 /*Remove degenerate solutions (solutions with free variables stored in %rnum_list)*/
 critical_nd: lreduce(noDegen,  %rnum_list,     critical);
@@ -102,7 +103,8 @@ Some lines should be changed by the teacher:
 ### Question text
 
 ```html
-<p>Given a surface defined by z=f(x,y), shown in the top figure, determine local minimums and maximums by dragging the min/max points in the bottom figure</p><br>
+<p>Given a surface defined by z=f(x,y), shown in the top figure, determine local
+minimums and maximums by dragging the min/max points in the bottom figure</p><br>
 
 <p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
 <p style="display:none">[[input:ans2]][[validation:ans2]]</p>
@@ -140,9 +142,12 @@ axis: false
 });
 
 //Create the 2D board
-var board2 = JXG.JSXGraph.initBoard(divid2, {boundingbox: [xrang[0],yrang[1],xrang[1],yrang[0]], axis: true});
+var board2=
+JXG.JSXGraph.initBoard(divid2,
+{boundingbox: [xrang[0],yrang[1],xrang[1],yrang[0]], axis: true});
 
-//Add the 3D board as a child of the 2D board, such that the 3D figure updates when we manipulate the 2D figure
+//Add the 3D board as a child of the 2D board,
+//such that the 3D figure updates when we manipulate the 2D figure
 board2.addChild(board);
 
 //Arrays holding the min/max points in the 2D figure
@@ -162,34 +167,49 @@ var localmax = {#localmax#};
 The arrays [x, y] and [w, h] define the 2D frame into which the 3D cube is (roughly) projected. 
 [[x1, x2], [y1, y2], [z1, z2]] determines the coordinate ranges of the 3D cube. */
 
-var view = board.create('view3d', [[xrang[0], yrang[0]], [xrang[1]-xrang[0],yrang[1]-yrang[0]],[xrang, yrang, zrang]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
+var view = 
+board.create('view3d',
+[[xrang[0], yrang[0]], [xrang[1]-xrang[0],yrang[1]-yrang[0]],[xrang, yrang, zrang]],
+{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
 
 //-----------
 
-//Create a slider that scales the z-values [0,0.2,2] are the [min,start,max] values of sliders
+//Create a slider that scales the z-values [0,0.2,2] are the
+//[min,start,max] values of sliders
 var z_scale = board.create('slider', [[-3,-5], [3,-5],[0,0.2,2]], {
    name: "Skaler z-akse",
    point1: {frozen: true},
    point2: {frozen: true}
 });
 
-var FF = board.jc.snippet('{#f#}', true, 'x,y', true); //Jessiecode parsing of function from maxima
+//Jessiecode parsing of function from maxima
+var FF = board.jc.snippet('{#f#}', true, 'x,y', true);
 
-var F = (x,y)=>z_scale.Value()*FF(x,y); //Scale function value by multiplying with z_scale slider value
+//Scale function value by multiplying with z_scale slider value
+var F = (x,y)=>z_scale.Value()*FF(x,y); 
 
 //Create the surface plot
-var c = view.create('functiongraph3d',[F,xrang,yrang], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+var c =
+view.create('functiongraph3d',
+[F,xrang,yrang], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
 
 
 // Create points for every minimum the students musts find
 for (let i=0; i<localmin.length; i++){
+
    p1min[i] = board2.create('point', [i,i], {name: "Min"+(i+1), color: "red"}); //Point in 2D plane
   
    //Create the corresponding point in the bottom of the 3D plot - values bound to the 2D plot
-   p2min[i] = view.create('point3d', [()=>p1min[i].X(), ()=>p1min[i].Y(), zrang[0]], {name: "Min"+(i+1), color: "red"});
+   p2min[i] = 
+   view.create('point3d',
+   [()=>p1min[i].X(), ()=>p1min[i].Y(), zrang[0]],{name: "Min"+(i+1), color: "red"});
 
-   //Create corresponding point on the surface plot - bound by the function value, and (x,y) of the 2D point
-   var ptemp = view.create('point3d', [()=>p1min[i].X(), ()=>p1min[i].Y(), ()=>F(p1min[i].X(), p1min[i].Y())], {withLabel: false});
+   //Create corresponding point on the surface plot - bound by the function value,
+   //and (x,y) of the 2D point
+   var ptemp=
+   view.create('point3d',
+   [()=>p1min[i].X(), ()=>p1min[i].Y(), ()=>F(p1min[i].X(), p1min[i].Y())],
+   {withLabel: false});
 
    //Lastly, create a dashed line from the base point to the point on the surface plot
    view.create('line3d', [p2min[i], ptemp], {dash: 1});
@@ -197,10 +217,18 @@ for (let i=0; i<localmin.length; i++){
 
 //Same procedure for the maximal values
 for (let i=0; i<localmax.length; i++){
-   p1max[i] = board2.create('point', [i,i], {name: "Max"+(i+1), color: "blue"});
-   p2max[i] = view.create('point3d', [()=>p1max[i].X(), ()=>p1max[i].Y(), zrang[0]], {name: "Max"+(i+1), color: "blue"});
-   var ptemp = view.create('point3d', [()=>p1max[i].X(), ()=>p1max[i].Y(), ()=>F(p1max[i].X(), p1max[i].Y())], {withLabel: false});
-   view.create('line3d', [p2max[i], ptemp], {dash: 1});
+   p1max[i] =
+   board2.create('point',
+   [i,i], {name: "Max"+(i+1), color: "blue"});
+   p2max[i] = 
+   view.create('point3d',
+   [()=>p1max[i].X(), ()=>p1max[i].Y(), zrang[0]],
+   {name: "Max"+(i+1), color: "blue"});
+   var ptemp = 
+   view.create('point3d',
+   [()=>p1max[i].X(), ()=>p1max[i].Y(), ()=>F(p1max[i].X(), p1max[i].Y())],
+   {withLabel: false});
+   view.create('line3d',[p2max[i], ptemp], {dash: 1});
 }
 
 
@@ -210,7 +238,8 @@ var answer_min = document.getElementById(points_min_out);
 var answer_max=document.getElementById(points_max_out);
 var state = document.getElementById(stateRef);
 
-//Check if student has started manipulated the boards earlier, and load the state of the graph
+//Check if student has started manipulated the boards earlier,
+//and load the state of the graph
 if (state.value && state.value != "")
 {
    var newState = JSON.parse(state.value);
@@ -229,7 +258,8 @@ if (state.value && state.value != "")
 
 board2.update();
 
-//Set an update function that sets the answer variables in stack to the points the student has selected
+//Set an update function that sets the answer variables in stack to the points the
+//student has selected
 board.on('update', function() {
 
    //Arrays of min/max points
@@ -282,16 +312,19 @@ lenlocalmax:length(localmax);
 /*Function dist(u,v) returns the distance between points u and v*/
 dist(u,v):=float(sqrt((u[1]-v[1])^2+(u[2]-v[2])^2));
 
-/*Function dists(u,l) takes a point 'u' and a list of points 'l', and returns a list with the distances between 'u' and the points in 'l'*/
+/*Function dists(u,l) takes a point 'u' and a list of points 'l',
+and returns a list with the distances between 'u' and the points in 'l'*/
 dists(u,l):=map(lambda([x],dist(u,x)), l);
 
 /*'errors' holds the distances from the points the student found, to all the minimums*/
 errors:map(lambda([x],dists(x,localmin)),ans1);
 
-/*bestErrorWithIndex takes a list 'e' of errors, and returns a list with the smallest error and its index*/
+/*bestErrorWithIndex takes a list 'e' of errors, and returns a list with the 
+smallest error and its index*/
 bestErrorWithIndex(e):=[lmin(e), first(sublist_indices(e, lambda([x], x=lmin(e))))];
 
-/*Find the smallest distance from all the student's points to the minimums, along with the minimums index*/
+/*Find the smallest distance from all the student's points to the minimums, along with 
+the minimums index*/
 errors_best:map(bestErrorWithIndex, errors);
 
 /*Find which of the best errors are smaller than maxError*/
@@ -300,7 +333,8 @@ errors_OK:sublist(errors_best, lambda([x], x[1]<maxError));
 /*List containing the indices of approved errors*/
 indices_OK:map(lambda([x],x[2]), errors_OK);
 
-/*Number of correctly indentified minimums correspond to the number of unique indices in indices_OK*/
+/*Number of correctly indentified minimums correspond to the number of unique indices in
+indices_OK*/
 correct_mins:length(unique(indices_OK));
 
 /*Same procedure for local max*/
