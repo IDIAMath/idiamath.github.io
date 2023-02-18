@@ -36,10 +36,23 @@ When the user submits the question, STACK highlights the wrong matrix entries in
 ## Question code
 ### Question variables
 ```rust
+/* generate a random list of numbers [x,y,z] between a given range*/
+matrix_position: 
+matrixmap(lambda([ex], float(rand_with_prohib(-5, 5, [0]))), zeromatrix(1, 3));
+matrix_scale: 
+matrixmap(lambda([ex], float(rand_with_prohib(1,10, [0])/10)), zeromatrix(1, 3));
+matrix_rotation: 
+matrixmap(lambda([ex], float(rand_with_prohib(0,359,[500]))), zeromatrix(1, 3));
+
+/*create a list of of the random numbers from matrices*/
+DPosition: makelist(matrix_position[1][i], i, 1, 3);
+DScale: makelist(matrix_scale[1][i], i, 1, 3);
+DRotation: makelist(matrix_rotation[1][i], i, 1, 3);
+
 /* Default task cube parameters */
-MPosition:[1,5,3];
-MScale:[1,1,1];
-MRotation:[45,15,100];
+MPosition:DPosition;
+MScale:DScale;
+MRotation:DRotation;
 color:"green";
 
 /*input this variable into the model answer if its not */
@@ -55,7 +68,7 @@ color_user:"skyblue";
 ### Question Text
 
 ```javascript
-<p id="p">Transform the {#color_user#} cube into the {#color#} cube</p>
+<p id="p">Transform the {#color_user#} cube into the {#color#}  </p>
 [[jsxgraph height='850px' width='850px']]
 
 //remove qoutation marks from html<p> element
@@ -73,7 +86,14 @@ var elements = mainElement.getElementsByTagName("input");
 var board = JXG.JSXGraph.initBoard(divid,{
 boundingbox: [-8, 8, 8, -8],
 keepaspectratio: false,
-axis: false
+axis: false,
+ zoom: {
+            factorX: 1.1,
+            factorY: 1.1,
+            wheel: true,
+            needshift: true,
+            eps: 0.5
+        }
 });
 
 //create a 3D view
@@ -289,8 +309,13 @@ for(var z=0; z< elements.length;z++) {
     elements[z].placeholder=elementId[z];
         
     //function to transform cube when input changes
-    elements[z].addEventListener('input', debounce(function() {
-    
+    elements[z].addEventListener('input', debounce(function(e) {
+
+    //if input is empty set it to 0
+    if (!e.target.value) {
+    e.target.value = 0;
+  }
+
      //get new cube coordinates
     for(var i=0; i<3;i++) {
       position[i] = parseFloat(document.getElementById(elementId[i]).value);
