@@ -25,7 +25,7 @@ The user is given a skyblue cube, they need to transform it into the green cube.
 |:--:|
 | <sup>*-  figure 2:*</sup>  *When the user updates the input fields* |
 
-When the user updates the input field the cube is transformed
+When the user updates the input field the cube is transformed. If an input field is left empty, it is filled with the value '0'. This is because sometimes users forget something and the cube disapears because all inputs must be filled.
 
 | ![image](https://user-images.githubusercontent.com/43517080/219126215-cf5d8695-bebe-4ece-ab42-366c2fdeb3a7.png) |
 |:--:|
