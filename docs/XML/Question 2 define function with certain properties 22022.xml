@@ -98,11 +98,6 @@ board.update();
       <text><![CDATA[a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0])
 
-de:ans1;
-ez:funcExpr2;
-ef:ev(ez,x=5,y=5);
-es:ef;
-
 rand_question:rand_with_prohib(0,3,[0]);
 question_text:if (rand_question = 1) then positive else if (rand_question = 2) then negative else "different in regards to the sign infront of them, example: fx = -5 fy =-1 fxy = 0.  is not valid because -1 and -5 are both negative";
 

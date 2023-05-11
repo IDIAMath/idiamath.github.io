@@ -8,16 +8,16 @@ theme: minima
 
 > Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero.
 
-## Part 1
-
-| ![Capture](https://user-images.githubusercontent.com/43517080/178970093-ca6c50b4-d9b4-45a5-9687-575a896a4fc0.PNG) |
+| ![image](https://user-images.githubusercontent.com/43517080/212041412-d46e3d60-d03b-41d1-ac42-201546c67ecf.png) |
 |:--:|
-| *This image shows the students first view of the question* |
+| * First impression of the question* |
 
 ### Question description
-Find a point on the functions where all first order partial derivative `(Fx,Fy,Fxy)` values on the corresponding point provide unique signs from each other `(+, -, 0/neutral)`.
+Find one (x,y) **coordinates** on the functions where all first order partial derivative `(Fx,Fy,Fxy)` values on the corresponding coordinates provide values with unique signs from each other `(+, -, 0/neutral)`.
 
-- [XML Code](XML/Question 1 part 1 unknown F - 202207.xml)
+In different words: the signs infront of the real numbers derived from inputing the coordinates into the partial derivatives of a given function should be different from each other. We have three unique signs in math: 0, +, and - (plus, minus and 0/neutral).
+
+- [XML Code](XML/Question 1 Interpret partial derivatives.xml)
 
 #### Example
 
@@ -30,18 +30,10 @@ The answer would be for example `[ any_negative_number, 1]`
 ### Student perspective
 The student has to type in the correct answer in the `[x,y]` input field.
 
-#### Visible on hover
-Check this box if you want all other graphs to become invisible when you hover over one graph
-
-| ![cursorHover](https://user-images.githubusercontent.com/43517080/178970454-c67b02e0-ce4a-4d4c-a747-53f26593c972.PNG) |
-|:--:| 
-| *The above image shows the visible on hover functionality, where the student is able to hover over one graph to make all other graphs invisible* |
-
-
 #### Show/hide
 Check this box if you want to hide a given graph
 
-| ![hiddenGraph](https://user-images.githubusercontent.com/43517080/178970723-a23680ae-f859-4c6d-92b7-7bf311f77f45.PNG) |
+| ![HiddenGraph](https://user-images.githubusercontent.com/43517080/212041555-9bfa098b-bbb0-4b13-afb3-0e64f0db4580.png) |
 |:--:|
 | *The above image displays how the student can check a checkbox corresponding to a given graph, to set change the mentioned graphs visibility* |
 
@@ -53,12 +45,14 @@ The teacher does not have to change anything, but they may choose to add or dele
 | *the above image shows which values the teacher may choose to change* |
 
 
-## Quesion code
+## Question code
 
 
-### Quesion variables
-
-```html
+### Question variables
+We create 2 variables a and b that have a random number ranging between 10 and -10. These numbers can be multiplied by the function to achieve a level of 'randomness'.
+The **f** variable is where we store the function.
+variables: `fy`,`fx` and `fxy` give us the needed partial derivatives for the function **f**.
+```rust
 a:rand_with_prohib(-10,10,[0]);
 b:rand_with_prohib(-10,10,[0]);
 f:x*y^2-x;
@@ -72,43 +66,28 @@ The function to displayed is
 \[ f(x,y) = a\cdot x\cdot y^2 - b\cdot x \]
 
 
-### Quesion text
+### Question text
+The objectives here are the following:
+- Display the main function and its desired partial derivatives. 
+- Be able to hide any given function by crossing a checkbox
+## the below description is OUTDATED (will upadte soon)
+The proposed objectives can be achieved following these procedures:
+- **1 Segment** We create and plot the functions, then we store them in an array 
+- **2 Segment** Here a for loop is used to create a checkbox for each function.
+- **3 Segment** The **'graphSelectVisibility'** function detects weather a checkbox element is checked or unchecked. It's activated when a user clicks on input element of type 'checkbox'.
 
-```html
-<p>drag the black point to move the red point on the graph</p>
 
 
-
+```javascript
+<p>drag the black point to move the red point on the graph {#p#}</p>
 
 <p></p>
 <p><span style="font-size: 0.9375rem;" id="question">Given a surface defined by z=f(x,y), and Fxy where exact expression for f is unknown. Select a point where partial derivatives are positive/negative/zero</span><br></p>
 
-[[jsxgraph height='750px' width='1550px']]
+[[jsxgraph height='750px' width='1550px' input-ref-stateStore="stateRef"]]
 
 // set the value of input field to []
 document.getElementsByClassName("algebraic")[0].value = "[x,y]";
-
-// checkbox visibility on hover creation
-
-var checkbox = document.createElement("input");
-var span = document.createElement("span");
-var br = document.createElement("br");
-var br2 = document.createElement("br");
-
-checkbox.setAttribute("type","checkbox");
-span.innerHTML = `Visible on hover`;
-document.getElementsByClassName("clearfix")[0].appendChild(span);
-document.getElementsByClassName("clearfix")[0].appendChild(checkbox);
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(br2);
-
-
-checkbox.addEventListener("change",graphHoverVisibility);
-
-//constants
-var functionArr = [];
-var labelArr = [];
-var selected = false;
 
 var board = JXG.JSXGraph.initBoard(divid, {
 boundingbox: [-8, 8, 8, -8],
@@ -129,17 +108,21 @@ var FExpr = '{#f#}';
 
 var F = board.jc.snippet(FExpr, true, 'x,y', true);
 var FGraph = view.create('functiongraph3d',[F,box,box,], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
-functionArr.push(FGraph);
-FGraph.setLabel(FExpr);
-labelArr.push(FExpr);
 
-
+var state = {'x':2, 'y':2, 'z':-5, 'az_slide':0.87 , 'el_slide':1.5};
+var stateInput = document.getElementById(stateRef);
+if (stateInput.value){
+if(stateInput.value != '') {
+state = JSON.parse(stateInput.value);
+}
+}
 
 //the point that controlls the point on the graph;
-var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
+var Axy = view.create('point3d', [state['x'], state['y'], state['z']], { withLabel: false, color:'gray',strokeWidth:5 });
 
 //the point reflected on the graph
 var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
+
 
 //graph fxy
 var FxyExpr = '{#fxy#}';
@@ -152,110 +135,76 @@ box,
 box,
 ], { strokeWidth: 0.5, stepsU: 70, stepsV: 70,color:'orange'});
 
-functionArr.push(FxyGraph);
-FxyGraph.setLabel(FxyExpr);
-labelArr.push(FxyExpr);
 
+// checkbox to show/hide main function {#f#} main function
+var checkboxF = board.create('checkbox', [0, 4, 'Toggle {#f#}']);
 
+JXG.addEvent(checkboxF.rendNodeCheckbox, 'change', function() {
+if (this.Value()) {
+FGraph.setAttribute({visible:false});
 
-
-
-
-
-
-
-
-/* create checkbox for every function3d .
-the 'advantage' of lack of element tracing is
-i know in which order i created the graphs
-*/
-for(var i = 0; !(i == functionArr.length);i++) {
-var input = document.createElement("input");
-var span = document.createElement("span");
-var br = document.createElement("br");
-
-
-input.setAttribute("type","checkbox");
-input.setAttribute("class","graphToggle");
-span.innerHTML = "hide/show "+ labelArr[i];
-document.getElementsByClassName("clearfix")[0].appendChild(span);
-document.getElementsByClassName("clearfix")[0].appendChild(input);
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-input.addEventListener("change",graphSelectVisibility);
-
-}
-
-/* on/off graph toggle*/
-
-function graphSelectVisibility() {
-
-var input = document.getElementsByClassName('graphToggle');
-for(var i =0; !(i == functionArr.length);i++){
-if(input[i].checked == true) {
-functionArr[i].setAttribute({visible:false});
 } else {
-functionArr[i].setAttribute({visible:true});
+FGraph.setAttribute({visible:true});
 }
+}, checkboxF);
+
+
+// checkbox to show/hide main partial derivative {#fxy#} function
+var checkboxFxy = board.create('checkbox', [0, 6, 'Toggle {#fxy#} ']);
+
+JXG.addEvent(checkboxFxy.rendNodeCheckbox, 'change', function() {
+if (this.Value()) {
+FxyGraph.setAttribute({visible:false});
+
+} else {
+FxyGraph.setAttribute({visible:true});
 }
-}
-
-FxGraph.setAttribute({highlightStrokeColor:'#f5ad42'});
-FGraph.setAttribute({highlightStrokeColor:'#00ccff'})
+}, checkboxFxy);
 
 
-/*this function hides all other graphs
-*/
-function selectedGraph(graph) {
-graph.on('mouseover', function(){
-if(!selected) {
-if (checkbox.checked ===false) {
-selected = true;
+// Update the stored state when the position of the point Axy changes.
+Axy.on('drag', function() {
+state.x = Axy.X();
+state.y = Axy.Y();
+stateInput.value = JSON.stringify(state);
+});
 
-if(graph.getAttribute(highlight) == true) {
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i]
-}
-}
+//optimize the el and az scale
+view.D3.az_slide.setValue(state['az_slide']);
+view.D3.el_slide.setValue(state['el_slide']);
+board.update();
 
-}else {
-graph.setAttribute({highlight:true});
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i].setAttribute({visible:false});
-}
+//store the value fo the az and el scale when user adjusts it
+view.D3.az_slide.on('drag', function() {
+var az_slide_value = view.D3.az_slide.Value();
+state.az_slide = az_slide_value;
+stateInput.value = JSON.stringify(state);
+});
 
-graph.setAttribute({visible:true});
+view.D3.el_slide.on('drag', function() {
+var el_slide_value = view.D3.el_slide.Value();
+state.el_slide = el_slide_value;
+stateInput.value = JSON.stringify(state);
+});
 
+var t1 = board.create('text',[0,1,Axy.D3.X()]);
 
-graph.on('mouseout', function(){
-for(var i =0; !(i == functionArr.length); i++) {
-functionArr[i].setAttribute({visible:true});
-}
-selected = false;
-})
-}
-
-}
-})
-}
-
-
-function graphHoverVisibility() {
-
-if (checkbox.checked ===true) {
-
-for(var c =0; !(c == functionArr.length); c++) {
-selectedGraph(functionArr[c]);
-}
-}//end if
-}//end functionvisibility
 
 [[/jsxgraph]]
 <p></p>
 <p><span>The point = [[input:ans1]][[validation:ans1]] </span></p>
+<p>[[input:stateStore]] [[validation:stateStore]]</p>
 ```
 
 ### Feedback variabels
-```html
+The objective here is:
+- Determine if the signs infront of the real numbers derived from inputing the coordinates into the partial derivatives of a given function are indeed different from each other as the question descriptions states
+
+#### Procedure:
+We need to check for each partial derivative, which sign it provides on the provided user coordinates. give a score of 6 if a partial derivative is equal to zero, a score of 3 if it is a positive number, and a score of 1 if it is a negative number. If the values from partial derivatives are unique (unique signs infront of all 3 values), then they should add up to 10. The numbers 1, 3 and 6 are not chosen randomley, rather strategically (think combinatorics).
+
+Lastley if the score adds up to 10 we set the student answer to be the correct answer. Otherwise we set a random long integer to be the correct answer, this is because we are required to insert an answer for the question. Ideally we would compute all the possible coordinates that would satisfy the requirements for a correct answer (unique signs), but it is almost impossible to do; so, we choose this approach instead.
+```rust
 score:0;
 sa1:if ev(fx,x=ans1[1],y=ans1[2]) = 0 then score: score+6 else if ev(fx,x=ans1[1],y=ans1[2]) >0 then score: score+3 else if ev(fx,x=ans1[1],y=ans1[2]) <0 then score:score +1; 
 sa2:if ev(fy,x=ans1[1],y=ans1[2]) = 0 then score: score+6 else if ev(fy,x=ans1[1],y=ans1[2]) >0 then score: score+3 else if ev(fy,x=ans1[1],y=ans1[2]) <0 then score:score +1; 
