@@ -25,7 +25,7 @@ github_username:  jekyll
 
 header_pages: 
   - /
-  - /about/
+  - //about/
 
 # Build settings
 markdown: kramdown
