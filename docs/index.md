@@ -26,6 +26,6 @@ permalink: /
 
 + [JSXGraph](JSXGraph) sandbox
 
-## Documentation
+## Documentation from Other Sources
 
 + [JSXGraph in Moodle](https://moodle.oulu.fi/question/type/stack/doc/doc.php/Authoring/JSXGraph.md)
