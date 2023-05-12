@@ -27,7 +27,7 @@ sections: [
   [ 'index', 'Front Page' ],
   [ 'about', 'About' ]
 ]
-pages: [
+header_pages: [
   [ 'index', 'Front Page' ],
   [ 'about', 'About' ]
 ]
