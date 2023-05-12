@@ -23,14 +23,9 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  jekyll
 
-sections: [
-  [ 'index', 'Front Page' ],
-  [ 'about', 'About' ]
-]
-header_pages: [
-  [ 'index', 'Front Page' ],
-  [ 'about', 'About' ]
-]
+header_pages: 
+  - index.html
+  - about.html
 
 # Build settings
 markdown: kramdown
