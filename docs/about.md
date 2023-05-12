@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About IDIAMath
+title: About
 permalink: /about/
 ---
 
