@@ -4,6 +4,7 @@
 
 title: Front page
 theme: minima
+permalink: /
 ---
 
 # Front page - sketches

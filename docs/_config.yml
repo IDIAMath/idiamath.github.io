@@ -24,8 +24,8 @@ twitter_username: jekyllrb
 github_username:  jekyll
 
 header_pages: 
-  - index.html
-  - about.html
+  - /
+  - about
 
 # Build settings
 markdown: kramdown
