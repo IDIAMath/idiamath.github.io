@@ -27,6 +27,10 @@ sections: [
   [ 'index', 'Front Page' ],
   [ 'about', 'About' ]
 ]
+pages: [
+  [ 'index', 'Front Page' ],
+  [ 'about', 'About' ]
+]
 
 # Build settings
 markdown: kramdown
