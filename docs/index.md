@@ -7,9 +7,11 @@ theme: minima
 permalink: /
 ---
 
-# Front page - sketches
+# Tutorials (Question Examples)
 
-## Question Tutorials under Construction
+# Sketches (questions under construction)
+
+## Visualising functions in two variables
 
 + Question 1 [Interpret partial derivatives](question/partial-derivative.md)
 + Question 2 [question-match-properties](question/match-properties.md)
@@ -18,6 +20,9 @@ permalink: /
 + Question 5 (XML only) [Tune 3D Quadric](XML/questions-jtc-Tune 3D quadric-20220617-1129.xml)
 + Question 6 [Select matching function](question/select-matching-function.md)
 + Question 7 [Select matching partial derivative](question/select-matching-partial-derivative.md)
+
+## Visualising solids in 3D
+
 + Question 8 [3d-cube-transformations](question/3d-cube-transformations.md)
 
 
