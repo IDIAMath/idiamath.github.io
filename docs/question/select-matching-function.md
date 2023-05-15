@@ -17,7 +17,7 @@ User has to select function expression that matches the one drawn on the graph. 
 
 
 xml code 
-- [XML Code](XML/question-select-matching-function.xml) 
+- [XML Code](../XML/question-select-matching-function.xml) 
 
 
 ## Question code

@@ -17,7 +17,7 @@ User has to select partial derivative for the given and plotted function express
 
 
 xml code 
-- [XML Code](XML/question-select-matching-partial-derivative.xml) 
+- [XML Code](../XML/question-select-matching-partial-derivative.xml) 
 
 
 ## Question code
