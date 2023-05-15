@@ -26,7 +26,7 @@ be complementary. STACK works to provide the user with input feedback
 in realtime. For example the user may type `xy` instead of `x*y`,
 STACK will highlight this error. This is useful as it omits the need for string manipulation in JS, saves time.
 
-- [XML Code](../XML/question-select-matching-function.xml)
+- [XML Code](../XML/match-properties.xml)
 
 ### Student perspective
 The student will type in the function that fits the criteria of the random question (1 of the 3) generated for them by clicking the **Draw** button.

@@ -1,35 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
-<!-- question: 5573  -->
+<!-- question: 5440  -->
   <question type="stack">
     <name>
-      <text>Question 2 define function with certain properties (Jonas-NYEST)</text>
+      <text>Select matching function(original, NYEST)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p></p>
-<p onclick="myFunction()" id="questiontext">
-Give an example of a function where all the first partial derivatives at \((x={#a#},y={#b#})\) are {#question_text#}<br></p>
+      <text><![CDATA[<p>Select the function expression matching the function on the graph</p>
+<div class="checkbox-container" style="float:left">
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[1]#}" id="A">\[ {#inputs[1]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[2]#}" id="B">\[ {#inputs[2]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[3]#}" id="C">\[ {#inputs[3]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[4]#}" id="C">\[ {#inputs[4]#}\]</label><br>
+    <label><input type="radio" name="answer" class="checkbox-class" value="{#inputs[5]#}" id="C" checked="checked">\[ None\: of\: the\: above\]</label><br>
+</div>
 
-<p style="display:none">[[input:p1]][[validation:p1]]</p>
-<p style="display:none">[[input:p2]][[validation:p2]]</p>
+[[jsxgraph height='850px' width='850px']]
+const head = document.querySelector('head');
+const style = document.createElement('style');
+style.setAttribute('type', 'text/css');
+style.innerHTML = `input[type="radio"] {
+position: relative;
+}
 
-[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef"]]
+input[type="radio"]:before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+border: 2px solid grey;
+background-color: white;
+}
 
-//elements created
-let btn = document.createElement("button");
-btn.innerHTML = "Draw Function";
-btn.setAttribute("type","button");
-let br = document.createElement("br");
+input[type="radio"]:after {
+content: "";
+position: absolute;
+top: 5px;
+left: 5px;
+width: 10px;
+height: 10px;
+border-radius: 50%;
+background-color: grey;
+}
 
-//set attributes
-var jsxgraph2 = document.getElementById("stack-jsxgraph-2");
-//append to document
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(btn);
+input[type="radio"]:checked:before {
+border-color: blue;
+}
 
+input[type="radio"]:checked:after {
+background-color: blue;
+}
+`;
 
-btn.addEventListener("click", myFunction);
+head.appendChild(style);
+
 
 var board = JXG.JSXGraph.initBoard(divid, {
 boundingbox: [-8, 8, 8, -8],
@@ -37,108 +64,66 @@ keepaspectratio: false,
 axis: false
 });
 
+var box = [-10,10];
+var view = board.create('view3d', [[-6, -3], [8, 8],[box, box, box]],{ xPlaneRear: {visible: false}, yPlaneRear: {visible:false}});
 
-var box = [-5, 5];
-var view = board.create('view3d',
-[
-[-6, -3], [8, 8],
-[box, box, box]
-],
-{
-xPlaneRear: {visible: false},
-yPlaneRear: {visible: false},
-});
 view.D3.az_slide._smax = 12;
 
-var scale_slider = board.create('slider', [[-7,-6],[5,-6],[0,1,2]], {name: "Skaler z-akse"});
-var slider_p = board.create('slider', [[-7,-6.5],[5,-6.5],[-1,0,1]], {name: "p"});
-var slider_q = board.create('slider', [[-7,-7],[5,-7],[-1,0,1]], {name: "q"});
-document.getElementById(pRef).value=1;
-document.getElementById(qRef).value=1;
-//slider_q.hide();
-stack_jxg.bind_slider(pRef,slider_p);
-stack_jxg.bind_slider(qRef,slider_q);
-board.update();
-var funcExpr = '';
-var p_bottom, p_graph, dashline;
-p_bottom = view.create('point3d', [1,1,-5]);
+// Draw function
 
-var F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
-// 3D surface
+var F = board.jc.snippet('{#random_function#}', true, 'x,y', true); // JessieCode parsing
 
-var fGraph = view.create('functiongraph3d', [
-F,
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
-
-var dFx, dFy, tangplane, tangx, tangy;
-
-function myFunction() {
-
-var ans1n = document.getElementsByClassName('algebraic')[0];
-funcExpr = ans1n.value;
-
-var funcExpr2 = ans1n.value;
-console.log({#ez#});
-if (funcExpr.includes("p")) {
-   slider_p.show();
-}else{
-   slider_p.hide();
-}
-if (funcExpr.includes("q")){
-   slider_q.show();
-}else{
-  slider_q.hide();
-}
-
-var questiontext = document.getElementById("questiontext");
-document.getElementById("questiontext").innerHTML = ` ${questiontext.innerHTML} ${funcExpr}`;
-
-board.removeObject(fGraph,false);
-board.removeObject(p_graph,false);
-board.removeObject(dashline,false);
-board.removeObject(tangplane,false);
-board.removeObject(tangx,false);
-board.removeObject(tangy,false);
-
-var h = 0.01 //Stepsize
-console.log("debug 1");
-board.jc.parse("e={#float(%e)#};");
-board.jc.parse("pi={#float(%pi)#};");
-console.log("debug 2");
-var FF = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
-F = (x,y) => scale_slider.Value()*FF(x,y);
-dFx = function () {
-   var x = p_bottom.D3.X();
-   var y = p_bottom.D3.Y();
-   return (F(x+h,y)-F(x-h,y))/(2*h);}
-dFy = function () {
-   var x = p_bottom.D3.X();
-   var y = p_bottom.D3.Y();
-   return (F(x,y+h)-F(x,y-h))/(2*h);}
-
-p_graph = view.create('point3d', [()=>p_bottom.D3.X(), ()=>p_bottom.D3.Y(), ()=>F(p_bottom.D3.X(), p_bottom.D3.Y())]);
-dashline = view.create('line3d', [p_bottom, p_graph], {dash: 1});
-tangplane = view.create('plane3d', [p_graph,[1,0,dFx],[0,1,dFy],[()=>-dFx(),dFx],[()=>-dFy(), dFy]], {fillOpacity: 0.8, fillColor: 'red'});
-tangx = view.create('line3d', [p_graph, [1,0,dFx],[0,dFx]]);
-tangy = view.create('line3d', [p_graph, [0,1,dFy],[0,dFy]]);
-fGraph =view.create('functiongraph3d', [
+var fGraph =view.create('functiongraph3d', [
 F,
 box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 ], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
 board.update();
 
-}
 
+//the point that controlls the point on the graph;
+var Axy = view.create('point3d', [2, 2, -5], { withLabel: false, color:'gray',strokeWidth:5 });
+
+//the point reflected on the graph
+
+var A = view.create('point3d',[ function() {return Axy.D3.X()}, function(){return Axy.D3.Y()},
+function(){return F(Axy.D3.X(), Axy.D3.Y())}], { withLabel: false, color:'red' });
+
+
+//optimize the view to best suit most functions in general
+
+view.D3.az_slide.setValue(0.87);
+view.D3.el_slide.setValue(1.5);
+board.update();
+
+//set the input value equal to the default selected checkbox
+
+const checkboxArray = document.querySelectorAll('.checkbox-class');
+const checkboxArrayLength = checkboxArray.length;
+var ans1n = document.getElementsByClassName('algebraic')[0].value=checkboxArray[checkboxArrayLength-1].value;
+
+
+//change the input value when the user selects a different checkbox
+
+const checkboxContainer = document.querySelector('.checkbox-container');
+checkboxContainer.addEventListener('change', setValue);
+function setValue(event) {
+const checkbox = event.target;
+if (checkbox.classList.contains('checkbox-class')) {
+var ans1n = document.getElementsByClassName('algebraic')[0].value=checkbox.value;
+
+}
+}
 [[/jsxgraph]]
-<p></p>
-<p><span>Your function, \(f(x,y) =\) [[input:ans1]][[validation:ans1]] </span></p>
-<p> If you'd like, you can include constants \(p,q\) in your expression, and tune their values with sliders in the graph plot </p>]]></text>
+
+
+
+
+
+<p style="display:none">[[input:ans1]] [[validation:ans1]]</p>]]></text>
     </questiontext>
     <generalfeedback format="html">
-      <text></text>
+      <text><![CDATA[<p dir="ltr" style="text-align: left;"></p><p dir="ltr"></p><br><p></p>]]></text>
     </generalfeedback>
     <defaultgrade>1</defaultgrade>
     <penalty>0.1</penalty>
@@ -148,34 +133,43 @@ board.update();
       <text>2022082900</text>
     </stackversion>
     <questionvariables>
-      <text><![CDATA[a:rand_with_prohib(-5,5,[0]);
-b:rand_with_prohib(-5,5,[0])
+      <text>/*random variables to randomize functions*/
+a:rand_with_prohib(-3,3,[0]);
+b:rand_with_prohib(-3,3,[0]);
 
-de:ans1;
-ez:funcExpr2;
-ef:ev(ez,x=5,y=5);
-es:ef;
+/* Function expressions one of which corresponds to the answer*/
+f1:a*3*x+b*4*y;
+f2:a*2*x-b*5*y;
+f3:a*1*x^2+b*2*y^2;
+f4:a*4*x^2+b*1*y^2;
+f5:a*2*x^2+b*1*y;
 
-rand_question:rand_with_prohib(0,3,[0]);
-question_text:if (rand_question = 1) then positive else if (rand_question = 2) then negative else "of opposite signs";]]></text>
+/*insert all the function expressions in an array*/
+inputs :[f1,f2,f3,f4,f5];
+
+/*Select a random function expression  from the array of functions*/
+k:rand_with_prohib(1,length(inputs),[0]);
+random_function:inputs[k];
+
+</text>
     </questionvariables>
     <specificfeedback format="html">
       <text>[[feedback:prt1]]</text>
     </specificfeedback>
     <questionnote>
-      <text>h</text>
+      <text>k</text>
     </questionnote>
     <questionsimplify>1</questionsimplify>
     <assumepositive>0</assumepositive>
     <assumereal>0</assumereal>
     <prtcorrect format="html">
-      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+      <text><![CDATA[<p dir="ltr" style="text-align: left;"><span><i></i></span>&nbsp;Correct answer, well done.<br></p>]]></text>
     </prtcorrect>
     <prtpartiallycorrect format="html">
-      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">&nbsp;Your answer is partially correct.<br></p>]]></text>
     </prtpartiallycorrect>
     <prtincorrect format="html">
-      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+      <text><![CDATA[<p dir="ltr" style="text-align: left;">&nbsp;Incorrect answer.<br></p>]]></text>
     </prtincorrect>
     <multiplicationsign>dot</multiplicationsign>
     <sqrtsign>1</sqrtsign>
@@ -187,43 +181,7 @@ question_text:if (rand_question = 1) then positive else if (rand_question = 2) t
     <input>
       <name>ans1</name>
       <type>algebraic</type>
-      <tans>Function_expression</tans>
-      <boxsize>15</boxsize>
-      <strictsyntax>1</strictsyntax>
-      <insertstars>0</insertstars>
-      <syntaxhint></syntaxhint>
-      <syntaxattribute>0</syntaxattribute>
-      <forbidwords></forbidwords>
-      <allowwords>q</allowwords>
-      <forbidfloat>0</forbidfloat>
-      <requirelowestterms>0</requirelowestterms>
-      <checkanswertype>0</checkanswertype>
-      <mustverify>1</mustverify>
-      <showvalidation>2</showvalidation>
-      <options></options>
-    </input>
-    <input>
-      <name>p1</name>
-      <type>numerical</type>
-      <tans>1</tans>
-      <boxsize>15</boxsize>
-      <strictsyntax>1</strictsyntax>
-      <insertstars>0</insertstars>
-      <syntaxhint></syntaxhint>
-      <syntaxattribute>0</syntaxattribute>
-      <forbidwords></forbidwords>
-      <allowwords></allowwords>
-      <forbidfloat>0</forbidfloat>
-      <requirelowestterms>0</requirelowestterms>
-      <checkanswertype>0</checkanswertype>
-      <mustverify>0</mustverify>
-      <showvalidation>0</showvalidation>
-      <options></options>
-    </input>
-    <input>
-      <name>p2</name>
-      <type>numerical</type>
-      <tans>1</tans>
+      <tans>random_function</tans>
       <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
@@ -244,26 +202,13 @@ question_text:if (rand_question = 1) then positive else if (rand_question = 2) t
       <autosimplify>1</autosimplify>
       <feedbackstyle>1</feedbackstyle>
       <feedbackvariables>
-        <text>score:0;
-q:p2;
-p:p1
-f:ans1;
-fx:diff(f,x);
-fy:diff(f,y);
-fxy:diff(fy,x);
-evfx:ev(fx,x=a,y=b);
-evfy:ev(fy,x=a,y=b);
-evfxy:ev(fxy,x=a,y=b);
-
-
-
-correct:if (is(equal(rand_question,3))) then (not is(equal(sign(evfx),sign(evfy)))) else (is(equal(sign(evfx),sign(evfy))));</text>
+        <text>ta: random_function;</text>
       </feedbackvariables>
       <node>
         <name>0</name>
         <answertest>AlgEquiv</answertest>
-        <sans>correct</sans>
-        <tans>true</tans>
+        <sans>ans1</sans>
+        <tans>ta</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
@@ -272,7 +217,7 @@ correct:if (is(equal(rand_question,3))) then (not is(equal(sign(evfx),sign(evfy)
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-1-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p> Correct!: <p> Your function, \(f(x,y) = {@f@}\) has partial derivatives \(f_x = {@fx@}\) and \(f_y = {@fy@}\), which evaluates to \(f_x ={@evfx@}\) and \(f_y={@evfy@}\) at ({@a@},{@b@}) </p></p>]]></text>
+          <text><![CDATA[<p dir="ltr" style="text-align: left;">You have found the correct function expression!</p>]]></text>
         </truefeedback>
         <falsescoremode>=</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -280,7 +225,7 @@ correct:if (is(equal(rand_question,3))) then (not is(equal(sign(evfx),sign(evfy)
         <falsenextnode>-1</falsenextnode>
         <falseanswernote>prt1-1-F</falseanswernote>
         <falsefeedback format="html">
-          <text><![CDATA[<p> Not correct: <p> Your function, \(f(x,y) = {@f@}\) has partial derivatives \(f_x = {@fx@}\) and \(f_y = {@fy@}\), which evaluates to \(f_x ={@evfx@}\) and \(f_y={@evfy@}\) at ({@a@},{@b@}) </p></p>]]></text>
+          <text><![CDATA[<p dir="ltr" style="text-align: left;">Try dragging the point on the graph, and see which output for x and y values are consistent with a provided function expressions.</p>]]></text>
         </falsefeedback>
       </node>
     </prt>
