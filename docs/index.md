@@ -23,7 +23,7 @@ permalink: /
 
 ## Visualising solids in 3D
 
-+ Question 8 [3d-cube-transformations](question/3d-cube-transformations.md)
++ Question 8 [3d-cube-transformations](solids/3d-cube-transformations.md)
 
 
 

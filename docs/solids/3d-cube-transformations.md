@@ -9,7 +9,7 @@ theme: minima
 > Two figures showing a 3D object and a rotation and/or translation of the same object.
 > Enter a matrix which transforms the first figure into the second.
 
-- [XML Code](../XML/Question 8 Transformation in 3D space.xml)
+- [XML Code](Question 8 Transformation in 3D space.xml)
 
 
 
