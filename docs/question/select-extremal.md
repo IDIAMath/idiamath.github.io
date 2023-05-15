@@ -357,8 +357,8 @@ This question utilizes a single response tree for ease and flexibility.
 Should the teacher to wish create seperate response trees for min/max values, they would need to copy the first two and last 5 lines, along with the functions `dist`, `dists`, and `bestErrorWithIndex` over to the "feedback variables" field in the new response tree.
 
 ### Partial Response Tree
-![node1](question-select-extremal-prt-node1.png)
-![node2](question-select-extremal-prt-node2.png)
+![node1](select-extremal-prt-node1.png)
+![node2](select-extremal-prt-node2.png)
 
 #### Node 1
 The response tree consists of two nodes. 
