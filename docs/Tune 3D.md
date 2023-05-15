@@ -21,7 +21,7 @@ value of $$a$$ can be controlled by a slider.
 The student will have to use the slider to find the value for $$a$$
 that makes the two functions coincide.
 
-- [XML Code](XML/questions-jtc-Tune 3D-20220617-1129.xml)
+- [XML Code](XML/question-tune-polynomial.xml)
 
 # How it works
 
