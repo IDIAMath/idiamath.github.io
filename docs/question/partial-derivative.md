@@ -6,11 +6,13 @@ theme: minima
 
 ## Question Interpretation
 
-> Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$ is unknown to a user, ask the user to select a point on it where partial derivatives are positive/negative/zero.
+> Given a a surface defined by $$z=f(x,y)$$, where exact expression for 
+$$f$$ is unknown to the student, ask the student to select a point 
+where the partial derivatives are positive/negative/zero.
 
 | ![image](https://user-images.githubusercontent.com/43517080/212041412-d46e3d60-d03b-41d1-ac42-201546c67ecf.png) |
 |:--:|
-| * First impression of the question* |
+| *First impression of the question* |
 
 ### Question description
 Find one (x,y) **coordinates** on the functions where all first order partial derivative `(Fx,Fy,Fxy)` values on the corresponding coordinates provide values with unique signs from each other `(+, -, 0/neutral)`.

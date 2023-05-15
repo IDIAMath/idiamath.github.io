@@ -3,6 +3,7 @@ title: STACK Question -  3d-cube-transformations
 usemathjax: true
 theme: minima
 ---
+
 # STACK Question 8 Interpretation
 
 > Two figures showing a 3D object and a rotation and/or translation of the same object.
