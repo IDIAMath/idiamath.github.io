@@ -6,20 +6,36 @@ theme: minima
 
 ## Question Interpretation
 
-> Given a a surface defined by $$z=f(x,y)$$, where exact expression for 
-$$f$$ is unknown to the student, ask the student to select a point 
-where the partial derivatives are positive/negative/zero.
+
+> Consider the following plot of the function $$z=f(x,y)$$.
+Select a point where all the partial derivatives are zero.
 
 | ![image](https://user-images.githubusercontent.com/43517080/212041412-d46e3d60-d03b-41d1-ac42-201546c67ecf.png) |
 |:--:|
 | *First impression of the question* |
 
+
+The **learning outcome** of the exercise is a better understanding of the
+meaning of derivatives, particularly a visual understanding in 3D.
+
+- [XML Code](../XML/Question 1 Interpret partial derivatives.xml)
+
 ### Question description
+
+1.  The question selects a random function $$f(x,y)$$ from a parametric class of
+    functions.
+2.  A surface plot of $$f(x,y)$$ is presented to the students.  The algebraic
+    form is kept secret.
+3.  The student selects a point in 3D space, where the partial derivative has
+    certain properties.  It should be possible to do this using GUI features
+    on the figure itself.
+4.  The question validates that the required properties hold.
+
+
 Find one (x,y) **coordinates** on the functions where all first order partial derivative `(Fx,Fy,Fxy)` values on the corresponding coordinates provide values with unique signs from each other `(+, -, 0/neutral)`.
 
 In different words: the signs infront of the real numbers derived from inputing the coordinates into the partial derivatives of a given function should be different from each other. We have three unique signs in math: 0, +, and - (plus, minus and 0/neutral).
 
-- [XML Code](../XML/Question 1 Interpret partial derivatives.xml)
 
 #### Example
 
