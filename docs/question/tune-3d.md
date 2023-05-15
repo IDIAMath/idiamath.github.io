@@ -5,7 +5,7 @@ usemathjax: true
 
 # Question
 
-![Screenshot - Tune 3D](Tune 3D.png)
+![Screenshot - Tune 3D](tune-3D.png)
 
 The student is given a plot of a function of the form
 
@@ -21,7 +21,7 @@ value of $$a$$ can be controlled by a slider.
 The student will have to use the slider to find the value for $$a$$
 that makes the two functions coincide.
 
-- [XML Code](XML/question-tune-polynomial.xml)
+- [XML Code](XML/tune-3d.xml)
 
 # How it works
 
