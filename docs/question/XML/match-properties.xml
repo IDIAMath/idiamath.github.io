@@ -1,141 +1,200 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <quiz>
-<!-- question: 5573  -->
+<!-- question: 234  -->
   <question type="stack">
     <name>
-      <text>Question 2 define function with certain properties (Jonas-NYEST)</text>
+      <text>Question 2 define function with certain properties (refaktor may 16)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p></p>
-<p onclick="myFunction()" id="questiontext">
-Give an example of a function where all the first partial derivatives at \((x={#a#},y={#b#})\) are {#question_text#}<br></p>
-
+      <text><![CDATA[<p>
+Give an example of a function where the first partial derivatives at \((x={@a@},y={@b@})\) are {@question_text@}<br></p>
+   
 <p style="display:none">[[input:p1]][[validation:p1]]</p>
 <p style="display:none">[[input:p2]][[validation:p2]]</p>
+<p style="display:none">[[input:stateStore]][[validation:stateStore]]</p>
 
-[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef"]]
+[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
 
-//elements created
-let btn = document.createElement("button");
-btn.innerHTML = "Draw Function";
-btn.setAttribute("type","button");
-let br = document.createElement("br");
+   var state = document.getElementById(stateRef); // Variable that holds the state of the board
+   let btn = document.getElementById("draw_button");//Referance to button that draws the graph
+   btn.addEventListener("click", drawFunction); // Add the function that runs when button is clicked
 
-//set attributes
-var jsxgraph2 = document.getElementById("stack-jsxgraph-2");
-//append to document
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(btn);
-
-
-btn.addEventListener("click", myFunction);
-
-var board = JXG.JSXGraph.initBoard(divid, {
-boundingbox: [-8, 8, 8, -8],
-keepaspectratio: false,
-axis: false
-});
+   //Create the board
+   var board = JXG.JSXGraph.initBoard(divid, {
+      boundingbox: [-8, 8, 8, -8],
+      keepaspectratio: false,
+      axis: false
+   });
 
 
-var box = [-5, 5];
-var view = board.create('view3d',
-[
-[-6, -3], [8, 8],
-[box, box, box]
-],
-{
-xPlaneRear: {visible: false},
-yPlaneRear: {visible: false},
-});
-view.D3.az_slide._smax = 12;
+   // Create the 3dView
+   var box = [-5, 5];
+   var view = board.create('view3d',
+      [
+         [-6, -3], [8, 8],
+         [box, box, box]
+      ],
+      {
+         xPlaneRear: {visible: false},
+         yPlaneRear: {visible: false},
+      });
 
-var scale_slider = board.create('slider', [[-7,-6],[5,-6],[0,1,2]], {name: "Skaler z-akse"});
-var slider_p = board.create('slider', [[-7,-6.5],[5,-6.5],[-1,0,1]], {name: "p"});
-var slider_q = board.create('slider', [[-7,-7],[5,-7],[-1,0,1]], {name: "q"});
-document.getElementById(pRef).value=1;
-document.getElementById(qRef).value=1;
-//slider_q.hide();
-stack_jxg.bind_slider(pRef,slider_p);
-stack_jxg.bind_slider(qRef,slider_q);
-board.update();
-var funcExpr = '';
-var p_bottom, p_graph, dashline;
-p_bottom = view.create('point3d', [1,1,-5]);
 
-var F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
-// 3D surface
-
-var fGraph = view.create('functiongraph3d', [
-F,
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
-
-var dFx, dFy, tangplane, tangx, tangy;
-
-function myFunction() {
-
-var ans1n = document.getElementsByClassName('algebraic')[0];
-funcExpr = ans1n.value;
-
-var funcExpr2 = ans1n.value;
-console.log({#ez#});
-if (funcExpr.includes("p")) {
-   slider_p.show();
-}else{
+   //Create sliders for scaling, and for the optional parameters
+   var scale_slider = board.create('slider', [[-7,-6],[5,-6],[0,1,2]], {name: "Skaler z-akse"});
+   var slider_p = board.create('slider', [[-7,-6.5],[5,-6.5],[-1,1,1]], {name: "p"});
+   var slider_q = board.create('slider', [[-7,-7],[5,-7],[-1,1,1]], {name: "q"});
+   slider_q.hide();
    slider_p.hide();
-}
-if (funcExpr.includes("q")){
-   slider_q.show();
-}else{
-  slider_q.hide();
-}
 
-var questiontext = document.getElementById("questiontext");
-document.getElementById("questiontext").innerHTML = ` ${questiontext.innerHTML} ${funcExpr}`;
+   //We bind the parameters slides to STACK's answer variables
+   //This let's Maxima use the values when grading
+   stack_jxg.bind_slider(pRef,slider_p);
+   stack_jxg.bind_slider(qRef,slider_q);
+   
+   //Variables for the draggable bottom point, 
+   //the corresponding point on the graph and a dashed line in between
+   var p_bottom, p_graph, dashline; 
 
-board.removeObject(fGraph,false);
-board.removeObject(p_graph,false);
-board.removeObject(dashline,false);
-board.removeObject(tangplane,false);
-board.removeObject(tangx,false);
-board.removeObject(tangy,false);
+   p_bottom = view.create('point3d', [1,1,-5]);
+   
+   //Variables used when drawing the graph
+   var dFx, dFy, tangplane, tangx, tangy, scale_x, scale_y, F, funcExpr, fGraph;
 
-var h = 0.01 //Stepsize
-console.log("debug 1");
-board.jc.parse("e={#float(%e)#};");
-board.jc.parse("pi={#float(%pi)#};");
-console.log("debug 2");
-var FF = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
-F = (x,y) => scale_slider.Value()*FF(x,y);
-dFx = function () {
-   var x = p_bottom.D3.X();
-   var y = p_bottom.D3.Y();
-   return (F(x+h,y)-F(x-h,y))/(2*h);}
-dFy = function () {
-   var x = p_bottom.D3.X();
-   var y = p_bottom.D3.Y();
-   return (F(x,y+h)-F(x,y-h))/(2*h);}
+   //drawFunction is called when the student writes a function in the answerfield ans1, 
+   //and clicks the "Draw function" button. drawFunction draws the function on the screen, along with 
+   //a tangent plane
+   //
+   function drawFunction() {
 
-p_graph = view.create('point3d', [()=>p_bottom.D3.X(), ()=>p_bottom.D3.Y(), ()=>F(p_bottom.D3.X(), p_bottom.D3.Y())]);
-dashline = view.create('line3d', [p_bottom, p_graph], {dash: 1});
-tangplane = view.create('plane3d', [p_graph,[1,0,dFx],[0,1,dFy],[()=>-dFx(),dFx],[()=>-dFy(), dFy]], {fillOpacity: 0.8, fillColor: 'red'});
-tangx = view.create('line3d', [p_graph, [1,0,dFx],[0,dFx]]);
-tangy = view.create('line3d', [p_graph, [0,1,dFy],[0,dFy]]);
-fGraph =view.create('functiongraph3d', [
-F,
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
-board.update();
+      //We get the function expression supplied by student
+      var ans1=document.getElementById(ans1Ref);
+      funcExpr = ans1.value;
 
-}
+      //If the function expression contains the tunable parameters p or q
+      //we show the sliders, else we hide them
+      if (funcExpr.includes("p")) {
+         slider_p.show();
+      }else{
+         slider_p.hide();
+      }
+      if (funcExpr.includes("q")){
+         slider_q.show();
+      }else{
+         slider_q.hide();
+      }
+
+      //Remove any previous graphs and planes
+      board.removeObject(fGraph,false);
+      board.removeObject(p_graph,false);
+      board.removeObject(dashline,false);
+      board.removeObject(tangplane,false);
+      board.removeObject(tangx,false);
+      board.removeObject(tangy,false);
+
+      //board.jc.parse("e={#float(%e)#};");  //substitute floating point values for e and pi
+      //board.jc.parse("pi={#float(%pi)#};"); //Needs some work
+      
+      
+      // We use a first order central difference to get numerical
+      // approximations for Fx and Fy
+      var h = 0.01 //Stepsize for finite difference
+      var FF = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing of function
+      F = (x,y) => scale_slider.Value()*FF(x,y); //Multiply function value with the scale_slider to scale it
+      
+      //Finite difference approximation of partial derivatives at the x-, y- 
+      //coordinates given by the draggable point on the bottom
+      dFx = function () {
+         var x = p_bottom.D3.X();
+         var y = p_bottom.D3.Y();
+         return (F(x+h,y)-F(x-h,y))/(2*h);
+      }
+      dFy = function () {
+         var x = p_bottom.D3.X();
+         var y = p_bottom.D3.Y();
+         return (F(x,y+h)-F(x,y-h))/(2*h);
+      }
+      
+      //Functions that gives the factor that normalizes the tangent plane
+      scale_x = ()=> 1.0/Math.sqrt(1+Math.pow(dFx(),2));
+      scale_y = ()=> 1.0/Math.sqrt(1+Math.pow(dFy(),2));
+
+      //Draw the point on the graph that corresponds to the bottom point
+      p_graph = view.create('point3d', [()=>p_bottom.D3.X(), ()=>p_bottom.D3.Y(), ()=>F(p_bottom.D3.X(), p_bottom.D3.Y())]);
+      //Draw a dashed line between graph point and bottom point
+      dashline = view.create('line3d', [p_bottom, p_graph], {dash: 1});
+
+      //Draw the "unit" tangent plane (Area 2) - [point, [direction1], [direction2], [length1], [length2]
+      //The directions are unit vectors from div(F) - the gives a factor of how much of the directions the plane spans
+      tangplane = view.create('plane3d', [p_graph,
+         [scale_x,0,()=>scale_x()*dFx()],
+         [0,scale_y,()=>scale_y()*dFy()],
+         [-0.8,0.8],[-0.8,0.8]], 
+         {fillOpacity: 0.8, fillColor: 'red'}
+      );
+      
+      //Gradient lines
+      tangx = view.create('line3d', [p_graph, [1,0,dFx],[0,dFx]]);
+      tangy = view.create('line3d', [p_graph, [0,1,dFy],[0,dFy]]);
+      
+      //Plot the graph
+      fGraph =view.create('functiongraph3d', [
+      F,
+      box,
+      box,
+      ], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+      board.update();
+
+   }; //End drawFunction
+
+
+
+
+   // Check if student has started working on the board earlier and load the state of the graph
+   if (state.value && state.value != "")
+   {
+      //Parse the string-representation of the state
+      var newState = JSON.parse(state.value);
+   
+      //Update the different, sliders to previous state
+      scale_slider.setValue(newState["scale_slider"]);
+      slider_p.setValue(newState["slider_p"]);
+      slider_q.setValue(newState["slider_q"]);
+      //elevation and rotation sliders
+      view.D3.el_slide.setValue(newState["el_slider"]);
+      view.D3.az_slide.setValue(newState["az_slider"]);
+      //Bottom control point
+      p_bottom.D3.coords = newState["p_bottom"];
+
+      board.update();
+
+      //Read function expression and draw everything at the end
+      funcExpr = newState["funcExpr"];
+      drawFunction();
+
+   }
+
+   //Set an update function that saves the state of the board when it changes
+   board.on('update', function() {
+      //JSON object to contain the state of the board
+      var newState = {};
+      //Add all the entries we want to "save"
+      newState.scale_slider = scale_slider.Value();
+      newState.slider_p = slider_p.Value();
+      newState.slider_q = slider_q.Value();
+      newState.el_slider = view.D3.el_slide.Value();
+      newState.az_slider = view.D3.az_slide.Value();
+      newState.funcExpr = funcExpr;
+      newState.p_bottom = p_bottom.D3.coords;
+      //Store the state in the stateStore answer field as a string
+      state.value = JSON.stringify(newState);
+   });
 
 [[/jsxgraph]]
-<p></p>
-<p><span>Your function, \(f(x,y) =\) [[input:ans1]][[validation:ans1]] </span></p>
-<p> If you'd like, you can include constants \(p,q\) in your expression, and tune their values with sliders in the graph plot </p>]]></text>
+<p><span>Your function, \(f(x,y) =\) [[input:ans1]][[validation:ans1]] </span><br>
+<input type="button" value="Draw Function" id="draw_button">
+</p>
+<p> If you'd like, you can include constants \( p, q \) in your expression, and tune their values with sliders in the graph plot </p>]]></text>
     </questiontext>
     <generalfeedback format="html">
       <text></text>
@@ -145,25 +204,22 @@ board.update();
     <hidden>0</hidden>
     <idnumber></idnumber>
     <stackversion>
-      <text>2022082900</text>
+      <text>2023010400</text>
     </stackversion>
     <questionvariables>
       <text><![CDATA[a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0])
 
-de:ans1;
-ez:funcExpr2;
-ef:ev(ez,x=5,y=5);
-es:ef;
-
 rand_question:rand_with_prohib(0,3,[0]);
-question_text:if (rand_question = 1) then positive else if (rand_question = 2) then negative else "of opposite signs";]]></text>
+question_text:if (rand_question = 1) then "positive" else if (rand_question = 2) then "negative" else "of opposite signs";
+
+ma: [a*x^2+b*y^2, -a*x^2-b*y^2, -a*x^2+y^2]]]></text>
     </questionvariables>
     <specificfeedback format="html">
       <text>[[feedback:prt1]]</text>
     </specificfeedback>
     <questionnote>
-      <text>h</text>
+      <text>rand_question</text>
     </questionnote>
     <questionsimplify>1</questionsimplify>
     <assumepositive>0</assumepositive>
@@ -187,7 +243,7 @@ question_text:if (rand_question = 1) then positive else if (rand_question = 2) t
     <input>
       <name>ans1</name>
       <type>algebraic</type>
-      <tans>Function_expression</tans>
+      <tans>ma[rand_question]</tans>
       <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
@@ -238,24 +294,37 @@ question_text:if (rand_question = 1) then positive else if (rand_question = 2) t
       <showvalidation>0</showvalidation>
       <options></options>
     </input>
+    <input>
+      <name>stateStore</name>
+      <type>string</type>
+      <tans><![CDATA["NA"]]></tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
     <prt>
       <name>prt1</name>
       <value>1.0000000</value>
       <autosimplify>1</autosimplify>
       <feedbackstyle>1</feedbackstyle>
       <feedbackvariables>
-        <text>score:0;
-q:p2;
-p:p1
+        <text>q:p2;
+p:p1;
 f:ans1;
 fx:diff(f,x);
 fy:diff(f,y);
-fxy:diff(fy,x);
 evfx:ev(fx,x=a,y=b);
-evfy:ev(fy,x=a,y=b);
-evfxy:ev(fxy,x=a,y=b);
-
-
+evfy:ev(fy,x=a,y=b);jkj
 
 correct:if (is(equal(rand_question,3))) then (not is(equal(sign(evfx),sign(evfy)))) else (is(equal(sign(evfx),sign(evfy))));</text>
       </feedbackvariables>
