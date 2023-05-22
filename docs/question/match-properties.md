@@ -15,9 +15,9 @@ theme: minima
 ## Question description
 
 Random $$(x, y)$$ coordinates are generated, the user is asked 1 of 3 randomly generated questions: 
-1. To provide a function that will result in positive output for all first order partial/mixed derivatives (Fx,Fy and Fxy) of the given function at the generated coordinates.
-2. To provide a function that will result in negative output for all first order partial/mixed derivatives (Fx,Fy and Fxy)  of the given function at the generated coordinates.
-3. To provide a function where all first order partial derivative (Fx,Fy,Fxy) values at the generated coordinates provide unique signs from each other (+, -, 0/neutral).
+1. To provide a function that will result in positive output for all first order partial derivatives (Fx,Fy) of the given function at the generated coordinates.
+2. To provide a function that will result in negative output for all first order partial derivatives (Fx,Fy) of the given function at the generated coordinates.
+3. To provide a function where all first order partial derivative (Fx,Fy) values at the generated coordinates provide unique signs from each other (+, -, 0/neutral).
 
 The user may choose to draw the provided function by clicking on the **'Draw Function'** button.
 
