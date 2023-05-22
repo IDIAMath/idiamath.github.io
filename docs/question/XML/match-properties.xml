@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+e?xml version="1.0" encoding="UTF-8"?>
 <quiz>
 <!-- question: 234  -->
   <question type="stack">
@@ -8,24 +8,15 @@
     <questiontext format="html">
       <text><![CDATA[<p>
   Give an example of a function where the first partial derivatives at
-      \((x={@a@},y={@b@})\) are 
-      {@if xsign > 0 and ysign > 0 then "positive"
-      else if xsign < 0 and ysign < 0 then "negative"
-      else if xsign > 0 and ysign < 0 then 
-         "positive with respect to \(x\) and negative with respect to \(y\)"
-      else if xsign < 0 and ysign > 0 then 
-         "negative with respect to \(x\) and positive with respect to \(y\)"
-      else if xsign = 0 and ysign = 0 then 
-         "zero"
-      else if xsign = 0 and ysign < 0 then 
-         "zero with respect to \(x\) and negative with respect to \(y\)"
-      else if xsign = 0 and ysign > 0 then 
-         "zero with respect to \(x\) and positive with respect to \(y\)"
-      else if xsign > 0 and ysign = 0 then 
-         "positive with respect to \(x\) and zero with respect to \(y\)"
-      else if xsign < 0 and ysign = 0 then 
-         "negative with respect to \(x\) and zero with respect to \(y\)"
-      @}
+    \((x={@a@},y={@b@})\) are 
+     {@if xsign > 0 then "positive"
+      else if xsign < 0 then "negative"
+      else "zero"@}
+     with respect to \(x\) and
+     {@if ysign > 0 then "positive"
+      else if ysign < 0 then "negative"
+      else "zero"@}
+     with respect to \(y\).
 </p>
    
 <p style="display:none">[[input:p1]][[validation:p1]]</p>
@@ -36,6 +27,10 @@
 
    var state = document.getElementById(stateRef); // Variable that holds the state of the board
    let btn = document.getElementById("draw_button");//Referance to button that draws the graph
+   var pref = document.getElementById(pRef); 
+   var qref = document.getElementById(qRef); 
+   pref.value = 1 ;
+   qref.value = 1 ;
    btn.addEventListener("click", drawFunction); // Add the function that runs when button is clicked
 
    //Create the board
@@ -227,14 +222,14 @@
       <text><![CDATA[a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0]);
 
-xsign: rand(3)-2;
-ysign: rand(3)-2;
+xsign: rand(3)-1;
+ysign: rand(3)-1;
 
 ma: xsign*a*x^2 + ysign*b*y^2 ;
 ]]></text>
     </questionvariables>
     <specificfeedback format="html">
-      <text>[[feedback:prt1]] [[feedback:prt2]]</text>
+      <text>[[feedback:prt1]]</text>
     </specificfeedback>
     <questionnote>
        <text>({@a@},{@b@}):({@xsign@},{@ysign@})</text>
@@ -344,8 +339,8 @@ fx:diff(f,x);
 fy:diff(f,y);
 evfx:ev(fx,x=a,y=b);
 evfy:ev(fy,x=a,y=b);
-signfx: evfx/abs(evfx) ;
-signfy: evfy/abs(evfy) ;
+signfx: signum(evfx) ;
+signfy: signum(evfy) ;
 op : [ "<", "=", ">" ] ;
 word : [ "negative", "zero", "positive" ] ;
         ]]></text>
@@ -361,13 +356,14 @@ word : [ "negative", "zero", "positive" ] ;
         <truescoremode>=</truescoremode>
         <truescore>0.5</truescore>
         <truepenalty></truepenalty>
-        <truenextnode>-1</truenextnode>
+        <truenextnode>1</truenextnode>
         <trueanswernote>prt1-1-T</trueanswernote>
         <truefeedback format="html">
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
-\(f_x({@a@},{@b@}) = {@evfx@} {@op[2+xsign]@} 0\)
+\(f_x({@a@},{@b@}) = {@evfx@}\)
+which is {@word[2+signfy]@}
 as required.
 </p>
            ]]></text>
@@ -375,70 +371,52 @@ as required.
         <falsescoremode>=</falsescoremode>
         <falsescore>0.0000000</falsescore>
         <falsepenalty></falsepenalty>
-        <falsenextnode>-1</falsenextnode>
+        <falsenextnode>1</falsenextnode>
         <falseanswernote>prt1-1-F</falseanswernote>
         <falsefeedback format="html">
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
-\(f_x({@a@},{@b@}) = {@evfx@} {@op[2+signfx]@} 0\),
+\(f_x({@a@},{@b@}) = {@evfx@}\)
+which is {@word[2+signfy]@},
 but it should have been {@word[2+xsign]@}.
 </p>
            ]]></text>
         </falsefeedback>
       </node>
-    </prt>
-    <prt>
-      <name>prt2</name>
-      <value>1.0000000</value>
-      <autosimplify>1</autosimplify>
-      <feedbackstyle>1</feedbackstyle>
-      <feedbackvariables>
-        <text><![CDATA[
-q:p2;
-p:p1;
-f:ans1;
-fx:diff(f,x);
-fy:diff(f,y);
-evfx:ev(fx,x=a,y=b);
-evfy:ev(fy,x=a,y=b);
-signfx: evfx/abs(evfx) ;
-signfy: evfy/abs(evfy) ;
-op : [ "<", "=", ">" ] ;
-word : [ "negative", "zero", "positive" ] ;
-        ]]></text>
-      </feedbackvariables>
       <node>
-        <name>0</name>
+        <name>1</name>
         <answertest>AlgEquiv</answertest>
         <sans>signfy</sans>
         <tans>ysign</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
-        <truescoremode>=</truescoremode>
+        <truescoremode>+</truescoremode>
         <truescore>0.5</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
-        <trueanswernote>prt2-1-T</trueanswernote>
+        <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
-\(f_y({@a@},{@b@}) = {@evfy@} {@op[2+ysign]@} 0\)
+\(f_y({@a@},{@b@}) = {@evfy@}\)
+which is {@word[2+signfy]@}
 as required.
 </p>
            ]]></text>
         </truefeedback>
-        <falsescoremode>=</falsescoremode>
+        <falsescoremode>+</falsescoremode>
         <falsescore>0.0000000</falsescore>
         <falsepenalty></falsepenalty>
         <falsenextnode>-1</falsenextnode>
-        <falseanswernote>prt2-1-F</falseanswernote>
+        <falseanswernote>prt1-2-F</falseanswernote>
         <falsefeedback format="html">
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
-\(f_y({@a@},{@b@}) = {@evfy@} {@op[2+signfy]@} 0\),
+\(f_y({@a@},{@b@}) = {@evfy@}\}
+which is {@word[2+signfy]@},
 but it should have been {@word[2+ysign]@}.
 </p>
            ]]></text>
