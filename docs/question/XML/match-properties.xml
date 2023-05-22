@@ -25,13 +25,18 @@ e?xml version="1.0" encoding="UTF-8"?>
 
 [[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
 
-   var state = document.getElementById(stateRef); // Variable that holds the state of the board
-   let btn = document.getElementById("draw_button");//Referance to button that draws the graph
+   // Get a reference to the hidden answer to hold the board state
+   var state = document.getElementById(stateRef); 
+
+   // Initialise the hidden answer variables to avoid errors:
    var pref = document.getElementById(pRef); 
    var qref = document.getElementById(qRef); 
    pref.value = 1 ;
    qref.value = 1 ;
-   btn.addEventListener("click", drawFunction); // Add the function that runs when button is clicked
+
+   // Make the button to draw the function
+   let btn = document.getElementById("draw_button");
+   btn.addEventListener("click", drawFunction); 
 
    //Create the board
    var board = JXG.JSXGraph.initBoard(divid, {
@@ -54,20 +59,21 @@ e?xml version="1.0" encoding="UTF-8"?>
       });
 
 
-   //Create sliders for scaling, and for the optional parameters
+   // Create sliders for scaling, and for the optional parameters
    var scale_slider = board.create('slider', [[-7,-6],[5,-6],[0,1,2]], {name: "Skaler z-akse"});
    var slider_p = board.create('slider', [[-7,-6.5],[5,-6.5],[-1,1,1]], {name: "p"});
    var slider_q = board.create('slider', [[-7,-7],[5,-7],[-1,1,1]], {name: "q"});
+   // The p and q sliders are hidden until needed
    slider_q.hide();
    slider_p.hide();
 
-   //We bind the parameters slides to STACK's answer variables
-   //This let's Maxima use the values when grading
+   // We bind the parameters slides to STACK's answer variables
+   // This let's Maxima use the values when grading
    stack_jxg.bind_slider(pRef,slider_p);
    stack_jxg.bind_slider(qRef,slider_q);
    
-   //Variables for the draggable bottom point, 
-   //the corresponding point on the graph and a dashed line in between
+   // Variables for the draggable bottom point, 
+   // the corresponding point on the graph and a dashed line in between
    var p_bottom, p_graph, dashline; 
 
    p_bottom = view.create('point3d', [1,1,-5]);
@@ -75,10 +81,7 @@ e?xml version="1.0" encoding="UTF-8"?>
    //Variables used when drawing the graph
    var dFx, dFy, tangplane, tangx, tangy, scale_x, scale_y, F, funcExpr, fGraph;
 
-   //drawFunction is called when the student writes a function in the answerfield ans1, 
-   //and clicks the "Draw function" button. drawFunction draws the function on the screen, along with 
-   //a tangent plane
-   //
+   // drawFunction is called when the clicks the button to draw the answer function
    function drawFunction() {
 
       //We get the function expression supplied by student
@@ -106,18 +109,14 @@ e?xml version="1.0" encoding="UTF-8"?>
       board.removeObject(tangx,false);
       board.removeObject(tangy,false);
 
-      //board.jc.parse("e={#float(%e)#};");  //substitute floating point values for e and pi
-      //board.jc.parse("pi={#float(%pi)#};"); //Needs some work
-      
-      
       // We use a first order central difference to get numerical
       // approximations for Fx and Fy
       var h = 0.01 //Stepsize for finite difference
       var FF = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing of function
       F = (x,y) => scale_slider.Value()*FF(x,y); //Multiply function value with the scale_slider to scale it
       
-      //Finite difference approximation of partial derivatives at the x-, y- 
-      //coordinates given by the draggable point on the bottom
+      // Finite difference approximation of partial derivatives at the x-, y- 
+      // coordinates given by the draggable point on the bottom
       dFx = function () {
          var x = p_bottom.D3.X();
          var y = p_bottom.D3.Y();
@@ -129,17 +128,17 @@ e?xml version="1.0" encoding="UTF-8"?>
          return (F(x,y+h)-F(x,y-h))/(2*h);
       }
       
-      //Functions that gives the factor that normalizes the tangent plane
+      // Functions that gives the factor that normalizes the tangent plane
       scale_x = ()=> 1.0/Math.sqrt(1+Math.pow(dFx(),2));
       scale_y = ()=> 1.0/Math.sqrt(1+Math.pow(dFy(),2));
 
-      //Draw the point on the graph that corresponds to the bottom point
+      // Draw the point on the graph that corresponds to the bottom point
       p_graph = view.create('point3d', [()=>p_bottom.D3.X(), ()=>p_bottom.D3.Y(), ()=>F(p_bottom.D3.X(), p_bottom.D3.Y())]);
       //Draw a dashed line between graph point and bottom point
       dashline = view.create('line3d', [p_bottom, p_graph], {dash: 1});
 
-      //Draw the "unit" tangent plane (Area 2) - [point, [direction1], [direction2], [length1], [length2]
-      //The directions are unit vectors from div(F) - the gives a factor of how much of the directions the plane spans
+      // Draw the "unit" tangent plane (Area 2) - [point, [direction1], [direction2], [length1], [length2]
+      // The directions are unit vectors from div(F) - the gives a factor of how much of the directions the plane spans
       tangplane = view.create('plane3d', [p_graph,
          [scale_x,0,()=>scale_x()*dFx()],
          [0,scale_y,()=>scale_y()*dFy()],
@@ -147,11 +146,11 @@ e?xml version="1.0" encoding="UTF-8"?>
          {fillOpacity: 0.8, fillColor: 'red'}
       );
       
-      //Gradient lines
+      // Gradient lines
       tangx = view.create('line3d', [p_graph, [1,0,dFx],[0,dFx]]);
       tangy = view.create('line3d', [p_graph, [0,1,dFy],[0,dFy]]);
       
-      //Plot the graph
+      // Plot the graph
       fGraph =view.create('functiongraph3d', [
       F,
       box,
@@ -160,9 +159,6 @@ e?xml version="1.0" encoding="UTF-8"?>
       board.update();
 
    }; //End drawFunction
-
-
-
 
    // Check if student has started working on the board earlier and load the state of the graph
    if (state.value && state.value != "")
