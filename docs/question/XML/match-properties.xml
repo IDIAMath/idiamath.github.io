@@ -215,9 +215,7 @@
 </p>
 <p> If you'd like, you can include constants \( p, q \) in your expression, and tune their values with sliders in the graph plot </p>]]></text>
     </questiontext>
-    <generalfeedback format="html">
-      <text></text>
-    </generalfeedback>
+    <generalfeedback format="html"></generalfeedback>
     <defaultgrade>1</defaultgrade>
     <penalty>0.1</penalty>
     <hidden>0</hidden>
@@ -229,14 +227,14 @@
       <text><![CDATA[a:rand_with_prohib(-5,5,[0]);
 b:rand_with_prohib(-5,5,[0]);
 
-xsign: random(3)-1;
-ysign: random(3)-1;
+xsign: rand(3)-2;
+ysign: rand(3)-2;
 
 ma: xsign*a*x^2 + ysign*b*y^2 ;
 ]]></text>
     </questionvariables>
     <specificfeedback format="html">
-      <text>[[feedback:prt1]]</text>
+      <text>[[feedback:prt1]] [[feedback:prt2]]</text>
     </specificfeedback>
     <questionnote>
        <text>({@a@},{@b@}):({@xsign@},{@ysign@})</text>
@@ -338,7 +336,8 @@ ma: xsign*a*x^2 + ysign*b*y^2 ;
       <autosimplify>1</autosimplify>
       <feedbackstyle>1</feedbackstyle>
       <feedbackvariables>
-        <text>q:p2;
+        <text><![CDATA[
+q:p2;
 p:p1;
 f:ans1;
 fx:diff(f,x);
@@ -348,8 +347,8 @@ evfy:ev(fy,x=a,y=b);
 signfx: evfx/abs(evfx) ;
 signfy: evfy/abs(evfy) ;
 op : [ "<", "=", ">" ] ;
-word : [ "negative "zero", "positive ] ;
-        </text>
+word : [ "negative", "zero", "positive" ] ;
+        ]]></text>
 
       </feedbackvariables>
       <node>
@@ -368,7 +367,7 @@ word : [ "negative "zero", "positive ] ;
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
-\(f_x({@a@},{@b@}) = {@evfx@} {@op[2+signx]@} 0\)
+\(f_x({@a@},{@b@}) = {@evfx@} {@op[2+xsign]@} 0\)
 as required.
 </p>
            ]]></text>
@@ -383,7 +382,7 @@ as required.
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
 \(f_x({@a@},{@b@}) = {@evfx@} {@op[2+signfx]@} 0\),
-but it should have been {@word[2+signx]@}.
+but it should have been {@word[2+xsign]@}.
 </p>
            ]]></text>
         </falsefeedback>
@@ -395,7 +394,8 @@ but it should have been {@word[2+signx]@}.
       <autosimplify>1</autosimplify>
       <feedbackstyle>1</feedbackstyle>
       <feedbackvariables>
-        <text>q:p2;
+        <text><![CDATA[
+q:p2;
 p:p1;
 f:ans1;
 fx:diff(f,x);
@@ -405,8 +405,8 @@ evfy:ev(fy,x=a,y=b);
 signfx: evfx/abs(evfx) ;
 signfy: evfy/abs(evfy) ;
 op : [ "<", "=", ">" ] ;
-word : [ "negative "zero", "positive ] ;
-        </text>
+word : [ "negative", "zero", "positive" ] ;
+        ]]></text>
       </feedbackvariables>
       <node>
         <name>0</name>
@@ -419,12 +419,12 @@ word : [ "negative "zero", "positive ] ;
         <truescore>0.5</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
-        <trueanswernote>prt1-1-T</trueanswernote>
+        <trueanswernote>prt2-1-T</trueanswernote>
         <truefeedback format="html">
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
-\(f_y({@a@},{@b@}) = {@evfy@} {@op[2+signy]@} 0\)
+\(f_y({@a@},{@b@}) = {@evfy@} {@op[2+ysign]@} 0\)
 as required.
 </p>
            ]]></text>
@@ -433,13 +433,13 @@ as required.
         <falsescore>0.0000000</falsescore>
         <falsepenalty></falsepenalty>
         <falsenextnode>-1</falsenextnode>
-        <falseanswernote>prt1-1-F</falseanswernote>
+        <falseanswernote>prt2-1-F</falseanswernote>
         <falsefeedback format="html">
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
 \(f_y({@a@},{@b@}) = {@evfy@} {@op[2+signfy]@} 0\),
-but it should have been {@word[2+signy]@}.
+but it should have been {@word[2+ysign]@}.
 </p>
            ]]></text>
         </falsefeedback>
