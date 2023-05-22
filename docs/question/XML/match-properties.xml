@@ -3,11 +3,30 @@
 <!-- question: 234  -->
   <question type="stack">
     <name>
-      <text>[match-properties] Define function with certain properties (refactored 16 May'23)</text>
+      <text>[match-properties] Define function with certain properties (22 May'23)</text>
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>
-Give an example of a function where the first partial derivatives at \((x={@a@},y={@b@})\) are {@question_text@}<br></p>
+  Give an example of a function where the first partial derivatives at
+      \((x={@a@},y={@b@})\) are 
+      {@if xsign > 0 and ysign > 0 then "positive"
+      else if xsign < 0 and ysign < 0 then "negative"
+      else if xsign > 0 and ysign < 0 then 
+         "positive with respect to \(x\) and negative with respect to \(y\)"
+      else if xsign < 0 and ysign > 0 then 
+         "negative with respect to \(x\) and positive with respect to \(y\)"
+      else if xsign = 0 and ysign = 0 then 
+         "zero"
+      else if xsign = 0 and ysign < 0 then 
+         "zero with respect to \(x\) and negative with respect to \(y\)"
+      else if xsign = 0 and ysign > 0 then 
+         "zero with respect to \(x\) and positive with respect to \(y\)"
+      else if xsign > 0 and ysign = 0 then 
+         "positive with respect to \(x\) and zero with respect to \(y\)"
+      else if xsign < 0 and ysign = 0 then 
+         "negative with respect to \(x\) and zero with respect to \(y\)"
+      @}
+</p>
    
 <p style="display:none">[[input:p1]][[validation:p1]]</p>
 <p style="display:none">[[input:p2]][[validation:p2]]</p>
@@ -208,18 +227,19 @@ Give an example of a function where the first partial derivatives at \((x={@a@},
     </stackversion>
     <questionvariables>
       <text><![CDATA[a:rand_with_prohib(-5,5,[0]);
-b:rand_with_prohib(-5,5,[0])
+b:rand_with_prohib(-5,5,[0]);
 
-rand_question:rand_with_prohib(0,3,[0]);
-question_text:if (rand_question = 1) then "positive" else if (rand_question = 2) then "negative" else "of opposite signs";
+xsign: random(3)-1;
+ysign: random(3)-1;
 
-ma: [a*x^2+b*y^2, -a*x^2-b*y^2, -a*x^2+y^2]]]></text>
+ma: xsign*a*x^2 + ysign*b*y^2 ;
+]]></text>
     </questionvariables>
     <specificfeedback format="html">
       <text>[[feedback:prt1]]</text>
     </specificfeedback>
     <questionnote>
-      <text>rand_question</text>
+       <text>({@a@},{@b@}):({@xsign@},{@ysign@})</text>
     </questionnote>
     <questionsimplify>1</questionsimplify>
     <assumepositive>0</assumepositive>
@@ -243,7 +263,7 @@ ma: [a*x^2+b*y^2, -a*x^2-b*y^2, -a*x^2+y^2]]]></text>
     <input>
       <name>ans1</name>
       <type>algebraic</type>
-      <tans>ma[rand_question]</tans>
+      <tans>ma</tans>
       <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
@@ -274,7 +294,7 @@ ma: [a*x^2+b*y^2, -a*x^2-b*y^2, -a*x^2+y^2]]]></text>
       <checkanswertype>0</checkanswertype>
       <mustverify>0</mustverify>
       <showvalidation>0</showvalidation>
-      <options></options>
+      <options>hideanswer</options>
     </input>
     <input>
       <name>p2</name>
@@ -292,7 +312,7 @@ ma: [a*x^2+b*y^2, -a*x^2-b*y^2, -a*x^2+y^2]]]></text>
       <checkanswertype>0</checkanswertype>
       <mustverify>0</mustverify>
       <showvalidation>0</showvalidation>
-      <options></options>
+      <options>hideanswer</options>
     </input>
     <input>
       <name>stateStore</name>
@@ -310,7 +330,7 @@ ma: [a*x^2+b*y^2, -a*x^2-b*y^2, -a*x^2+y^2]]]></text>
       <checkanswertype>0</checkanswertype>
       <mustverify>0</mustverify>
       <showvalidation>0</showvalidation>
-      <options></options>
+      <options>hideanswer</options>
     </input>
     <prt>
       <name>prt1</name>
@@ -324,24 +344,34 @@ f:ans1;
 fx:diff(f,x);
 fy:diff(f,y);
 evfx:ev(fx,x=a,y=b);
-evfy:ev(fy,x=a,y=b);jkj
+evfy:ev(fy,x=a,y=b);
+signfx: evfx/abs(evfx) ;
+signfy: evfy/abs(evfy) ;
+op : [ "<", "=", ">" ] ;
+word : [ "negative "zero", "positive ] ;
+        </text>
 
-correct:if (is(equal(rand_question,3))) then (not is(equal(sign(evfx),sign(evfy)))) else (is(equal(sign(evfx),sign(evfy))));</text>
       </feedbackvariables>
       <node>
         <name>0</name>
         <answertest>AlgEquiv</answertest>
-        <sans>correct</sans>
-        <tans>true</tans>
+        <sans>signfx</sans>
+        <tans>xsign</tans>
         <testoptions></testoptions>
         <quiet>0</quiet>
         <truescoremode>=</truescoremode>
-        <truescore>1.0000000</truescore>
+        <truescore>0.5</truescore>
         <truepenalty></truepenalty>
         <truenextnode>-1</truenextnode>
         <trueanswernote>prt1-1-T</trueanswernote>
         <truefeedback format="html">
-          <text><![CDATA[<p> Correct!: <p> Your function, \(f(x,y) = {@f@}\) has partial derivatives \(f_x = {@fx@}\) and \(f_y = {@fy@}\), which evaluates to \(f_x ={@evfx@}\) and \(f_y={@evfy@}\) at ({@a@},{@b@}) </p></p>]]></text>
+           <text><![CDATA[
+<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+\(f_x = {@fx@}\) which  evaluates to 
+\(f_x({@a@},{@b@}) = {@evfx@} {@op[2+signx]@} 0\)
+as required.
+</p>
+           ]]></text>
         </truefeedback>
         <falsescoremode>=</falsescoremode>
         <falsescore>0.0000000</falsescore>
@@ -349,7 +379,69 @@ correct:if (is(equal(rand_question,3))) then (not is(equal(sign(evfx),sign(evfy)
         <falsenextnode>-1</falsenextnode>
         <falseanswernote>prt1-1-F</falseanswernote>
         <falsefeedback format="html">
-          <text><![CDATA[<p> Not correct: <p> Your function, \(f(x,y) = {@f@}\) has partial derivatives \(f_x = {@fx@}\) and \(f_y = {@fy@}\), which evaluates to \(f_x ={@evfx@}\) and \(f_y={@evfy@}\) at ({@a@},{@b@}) </p></p>]]></text>
+           <text><![CDATA[
+<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+\(f_x = {@fx@}\) which  evaluates to 
+\(f_x({@a@},{@b@}) = {@evfx@} {@op[2+signfx]@} 0\),
+but it should have been {@word[2+signx]@}.
+</p>
+           ]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>q:p2;
+p:p1;
+f:ans1;
+fx:diff(f,x);
+fy:diff(f,y);
+evfx:ev(fx,x=a,y=b);
+evfy:ev(fy,x=a,y=b);
+signfx: evfx/abs(evfx) ;
+signfy: evfy/abs(evfy) ;
+op : [ "<", "=", ">" ] ;
+word : [ "negative "zero", "positive ] ;
+        </text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>signfy</sans>
+        <tans>ysign</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+           <text><![CDATA[
+<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+\(f_y = {@fy@}\) which  evaluates to 
+\(f_y({@a@},{@b@}) = {@evfy@} {@op[2+signy]@} 0\)
+as required.
+</p>
+           ]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0.0000000</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+           <text><![CDATA[
+<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+\(f_y = {@fy@}\) which  evaluates to 
+\(f_y({@a@},{@b@}) = {@evfy@} {@op[2+signfy]@} 0\),
+but it should have been {@word[2+signy]@}.
+</p>
+           ]]></text>
         </falsefeedback>
       </node>
     </prt>
