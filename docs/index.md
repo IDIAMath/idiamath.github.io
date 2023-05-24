@@ -17,7 +17,7 @@ permalink: /
 + Question 2 [question-match-properties](question/match-properties.md)
 + Question 3 [Select maxima/minima on a plot](question/select-extremal.md)
 + Question 4 [Tune 3D](question/tune-3d.md)
-+ Question 5 (XML only) [Tune 3D Quadric](XML/questions-jtc-Tune 3D quadric-20220617-1129.xml)
++ Question 5 [Tune 3D Function](question/tune-3d-function.md)
 + Question 6 [Select matching function](question/select-matching-function.md)
 + Question 7 [Select matching partial derivative](question/select-matching-partial-derivative.md)
 
