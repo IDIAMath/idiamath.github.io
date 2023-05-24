@@ -1,5 +1,5 @@
 ---
-title: Question - Tune 3D
+title: Question - Tune 3D Function
 usemathjax: true
 ---
 
