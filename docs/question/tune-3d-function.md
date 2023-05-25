@@ -453,8 +453,8 @@ The button itself is added in html between the two jsxgraph-blocks:
 <button type="button" value="0" id="split-button"> Split </button>
 ```
 
-```js
 Its logic is added made as follows:
+```js
    var button = document.getElementById('split-button');
    //Add the function to be called when the button is clicked
    button.addEventListener('click', function() { 
