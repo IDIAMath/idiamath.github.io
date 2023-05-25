@@ -20,7 +20,7 @@ that makes the two functions coincide.
 
 The function, its parameter-values and which and how many of the parameters
 are unknown can be randomized. Dynamic input/output to jsxgraph in this
-way present some challenges we try to explore in this tutorial.
+manner present some challenges that we try to explore in this tutorial.
 
 - [XML Code](XML/tune-3d-function-xml)
 
@@ -95,9 +95,47 @@ parameters values. In the example above, we have a 2. order polynomial with
 with two parameters guaranteed to be zero. The list `params` holds the names
 of the unkown parameters, in the above example we draw two random parameters.
 
+The last 4 lines above sets the ranges and starting values of the sliders, 
+the x-, and y- domain and the tolerance of the students answer.
 
+The rest of the maxima code should not need to be changed, 
+and does a couple of things. It creates som formatted parameter lists and two 
+functions. `fxy` is the function with only the known parameters evaluated, 
+`fxy2` is the function with all parameters evaluated.
 
+To get the data from maxima to jsxgraph, the easiest way usually is to use
+{#<CAS expression>#} syntax. This "pastes" the maxima result between #
+directly into the javascript-code. This would probably suffice in this
+case, but if the data is big/complex/dynamic it could be a good idea to
+use a stackmap in maxima that can be converted and parsed into a JSON object
+in the jsxgraph block.
 
+A strackmap consists of a list that starts with the string "stackmap" followed
+by a variable number of sublists of length 2. The first element of the sublists
+is the "key" and the second element is the "value". 
+```maxima
+params_json: append(["stack_map"],
+   makelist([string(all_params[i]),coef[i]], i, length(all_params)),
+   [["pnames", map(string,params)]], [["sliders", param_sliders]]
+);
+```
+The above code creates the stackmap. It holds the the value of the parameters,
+the names of the parameters and the slider sizes. 
+It could look something like this:
+```maxima
+["stackmap", 
+    ["a",2],["b", 1],["c",-3], 
+    ["pnames", ["a","b"]], 
+    ["sliders", [-4,0,4]]
+]
+```
+This can be converted and parsed into a JSON object, which we use to access the
+data from maxima:
+```js
+ var stack_input = JSON.parse({#stackjson_stringify(params_json)#});
+ var paramater_names = stack_input["pnames"];
+ var param_a_value = stack_input["a"];
+```
 
 ## Question Text
 
@@ -132,7 +170,7 @@ The critical part is the javascript code, in `[[jsxgraph]]` tags.
    
    //Reference to the bottm jsxgraph figure
    var jsxgraph2 = document.getElementById(divid2);
-   jsxgraph2.style.display="none";//Hide second fiture by default
+   jsxgraph2.style.display="none";//Hide second figure by default
 
 
    //{#stackjson_stringify(params_json)#} inserts JSON string from maxima
