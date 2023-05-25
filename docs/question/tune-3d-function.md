@@ -18,6 +18,10 @@ can be controlled by one or more sliders.
 The student will have to use the slider to find the value for the parameters
 that makes the two functions coincide.
 
+The function, its parameter-values and which and how many of the parameters
+are unknown can be randomized. Dynamic input/output to jsxgraph in this
+way present some challenges we try to explore in this tutorial.
+
 - [XML Code](XML/tune-3d-function-xml)
 
 # How it works
@@ -70,7 +74,28 @@ fxy:ev(func,non_params_eq);
 
 /*Function evaluated with all parameters given*/
 fxy2:ev(func,all_params_eq);
+
 ```
+In the question variables, the following part is expected to be changed by the
+teacher
+```maxima
+func: a*x^2+b*y^2+c*x*y+d*x+f*y+g;
+all_params: [a,b,c,d,f,g];
+coef: random_permutation(append([0,0],makelist(rand_with_prohib(-4,4,[0]),4)));
+params: rand_selection(all_params,2);
+param_sliders: [-4,0,4];
+xrang:[-7,7];
+yrang:[-7,7];
+maxError:0.2;
+```
+The variable `func` is the goal function, where the list `all_params` lists 
+the name of all "potentially unknown" parameters. The list `coef` holds all the
+parameters values. In the example above, we have 2. order polynomial with
+6 parameters and they are given a random value between $[-4,4]$, excluding 0,
+with two parameters guaranteed to be zero. 
+
+
+
 
 ## Question Text
 
