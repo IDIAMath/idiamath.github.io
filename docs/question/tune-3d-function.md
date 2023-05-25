@@ -490,3 +490,8 @@ figure:
    });
 ```
 
+### Input:ans
+
+| ![Input variable settings](tun3-3d-function-inputsettings.png) |
+
+
