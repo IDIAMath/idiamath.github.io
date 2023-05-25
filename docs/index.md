@@ -9,6 +9,22 @@ permalink: /
 
 # Tutorials (Question Examples)
 
+The following tutorials are written to illustrate concrete questions
+that could be given to students in higher education.
+We aim to discuss the STACK and JSXGraph features used as well as the
+motivation for the question, but there is room for improvement, so 
+please give feedback.
+
+Each tutorial will provide the Moodle XML code for the question,
+so that you can easily import it in your own server and test it,
+as well as the discussing of the design.
+
+The questions are not really indended to be ready for use.  
+We reckon that most teachers will want to tailor the questions to
+their students and use the questions primarily as examples to build
+on.
+
+
 # Sketches (questions under construction)
 
 ## Visualising functions in two variables

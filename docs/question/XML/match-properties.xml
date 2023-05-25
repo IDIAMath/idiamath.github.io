@@ -3,7 +3,7 @@
 <!-- question: 234  -->
   <question type="stack">
     <name>
-      <text>[match-properties] Define function with certain properties (HGS 22 May'23)</text>
+      <text>[match-properties] Define function with certain properties (cleanup 25 May'23)</text>
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>
@@ -25,28 +25,13 @@
 
 [[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
 
-   // Get a reference to the hidden answer to hold the board state
-   var state = document.getElementById(stateRef); 
-
-   // Initialise the hidden answer variables to avoid errors:
-   var pref = document.getElementById(pRef); 
-   var qref = document.getElementById(qRef); 
-   pref.value = 1 ;
-   qref.value = 1 ;
-
-   // Make the button to draw the function
-   let btn = document.getElementById("draw_button");
-   btn.addEventListener("click", drawFunction); 
-
-   //Create the board
+   // BOARD
+   // This is the basic code to create 3D co-ordinate system and view
    var board = JXG.JSXGraph.initBoard(divid, {
       boundingbox: [-8, 8, 8, -8],
       keepaspectratio: false,
       axis: false
    });
-
-
-   // Create the 3dView
    var box = [-5, 5];
    var view = board.create('view3d',
       [
@@ -58,9 +43,22 @@
          yPlaneRear: {visible: false},
       });
 
+   // Define a sliders to scale the z axis
+   var scale_slider = board.create('slider', [[-7,-6],[5,-6],[0,1,2]], 
+          {name: "Scale z axis"});
 
-   // Create sliders for scaling, and for the optional parameters
-   var scale_slider = board.create('slider', [[-7,-6],[5,-6],[0,1,2]], {name: "Skaler z-akse"});
+   // DRAGGABLE REFERENCE POINT 
+   var p_bottom, p_graph, dashline; 
+   p_bottom = view.create('point3d', [1,1,-5]);
+
+   // SLIDERS for p and q
+
+   // Initialise the hidden answer variables to avoid errors:
+   var pref = document.getElementById(pRef); 
+   var qref = document.getElementById(qRef); 
+   pref.value = 1 ;
+   qref.value = 1 ;
+
    var slider_p = board.create('slider', [[-7,-6.5],[5,-6.5],[-1,1,1]], {name: "p"});
    var slider_q = board.create('slider', [[-7,-7],[5,-7],[-1,1,1]], {name: "q"});
    // The p and q sliders are hidden until needed
@@ -72,36 +70,37 @@
    stack_jxg.bind_slider(pRef,slider_p);
    stack_jxg.bind_slider(qRef,slider_q);
    
-   // Variables for the draggable bottom point, 
-   // the corresponding point on the graph and a dashed line in between
-   var p_bottom, p_graph, dashline; 
 
-   p_bottom = view.create('point3d', [1,1,-5]);
-   
-   //Variables used when drawing the graph
+   // DRAW FUNCTION
+   // Create the button and its listener
+   let btn = document.getElementById("draw_button");
+   btn.addEventListener("click", drawFunction); 
+
+   // The following variables hold board elements.
+   // They are global so that drawFunction() can remove elements
+   // from previous calls.
    var dFx, dFy, tangplane, tangx, tangy, scale_x, scale_y, F, funcExpr, fGraph;
-
-   // drawFunction is called when the clicks the button to draw the answer function
+  
+   // drawFunction() is called from the button
    function drawFunction() {
 
-      //We get the function expression supplied by student
-      var ans1=document.getElementById(ans1Ref);
+      // We get the function expression supplied by student
+      var ans1 = document.getElementById(ans1Ref);
       funcExpr = ans1.value;
 
-      //If the function expression contains the tunable parameters p or q
-      //we show the sliders, else we hide them
+      // Show $p$ and $q$ sliders only when needed
       if (funcExpr.includes("p")) {
          slider_p.show();
-      }else{
+      } else {
          slider_p.hide();
       }
       if (funcExpr.includes("q")){
          slider_q.show();
-      }else{
+      } else {
          slider_q.hide();
       }
 
-      //Remove any previous graphs and planes
+      // Remove any previous graphs and planes
       board.removeObject(fGraph,false);
       board.removeObject(p_graph,false);
       board.removeObject(dashline,false);
@@ -112,8 +111,10 @@
       // We use a first order central difference to get numerical
       // approximations for Fx and Fy
       var h = 0.01 //Stepsize for finite difference
-      var FF = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing of function
-      F = (x,y) => scale_slider.Value()*FF(x,y); //Multiply function value with the scale_slider to scale it
+      var FF = board.jc.snippet(funcExpr, true, 'x,y', true); 
+                 // JessieCode parsing of function
+      F = (x,y) => scale_slider.Value()*FF(x,y); 
+                 // Multiply function value with the scale_slider to scale it
       
       // Finite difference approximation of partial derivatives at the x-, y- 
       // coordinates given by the draggable point on the bottom
@@ -133,7 +134,8 @@
       scale_y = ()=> 1.0/Math.sqrt(1+Math.pow(dFy(),2));
 
       // Draw the point on the graph that corresponds to the bottom point
-      p_graph = view.create('point3d', [()=>p_bottom.D3.X(), ()=>p_bottom.D3.Y(), ()=>F(p_bottom.D3.X(), p_bottom.D3.Y())]);
+      p_graph = view.create('point3d', [()=>p_bottom.D3.X(), ()=>p_bottom.D3.Y(),
+                                         ()=>F(p_bottom.D3.X(), p_bottom.D3.Y())]);
       //Draw a dashed line between graph point and bottom point
       dashline = view.create('line3d', [p_bottom, p_graph], {dash: 1});
 
@@ -151,14 +153,16 @@
       tangy = view.create('line3d', [p_graph, [0,1,dFy],[0,dFy]]);
       
       // Plot the graph
-      fGraph =view.create('functiongraph3d', [
-      F,
-      box,
-      box,
-      ], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
+      fGraph = view.create('functiongraph3d', [ F, box, box, ],
+                { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
       board.update();
 
-   }; //End drawFunction
+   }; // drawFunction
+
+   // STATE MANAGEMENT
+
+   // Get reference to the hidden answer holding the board state
+   var state = document.getElementById(stateRef); 
 
    // If the state has been set, we need to restore the state from
    // previous work by the student.
@@ -328,16 +332,12 @@ modelanswer: xsign*x0*x^2 + ysign*y0*y^2 ;
       <feedbackstyle>1</feedbackstyle>
       <feedbackvariables>
         <text><![CDATA[
-q:p2;
-p:p1;
-f:ans1;
-fx:diff(f,x);
-fy:diff(f,y);
-evfx:ev(fx,x=x0,y=y0);
-evfy:ev(fy,x=x0,y=y0);
+fx: diff(ans1,x);
+fy: diff(ans1,y);
+evfx: ev(fx,x=x0,y=y0);
+evfy: ev(fy,x=x0,y=y0);
 signfx: signum(evfx) ;
 signfy: signum(evfy) ;
-op : [ "<", "=", ">" ] ;
 word : [ "negative", "zero", "positive" ] ;
         ]]></text>
 
@@ -356,11 +356,10 @@ word : [ "negative", "zero", "positive" ] ;
         <trueanswernote>prt1-1-T</trueanswernote>
         <truefeedback format="html">
            <text><![CDATA[
-<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
 \(f_x({@x0@},{@y0@}) = {@evfx@}\)
-which is {@word[2+signfy]@}
-as required.
+which is {@word[2+signfy]@} as required.
 </p>
            ]]></text>
         </truefeedback>
@@ -371,7 +370,7 @@ as required.
         <falseanswernote>prt1-1-F</falseanswernote>
         <falsefeedback format="html">
            <text><![CDATA[
-<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
 \(f_x({@x0@},{@y0@}) = {@evfx@}\)
 which is {@word[2+signfy]@},
@@ -394,7 +393,7 @@ but it should have been {@word[2+xsign]@}.
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
            <text><![CDATA[
-<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
 \(f_y({@x0@},{@y0@}) = {@evfy@}\)
 which is {@word[2+signfy]@}
@@ -409,7 +408,7 @@ as required.
         <falseanswernote>prt1-2-F</falseanswernote>
         <falsefeedback format="html">
            <text><![CDATA[
-<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
 \(f_y({@x0@},{@y0@}) = {@evfy@}\}
 which is {@word[2+signfy]@},
