@@ -332,16 +332,12 @@ modelanswer: xsign*x0*x^2 + ysign*y0*y^2 ;
       <feedbackstyle>1</feedbackstyle>
       <feedbackvariables>
         <text><![CDATA[
-q:p2;
-p:p1;
-f:ans1;
-fx:diff(f,x);
-fy:diff(f,y);
-evfx:ev(fx,x=x0,y=y0);
-evfy:ev(fy,x=x0,y=y0);
+fx: diff(ans1,x);
+fy: diff(ans1,y);
+evfx: ev(fx,x=x0,y=y0);
+evfy: ev(fy,x=x0,y=y0);
 signfx: signum(evfx) ;
 signfy: signum(evfy) ;
-op : [ "<", "=", ">" ] ;
 word : [ "negative", "zero", "positive" ] ;
         ]]></text>
 
@@ -360,11 +356,10 @@ word : [ "negative", "zero", "positive" ] ;
         <trueanswernote>prt1-1-T</trueanswernote>
         <truefeedback format="html">
            <text><![CDATA[
-<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
 \(f_x({@x0@},{@y0@}) = {@evfx@}\)
-which is {@word[2+signfy]@}
-as required.
+which is {@word[2+signfy]@} as required.
 </p>
            ]]></text>
         </truefeedback>
@@ -375,7 +370,7 @@ as required.
         <falseanswernote>prt1-1-F</falseanswernote>
         <falsefeedback format="html">
            <text><![CDATA[
-<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
 \(f_x({@x0@},{@y0@}) = {@evfx@}\)
 which is {@word[2+signfy]@},
@@ -398,7 +393,7 @@ but it should have been {@word[2+xsign]@}.
         <trueanswernote>prt1-2-T</trueanswernote>
         <truefeedback format="html">
            <text><![CDATA[
-<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
 \(f_y({@x0@},{@y0@}) = {@evfy@}\)
 which is {@word[2+signfy]@}
@@ -413,7 +408,7 @@ as required.
         <falseanswernote>prt1-2-F</falseanswernote>
         <falsefeedback format="html">
            <text><![CDATA[
-<p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
 \(f_y({@x0@},{@y0@}) = {@evfy@}\}
 which is {@word[2+signfy]@},

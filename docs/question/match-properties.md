@@ -45,13 +45,32 @@ Thus the question will make the following calculation.
 3. Draw a random point $(x_0,y_0)$ such that $x,y\in\{\pm1,\pm2,\ldots,\pm5\}$,
    where the partial derivatives are restricted.
 
+
+## Student View
+
+The question as implemented below includes several graphical features to
+visualise the problem and solution to the student.
+
+| ![Click draw button](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
+|:--:|
+| *When the student types in the function and clicks the **Draw** button* |
+
 The student has to enter an algebraic expression in $(x,y)$.
 They may parameterise the expression with $(p,q)$, in which
 case sliders appear, letting the smoothly and interactively
 adjust the parameters in the plot.
 
-The student has to click the `Draw Function' button to see the plot.
-This is unfortunate, but simplifies the coding.
+In addition to visualising the algebraic expression in $x$ and $y$,
+we also visualise the tangent plane in the reference point.  This reference
+point can be moved by dragging.
+
+Unfortunately, we cannot rotate and pan the view using mouse actions directly on
+the 3D plot.  Instead the sliders have to be used, but at least the student can
+study the function from any angle.
+
+We have not found a way to draw the function automatically.
+Hence, the student has to click the `Draw Function' button to see 
+the plot.
 
 # Question Code
 
@@ -342,210 +361,78 @@ but it would be needed when making multi-page questions.
    });
 ```
 
-### For cleanup
+## Model Answers
 
-The code is divided into segments, each of which is explained
-- **1 Segment** We create a button element and append in the appropriate location on the DOM, which in this case is the div element with classname **ClearFix**. An eventlistener is added, the button triggers the **drawFunction** when a user clicks on it.
+The model answers have to be filled in, for `ans1`, `p1`, `p2`, and `stateStore`.
+Mostly, the defaults are fine; all the answers are algebraic input, but a few
+changes are necessary.
 
-- **2 Segment** this is default code for creating the 3D room and the plane with x,y and z axis.
+For `ans1` we defined the `modelanswer` in maxima (above).  This has to be entered
+as the *Model answer*.
 
-- **3 Segment** the function drawFunction is created. It recieves the input from an input element in the DOM which has the class name **"algebraic"**, then we remove any previously drawn functions and draw a new function based on the recieved user input.
+For the other three answers, there is no meaningful model answer, so any valid value would
+do; say `NA` for `stateStore` and 1 for `p1` and `p2`.
+Importantly, these answers should be hidden from the student, which requires the keyword
+`hideanswer` to be entered under *Extra options* (last in the *Input: ...* section).
 
-```javascript
-<p></p>
-<p>Give an example of a function where all partial derivatives at the
-  coordinates ({#a#},{#b#}) are {#question_text#} <br></p>
+## Partial Response Tree
 
-[[jsxgraph height='850px' width='850px']]
+We define only one PRT, with two nodes, one to check each of the partial derivatives.
+The student gets ½ point for each satisfied criterion.  A perfect answer thus gets one
+point, and partially correct answers are possible.
 
-//SEGMENT 1 _________Create and append elements to document_______________
-let btn = document.createElement("button");
-btn.innerHTML = "Draw Function";
-btn.setAttribute("type","button");
-let br = document.createElement("br");
+### Feedback variables
 
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(br);
-document.getElementsByClassName("clearfix")[0].appendChild(btn);
+The following variables have to be defined, calculating the partial
+derivatives and finding their signs in the reference point.
+We also the `word` array to translate a numeric sign into a word to use
+in the feecback text.
 
-btn.addEventListener("click", drawFunction);
-
-//SEGMENT 2 _________Create the 3D room and the plane with x,y and z axis._______________
-var board = JXG.JSXGraph.initBoard(divid, {
-boundingbox: [-8, 8, 8, -8],
-keepaspectratio: false,
-axis: false
-});
-
-
-var box = [-5, 5];
-var view = board.create('view3d',
-[
-[-6, -3], [8, 8],
-[box, box, box]
-],
-{
-xPlaneRear: {visible: false},
-yPlaneRear: {visible: false},
-});
-view.D3.az_slide._smax = 12;
-
-var funcExpr = '';
-
-var F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
-// 3D surface
-
-var fGraph = view.create('functiongraph3d', [
-F,
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
-
-
-//SEGMENT 3 _________ Draw function in the input value_______________
-function drawFunction() {
-var ans1n = document.getElementsByClassName('algebraic')[0];
-
-funcExpr = ans1n.value;
-
-board.removeObject(fGraph,false);
-
-F = board.jc.snippet(funcExpr, true, 'x,y', true); // JessieCode parsing
-fGraph =view.create('functiongraph3d', [
-F,
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-box, // () =&gt; [-s.Value()*5, s.Value() * 5],
-], { strokeWidth: 0.5, stepsU: 70, stepsV: 70 });
-board.update();
-}
-
-<p></p>
-<p><span>Your function = [[input:ans1]][[validation:ans1]] </span></p>
+```
+fx: diff(ans1,x);
+fy: diff(ans1,y);
+evfx: ev(fx,x=x0,y=y0);
+evfy: ev(fy,x=x0,y=y0);
+signfx: signum(evfx) ;
+signfy: signum(evfy) ;
+word : [ "negative", "zero", "positive" ] ;
 ```
 
-The last piece of javascript code manages the state variable.
-This may not be required for a single page question, but is 
-included here for completeness, in case the reader wants to
-extnd the example
+### The nodes
 
-```javascript
-   // If the state has been set, we need to restore the state from
-   // previous work by the student.
-   if (state.value && state.value != "") {
-      //Parse the string-representation of the state
-      var newState = JSON.parse(state.value);
+The two nodes should check `signfx` (resp. `signfy`) as *SAns* against `xsign`
+(resp. `ysign`) as *TAns*.  
+Using the default algebraic equivalence (AlgEquiv) as *Answer test* is
+ok, but other tests work too.
 
-      //Update the different, sliders to previous state
-      scale_slider.setValue(newState["scale_slider"]);
-      slider_p.setValue(newState["slider_p"]);
-      slider_q.setValue(newState["slider_q"]);
-      //elevation and rotation sliders
-      view.D3.el_slide.setValue(newState["el_slider"]);
-      view.D3.az_slide.setValue(newState["az_slider"]);
-      //Bottom control point
-      p_bottom.D3.coords = newState["p_bottom"];
+The *Score* should be 0.5 for true and 0 for false, and importantly, we have to change
+the *Mod* to `+` so that the scores from each node are added together.
 
-      board.update();
+Each node should have a feedback text.
+When the $x$ derivative is correct, we can use.
 
-      //Read function expression and draw everything at the end
-      funcExpr = newState["funcExpr"];
-      drawFunction();
-
-   }
-
-   // When the board updates, we need to update the state variable
-   board.on('update', function() {
-      //JSON object to contain the state of the board
-      var newState = {};
-      //Add all the entries we want to "save"
-      newState.scale_slider = scale_slider.Value();
-      newState.slider_p = slider_p.Value();
-      newState.slider_q = slider_q.Value();
-      newState.el_slider = view.D3.el_slide.Value();
-      newState.az_slider = view.D3.az_slide.Value();
-      newState.funcExpr = funcExpr;
-      newState.p_bottom = p_bottom.D3.coords;
-      //Store the state in the stateStore answer field as a string
-      state.value = JSON.stringify(newState);
-   });
+```html
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative
+\(f_x = {@fx@}\) which  evaluates to
+\(f_x({@x0@},{@y0@}) = {@evfx@}\)
+which is {@word[2+signfy]@} as required.
+</p>
 ```
 
-## Feedback variables
+When the derivative is wrong, we may instead use,
 
-We retrieve the student answer (function expression) and store it in the variable **f**. 
-
-We then find the partial derivatives of the provided expression and create a **score** variable set it to 0.
-
-The provided function is evaluated at the randomly generate x and y values (which we named **'a'** and **'b'* in this case)
-
-Variable **question_procedure** checks which of the 3 random questions that has been picked and further. we further increase the score if all three conditions of that question are met.
-
-The **ta** variable check wether the score matches the required score to pass the selected question, if it is, then its set to the student retrived input because its the correct answer. It bascally checks if the answer is correct and stores it.
-
-
-```rust
-f:ans1;
-fx:diff(f,x);
-fy:diff(f,y);
-fxy:diff(fy,x);
-score:0;
-evfx:ev(fx,x=a,y=b);
-evfy:ev(fy,x=a,y=b);
-evfxy:ev(fxy,x=a,y=b);
-question_procedure: if (rand_question =1) then (sa1:if evfx >0 then score:score+1, sa2:if evfy > 0 then score:score+1, sa3:if evfxy > 0 then score:score+1) else if (rand_question = 2) then (sa1:if evfx <0 then score:score+1, sa2:if evfy < 0 then score:score+1, sa3:if evfxy < 0 then score:score+1) 
-/* the different combination check */
-else (sa1:if evfx <0 then score:score+1 else if evfx>0 then score:score + 3 else score:score+6 , sa2:if evfy < 0 then score:score+1 else if evfy>0 then score:score + 3 else score:score+6 , sa3:if evfxy < 0 then score:score+1  else if evfxy >0 then score:score + 3 else score:score+6 );
-ta: if (score =3 and (rand_question = 1 or rand_question = 2))then ans1 else if (score = 10 and rand_question = 3 ) then ans1;
+```html
+<p>Your function, \(f(x,y) = {@ans1@}\) has partial derivative
+\(f_x = {@fx@}\) which  evaluates to
+\(f_x({@x0@},{@y0@}) = {@evfx@}\)
+which is {@word[2+signfy]@},
+but it should have been {@word[2+xsign]@}.
+</p>
 ```
-## Partial response tree
+
+It should be trivial to edit these to make corresponding texts for the other node.
 
 | ![Node 1](https://user-images.githubusercontent.com/43517080/191792093-1f2181ef-cad3-412b-b566-48303d98a658.png) |
 |:--:|
 | *Values of **node 1*** |
 
-### Node 1
-The answer test is set to AlgEquiv which checks if the user input algebriac expression is equivelant to the required expression to pass the question criteria.
-We also display the question text when the student answer is incorrect `{#rand_question#}`
-
-
-# Notes
-
-**TODO** For example the user may type `xy` instead of `x*y`,
-STACK will highlight this error.
-This is useful as it omits the need for string manipulation in JS, saves time.
-
-## Student perspective
-
-The student will type in the function that fits the criteria of the random question (1 of the 3) generated for them by clicking the **Draw** button.
-
-| ![Click draw button](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
-|:--:|
-| *When the student types in the function and clicks the **Draw** button* |
-
-## Question's and answers examples
-### Question variant 1.
-> "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are positive"
-
-Answer: `y^2*x^2`
-### Question variant 2.
-> "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are negative"
-
-Answer: `-y^2*x^2`
-### Question variant 3.
->"Give an example of a function where all partial derivatives at the coordinates (2,-3) are "different in regards to the sign infront of them, example:` fx = -5 fy =-1 fxy = 0`. is not valid because -1 and -5 are both negative""
-
-Here if we can get Fx to be any positive number, then we have two options left for Fy and Fxy. The options are a negative number or 0; Fy can be a negative number, then Fxy has to be 0. Fy can be 0, then Fxy has to be a negative number. The point is the sign's for all partial derivative values have to be unique from each other.
-
-Answer: `x+y^2`
-The answer is such because;
-`Fx:1
-Fy:-6
-Fxy:0`
-
-## Teacher perspective
-
-The teacher's do not have to change anything unless they wish to change the range for the randomly generated x and y coordinates for the question. Then they may change the a (x) and b (y) variables inside the **Question variables** box.
-
-| ![values the teacher can change](https://user-images.githubusercontent.com/43517080/191801405-a9083b67-b488-4c80-8fa2-1928e6b8aae5.png) |
-|:--:|
-| *The above image shows which values the teacher may wish to change (highlighted in yellow)* |
