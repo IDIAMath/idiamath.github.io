@@ -17,13 +17,13 @@ $(x,y)$ are (say) positive.
 
 - [XML Code](../XML/match-properties.xml)
 
-# Question description
+## Question description
 
 The question is simple, but the tutorial effectively illustrates how the
 algebraic answer in STACK can be linked to variables in JSXGraph and its
 visualisation.
 
-## Pedagogical Motivation
+### Pedagogical Motivation
 
 This exercise is an early training exercise when the student starts studying
 functions of two variables in calculus.
@@ -34,7 +34,7 @@ between the algebraic and the graphical representation when solving problems.
 The particular question aims to develop the intuitive understanding of the
 partial derivative.
 
-## Implementation
+### Implementation
 
 The version implemented here is quite flexible, including variants where each
 partial derivative may be required to be negative, positive, or zero.
@@ -46,7 +46,7 @@ Thus the question will make the following calculation.
    where the partial derivatives are restricted.
 
 
-## Student View
+### Student View
 
 The question as implemented below includes several graphical features to
 visualise the problem and solution to the student.
@@ -72,9 +72,9 @@ We have not found a way to draw the function automatically.
 Hence, the student has to click the `Draw Function' button to see 
 the plot.
 
-# Question Code
+## Question Code
 
-## Question Variables
+### Question Variables
 
 The question variables comprise the point $(x_0,y_0)$,
 the signs of the partial derivatives, and a model answer,
@@ -90,7 +90,7 @@ ysign: rand(3)-1;
 modelanswer: xsign*a*x^2 + ysign*b*y^2 ;
 ```
 
-## Question Text
+### Question Text
 
 The question text is nasty, because it has to include all the javascript code 
 to manage the plot.
@@ -139,7 +139,7 @@ answer.
    and tune their values with sliders in the graph plot </p>
 ```
 
-### Coding the Plot
+#### Coding the Plot
 
 
 The javascript code is enclosed in special STACK tags, which not only 
@@ -361,7 +361,7 @@ but it would be needed when making multi-page questions.
    });
 ```
 
-## Model Answers
+### Model Answers
 
 The model answers have to be filled in, for `ans1`, `p1`, `p2`, and `stateStore`.
 Mostly, the defaults are fine; all the answers are algebraic input, but a few
@@ -375,13 +375,13 @@ do; say `NA` for `stateStore` and 1 for `p1` and `p2`.
 Importantly, these answers should be hidden from the student, which requires the keyword
 `hideanswer` to be entered under *Extra options* (last in the *Input: ...* section).
 
-## Partial Response Tree
+### Partial Response Tree
 
 We define only one PRT, with two nodes, one to check each of the partial derivatives.
 The student gets ½ point for each satisfied criterion.  A perfect answer thus gets one
 point, and partially correct answers are possible.
 
-### Feedback variables
+#### Feedback variables
 
 The following variables have to be defined, calculating the partial
 derivatives and finding their signs in the reference point.
@@ -398,7 +398,7 @@ signfy: signum(evfy) ;
 word : [ "negative", "zero", "positive" ] ;
 ```
 
-### The nodes
+#### The nodes
 
 The two nodes should check `signfx` (resp. `signfy`) as *SAns* against `xsign`
 (resp. `ysign`) as *TAns*.  
