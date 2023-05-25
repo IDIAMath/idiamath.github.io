@@ -90,9 +90,11 @@ maxError:0.2;
 ```
 The variable `func` is the goal function, where the list `all_params` lists 
 the name of all "potentially unknown" parameters. The list `coef` holds all the
-parameters values. In the example above, we have 2. order polynomial with
-6 parameters and they are given a random value between $[-4,4]$, excluding 0,
-with two parameters guaranteed to be zero. 
+parameters values. In the example above, we have a 2. order polynomial with
+6 parameters and they are given a random value between $$[-4,4]$$, excluding 0,
+with two parameters guaranteed to be zero. The list `params` holds the names
+of the unkown parameters, in the above example we draw two random parameters.
+
 
 
 
