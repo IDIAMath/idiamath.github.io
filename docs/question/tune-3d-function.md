@@ -338,7 +338,14 @@ The critical part is the javascript code, in `[[jsxgraph]]` tags.
 ```
 ### Javascript code
 
-First we get the ID of the bottom jsxgraph figure. We want the students
+The jsxgraph block starts with
+```js
+[[jsxgraph input-ref-ans="ansRef"]]
+```
+In the opening jsxgraph block we specify that we want a reference to the STACK answerfield "ans" 
+stored in a variable "ansRef"
+
+Then we get the ID of the bottom jsxgraph figure. We want the students
 to be able to toggle between showing both graphs in a single figure
 or seperate figures by clicking a button. 
 The code for both plots is contained in the first jsxgraph block.
@@ -352,10 +359,134 @@ bottom graph by incrementing X for the first graph, which we do with regex:
    var nextDivNum = Number(divid.match(regexMatchNumber))+1;//Match+increment
    var divid2 = divid.replace(regexMatchNumber, nextDivNum);//Replace new number
 ```
+We use <code> divid2 </code> to get a reference to the bottom figure, in order
+to hide/show it.
 
-An additional feature allows the student to split the view, seeing
-each function in different surface plots.
+```js
+   var jsxgraph2 = document.getElementById(divid2);
+   jsxgraph2.style.display="none";//Hide second figure by default
+```
+The two boards  an 3Dviews can now be created in their respective figures
+```js
+   var board = JXG.JSXGraph.initBoard(divid, {...
+   var board2 = JXG.JSXGraph.initBoard(divid2, { ...
+   var view = board.create('view3d', ....
+   var view2 = board2.create('view3d', ....
+```
 
+Next we nee to get our data from maxima. 
+The maximafunction `stackjson_stringify(params_json)` encodes the stackmap
+into a JSON string, which we can parse into a JSON object with JSON.parse()
+```js
+   var stack_input = JSON.parse({#stackjson_stringify(params_json)#});
+   var ans = document.getElementById(ansRef);//Reference to answer field
+   ans.value= JSON.stringify(stack_input); //Write JSON object to ans as string
+```
+We also get the answerfield element by using our supplied "ansRef" reference,
+and store our stack_input object as string in the answerfield with JSON.stringify.
+The goal is to hand the position of the sliders back to stack, by updating the
+stack_input object with the current slider values and write the entire object
+back to the answerfield.
+
+From the stack_input object we can get the slider sizes and the parameter names:
+```js
+   var pnames = stack_input["pnames"];
+   var slider_size = stack_input["sliders"];
+```
+We can now create the sliders for the tunable parameters:
+```js
+   var sliders = []; //Array holding a reference to sliders
+   
+   //For several sliders, we need to shift the y-position so they don't overlap
+   var slider_shift = 0 
+
+   // Iterate over the the names of the tunable parameters
+   for (var i=0; i<pnames.length; i++){
+
+      //Set the initial tunable parameter value to startvalue of sliders
+      stack_input[pnames[i]] = slider_size[1];
+      //Write new parameter values to answer field
+      ans.value = JSON.stringify(stack_input);
+
+      
+      //Create and push new slider to list of sliders
+      sliders.push(board.create('slider',  
+         [[-7, -6-slider_shift], [5, -6-slider_shift], slider_size], 
+         { name: pnames[i] }//New slider has same name as the parameter
+      ));
+      slider_shift++; //Shift y-position for next slider
+
+      board.update();
+   }
+```
+The sliders are given the same name as the tunable parameters, which
+means they will affect the functionplot. Also note that we set the parameter
+values in stack_input to the initial value of the corresponding slider and 
+write it to the answerfield. Otherwise the answerfield would initially contain
+the correct values.
+
+Next we parse the functionstrings fxy and fxy2 from maxima with with 
+\<board\>.jc.snippet(), create the scaled function to be plotted
+and plot the functions in the same manner as in previous tutorials.
+
+The point of having the option to view the plots in seperate figures, is
+that it can be messy and difficult to match the plots in the same figure 
+initially. We also want the same rotation and elevation angles in the two
+plots at all times, which we can accomplish by hiding the el. az. controls
+in the bottom figure and set the controls in the first figure to also control
+the bottom figure:
+
+```js
+   view2.D3.az_slide.hide();
+   view2.D3.el_slide.hide();
+   
+   view2.D3.az_slide = view.D3.az_slide;
+   view2.D3.el_slide = view.D3.el_slide;
+
+   //Rename elevation and rotation control sliders
+   view.D3.el_slide.name = "elevation";
+   view.D3.az_slide.name="rotate";
+```
+
+The button itself is added in html between the two jsxgraph-blocks:
 ```html
 <button type="button" value="0" id="split-button"> Split </button>
 ```
+
+```js
+Its logic is added made as follows:
+   var button = document.getElementById('split-button');
+   //Add the function to be called when the button is clicked
+   button.addEventListener('click', function() { 
+      
+      // If value=0 we hide the goal-plot and show the bottom figure
+      if (button.value == "0"){
+         func_g.hide();                     //Hide target function 
+         button.value = "1";                //Toggle button value
+         button.textContent = "Merge";      //Toggle button text
+         jsxgraph2.style.display = "block"; //Show bottom figure
+      }
+      else { //If value != 0 we show the goal-plot and hide the bottom figure
+         func_g.show();                    //Show target function
+         button.value="0";                 //Toggle button value
+         button.textContent = "Split";     //Toggle button text
+         jsxgraph2.style.display = "none"; //Hide bottom figure
+      }
+   });
+```
+
+The final piece of the puzzle is to make sure to write an updated JSON
+object as a string to the answerfield everytime the student manipulates the
+figure:
+```js
+   board.on('update', function(){
+      for (let i=0; i<sliders.length; i++) //Iterate over tunable sliders
+      {
+         var ans_name = sliders[i].getAttribute("name"); //Get name of slider
+         stack_input[ans_name] = sliders[i].Value();  //Update value of parameter
+      }
+      //Write JSON object with updated parameter values to stack answer field
+      ans.value=JSON.stringify(stack_input);
+   });
+```
+
