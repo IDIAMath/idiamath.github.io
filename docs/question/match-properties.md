@@ -4,66 +4,66 @@ usemathjax: true
 theme: minima
 ---
 
-> Ask the user to enter a function defined by algebraic expression such that certain properties are in place. Use graphics to plot the surface with corresponding properties before it is evaluated formally.
->
-> Property example: partial derivatives at all points with coordinates (t,t) are positive.
+> Ask the user to an algebraic expression defining a function in two variables with certain properties.
+> Visualise the function as a surface plot, to help the student to validate the properties
+> visually.
+
+One example would be function where all the partial derivatives in a given point
+$(x,y)$ are (say) positive.
 
 | ![First impression](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png) |
 |:--:|
 | *First impression of the question* |
 
-## Question description
-
-Random $$(x, y)$$ coordinates are generated, the user is asked 1 of 3 randomly generated questions: 
-1. To provide a function that will result in positive output for all first order partial derivatives (Fx,Fy) of the given function at the generated coordinates.
-2. To provide a function that will result in negative output for all first order partial derivatives (Fx,Fy) of the given function at the generated coordinates.
-3. To provide a function where all first order partial derivative (Fx,Fy) values at the generated coordinates provide unique signs from each other (+, -, 0/neutral).
-
-The user may choose to draw the provided function by clicking on the **'Draw Function'** button.
-
-Although simple, this question demonstrates how STACK and JSXGraph can
-be complementary. STACK works to provide the user with input feedback
-in realtime. For example the user may type `xy` instead of `x*y`,
-STACK will highlight this error. This is useful as it omits the need for string manipulation in JS, saves time.
-
 - [XML Code](../XML/match-properties.xml)
 
-### Student perspective
-The student will type in the function that fits the criteria of the random question (1 of the 3) generated for them by clicking the **Draw** button.
+# Question description
 
-| ![Click draw button](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
-|:--:|
-| *When the student types in the function and clicks the **Draw** button* |
+The question is simple, but the tutorial effectively illustrates how the
+algebraic answer in STACK can be linked to variables in JSXGraph and its
+visualisation.
+
+## Pedagogical Motivation
+
+This exercise is an early training exercise when the student starts studying
+functions of two variables in calculus.
+
+The visualisation trains the student in seeing the relationship
+between the algebraic and the graphical representation when solving problems.
+
+The particular question aims to develop the intuitive understanding of the
+partial derivative.
+
+## Implementation
+
+The version implemented here is quite flexible, including variants where each
+partial derivative may be required to be negative, positive, or zero.
+Thus the question will make the following calculation.
+
+1. Draw the sign of $f_x$ uniformly at random from ±1 and 0.
+2. Draw the sign of $f_y$ uniformly at random from ±1 and 0.
+3. Draw a random point $(x',y')$ such that $x,y\in\{\pm1,\pm2,\ldots,\pm5\}$,
+   where the partial derivatives are restricted.
+
+The student has to enter an algebraic expression in $(x,y)$.
+They may parameterise the expression with $(p,q)$, in which
+case sliders appear, letting the smoothly and interactively
+adjust the parameters in the plot.
+
+The student has to click the `Draw Function' button to see the plot.
+This is unfortunate, but simplifies the coding.
 
 
-### Teacher perspective
+# Teacher perspective
+
 The teacher's do not have to change anything unless they wish to change the range for the randomly generated x and y coordinates for the question. Then they may change the a (x) and b (y) variables inside the **Question variables** box.
 
 | ![values the teacher can change](https://user-images.githubusercontent.com/43517080/191801405-a9083b67-b488-4c80-8fa2-1928e6b8aae5.png) |
 |:--:|
 | *The above image shows which values the teacher may wish to change (highlighted in yellow)* |
 
-### Question's and answers examples
-#### Question variant 1.
-> "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are positive"
 
-Answer: `y^2*x^2`
-#### Question variant 2.
-> "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are negative"
-
-Answer: `-y^2*x^2`
-#### Question variant 3.
->"Give an example of a function where all partial derivatives at the coordinates (2,-3) are "different in regards to the sign infront of them, example:` fx = -5 fy =-1 fxy = 0`. is not valid because -1 and -5 are both negative""
-
-Here if we can get Fx to be any positive number, then we have two options left for Fy and Fxy. The options are a negative number or 0; Fy can be a negative number, then Fxy has to be 0. Fy can be 0, then Fxy has to be a negative number. The point is the sign's for all partial derivative values have to be unique from each other.
-
-Answer: `x+y^2`
-The answer is such because;
-`Fx:1
-Fy:-6
-Fxy:0`
-
-## Question CODE
+# Question Code
 
 ### Question Variables
 
@@ -201,3 +201,36 @@ The answer test is set to AlgEquiv which checks if the user input algebriac expr
 We also display the question text when the student answer is incorrect `{#rand_question#}`
 
 
+# Notes
+
+**TODO** For example the user may type `xy` instead of `x*y`,
+STACK will highlight this error.
+This is useful as it omits the need for string manipulation in JS, saves time.
+
+## Student perspective
+
+The student will type in the function that fits the criteria of the random question (1 of the 3) generated for them by clicking the **Draw** button.
+
+| ![Click draw button](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
+|:--:|
+| *When the student types in the function and clicks the **Draw** button* |
+
+## Question's and answers examples
+#### Question variant 1.
+> "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are positive"
+
+Answer: `y^2*x^2`
+#### Question variant 2.
+> "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are negative"
+
+Answer: `-y^2*x^2`
+#### Question variant 3.
+>"Give an example of a function where all partial derivatives at the coordinates (2,-3) are "different in regards to the sign infront of them, example:` fx = -5 fy =-1 fxy = 0`. is not valid because -1 and -5 are both negative""
+
+Here if we can get Fx to be any positive number, then we have two options left for Fy and Fxy. The options are a negative number or 0; Fy can be a negative number, then Fxy has to be 0. Fy can be 0, then Fxy has to be a negative number. The point is the sign's for all partial derivative values have to be unique from each other.
+
+Answer: `x+y^2`
+The answer is such because;
+`Fx:1
+Fy:-6
+Fxy:0`
