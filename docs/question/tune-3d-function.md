@@ -104,7 +104,7 @@ functions. `fxy` is the function with only the known parameters evaluated,
 `fxy2` is the function with all parameters evaluated.
 
 To get the data from maxima to jsxgraph, the easiest way usually is to use
-{#<CAS expression>#} syntax. This "pastes" the maxima result between #
+{#\<CAS expression\>#} syntax. This "pastes" the maxima result between #
 directly into the javascript-code. This would probably suffice in this
 case, but if the data is big/complex/dynamic it could be a good idea to
 use a stackmap in maxima that can be converted and parsed into a JSON object
@@ -139,13 +139,13 @@ data from maxima:
 
 ## Question Text
 
-First we create three *hidden* input boxes which will
-be manipulated from javascript only.
+Usually would want one hidden input box bound to each slider that is part
+of the students answer. In this case we might not know the name of, or more
+importantly, the number of sliders. In such cases we can manually "bind" all 
+the relevant data form jsxgraph to a single answer variable/input box:
 
 ```html
-<p style="display:none">[[input:ansa]] [[validation:ansa]]</p>
-<p style="display:none">[[input:ansb]] [[validation:ansb]]</p>
-<p style="display:none">[[input:ansc]] [[validation:ansc]]</p>
+<p style="display:none">[[input:ans]] [[validation:ans]]</p>
 ```
 
 The question text proper is straight forward.
@@ -335,6 +335,22 @@ The critical part is the javascript code, in `[[jsxgraph]]` tags.
 
 })();	
 [[/jsxgraph]]
+```
+### Javascript code
+
+First we get the ID of the bottom jsxgraph figure. We want the students
+to be able to toggle between showing both graphs in a single figure
+or seperate figures by clicking a button. 
+The code for both plots is contained in the first jsxgraph block.
+The ID for the jsxgraphblock is contained in `divid` and has value
+"stack-jsxgraph-X", where X is a number controlled by stack, depending on
+how many jsxgraph figures is on the quiz page. We can get the ID of the
+bottom graph by incrementing X for the first graph, which we do with regex:
+
+```js
+   var regexMatchNumber = /([1-9][0-9]|[1-9])/g; 
+   var nextDivNum = Number(divid.match(regexMatchNumber))+1;//Match+increment
+   var divid2 = divid.replace(regexMatchNumber, nextDivNum);//Replace new number
 ```
 
 An additional feature allows the student to split the view, seeing
