@@ -123,6 +123,23 @@ answer.
 ### Coding the Plot
 
 
+The javascript code is enclosed in special STACK tags, which not only 
+indicates javascript but also loads the required libraries.
+The opening tag has to specify the size of the plot and all the 
+student answer fields used, including the hidden once.
+
+```
+[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
+```
+
+```
+[[/jsxgraph]]
+```
+
+The following javascript code belongs inside the `jsxgraph` tags. 
+
+### For cleanup
+
 The code is divided into segments, each of which is explained
 - **1 Segment** We create a button element and append in the appropriate location on the DOM, which in this case is the div element with classname **ClearFix**. An eventlistener is added, the button triggers the **drawFunction** when a user clicks on it.
 
@@ -198,12 +215,59 @@ box, // () =&gt; [-s.Value()*5, s.Value() * 5],
 board.update();
 }
 
-[[/jsxgraph]]
 <p></p>
 <p><span>Your function = [[input:ans1]][[validation:ans1]] </span></p>
 ```
 
+The last piece of javascript code manages the state variable.
+This may not be required for a single page question, but is 
+included here for completeness, in case the reader wants to
+extnd the example
+
+```javascript
+   // If the state has been set, we need to restore the state from
+   // previous work by the student.
+   if (state.value && state.value != "") {
+      //Parse the string-representation of the state
+      var newState = JSON.parse(state.value);
+
+      //Update the different, sliders to previous state
+      scale_slider.setValue(newState["scale_slider"]);
+      slider_p.setValue(newState["slider_p"]);
+      slider_q.setValue(newState["slider_q"]);
+      //elevation and rotation sliders
+      view.D3.el_slide.setValue(newState["el_slider"]);
+      view.D3.az_slide.setValue(newState["az_slider"]);
+      //Bottom control point
+      p_bottom.D3.coords = newState["p_bottom"];
+
+      board.update();
+
+      //Read function expression and draw everything at the end
+      funcExpr = newState["funcExpr"];
+      drawFunction();
+
+   }
+
+   // When the board updates, we need to update the state variable
+   board.on('update', function() {
+      //JSON object to contain the state of the board
+      var newState = {};
+      //Add all the entries we want to "save"
+      newState.scale_slider = scale_slider.Value();
+      newState.slider_p = slider_p.Value();
+      newState.slider_q = slider_q.Value();
+      newState.el_slider = view.D3.el_slide.Value();
+      newState.az_slider = view.D3.az_slide.Value();
+      newState.funcExpr = funcExpr;
+      newState.p_bottom = p_bottom.D3.coords;
+      //Store the state in the stateStore answer field as a string
+      state.value = JSON.stringify(newState);
+   });
+```
+
 ## Feedback variables
+
 We retrieve the student answer (function expression) and store it in the variable **f**. 
 
 We then find the partial derivatives of the provided expression and create a **score** variable set it to 0.

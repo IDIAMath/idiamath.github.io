@@ -23,8 +23,7 @@
 <p style="display:none">[[input:p2]][[validation:p2]]</p>
 <p style="display:none">[[input:stateStore]][[validation:stateStore]]</p>
 
-[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" 
-    input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
+[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
 
    // Get a reference to the hidden answer to hold the board state
    var state = document.getElementById(stateRef); 
@@ -161,9 +160,9 @@
 
    }; //End drawFunction
 
-   // Check if student has started working on the board earlier and load the state of the graph
-   if (state.value && state.value != "")
-   {
+   // If the state has been set, we need to restore the state from
+   // previous work by the student.
+   if (state.value && state.value != "") {
       //Parse the string-representation of the state
       var newState = JSON.parse(state.value);
    
@@ -185,7 +184,7 @@
 
    }
 
-   //Set an update function that saves the state of the board when it changes
+   // When the board updates, we need to update the state variable
    board.on('update', function() {
       //JSON object to contain the state of the board
       var newState = {};
@@ -202,10 +201,10 @@
    });
 
 [[/jsxgraph]]
-<p><span>Your function, \(f(x,y) =\) [[input:ans1]][[validation:ans1]] </span><br>
+<p>Your function, \(f(x,y) =\) [[input:ans1]][[validation:ans1]] </p>
 <input type="button" value="Draw Function" id="draw_button">
-</p>
-<p> If you'd like, you can include constants \( p, q \) in your expression, and tune their values with sliders in the graph plot </p>]]></text>
+<p>If you want to, you can include constants \(p, q\) in your expression,
+   and tune their values with sliders in the graph plot </p>]]></text>
     </questiontext>
     <generalfeedback format="html"></generalfeedback>
     <defaultgrade>1</defaultgrade>
