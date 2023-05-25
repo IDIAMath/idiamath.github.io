@@ -8,7 +8,7 @@
     <questiontext format="html">
       <text><![CDATA[<p>
   Give an example of a function where the first partial derivatives at
-    \((x={@a@},y={@b@})\) are 
+    \((x={@x0@},y={@y0@})\) is 
      {@if xsign > 0 then "positive"
       else if xsign < 0 then "negative"
       else "zero"@}
@@ -23,7 +23,8 @@
 <p style="display:none">[[input:p2]][[validation:p2]]</p>
 <p style="display:none">[[input:stateStore]][[validation:stateStore]]</p>
 
-[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
+[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" 
+    input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
 
    // Get a reference to the hidden answer to hold the board state
    var state = document.getElementById(stateRef); 
@@ -215,20 +216,20 @@
       <text>2023010400</text>
     </stackversion>
     <questionvariables>
-      <text><![CDATA[a:rand_with_prohib(-5,5,[0]);
-b:rand_with_prohib(-5,5,[0]);
+      <text><![CDATA[x0:rand_with_prohib(-5,5,[0]);
+y0:rand_with_prohib(-5,5,[0]);
 
 xsign: rand(3)-1;
 ysign: rand(3)-1;
 
-ma: xsign*a*x^2 + ysign*b*y^2 ;
+modelanswer: xsign*x0*x^2 + ysign*y0*y^2 ;
 ]]></text>
     </questionvariables>
     <specificfeedback format="html">
       <text>[[feedback:prt1]]</text>
     </specificfeedback>
     <questionnote>
-       <text>({@a@},{@b@}):({@xsign@},{@ysign@})</text>
+       <text>({@x0@},{@y0@}):({@xsign@},{@ysign@})</text>
     </questionnote>
     <questionsimplify>1</questionsimplify>
     <assumepositive>0</assumepositive>
@@ -252,7 +253,7 @@ ma: xsign*a*x^2 + ysign*b*y^2 ;
     <input>
       <name>ans1</name>
       <type>algebraic</type>
-      <tans>ma</tans>
+      <tans>modelanswer</tans>
       <boxsize>15</boxsize>
       <strictsyntax>1</strictsyntax>
       <insertstars>0</insertstars>
@@ -333,8 +334,8 @@ p:p1;
 f:ans1;
 fx:diff(f,x);
 fy:diff(f,y);
-evfx:ev(fx,x=a,y=b);
-evfy:ev(fy,x=a,y=b);
+evfx:ev(fx,x=x0,y=y0);
+evfy:ev(fy,x=x0,y=y0);
 signfx: signum(evfx) ;
 signfy: signum(evfy) ;
 op : [ "<", "=", ">" ] ;
@@ -358,7 +359,7 @@ word : [ "negative", "zero", "positive" ] ;
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
-\(f_x({@a@},{@b@}) = {@evfx@}\)
+\(f_x({@x0@},{@y0@}) = {@evfx@}\)
 which is {@word[2+signfy]@}
 as required.
 </p>
@@ -373,7 +374,7 @@ as required.
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_x = {@fx@}\) which  evaluates to 
-\(f_x({@a@},{@b@}) = {@evfx@}\)
+\(f_x({@x0@},{@y0@}) = {@evfx@}\)
 which is {@word[2+signfy]@},
 but it should have been {@word[2+xsign]@}.
 </p>
@@ -396,7 +397,7 @@ but it should have been {@word[2+xsign]@}.
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
-\(f_y({@a@},{@b@}) = {@evfy@}\)
+\(f_y({@x0@},{@y0@}) = {@evfy@}\)
 which is {@word[2+signfy]@}
 as required.
 </p>
@@ -411,7 +412,7 @@ as required.
            <text><![CDATA[
 <p>Your function, \(f(x,y) = {@f@}\) has partial derivative 
 \(f_y = {@fy@}\) which  evaluates to 
-\(f_y({@a@},{@b@}) = {@evfy@}\}
+\(f_y({@x0@},{@y0@}) = {@evfy@}\}
 which is {@word[2+signfy]@},
 but it should have been {@word[2+ysign]@}.
 </p>

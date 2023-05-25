@@ -42,7 +42,7 @@ Thus the question will make the following calculation.
 
 1. Draw the sign of $f_x$ uniformly at random from ±1 and 0.
 2. Draw the sign of $f_y$ uniformly at random from ±1 and 0.
-3. Draw a random point $(x',y')$ such that $x,y\in\{\pm1,\pm2,\ldots,\pm5\}$,
+3. Draw a random point $(x_0,y_0)$ such that $x,y\in\{\pm1,\pm2,\ldots,\pm5\}$,
    where the partial derivatives are restricted.
 
 The student has to enter an algebraic expression in $(x,y)$.
@@ -53,36 +53,75 @@ adjust the parameters in the plot.
 The student has to click the `Draw Function' button to see the plot.
 This is unfortunate, but simplifies the coding.
 
-
-# Teacher perspective
-
-The teacher's do not have to change anything unless they wish to change the range for the randomly generated x and y coordinates for the question. Then they may change the a (x) and b (y) variables inside the **Question variables** box.
-
-| ![values the teacher can change](https://user-images.githubusercontent.com/43517080/191801405-a9083b67-b488-4c80-8fa2-1928e6b8aae5.png) |
-|:--:|
-| *The above image shows which values the teacher may wish to change (highlighted in yellow)* |
-
-
 # Question Code
 
-### Question Variables
+## Question Variables
 
-**a** and **b** variables are the x and y coordinates.
+The question variables comprise the point $(x_0,y_0)$,
+the signs of the partial derivatives, and a model answer,
+as follows:
 
-The **rand_question generates** a random value between 0-3, that value is further utilized in the **question_text** variable.
-
-The question_text variable checks which random value was generated and displays the message that coreesponds to the question value.
 ```rust
-a:rand_with_prohib(-5,5,[0]);
-b:rand_with_prohib(-5,5,[0]);
-rand_question:rand_with_prohib(0,3,[0]);
-question_text:if (rand_question = 1) then positive else if (rand_question = 2) then negative else "different in regards to the sign infront of them, example: fx = -5 fy =-1 fxy = 0.  is not valid because -1 and -5 are both negative";
+x0: rand_with_prohib(-5,5,[0]);
+y0: rand_with_prohib(-5,5,[0]);
+
+xsign: rand(3)-1;
+ysign: rand(3)-1;
+
+modelanswer: xsign*a*x^2 + ysign*b*y^2 ;
 ```
 
-### Question Text
-The objectives are:
--
--
+## Question Text
+
+The question text is nasty, because it has to include all the javascript code 
+to manage the plot.
+
+The first section is the main text of the question
+
+```html
+<p>
+  Give an example of a function where the first partial derivatives at
+    \((x={@x0@},y={@y0@})\) is
+     {@if xsign > 0 then "positive"
+      else if xsign < 0 then "negative"
+      else "zero"@}
+     with respect to \(x\) and
+     {@if ysign > 0 then "positive"
+      else if ysign < 0 then "negative"
+      else "zero"@}
+     with respect to \(y\).
+</p>
+```
+
+This is not quite ideal.  In the case where the partial derivativs have the
+same sign, it would be better to merge the two clauses into one and write
+e.g. «both partial derivatives are positive».
+
+In addition to the student answer `ans1`, we need three hidden answers.
+The first two, `p1` and `p2` are the parameters $p$ and $q$ which the
+student can use in their answer.  The third onw is a state variable which
+would be needed if the question is extended to a multi-part question, so
+that the plot can be restored after a page change.
+
+```html
+<p style="display:none">[[input:p1]][[validation:p1]]</p>
+<p style="display:none">[[input:p2]][[validation:p2]]</p>
+<p style="display:none">[[input:stateStore]][[validation:stateStore]]</p>
+```
+
+The javascript code is discussed below.
+After the plot, we have to code to receive and validate the student
+answer.
+
+```html
+<p>Your function, \(f(x,y) =\) [[input:ans1]][[validation:ans1]] </p>
+<input type="button" value="Draw Function" id="draw_button">
+<p>If you want to, you can include constants \(p, q\) in your expression,
+   and tune their values with sliders in the graph plot </p>
+```
+
+### Coding the Plot
+
 
 The code is divided into segments, each of which is explained
 - **1 Segment** We create a button element and append in the appropriate location on the DOM, which in this case is the div element with classname **ClearFix**. An eventlistener is added, the button triggers the **drawFunction** when a user clicks on it.
@@ -164,7 +203,7 @@ board.update();
 <p><span>Your function = [[input:ans1]][[validation:ans1]] </span></p>
 ```
 
-### Feedback variables
+## Feedback variables
 We retrieve the student answer (function expression) and store it in the variable **f**. 
 
 We then find the partial derivatives of the provided expression and create a **score** variable set it to 0.
@@ -190,13 +229,13 @@ question_procedure: if (rand_question =1) then (sa1:if evfx >0 then score:score+
 else (sa1:if evfx <0 then score:score+1 else if evfx>0 then score:score + 3 else score:score+6 , sa2:if evfy < 0 then score:score+1 else if evfy>0 then score:score + 3 else score:score+6 , sa3:if evfxy < 0 then score:score+1  else if evfxy >0 then score:score + 3 else score:score+6 );
 ta: if (score =3 and (rand_question = 1 or rand_question = 2))then ans1 else if (score = 10 and rand_question = 3 ) then ans1;
 ```
-### Partial response tree
+## Partial response tree
 
 | ![Node 1](https://user-images.githubusercontent.com/43517080/191792093-1f2181ef-cad3-412b-b566-48303d98a658.png) |
 |:--:|
 | *Values of **node 1*** |
 
-#### Node 1
+### Node 1
 The answer test is set to AlgEquiv which checks if the user input algebriac expression is equivelant to the required expression to pass the question criteria.
 We also display the question text when the student answer is incorrect `{#rand_question#}`
 
@@ -216,15 +255,15 @@ The student will type in the function that fits the criteria of the random quest
 | *When the student types in the function and clicks the **Draw** button* |
 
 ## Question's and answers examples
-#### Question variant 1.
+### Question variant 1.
 > "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are positive"
 
 Answer: `y^2*x^2`
-#### Question variant 2.
+### Question variant 2.
 > "Give an exmaple of a function where all partial derivatives at the coordinates (2,1) are negative"
 
 Answer: `-y^2*x^2`
-#### Question variant 3.
+### Question variant 3.
 >"Give an example of a function where all partial derivatives at the coordinates (2,-3) are "different in regards to the sign infront of them, example:` fx = -5 fy =-1 fxy = 0`. is not valid because -1 and -5 are both negative""
 
 Here if we can get Fx to be any positive number, then we have two options left for Fy and Fxy. The options are a negative number or 0; Fy can be a negative number, then Fxy has to be 0. Fy can be 0, then Fxy has to be a negative number. The point is the sign's for all partial derivative values have to be unique from each other.
@@ -234,3 +273,11 @@ The answer is such because;
 `Fx:1
 Fy:-6
 Fxy:0`
+
+## Teacher perspective
+
+The teacher's do not have to change anything unless they wish to change the range for the randomly generated x and y coordinates for the question. Then they may change the a (x) and b (y) variables inside the **Question variables** box.
+
+| ![values the teacher can change](https://user-images.githubusercontent.com/43517080/191801405-a9083b67-b488-4c80-8fa2-1928e6b8aae5.png) |
+|:--:|
+| *The above image shows which values the teacher may wish to change (highlighted in yellow)* |
