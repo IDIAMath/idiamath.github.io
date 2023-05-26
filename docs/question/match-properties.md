@@ -11,7 +11,7 @@ theme: minima
 One example would be function where all the partial derivatives in a given point
 $(x,y)$ are (say) positive.
 
-| ![First impression](https://user-images.githubusercontent.com/43517080/178961686-f936dea0-f8ac-48f4-b6e8-0f37f1a868ae.png) |
+| ![First impression](match-properties.png)
 |:--:|
 | *First impression of the question* |
 
@@ -51,7 +51,7 @@ Thus the question will make the following calculation.
 The question as implemented below includes several graphical features to
 visualise the problem and solution to the student.
 
-| ![Click draw button](https://user-images.githubusercontent.com/43517080/178962343-de23cd55-799c-4a47-a599-71e240d4f77b.png) |
+| ![Visualisation of the Function](match-properties-student.png)
 |:--:|
 | *When the student types in the function and clicks the **Draw** button* |
 
@@ -431,8 +431,4 @@ but it should have been {@word[2+xsign]@}.
 ```
 
 It should be trivial to edit these to make corresponding texts for the other node.
-
-| ![Node 1](https://user-images.githubusercontent.com/43517080/191792093-1f2181ef-cad3-412b-b566-48303d98a658.png) |
-|:--:|
-| *Values of **node 1*** |
 

@@ -3,7 +3,7 @@
 <!-- question: 234  -->
   <question type="stack">
     <name>
-      <text>[match-properties] Define function with certain properties (cleanup 25 May'23)</text>
+      <text>[match-properties] Define function with certain properties (HGS 26 May'23)</text>
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>
@@ -23,7 +23,7 @@
 <p style="display:none">[[input:p2]][[validation:p2]]</p>
 <p style="display:none">[[input:stateStore]][[validation:stateStore]]</p>
 
-[[jsxgraph height='850px' width='850px' input-ref-p1="pRef" input-ref-p2="qRef" input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
+[[jsxgraph height='400px' width='600px' input-ref-p1="pRef" input-ref-p2="qRef" input-ref-ans1="ans1Ref" input-ref-stateStore="stateRef"]]
 
    // BOARD
    // This is the basic code to create 3D co-ordinate system and view
