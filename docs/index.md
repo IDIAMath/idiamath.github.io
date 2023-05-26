@@ -34,7 +34,8 @@ on.
 ## Visualising functions in two variables
 
 + Question 1 [Interpret partial derivatives](question/partial-derivative.md)
-+ Question 3 [Select maxima/minima on a plot](question/select-extremal.md)
++ Question [select-extremal](question/select-extremal.md)
+  Select maxima/minima on a plot
 + Question 4 [Tune 3D](question/tune-3d.md)
 + Question 5 [Tune 3D Function](question/tune-3d-function.md)
 + Question 6 [Select matching function](question/select-matching-function.md)

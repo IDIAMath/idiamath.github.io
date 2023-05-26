@@ -3,7 +3,7 @@
 <!-- question: 5597  -->
   <question type="stack">
     <name>
-      <text>Question-select-extremal (Jonas-NYEST) (state-store)</text>
+      <text>[select-extremal] (Jonas-NYEST) (state-store)</text>
     </name>
     <questiontext format="html">
       <text><![CDATA[<p>Given a surface defined by z=f(x,y), shown in the top figure, 
