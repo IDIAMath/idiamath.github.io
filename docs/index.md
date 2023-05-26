@@ -24,13 +24,16 @@ We reckon that most teachers will want to tailor the questions to
 their students and use the questions primarily as examples to build
 on.
 
+## Visualising functions in two variables
+
++ Question [match-properties](question/match-properties.md).
+  Give an arbitrary function with given properties, with visual aid.
 
 # Sketches (questions under construction)
 
 ## Visualising functions in two variables
 
 + Question 1 [Interpret partial derivatives](question/partial-derivative.md)
-+ Question 2 [question-match-properties](question/match-properties.md)
 + Question 3 [Select maxima/minima on a plot](question/select-extremal.md)
 + Question 4 [Tune 3D](question/tune-3d.md)
 + Question 5 [Tune 3D Function](question/tune-3d-function.md)
