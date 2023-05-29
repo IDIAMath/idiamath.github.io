@@ -6,8 +6,8 @@
       <text>[select-extremal] (Jonas-NYEST) (state-store)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Given a surface defined by z=f(x,y), shown in the top figure, 
-determine local minimums and maximums by dragging the min/max points in the bottom figure</p><br>
+      <text><![CDATA[<p>Given a surface defined by \(z=f(x,y)\), shown in the top figure, 
+determine local minimums and maximums by dragging the min/max points in the bottom figure</p>
 
 <p style="display:none">[[input:ans1]] [[validation:ans1]]</p>
 <p style="display:none">[[input:ans2]][[validation:ans2]]</p>
@@ -172,25 +172,25 @@ state.value = JSON.stringify(newState);
       <text>2022082900</text>
     </stackversion>
     <questionvariables>
-      <text><![CDATA[xrang:[-2,5];  
-yrang:[-2,4];
-zrang:[-1,10];
+      <text><![CDATA[xrang: [-2,5];  
+yrang: [-2,4];
+zrang: [-1,10];
 
-maxError:0.3; /*Tolerance */
+maxError: 0.3; /*Tolerance */
 
 /*Easy example*/
-f:(2*x^4+2*y^4-8*x*y+12);
+f: (2*x^4+2*y^4-8*x*y+12);
 
 /*Hard example*/
 /*f:expand((x-3)*(x+1)*(y-2)*(y+2)*(x*y+3));*/
 
 /*Partial derivatives*/
-fx:diff(f,x);
-fy:diff(f,y);
-fxx:diff(fx,x);
-fyy:diff(fy,y);
-fxy:diff(fy,x);
-D: fxx*fyy-(fxy)^2;
+fx:  diff(f,x);
+fy:  diff(f,y);
+fxx: diff(fx,x);
+fyy: diff(fy,y);
+fxy: diff(fy,x);
+D: fx*fyy-(fxy)^2;
 
 /*Solve for critical points*/
 critical:solve([fx,fy],[x,y]);
@@ -201,17 +201,17 @@ noDegen(l,r):=sublist(l, lambda([ll], freeof(r,ll)));
 critical_nd: lreduce(noDegen,  %rnum_list,     critical);
 
 /*Function isNotImag returns true if a solution sol ([x=a,y=b]) has no imaginary part*/
-isNotImag(sol):=is(equal(imagpart(sol),[0=0,0=0]));
+isNotImag(sol) := is(equal(imagpart(sol),[0=0,0=0]));
 /*Remove complex solutions*/
-critical_nd_real:sublist(critical_nd, isNotImag);
+critical_nd_real: sublist(critical_nd, isNotImag);
 
 /*Classify critical points and collect local max/min */
 localmin_expr:sublist(critical_nd_real, lambda([p], ev(fxx,p) >0 and ev(D,p)>0));
 localmax_expr:sublist(critical_nd_real, lambda([p], ev(fxx,p) < 0 and ev(D,p)>0));
 
-/*Store min/max in [a,b] form, instead of [x=a, y=b] form*/
-localmin:float(map(lambda([x], map(rhs, x)),localmin_expr));
-localmax:float(map(lambda([x], map(rhs, x)), localmax_expr));]]></text>
+/* Store min/max in [a,b] form, instead of [x=a, y=b] form*/
+localmin: float(map(lambda([x], map(rhs, x)), localmin_expr));
+localmax: float(map(lambda([x], map(rhs, x)), localmax_expr));]]></text>
     </questionvariables>
     <specificfeedback format="html">
       <text><![CDATA[[[feedback:prt1]]<br>]]></text>
