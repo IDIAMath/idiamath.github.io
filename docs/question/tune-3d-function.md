@@ -3,30 +3,66 @@ title: Question - Tune 3D Function
 usemathjax: true
 ---
 
-# Question
-
-![Screenshot - Tune 3D Function](tune-3d-function-overview.png)
-
-The student is given a plot of a function $$f(x,y)$$ containing one or
-more unknown parameters, say $$a,b,c$$. 
-
-The student sees two superimposed surface plots.
-One with the correct values for the unkown parameters, and another where the
-value of the parameter, or parameters, 
-can be controlled by one or more sliders.
-
-The student will have to use the slider to find the value for the parameters
-that makes the two functions coincide.
-
-The function, its parameter-values and which and how many of the parameters
-are unknown can be randomized. Dynamic input/output to jsxgraph in this
-manner present some challenges that we try to explore in this tutorial.
+> The student is given two superimposed surfaceplots, and a surface equation
+> \(z = f(x,y)\) with a number of unkown parameters.
+> One of the surfaceplots corresponds to the "correct" function, while
+> the other lets the student "tune" the unkown parameters.
+> The student needs to find the values of the parameters that makes the 
+> two surfaceplots coincide
 
 - [XML Code](XML/tune-3d-function-xml)
 
-# How it works
+## Question description
 
-## Question Variables (Maxima)
+If we wanted to randomize the goal function, the parameter values and/or the 
+number of unkown parameters then getting data to and from jsxgraph with
+the usual {# ... #}-notation and binding of sliders/points gets difficult. 
+In this tutorial we will explore how we can deal with dynamic Input/output
+to jsxgraph.
+
+We will also implement a clickable button that hides/shows an additional
+jsxgraph-figure and let control elevation/rotation of both figures from
+the control sliders on *one* of them.
+
+### Pedagogical Motivation
+
+The goal of this excercise is for the student to examine what effect
+different parameters of a multivariable function has on the plot of its graph.
+
+The move from 2D to 3D challenges the students intuition about functions
+and their algebraic components. By observing the effect dynamically changing
+some paremeter of a function has on a graph while trying to fit it to a certain
+shape, we hope to build some intuition on the role of said parameter in a
+specific function.
+
+
+### Implementation
+
+The version implemented here is supposed to be flexible with regards
+to which function and which and how many parameter the student is to examine.
+
+The teacher should be able to choose any kind of function with a set of 
+parameters to be examined by creating a function and a couple of lists in maxima.
+The only parts of the javascript code that could need editing is the parts that
+determines the size of the axes.
+
+###Student View
+![Screenshot - Tune 3D Function](tune-3d-function-overview.png)
+
+The student needs to manipulate the sliders corresponding to a parameter
+in the function such that the two surfaceplots coincide. Depending
+on the functions, this can initially be difficult when the plots are
+occupying the same figure. In that case the student can click a button
+that splits the graphs into to seperate figures, and merge them again for "fine-
+tuning". When the graphs are split the rotation/elevation controls of the
+top figure controls the viewing angles of both plots. The student can
+also "scale" the z-axis to aid in a clear view of the plots.
+
+
+## Question Code
+
+
+## Question Variables
 
 ```rust
 /*Non-randomized small example*/
@@ -137,7 +173,7 @@ data from maxima:
  var param_a_value = stack_input["a"];
 ```
 
-## Question Text
+### Question Text
 
 Usually would want one hidden input box bound to each slider that is part
 of the students answer. In this case we might not know the name of, or more
@@ -159,6 +195,8 @@ Find the correct function by manipulating the sliders.
 ```
 
 The critical part is the javascript code, in `[[jsxgraph]]` tags.
+
+####Coding the Plot
 
 ```javascript
 [[jsxgraph input-ref-ans="ansRef"]]
@@ -340,7 +378,6 @@ The critical part is the javascript code, in `[[jsxgraph]]` tags.
 })();	
 [[/jsxgraph]]
 ```
-### Javascript code
 
 The jsxgraph block starts with
 ```js
@@ -506,8 +543,8 @@ things, and we put "NA" here. We also set the option "hideanswer" in the extra
 options box, to stop the student getting freedback regarding the answer variable
 
 
-## Response Tree
-### Feedback variables
+### Partial Response Tree
+#### Feedback variables
 
 The feedback variables does two main things: It parses the JSON-string
 contained in the answer variables and collect the student's answer, 
@@ -583,7 +620,7 @@ form chose 2 random parameters.
 The variables `n_stud` and `n_ans` hold the number of correctly tuned parameters,
 and the total number of parameters, respectively
 
-### Response tree
+#### Response Tree Nodes
 The response tree is quite straightforward - It compares the number of correct
 parameters from the student `n_stud` with the total number of tunable parameters
 `n_ans`. If they are equal, the student gets full marks. If the student gets
