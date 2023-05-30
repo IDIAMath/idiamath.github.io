@@ -6,7 +6,7 @@
       <text>[select-extremal] (Jonas-NYEST) (state-store)</text>
     </name>
     <questiontext format="html">
-      <text><![CDATA[<p>Given a surface defined by \(z=f(x,y)\), shown in the top figure, 
+      <text><![CDATA[<p>Given the surface defined by \(z=f(x,y)\) and shown in the top figure, 
 determine local minimums and maximums by dragging the min/max points in the bottom figure</p>
 
 <p style="display:none">[[input:ans1]] [[validation:ans1]]</p>

@@ -19,10 +19,18 @@ theme: minima
 
 # Question description
 
+The question is a simple example of how a student can give an answer purely
+by interacting with the JSXGraph plot.
+
 ### Pedagogical Motivation
 
+**TODO** Jonas?
 
-### What the student has to do
+### Implementation
+
+**TODO**
+
+### Student View
 
 The function may have any number of local extremal points,
 The 2D figure shows one red point for each minima, and one blue point for each maxima.
@@ -39,7 +47,7 @@ In addition the controls in the lower right hand corner lets the student move th
 
 Grading allows for a limited error, and the teacher should set a tolerance appropriate to the resolution on the x/y-axes.
 
-## Question code
+## Question Code
 
 ### Question variables
 
@@ -47,12 +55,12 @@ The following maxima code should be entered into the Question Variables field.
 
 **Caveats**
 
-1.  It does not use random variables.  The function `f` has to be hand-coded.
-2.  The x, y, and z ranges (`xrang`, `yrang`, `zrang`) have to be hand-coded.
-3.  The tolerance (`maxError`) is absolute (as opposed to relative) and have to be set to a reasonable value
+1.  It does not use random variables.  The function `f` is hard-coded.
+2.  The $x$, $y$, and $z$ ranges (`xrang`, `yrang`, `zrang`) have to be hard-coded.
+3.  The tolerance (`maxError`) is absolute (as opposed to relative) and have to be set to a reasonable value **TODO** Move to partial response tree?
 
 ```rust
-xrang:[-2,5];  
+rrang:[-2,5];  
 yrang:[-2,4];
 zrang:[-1,10];
 
