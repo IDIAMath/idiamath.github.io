@@ -1,5 +1,5 @@
 ---
-title: Question - find a function with given properties
+title: Question. Find a function with given properties
 usemathjax: true
 theme: minima
 ---

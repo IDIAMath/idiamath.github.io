@@ -1,28 +1,30 @@
 ---
-title: STACK Question 3.  Select maxima/minma on a plot
+title: Question.  Select maxima/minma on a plot
 usemathjax: true
 theme: minima
 ---
 
-# Question.  Select maxima/minma on a plot
 
-> Given a a surface defined by $$z=f(x,y)$$, where exact expression for $$f$$
-> is unknown to a user, ask the user to select all local maxima/minima on the
-> surface plot.
+> Given a plot of a function $f(x,y)$ in two variables,
+> ask the student to select all local maxima/minima on the plot.
+> The algebraic expression for $$f(x,y)$$ is not given to the student.
 
-- [XML Code](XML/select-extremal.xml)
-
-## What the student sees
+**TODO** New screenshot
 
 | ![First impression](https://user-images.githubusercontent.com/43517080/181220416-58f6716e-236e-41e1-8c63-632be8a72b93.PNG) |
 |:-:|
 | *This image shows the students first view of the question* |
 
+- [XML Code](XML/select-extremal.xml)
+
+# Question description
+
+### Pedagogical Motivation
+
 
 ### What the student has to do
 
-
-The function may have any amount of local extremal points,
+The function may have any number of local extremal points,
 The 2D figure shows one red point for each minima, and one blue point for each maxima.
 The student has to move them to the correct co-ordinate position to identify extramal
 points on the surface in the 3D plot.
