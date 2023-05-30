@@ -31,7 +31,7 @@ different parameters of a multivariable function has on the plot of its graph.
 
 The move from 2D to 3D challenges the students intuition about functions
 and their algebraic components. By observing the effect dynamically changing
-some paremeter of a function has on a graph while trying to fit it to a certain
+some parameter of a function has on a graph while trying to fit it to a certain
 shape, we hope to build some intuition on the role of said parameter in a
 specific function.
 
@@ -46,7 +46,8 @@ parameters to be examined by creating a function and a couple of lists in maxima
 The only parts of the javascript code that could need editing is the parts that
 determines the size of the axes.
 
-###Student View
+### Student View
+
 ![Screenshot - Tune 3D Function](tune-3d-function-overview.png)
 
 The student needs to manipulate the sliders corresponding to a parameter
@@ -196,7 +197,7 @@ Find the correct function by manipulating the sliders.
 
 The critical part is the javascript code, in `[[jsxgraph]]` tags.
 
-####Coding the Plot
+#### Coding the Plot
 
 ```javascript
 [[jsxgraph input-ref-ans="ansRef"]]
