@@ -493,5 +493,96 @@ figure:
 ### Input:ans
 
 | ![Input variable settings](tune-3d-function-inputsettings.png) |
+|:--:|
+|*Input setting for answervariable "ans"*|
+
+For the answer variable ans, we set the input type to "String".
+The model answer is not really applicable since the variable stores several 
+things, and we put "NA" here. We also set the option "hideanswer" in the extra
+options box, to stop the student getting freedback regarding the answer variable
+
+
+## Response Tree
+### Feedback variables
+
+The feedback variables does two main things: It parses the JSON-string
+contained in the answer variables and collect the student's answer, 
+and it checks if the tunable parameters given by the student 
+are within the set tolerance `maxError`of the correct values.
+
+```maxima
+/*Parse json-string from jsxgraph*/
+tmp:stackjson_parse(ans);
+
+/*Student answer example [[a,4], [b,6], ... ]*/
+sanswer:map(lambda([x], [x,stackmap_get(tmp, string(x))]), params);
+
+/*Teacher answer */
+tanswer:map(lambda([x], [lhs(x), rhs(x)]), params_eq);
+
+/*Find parameterval for par in tanswer*/
+findParameterVal(par):=
+   (sublist(tanswer, lambda([x], is(equal(x[1],par)))))[1][2];
+
+/*List of errors in the parameters, example [[a,0], [b,0.35], [c,0]] */
+errors:makelist( [sanswer[i][1],
+   abs(sanswer[i][2]-findParameterVal(sanswer[i][1]))],
+   i,1,length(sanswer));
+
+/*List of correct parameters (error<maxError) */
+correct:sublist(errors, lambda([x], x[2]<maxError));
+/*Formatted list of correct parameters */
+correct_list:sublist(params_eq,
+   lambda([x], member(lhs(x), map(first, correct))));
+
+/*List of incorrect parameters*/
+incorrect:sublist(errors, lambda([x], x[2]>=maxError));
+
+/*Number of correct answers*/
+n_stud:length(correct);
+n_ans:length(tanswer);
+```
+
+To get a hold of the variables in the JSON string, 
+we use `tmp:stackjson_parse(ans)`.
+This parses the JSON string from jsxgraph and returns a stackmap.
+We can then use the function `stackmap_get(\<stackmap\>, \<key\>)` to lookup
+the value of a key in the stackmap.
+
+We look up the values for all tunable parameters and store them in a list 
+`sanswer = [[\<parameter\>, \<value\>], ...]` here:
+```maxima
+sanswer:map(lambda([x], [x,stackmap_get(tmp, string(x))]), params);
+```
+The list `tanswer` is of the same form, and contains the correct 
+parameter names/values. 
+
+Next we calculate a list of the student's error and filter out the parameters
+whose error is above the tolerance. 
+```maxima
+findParameterVal(par):=
+   (sublist(tanswer, lambda([x], is(equal(x[1],par)))))[1][2];
+
+errors:makelist( [sanswer[i][1],
+   abs(sanswer[i][2]-findParameterVal(sanswer[i][1]))],
+   i,1,length(sanswer));
+
+correct:sublist(errors, lambda([x], x[2]<maxError));
+correct_list:sublist(params_eq,
+   lambda([x], member(lhs(x), map(first, correct))));
+```
+We have to use the function `findParameterVal(par)` to look up the correct 
+parameter value in `tanswer` as the parameternames not necessarily are 
+in the same order after we in the question variables 
+form chose 2 random parameters.
+
+The variables `n_stud` and `n_ans` hold the number of correctly tuned parameters,
+and the total number of parameters, respectively
+
+### Response tree
+The response tree is quite straightforward - It compares the number of correct
+parameters from the student `n_stud` with the total number of tunable parameters
+`n_ans`. If they are equal, the student gets full marks. If the student gets
+at least 1 parameter right they get half marks, and otherwise no marks.
 
 
