@@ -28,7 +28,7 @@ manner present some challenges that we try to explore in this tutorial.
 
 ## Question Variables (Maxima)
 
-```maxima
+```rust
 /*Non-randomized small example*/
 
 func: a*x^2+b*x*y+c*y^2;
@@ -78,7 +78,7 @@ fxy2:ev(func,all_params_eq);
 ```
 In the question variables, the following part is expected to be changed by the
 teacher
-```maxima
+```rust
 func: a*x^2+b*y^2+c*x*y+d*x+f*y+g;
 all_params: [a,b,c,d,f,g];
 coef: random_permutation(append([0,0],makelist(rand_with_prohib(-4,4,[0]),4)));
@@ -113,7 +113,7 @@ in the jsxgraph block.
 A strackmap consists of a list that starts with the string "stackmap" followed
 by a variable number of sublists of length 2. The first element of the sublists
 is the "key" and the second element is the "value". 
-```maxima
+```rust
 params_json: append(["stack_map"],
    makelist([string(all_params[i]),coef[i]], i, length(all_params)),
    [["pnames", map(string,params)]], [["sliders", param_sliders]]
@@ -122,7 +122,7 @@ params_json: append(["stack_map"],
 The above code creates the stackmap. It holds the the value of the parameters,
 the names of the parameters and the slider sizes. 
 It could look something like this:
-```maxima
+```rust
 ["stackmap", 
     ["a",2],["b", 1],["c",-3], 
     ["pnames", ["a","b"]], 
