@@ -5,7 +5,7 @@ usemathjax: true
 
 # Question
 
-![Screenshot - Tune 3D](tune-3D.png)
+![Screenshot - Tune 3D](tune-3d-poly-overview.png)
 
 The student is given a plot of a function of the form
 
@@ -69,8 +69,8 @@ be manipulated from javascript only.
 The question text proper is straight forward.
 
 ```html
-We are given the function \(F(x,y) = {@fxy@}\) where the parameter \({@tunable@}\) is unknown.
-are unknown. The figure below shows the correct function,
+We are given the function \(F(x,y) = {@fxy@}\) where the parameter 
+\({@tunable@}\) is unknown. The figure below shows the correct function,
 along with a function where you can tune the unknown parameter with the slider.
 Find the correct function by manipulating the slider.
 ```
