@@ -5,7 +5,7 @@ usemathjax: true
 
 # Question
 
-![Screenshot - Tune 3D](tune-3D.png)
+![Screenshot - Tune 3D Function](tune-3d-function-overview.png)
 
 The student is given a plot of a function $$f(x,y)$$ containing one or
 more unknown parameters, say $$a,b,c$$. 
@@ -151,7 +151,11 @@ the relevant data form jsxgraph to a single answer variable/input box:
 The question text proper is straight forward.
 
 ```html
-Gitt uttrykket \(f(x,y) = {@fxy@}\), hvor parameteren \({@simplode(params,",")@}\) er ukjent, bruk figuren til å finne den ukjente parameteren ved å stille på slideren slik at grafene blir like.
+We are given the function \(F(x,y) = {@fxy@}\) where 
+the parameters \({@simplode(params,",")@}\) are unknown. 
+The figure below shows the correct function, along with a function 
+where you can tune the unknown parameters with the sliders.
+Find the correct function by manipulating the sliders.
 ```
 
 The critical part is the javascript code, in `[[jsxgraph]]` tags.
@@ -546,11 +550,11 @@ n_ans:length(tanswer);
 To get a hold of the variables in the JSON string, 
 we use `tmp:stackjson_parse(ans)`.
 This parses the JSON string from jsxgraph and returns a stackmap.
-We can then use the function `stackmap_get(\<stackmap\>, \<key\>)` to lookup
+We can then use the function `stackmap_get(<stackmap>, <key>)` to lookup
 the value of a key in the stackmap.
 
 We look up the values for all tunable parameters and store them in a list 
-`sanswer = [[\<parameter\>, \<value\>], ...]` here:
+`sanswer = [[<parameter>, <value>], ...]` here:
 ```maxima
 sanswer:map(lambda([x], [x,stackmap_get(tmp, string(x))]), params);
 ```
