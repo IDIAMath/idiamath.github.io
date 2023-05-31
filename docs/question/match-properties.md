@@ -15,7 +15,7 @@ $(x,y)$ are (say) positive.
 |:--:|
 | *First impression of the question* |
 
-- [XML Code](../XML/match-properties.xml)
+- [XML Code](XML/match-properties.xml)
 
 ## Question description
 
