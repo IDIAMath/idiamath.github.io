@@ -28,6 +28,10 @@ on.
 
 + Question [match-properties](question/match-properties.md).
   Give an arbitrary function with given properties, with visual aid.
++ Question [Tune 3D Function](question/tune-3d-function.md)
+    Tune parameters of a function to match another function visually
++ Question [Tune 3D polynomoial](question/tune-3d.md)
+    Minimal working example of question using jsxgraph
 
 # Sketches (questions under construction)
 
@@ -36,8 +40,6 @@ on.
 + Question 1 [Interpret partial derivatives](question/partial-derivative.md)
 + Question [select-extremal](question/select-extremal.md)
   Select maxima/minima on a plot
-+ Question 4 [Tune 3D](question/tune-3d.md)
-+ Question 5 [Tune 3D Function](question/tune-3d-function.md)
 + Question 6 [Select matching function](question/select-matching-function.md)
 + Question 7 [Select matching partial derivative](question/select-matching-partial-derivative.md)
 
