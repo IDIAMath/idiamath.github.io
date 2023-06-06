@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Svingninger</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<!-- Include JSXGraph - jsdelivr -->
+<!--
+<link href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" rel="
+stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"
+type="text/javascript" charset="UTF-8"></script>
+-->
+
+<!-- Include JSXGraph - cloudflare -->
+<script type="text/javascript" charset="UTF-8"
+ src="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.4.4/jsxgraphcore.js"></script>
+<link rel="stylesheet"
+ type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jsxgraph/1.4.4/jsxgraph.css" />
+
+
+<!-- Include MathJax - optional -->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="
+MathJax-script" async></script>
+
+
+</head>
+<body>
+   <center>
+<h1>Svingninger</h1>
+
+<p style="max-width:700px">
+</p>
+
+\(t = \) <input type=text value="0" id="t_val"> <input type=range min=0 max=10 value=0 id="t_range" style="width:400px" step=0.01>
+<div style="display:flex; flex-direction:row; justify-content:center; align-itms:center">
+<div id="jxgbox1" class="jxgbox" style="width:600px; height:600px;"></div>
+<div id="jxgbox2" class="jxgbox" style="width:600px; height:600px;"></div>
+ </div>
+<script>
+   (function() {
+      var freq = 0.5
+      var w = freq*Math.PI*2;
+      
+      // Spring stuff
+      var r = 0.2;
+      var sA = 0.2;
+      var sv = -1;
+      var sw = (t) =>15;
+      //var sw = (t) =>w;
+
+      
+
+      var t_range = document.getElementById("t_range");
+      var t_val = document.getElementById("t_val");
+
+
+      
+      var board = JXG.JSXGraph.initBoard("jxgbox1", {boundingbox: [-2,1, 2,-10], axis:true,
+         defaultAxes: {
+            x: {name: "X", withLabel: true, label: {position: "rt", offset: [-10,10]}},
+            y: {name: "Y", withLabel: true, label: {position: "rt", offset: [10,-20]}}
+         }
+      });
+      var t_slid = board.create('slider', [[-1.5,-1], [-0.5,-1], [0,0,10]], {name: "t"});
+      var p = board.create('point', [0,()=>-6-3*Math.sin(w*t_slid.Value())], 
+         {color: "orange", size: 10} );
+
+      
+      var transform  = board.create('transform', [1,()=>-2-Math.sin(w*t_slid.Value())], {type: "scale"});
+      var spring = board.create('curve', [
+         (t) => -r/2+r*Math.sqrt(Math.sin(sw(t)*t)*Math.sin(sw(t)*t)
+               +0.02*Math.cos(sw(t)*t)*Math.cos(sw(t)*t)), 
+         (t) =>3+sv*t, 
+         0, 3]);
+      transform.bindTo(spring); 
+      board.update();
+      
+
+      t_range.addEventListener('input', ()=> {t_val.value=t_range.value; t_slid.setValue(t_range.value);board.update()});
+      t_slid.on('drag', ()=>{t_range.value=t_slid.Value(); t_val.value=t_range.value;} );
+
+      var dt = 10.0/(0.03);
+      //t_slid.startAnimation(1,dt,30);
+
+      var button2, button;
+      button = board.create('button', [-1.5, -8, "Ladet svinge", ()=> {
+         t_slid.startAnimation(1,dt,30);
+         button.hide();
+         button2.show();
+      }]);
+      button2 = board.create('button', [-1.5, -8, "stop", ()=> {
+         t_slid.stopAnimation();
+         button2.hide();
+         button.show();
+      }]);
+      button2.hide();
+
+      var likevekt  = board.create('line', [[0,-2], [1,-2]], {dash: 3}).hide();
+      
+
+      var likeCheck = board.create('checkbox', [-1.5,-8.5, "Vis likevektslinje"],{fixed: true});
+      JXG.addEvent(likeCheck.rendNodeCheckbox, 'change', function(){
+         if (this.Value()) {
+            likevekt.show();
+         } else {
+            likevekt.hide();
+         }
+      }, likeCheck);
+
+
+      var utslag2;
+      var utslag = board.create('arrow', [[0.5, ()=>likevekt.getRise()], [0.5,()=>p.Y()]],{straightFirst:false, straightLast: false}).hide();
+      var utslagVannrett = board.create('line', [[0,()=>p.Y()],[0.5,()=>p.Y()]], {dash:3, straightFirst:false, straightLast:false}).hide();
+      
+      var utslagCheck = board.create('checkbox', [-1.5, -9, "Vis utslag"], {fixed:true});
+      JXG.addEvent(utslagCheck.rendNodeCheckbox, 'change', function(){
+         if (this.Value()) {
+            utslag.show();
+            utslag2.show();
+            utslagVannrett.show();
+         } else {
+            utslag.hide();
+            utslag2.hide();
+            utslagVannrett.hide();
+         }
+      }, utslagCheck);
+
+      var ampUp = board.create('arrow', [[-0.5, ()=>likevekt.getRise()], [-0.5, -3]], {straightLast:false, straightFirst:false}).hide();
+      var ampDown  = board.create('arrow', [[-0.5, -3],[-0.5, ()=>likevekt.getRise()]], {straightLast:false, straightFirst:false, name:"Amplitude"}).hide();
+      var ampText = board.create('text', [-0.5, ()=>(likevekt.getRise()+-3)/2, "Amplitude"], {position:"rt"}).hide();
+
+      var visAmp = board.create('checkbox', [-1.5, -9.5, "Vis amplitude"], {fixed:true});
+      JXG.addEvent(visAmp.rendNodeCheckbox, 'change', function() {
+         if (this.Value()) {
+            ampUp.show();
+            ampDown.show();
+            ampText.show();
+         } else {
+            ampUp.hide();
+            ampDown.hide();
+            ampText.hide();
+         }
+      }, visAmp);
+
+
+
+      var board2 = JXG.JSXGraph.initBoard("jxgbox2", {boundingbox: [-1, 7,11,-7], axis:true,
+         defaultAxes: {
+            x: {name: "Tid", withLabel: true, label: {position: "rt", offset: [-10,10]}},
+            y: {name: "Utslag", withLabel: true, label: {position: "rt", offset: [10,-20]}}
+         },
+         showClearTraces: true
+      });
+
+      var p2 = board2.create('point', [()=>t_slid.Value(),()=>p.Y()-likevekt.getRise()], {trace:true});
+      board.addChild(board2);
+      p2.setAttribute({trace:false});
+
+      utslag2 = board2.create('arrow', [[()=>t_slid.Value(), 0], p2], {straightLast:false, straightFirst:false}).hide();
+
+      var traceCheck = board2.create('checkbox', [1, -5, 'Vis spor'], {fixed:true});
+      JXG.addEvent(traceCheck.rendNodeCheckbox, 'change', function() {
+         if (this.Value()){
+            p2.setAttribute({trace:true});
+         } else {
+            p2.setAttribute({trace:false});
+         }
+      },traceCheck);
+         
+      
+
+         
+         
+   })();
+</script>
+
+
+</center>
+</body>
+
+</html>
