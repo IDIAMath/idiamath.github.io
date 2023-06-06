@@ -24,11 +24,21 @@ by interacting with the JSXGraph plot.
 
 ### Pedagogical Motivation
 
-**TODO** Jonas?
+The motivation behind this question is to help the student to get familiar
+with surfaceplots, multivariable functions and points of interest in such plots
+and functions. Currently we only ask the student to identify local maxima and 
+minima, but the question could be adapted to also ask for saddlepoints, global
+and local extremas and so forth.
+
 
 ### Implementation
 
-**TODO**
+The question is set up such that the teacher only should need define a function,
+a tolerance for the answers and ranges for x, y and z axes. Calculating the local
+extremas and setting up the graph part should not require changes, but some
+editing of the javascript code setting up the 3d-view and bounding box might
+be necessary.
+
 
 ### Student View
 
