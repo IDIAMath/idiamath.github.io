@@ -45,6 +45,9 @@ on.
 
 + Question 8 [3d-cube-transformations](solids/3d-cube-transformations.md)
 
+## HTML test
++ [Test of html-link with jsxgraph](question/htmltest.html)
+
 
 
 ## Notes
