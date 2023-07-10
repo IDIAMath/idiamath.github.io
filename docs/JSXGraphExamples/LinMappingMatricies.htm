@@ -3,61 +3,19 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width">
 
-<!--Set these Flags to true to enable the Modules-->
-	<script type="text/javascript">
-		useJsxGraph = true;
-		useMathJax = true;
-		useSageCell = false;
-
-		if(useSageCell==true){
-			//MathJax is included in SageCell
-			useMathJax = false;
-		};
-	</script>
-
-
-<!--Location of the Server-Script in the Illias-System-->
-	<script type="text/javascript" src="https://www.studon.fau.de/mathlib/server_module.js"></script>
-
-<!--Configuration of SageCell-->
-	<script type="text/javascript">
-		if(useSageCell==true){
-			//Make the div with id 'sagecell' a Sage cell
-			sagecell.makeSagecell({	inputLocation:'#sagecell',
-									template: sagecell.templates.minimal,
-									evalButtonText:'Activate'});
-			//Make any div with class 'compute' a Sage cell
-			sagecell.makeSagecell({	inputLocation:'div.compute',
-									evalButtonText:'Evaluate'});
-		};
-	</script>
 	
-	<title>Linear Abbildungen und Matrizen</title>
+	<title>Linear Mappings and Matrices</title>
 	<style type="text/css" media="screen, projection"></style>
-	<link rel="stylesheet" type="text/css" media="print" href="/wiki/skins/common/commonPrint.css?164" />
+  <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+  <script type="text/javascript" charset="UTF-8"
+          src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
 </head>
 
 <body>
-<!--Check if the Illias-System can be reached-->
-	<script type="text/javascript">
-		Illias = false;
-		try{
-			Illias = ConnectedToIllias();
-		}
-		//This catch is required to enable the display of the Website even if the Illias-System cannot be reached.
-		catch(err){
-		}
-		finally{
-			//Alertmessagebox if the Illias-System cannot be reached.
-			if(Illias===false){
-				alert('Unable to reach StudOn.\nContents of this website may not work properly.');
-			}
-		}
-	</script>
-<!--Message if JavaScript is disabled in the Browser-->
-	<noscript>
-		This website requires JavaScript to work properly!
-	</noscript>
 <body>
 <div id="globalWrapper">
 	<div id="column-content">
@@ -79,7 +37,7 @@
 	  <td></td>
 	<td>
 Consider the mapping \( T:\mathbb{R}^2 \to \mathbb{R}^2 \):
-<center>\(T(r,\varphi)=\left(r\cos(\varphi),r\sin(\varphi))^{\top}\)</center><br/> &nbsp;
+<center>\(T(r,\varphi)=\left(r\cos(\varphi),r\sin(\varphi)\right)^{\top}\)</center><br/> &nbsp;
 </td><td></td><td></td>
 </tr>
   <tr>	
@@ -106,10 +64,10 @@ Consider the mapping \( T:\mathbb{R}^2 \to \mathbb{R}^2 \):
 	<td>
 <br/>&nbsp;<br/>
 <center>
-<form><input type="button" value="clear" onClick="cleardiagram()">&nbsp;<input type="button" value="symmetrisch regul&auml;r" onClick="case1()">
-&nbsp;<input type="button" value="regul&auml;r" onClick="case2()">
-&nbsp;<input type="button" value="Nullabbildung" onClick="case3()">
-&nbsp;<input type="button" value="Rang-1-Abbildung" onClick="case4()">
+<form><input type="button" value="clear" onClick="cleardiagram()">&nbsp;<input type="button" value="symmetric full rank" onClick="case1()">
+&nbsp;<input type="button" value="full rank" onClick="case2()">
+&nbsp;<input type="button" value="zero mapping" onClick="case3()">
+&nbsp;<input type="button" value="rank 1 mapping" onClick="case4()">
 </form>
 </center>
 </td><td>
