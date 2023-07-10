@@ -38,15 +38,35 @@ on.
 ## Visualising functions in two variables
 
 + Question 1 [Interpret partial derivatives](question/partial-derivative.md)
-+ Question [select-extremal](question/select-extremal.md)
-  Select maxima/minima on a plot
 + Question 6 [Select matching function](question/select-matching-function.md)
 + Question 7 [Select matching partial derivative](question/select-matching-partial-derivative.md)
+
+## Calculus of functions in two variables
+### Differentiation / stationary points / Hessian
++ Question [select-extremal](question/select-extremal.md)
+  Select maxima/minima on a plot
+
+In the following questions the tangent plane is shown
++ Question [stationary point](question/2D_function_stationary.md) based on trig function
++ Question [stationary point](question/2D_function_stationary_legendre.md) based on Legendre polynomial
+
+In optimization the local 2nd order behavior of a function hast to be analysed. This is addressed by these questions
++ Question [Hessian positive definit](question/2D_function_negative_definite_hessian.md) 
++ Question [Hessian negative definit](question/2D_function_negative_definite_hessian.md) 
+
+### Integration Domains
 
 ## Visualising solids in 3D
 
 + Question 8 [3d-cube-transformations](solids/3d-cube-transformations.md)
 
+## Vector fields in 3D
+
+## Examples JSXGraph
+
+Here will find some applets demonstrating JSXGraph in different applications. [JSXGraph Examples](./JSXGraphExamples/JSXGraphExamples.md)
+
+A huge collection you will find at the [JSXGraph homepage](https://jsxgraph.org) and the example data base [there](https://jsxgraph.uni-bayreuth.de/share/).
 ## HTML test
 + [Test of html-link with jsxgraph](question/htmltest.html)
 

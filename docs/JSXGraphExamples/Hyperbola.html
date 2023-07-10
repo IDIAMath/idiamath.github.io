@@ -1,0 +1,199 @@
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+
+	<!--Set these Flags to true to enable the Modules-->
+		<script type="text/javascript">
+			useJsxGraph = true;
+			useMathJax = true;
+			useSageCell = false;
+
+			if(useSageCell==true){
+				//MathJax is included in SageCell
+				useMathJax = false;
+			};
+		</script>
+
+
+	<!--Location of the Server-Script in the Illias-System-->
+        <script type="text/javascript" src="https://www.studon.fau.de/mathlib/server_module.js"></script>
+<!--	
+        <link rel="stylesheet" type="text/css" href="https://www.studon.fau.de/mathlib/indexILIAS.css" />
+        <link rel="stylesheet" type="text/css" href="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css" />
+        <script type="text/javascript" charset="UTF-8"  src="https://cdn.jsdelivr.net/npm/jsxgraph@1.1.0/distrib/jsxgraphcore.js"></script>
+        -->
+ <title>Hyperbelfunktion</title>
+
+<body>
+
+<H1>Hyperbelfunktion</H1>
+
+<center>
+
+		<div id="box1" class="jxgbox" style="width:500px; height:400px; "></div>
+<br clear="all">
+<script language="JavaScript">
+  var sliderx0 = -1.5;
+  var sliderx1 = 1.5;
+  var slidery0 = -1.5;
+  var sliderdy = -0.5
+  var slidery1 = slidery0+sliderdy;
+  var slidery2 = slidery1+sliderdy;
+  var tmax = 2;
+  var tmin = -2;
+  var tN   = 100;
+  var th = (tmax-tmin)/tN;
+  var xkurve1 = [];
+  var xkurve2 = [];
+  var ykurve = [];
+  b1 = JXG.JSXGraph.initBoard('box1', {originX: 250, originY: 200, unitX: 95, unitY: 95, grid:true});
+  b1.snapToGrid = true;
+  b1.suspendUpdate();
+  b1axisx=b1.createElement('axis', [[0,0], [1,0]], {});
+  b1axisy=b1.createElement('axis', [[0,0], [0,1]], {});
+ // a = b1.createElement('slider', [[sliderx0,slidery0],[sliderx1,slidery0],[0,1.1,2]],{name:'a'});
+ // b = b1.createElement('slider', [[sliderx0,slidery1],[sliderx1,slidery1],[0,0.8,2]],{name:'b'});
+// t = b1.createElement('slider', [[sliderx0,slidery2],[sliderx1,slidery2],[0,0.75,tmax]],{name:'t'});
+
+// Definition der ebenen Kurve
+
+var kurvex = function(t){
+	// funktionswert
+	var retval = 1;
+	return Math.abs(t)+1;
+}
+
+
+
+var kurvey = function(t){
+	// funktionswert
+	var retval = 1;
+       var thelp = (Math.abs(t)+1)*Math.abs(t)+1;
+	return Math.sign(t)*Math.sqrt(thelp-1);
+}
+
+
+
+
+var kurve = function(){
+	var tloc = tmin;
+	// funktionswert
+	for (var iloop=0;iloop<=tN;iloop++) {
+	  xkurve1[iloop]=kurvex(tloc);
+	  xkurve2[iloop]=-kurvex(tloc);
+	  ykurve[iloop]=kurvey(tloc);
+	  tloc = tloc + th;
+  }
+
+  	  xkurve1[iloop]=kurvex(tmin);
+	  ykurve[iloop]=kurvey(tmin);
+
+	return 1;
+}
+
+
+
+// kurve berechnen
+var retval = kurve();
+
+
+curve1 = b1.createElement('curve', [xkurve1,ykurve], {strokeColor:'#0000bb' , strokeWidth:'5px'});
+curve2 = b1.createElement('curve', [xkurve2,ykurve], {strokeColor:'#0000bb' , strokeWidth:'5px'});
+
+
+var scaledown = 0.99;
+var scaleup    = 1.01;
+
+
+p0 = b1.createElement('point',[0,0],{visible:false});
+p1 = b1.createElement('glider',[2,1,curve1],{name:"(cosh(A),sinh(A))"});
+p1d = b1.createElement('point',[
+        function() {
+                return p1.X()*scaledown;
+        },
+        function() {
+                return p1.Y()*scaledown;
+                }],{name:" ",visible:false});
+p1u = b1.createElement('point',[function() {return p1.X()*scaleup;},function() {return p1.Y()*scaleup;}],{name:" ",visible:false});
+p2 = b1.createElement('point',[function() {return p1.X();}, function() {return -p1.Y();}],{visible:false});
+p2d = b1.createElement('point',[function() {return p2.X()*scaledown;},function() {return p2.Y()*scaledown;}],{name:" ",visible:false});
+p2u = b1.createElement('point',[function() {return p2.X()*scaleup;},function() {return p2.Y()*scaleup;}],{name:" ",visible:false});
+p3 = b1.createElement('point',[0, function() {return p1.Y();}],{visible:false});
+p4 = b1.createElement('point',[ function() {return p1.X();},0],{visible:false});
+l1 = b1.createElement('line',[p3,p1],{straightFirst:false,straightLast:false});
+l1 = b1.createElement('line',[p4,p1],{straightFirst:false,straightLast:false});
+
+var pointsX = [p1.X(),0,p2.X()];
+var pointsY = [p1.Y(),0,p2.Y()];
+
+/*
+var curve3 = b1.create('curve',[pointsX,pointsY],{curveType:'plot'});
+curve3.updateDataArray = function() {
+            this.dataX[0] = p1.X();
+            this.dataX[2] = p2.X();
+            this.dataY[0] = p1.Y();
+            this.dataY[2] = p2.Y();
+ }
+ */
+var pointsX = [p1u.X(),p1d.X(),0,p2d.X(),p2u.X(),p1u.X()];
+var pointsY = [p1u.Y(),p1d.Y(),0,p2d.Y(),p2u.Y(),p1u.Y()];
+
+
+var curve4 = b1.create('curve',[pointsX,pointsY],{visible:false});
+
+
+
+
+curve4.updateDataArray = function() {
+            this.dataX[0] = p1u.X();
+            this.dataX[1] = p1d.X();
+            this.dataX[3] = p2d.X();
+            this.dataX[4] = p2u.X();
+            this.dataX[5] = p1u.X();
+            this.dataY[0] = p1u.Y();
+            this.dataY[1] = p1d.Y();
+            this.dataY[3] = p2d.Y();
+            this.dataY[4] = p1d.Y();
+            this.dataY[5] = p1d.Y();
+ }
+
+
+
+ var clip_path = b1.create('curve', [[], []], {strokeWidth: 3, fillColor: 'yellow', fillOpacity: 0.6});
+
+ clip_path.updateDataArray = function() {
+        var a = JXG.Math.Clip.greinerHormann(curve4, curve1, 'difference', this.board);
+        this.dataX = a[0];
+        this.dataY = a[1];
+    };
+/*
+  */
+ b1.unsuspendUpdate();
+
+t1 = b1.createElement("text",[0.5, 0.1,"A"]);
+
+</script>
+
+</script>
+
+                </center>
+
+<footer>Wigand Rathmann, FAU, <a
+href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a></footer>
+
+</body>
+</html>
+
+
+
+
+
+</div> <!--bodyContent -->
+</div><!--Content -->
+</div><!--columnContent -->
+
+
+</div><!--GlobalWrapper -->
+
+
+</body></html>

@@ -1,0 +1,321 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" type="text/css" href="layout.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css"
+    />
+    <script
+      type="text/javascript"
+      src="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js"
+    ></script>
+
+    <title>Convergence of sequences</title>
+  </head>
+
+  <body>
+    <style>
+      .jxb500 {
+        width: 500px;
+        height: 500px;
+      }
+    </style>
+  </body>
+  <h2>Convergence of Sequences</h2>
+  <p>
+    This example shows the usage of interactrive applets without input fields in
+    the surrounding HTML code.
+  </p>
+  <p></p>
+
+  <div id="box" class="jxgbox jxb500"></div>
+
+  <script type="text/javascript">
+    var board = JXG.JSXGraph.initBoard("box", {
+      axis: false,
+      boundingbox: [-2, 2, 50, -2],
+    });
+    var seq = board.create("curve", [[], []], { strokeColor: "blue" });
+    var n;
+    b1axisy = board.create(
+      "axis",
+      [
+        [0, 0],
+        [0, 1],
+      ],
+      {}
+    );
+    b1axisx = board.create(
+      "axis",
+      [
+        [0, 0],
+        [1, 0],
+      ],
+      {}
+    );
+
+    p1 = board.create("glider", [0, 1, b1axisy], { style: 1, name: "h" });
+    p2 = board.create(
+      "point",
+      [
+        2,
+        function () {
+          return p1.Y();
+        },
+      ],
+      { visible: false }
+    );
+    l1 = board.create("line", [p1, p2], {});
+    v2 = board.create("point", [0, 0], { style: 7, name: "a_n", trace: true });
+    eps = board.create(
+      "slider",
+      [
+        [5, -1],
+        [25, -1],
+        [0, 0.3, 1],
+      ],
+      { name: "&epsilon;" }
+    );
+
+    var button1 = board.create(
+      "button",
+      [
+        5,
+        -1.4,
+        "start",
+        function () {
+          start_approx();
+        },
+      ],
+      { fixed: true }
+    );
+    var button2 = board.create(
+      "button",
+      [
+        11,
+        -1.4,
+        "stop",
+        function () {
+          clear_all();
+        },
+      ],
+      { fixed: true }
+    );
+    var inputan = board.create("input", [5, -1.2, "1/n", "a_n="], {
+      cssStyle: "width: 100px",
+    });
+    var inputstart = board.create("input", [20, -1.2, "1", "start at n="], {
+      cssStyle: "width: 50px",
+    });
+    var buttonex1 = board.create(
+      "button",
+      [
+        5,
+        -1.6,
+        "1/n",
+        function () {
+          updateInputAn("1/n");
+        },
+      ],
+      { fixed: true }
+    );
+    var buttonex2 = board.create(
+      "button",
+      [
+        11,
+        -1.6,
+        "(-1)^n/n",
+        function () {
+          updateInputAn("(-1)^n/n");
+        },
+      ],
+      { fixed: true }
+    );
+    var buttonex3 = board.create(
+      "button",
+      [
+        19,
+        -1.6,
+        "(-1)^n",
+        function () {
+          updateInputAn("(-1)^n");
+        },
+      ],
+      { fixed: true }
+    );
+    var buttonex4 = board.create(
+      "button",
+      [
+        27,
+        -1.6,
+        "0.9^n",
+        function () {
+          updateInputAn("0.9^n");
+        },
+      ],
+      { fixed: true }
+    );
+    var buttonex5 = board.create(
+      "button",
+      [
+        34,
+        -1.6,
+        "1+0.1*n",
+        function () {
+          updateInputAn("1+0.1*n");
+        },
+      ],
+      { fixed: true }
+    );
+    var buttonex6 = board.create(
+      "button",
+      [
+        5,
+        -1.8,
+        "(1+1/n)^n/2",
+        function () {
+          updateInputAn("(1+1/n)^n/2");
+        },
+      ],
+      { fixed: true }
+    );
+    var buttonex7 = board.create(
+      "button",
+      [
+        15,
+        -1.8,
+        "(-1)^n*(1.5+1/n)",
+        function () {
+          updateInputAn("(-1)^n*(1.5+1/n)");
+        },
+      ],
+      { fixed: true }
+    );
+    var buttonex8 = board.create(
+      "button",
+      [
+        29,
+        -1.8,
+        "(1.5+(-1)^n/n)",
+        function () {
+          updateInputAn("(1.5+(-1)^n/n)");
+        },
+      ],
+      { fixed: true }
+    );
+
+    p3u = board.create(
+      "point",
+      [
+        0,
+        function () {
+          return p1.Y() - eps.Value();
+        },
+      ],
+      { style: 1, name: "h-&epsilon;" }
+    );
+    p4u = board.create(
+      "point",
+      [
+        60,
+        function () {
+          return p1.Y() - eps.Value();
+        },
+      ],
+      { visible: false }
+    );
+    l2 = board.create("line", [p3u, p4u], {});
+    p3o = board.create(
+      "point",
+      [
+        0,
+        function () {
+          return p1.Y() + eps.Value();
+        },
+      ],
+      { style: 1, name: "h+&epsilon;" }
+    );
+    p4o = board.create(
+      "point",
+      [
+        60,
+        function () {
+          return p1.Y() + eps.Value();
+        },
+      ],
+      { visible: false }
+    );
+    l3 = board.create("line", [p3o, p4o], {});
+    pol = board.create("polygon", [p3u, p4u, p4o, p3o], {});
+
+    function updateInputAn(newstring) {
+      board.removeObject(inputan);
+      inputan = board.create("input", [5, -1.2, newstring, "a_n="], {
+        cssStyle: "width: 100px",
+      });
+    }
+
+    var seq_add = function () {
+      var val = a_n(n);
+      seq.dataX.push(n);
+      seq.dataY.push(val);
+      v2.setPosition(JXG.COORDS_BY_USER, [n, val]);
+      n++;
+    };
+
+    var txt1 = board.create(
+      "text",
+      [
+        15,
+        1.6,
+        function () {
+          return (
+            "n=" +
+            (seq.dataX.length - 1) +
+            ": value = " +
+            seq.dataY[seq.dataY.length - 1]
+          );
+        },
+      ],
+      { strokeColor: "blue" }
+    );
+
+    var TO;
+
+    var approx = function () {
+      seq_add();
+      board.update();
+      if (n <= 50) {
+        TO = setTimeout(approx, 500);
+      }
+    };
+
+    var a_n;
+    var start_approx = function () {
+      // var txtraw = document.getElementById('input').value;
+      v2.clearTrace();
+      a_n = board.jc.snippet(inputan.Value(), true, "n", true);
+      seq.dataX = [];
+      seq.dataY = [];
+      n = board.jc.snippet(inputstart.Value(), false, " ", false);
+      approx();
+    };
+
+    var clear_all = function () {
+      clearTimeout(TO);
+    };
+  </script>
+  <footer>
+    Based on
+    <a
+      href="http://jsxgraph.uni-bayreuth.de/share/example/convergence-of-sequence"
+      >JSXGraph examples, Sequences</a
+    >
+    <br />
+    Wigand Rathmann, FAU
+  </footer>
+</html>

@@ -1,0 +1,185 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" type="text/css" href="layout.css" />
+	<link rel="stylesheet" type="text/css" href="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css" />
+	<script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+	</script>
+	<title>Polar Coordinates</title>
+</head>
+
+<body>
+	<h1 class="firstHeading">Polar Coordinates</h1>
+	<div id="bodyContent">
+		<p>
+
+		<table>
+			<colgroup>
+				<col width="50">
+				<col width="400">
+				<col width="400">
+				<col width="50">
+			</colgroup>
+			<tr>
+				<td></td>
+				<td>
+					Consider the mapping \( T:\mathbb{R}^2 \to \mathbb{R}^2 \):<br />
+					<center>\(T(r,\varphi)=\left(r\cos(\varphi),r\sin(\varphi)\right)^{\top}\)</center><br />
+					Change the blue segment by the sliders and adjust the red one by
+					dragging around the points \(P_1\) and \(P_2\).
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					This examples demonstrates furthermore the coupling of two JSXGraph boards.
+				</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<center>Origin</center><br />
+					</td>
+				<td>
+					<center>Result</center> <br />
+					</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<div id="box1" class="jxgbox" style="width:500px; height:500px; float:left;"></div>
+				</td>
+				<td>
+					<div id="box2" class="jxgbox" style="width:500px; height:500px; float:left;"></div>
+				</td>
+				<td>
+				</td>
+			<tr>
+				<td></td>
+				<td>
+					<br />&nbsp;<br />
+					<center>
+					</center>
+				</td>
+				<td>
+				</td>
+				<td></td>
+
+			</tr>
+		</table>
+
+		<br clear="all">
+		<center>
+			<script language="JavaScript">
+				b1 = JXG.JSXGraph.initBoard('box1', {
+					boundingbox: [-6.5, 6.5, 6.5, -6.5], axis: true,
+					defaultAxes: {
+						y: {
+							ticks: {
+								scale: Math.PI,
+								scaleSymbol: '\u03c0',
+								ticksDistance: 0.5,
+								beautifulScientificTickLabels: true,
+								insertTicks: false
+							}
+						}
+					}
+				});
+				b2 = JXG.JSXGraph.initBoard('box2', {
+					boundingbox: [-6.5, 6.5, 6.5, -6.5],
+					axis: true
+				});
+				b1.addChild(b2);
+				b1.snapToGrid = true;
+				b2.snapToGrid = true;
+				b1.suspendUpdate();
+				b2.suspendUpdate();
+				a = b2.createElement('slider', [[-5, -3], [-2, -3], [0, 2, 5]], { name: 'r_1', snapWidth: -0.1 });
+				b = b2.createElement('slider', [[-5, -4], [-2, -4], [0, 4, 5]], { name: 'r_2', snapWidth: -0.1 });
+				c = b2.createElement('slider', [[0.5, -3], [3.5, -3], [0, 0, 6.28]], { name: '\phi_1' });
+				d = b2.createElement('slider', [[0.5, -4], [3.5, -4], [0, 2.2, 6.28]], { name: '\phi_2' });
+
+				var center = b2.create("point", [0, 0], { name: "", visible: false, fixed: true });
+				var p1 = b2.create("point", [function () { return a.Value() * Math.cos(c.Value()); },
+				function () { return a.Value() * Math.sin(c.Value()); }],
+					//        [() => a.Value()*Math.cos(c.Value()),
+					//         () => a.Value()*Math.cos(c.Value())],
+					{ name: "P1", visible: false, fixed: true, });
+				var p2 = b2.create("point", [function () { return b.Value() * Math.cos(c.Value()); },
+				function () { return b.Value() * Math.sin(c.Value()); }],
+					{ name: "P2", visible: false, fixed: true });
+				var p3 = b2.create("point", [function () { return b.Value() * Math.cos(d.Value()); },
+				function () { return b.Value() * Math.sin(d.Value()); }],
+					{ name: "P3", visible: false, fixed: true });
+				var p4 = b2.create("point", [function () { return a.Value() * Math.cos(d.Value()); },
+				function () { return a.Value() * Math.sin(d.Value()); }],
+					{ name: "P4", visible: false, fixed: true });
+				var c1 = b2.create("arc", [center, p1, p4], { frozen: true });
+				var c2 = b2.create("line", [p4, p3], { frozen: true, straightFirst: false, straightLast: false });
+				var c3 = b2.create("arc", [center, p2, p3], { frozen: true });
+				var c4 = b2.create("line", [p2, p1], { frozen: true, straightFirst: false, straightLast: false });
+				/*
+				
+				*/
+
+				var center2 = b1.create("point", [0, 0], { name: "", visible: false, fixed: true });
+				var p12 = b1.create("point", [1, 0], { name: "P1", visible: true });
+				var p32 = b1.create("point", [2, 3.14], { name: "P2", visible: true });
+
+				var p22 = b1.create("point", [function () { return p32.X() }, function () { return p12.Y() }], { name: "p1", visible: false });
+				var p42 = b1.create("point", [function () { return p12.X() }, function () { return p32.Y() }], { name: "P2", visible: false });
+
+				var polyg1 = b1.create("polygon", [p12, p22, p32, p42], { name: "" });
+
+				// Ergebnise
+
+				var p1p = b2.create("point", [function () { return p12.X() * Math.cos(p12.Y()); },
+				function () { return p12.X() * Math.sin(p12.Y()); }],
+					//        [() => a.Value()*Math.cos(c.Value()),
+					//         () => a.Value()*Math.cos(c.Value())],
+					{ name: "P1", visible: false, fixed: true, });
+				var p2p = b2.create("point", [function () { return p32.X() * Math.cos(p12.Y()); },
+				function () { return p32.X() * Math.sin(p12.Y()); }],
+					{ name: "P2", visible: false, fixed: true });
+				var p3p = b2.create("point", [function () { return p32.X() * Math.cos(p32.Y()); },
+				function () { return p32.X() * Math.sin(p32.Y()); }],
+					{ name: "P3", visible: false, fixed: true });
+				var p4p = b2.create("point", [function () { return p12.X() * Math.cos(p32.Y()); },
+				function () { return p12.X() * Math.sin(p32.Y()); }],
+					{ name: "P4", visible: false, fixed: true });
+				var c1p = b2.create("arc", [center, p1p, p4p], { frozen: true, strokeColor: 'red' });
+				var c2p = b2.create("line", [p4p, p3p], { frozen: true, strokeColor: 'red', straightFirst: false, straightLast: false });
+				var c3p = b2.create("arc", [center, p2p, p3p], { frozen: true, strokeColor: 'red' });
+				var c4p = b2.create("line", [p2p, p1p], { frozen: true, strokeColor: 'red', straightFirst: false, straightLast: false });
+
+
+				b1.unsuspendUpdate();
+				b2.unsuspendUpdate();
+
+
+			</script>
+		</center>
+
+		</p>
+
+
+	</div> <!--bodyContent -->
+	</div><!--Content -->
+	</div><!--columnContent -->
+
+
+	</div><!--GlobalWrapper -->
+
+
+</body>
+<footer>Wigand Rathmann, FAU</footer>
+
+</html>

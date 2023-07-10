@@ -1,0 +1,238 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+
+<!--Set these Flags to true to enable the Modules-->
+	<script type="text/javascript">
+		useJsxGraph = true;
+		useMathJax = true;
+		useSageCell = false;
+
+		if(useSageCell==true){
+			//MathJax is included in SageCell
+			useMathJax = false;
+		};
+	</script>
+
+
+<!--Location of the Server-Script in the Illias-System-->
+	<script type="text/javascript" src="https://www.studon.fau.de/mathlib/server_module.js"></script>
+
+<!--Configuration of SageCell-->
+	<script type="text/javascript">
+		if(useSageCell==true){
+			//Make the div with id 'sagecell' a Sage cell
+			sagecell.makeSagecell({	inputLocation:'#sagecell',
+									template: sagecell.templates.minimal,
+									evalButtonText:'Activate'});
+			//Make any div with class 'compute' a Sage cell
+			sagecell.makeSagecell({	inputLocation:'div.compute',
+									evalButtonText:'Evaluate'});
+		};
+	</script>
+	
+	<title>Linear Abbildungen und Matrizen</title>
+	<style type="text/css" media="screen, projection"></style>
+	<link rel="stylesheet" type="text/css" media="print" href="/wiki/skins/common/commonPrint.css?164" />
+</head>
+
+<body>
+<!--Check if the Illias-System can be reached-->
+	<script type="text/javascript">
+		Illias = false;
+		try{
+			Illias = ConnectedToIllias();
+		}
+		//This catch is required to enable the display of the Website even if the Illias-System cannot be reached.
+		catch(err){
+		}
+		finally{
+			//Alertmessagebox if the Illias-System cannot be reached.
+			if(Illias===false){
+				alert('Unable to reach StudOn.\nContents of this website may not work properly.');
+			}
+		}
+	</script>
+<!--Message if JavaScript is disabled in the Browser-->
+	<noscript>
+		This website requires JavaScript to work properly!
+	</noscript>
+<body>
+<div id="globalWrapper">
+	<div id="column-content">
+	<div id="content">
+		<a name="top" id="top"></a>
+				<h1 class="firstHeading">Lineare Abbildungen und Matrizen</h1>
+		<div id="bodyContent">
+			<h3 id="siteSub">From JSXGraph Wiki</h3>
+			<p>
+
+<table>
+ <colgroup>
+    <col width="50">
+    <col width="400">
+    <col width="400">
+    <col width="50">
+  </colgroup>
+  <tr>	
+	  <td></td>
+	<td>
+Consider the mapping \( T:\mathbb{R}^2 \to \mathbb{R}^2 \):
+<center>\(T(r,\varphi)=\left(r\cos(\varphi),r\sin(\varphi))^{\top}\)</center><br/> &nbsp;
+</td><td></td><td></td>
+</tr>
+  <tr>	
+	  <td></td>
+	<td>
+  <center> \( V= \mathbb{R}^2 \)</center><br/>
+<!-- nix
+-->
+</td><td>
+  <center>Bild: \(Bild(A)\subset W= \mathbb{R}^2 \)</center> <br/>
+<!-- nix
+-->
+</td><td></td>
+</tr><tr>
+<td></td><td>
+<div id="box1" class="jxgbox" style="width:500px; height:400px; float:left;"></div>
+</td>
+	  <td>
+<div id="box2" class="jxgbox" style="width:500px; height:400px; float:left;"></div>
+</td><td>
+</td>
+  <tr>	
+	  <td></td>
+	<td>
+<br/>&nbsp;<br/>
+<center>
+<form><input type="button" value="clear" onClick="cleardiagram()">&nbsp;<input type="button" value="symmetrisch regul&auml;r" onClick="case1()">
+&nbsp;<input type="button" value="regul&auml;r" onClick="case2()">
+&nbsp;<input type="button" value="Nullabbildung" onClick="case3()">
+&nbsp;<input type="button" value="Rang-1-Abbildung" onClick="case4()">
+</form>
+</center>
+</td><td>
+<br/>&nbsp;<br/>
+<center>
+<form><input type="button" value="clear Bild" onClick="clearbild    ()"></form>
+</center>
+</td><td></td>
+
+  </tr>
+</table>
+
+<br clear="all">
+<center>
+<script language="JavaScript">
+  b1 = JXG.JSXGraph.initBoard('box1', {originX: 240, originY: 200, unitX: 40, unitY: 40, grid:true});
+  b2 = JXG.JSXGraph.initBoard('box2', {originX: 240, originY: 200, unitX: 40, unitY: 40, grid:true});
+  b1.addChild(b2);
+  b1.snapToGrid = true;
+  b2.snapToGrid = true;
+  b1.suspendUpdate();
+  b2.suspendUpdate();
+  b1.createElement('axis', [[0,0], [1,0]], {});
+  b1.createElement('axis', [[0,0], [0,1]], {});
+  b2.createElement('axis', [[0,0], [1,0]], {});
+  b2.createElement('axis', [[0,0], [0,1]], {});
+  a = b1.createElement('slider',[[-5,-3],[-2,-3],[-2,1,2]],{name:'\ a_{11}'});
+  b = b1.createElement('slider',[[-5,-4],[-2,-4],[-2,0.5,2]],{name:'\  a_{21}'});
+  c = b1.createElement('slider',[[0.5,-3],[3.5,-3],[-2,0.5,2]],{name:'\ a_{12}'});
+  d = b1.createElement('slider',[[0.5,-4],[3.5,-4],[-2,1,2]],{name:'\ a_{22}'});
+
+  v = b1.createElement('point',[1,0],{style:5,name:'v',color:'blue',trace:true});
+  vtarget = b2.createElement('point',[-2,2],{style:5,name:'Zielpunkt',
+                                     fillColor:'orange',
+                                     strokeColor:'orange',size:5,
+                                     label:{offset:[10,-10]},
+                                     trace:false});
+//  tv = b1.createElement('text',[ function(){ return v.X()+0.2;}, function(){ return v.Y()+0.2;}, v ],{fontSize:500});
+
+    va = b1.createElement('line',[[0,0],v],{straightFirst:false, straightLast:false, lastArrow:true});
+
+ v2 = b2.createElement('point',[
+       function() {return a.Value()*v.X()+c.Value()*v.Y();},
+       function() {return b.Value()*v.X()+d.Value()*v.Y();}],{style:7,name:"Av",trace:true});
+//  tv = b1.createElement('text',[ function(){ return v2.X()+0.2;}, function(){ return v2.Y()+0.2;}, 'v' ],{fontSize:500});
+//
+
+//  va1 = b1.createElement('line',[ [0,0] ,v],{straightFirst:true, straightLast:true, strokeColor:'red', strokeOpacity:0.5});
+  va2 = b2.createElement('line',[ [0,0],v2],{straightFirst:false, straightLast:false, lastArrow:true, withTicks: true});
+
+  var detJ = function () {
+	return a.Value()*d.Value()-c.Value()*b.Value();
+}
+
+// Create a fixed text at position [0,1].
+var t1 = b2.createElement('text',[2,-3.2,
+			function(){
+				var wert = detJ();
+				return "det(A) = "+wert.toFixed(2)}]);
+
+
+ b1.unsuspendUpdate();
+ b2.unsuspendUpdate();
+
+function cleardiagram(){
+   v.clearTrace();
+   v2.clearTrace();
+}
+
+function clearbild(){
+   v2.clearTrace();
+}
+
+
+function case1(){
+   cleardiagram();
+   a.setValue(1);
+   b.setValue(0.5);
+   c.setValue(0.5);
+   d.setValue(1);
+   b1.fullUpdate();
+}
+function case2(){
+   cleardiagram();
+   a.setValue(0.5);
+   b.setValue(1);
+   c.setValue(1);
+   d.setValue(-0.5);
+   b1.fullUpdate();
+}
+
+function case3(){
+   cleardiagram();
+   a.setValue(0);
+   b.setValue(0);
+   c.setValue(0);
+   d.setValue(0);
+   b1.fullUpdate();
+}
+function case4(){
+   cleardiagram();
+   a.setValue(1);
+   b.setValue(1);
+   c.setValue(1);
+   d.setValue(1);
+   b1.fullUpdate();
+}
+
+
+</script>
+</center>
+
+</p>
+
+
+</div> <!--bodyContent -->
+</div><!--Content -->
+</div><!--columnContent -->
+
+
+</div><!--GlobalWrapper -->
+
+
+</body>
+<footer>&copy; Wigand Rathmann, FAU, <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a></footer>
+</html>

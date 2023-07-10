@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="layout.css" />
+    <link rel="stylesheet" type="text/css" href="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraph.css" />
+    <script type="text/javascript" src="http://jsxgraph.uni-bayreuth.de/distrib/jsxgraphcore.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <article>
+            
+            <div >
+                <h2>3D solid: sphere</h2>
+                <p>
+                    This example shows, how to display a transformed cube using a 3D transformation.
+                    <br/>
+                    In this example the spherical coordinates are used. One can adjust 
+                    intervals \([r_1,r_2]\), \([\phi_1,\phi_2]\), \([\psi_1,\psi_2]\) with the sliders.
+                </p>
+                <div id="jxgbox7" class="jxgbox construct"></div>
+                <script id="ex7">
+                        var board = JXG.JSXGraph.initBoard('jxgbox7', {
+                            boundingbox: [-8, 8, 8, -12],
+                            keepaspectratio: false,
+                            axis: false
+                        });
+
+                        var box = [-5,5];
+                        var view = board.create('view3d',
+                            [[-6, -3], [8, 8],
+                            [box, box, box]],
+                            {});
+
+        //slider-based curve
+        var xlabel = view.create(
+          "point3d",
+          [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
+          { size: 0, name: "x" }
+        );
+        var Ylabel = view.create(
+          "point3d",
+          [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
+          { size: 0, name: "y" }
+        );
+        var Zlabel = view.create(
+          "point3d",
+          [
+            0.7 * (0.6 * box[0] + 0.4 * box[1]),
+            0.7 * (0.6 * box[0] + 0.4 * box[1]),
+            0.9 * box[1],
+          ],
+          { size: 0, name: "z" }
+        );
+
+
+
+                       var r1 = board.create('slider', [[-7, -6], [5, -6], [0, 2, 4]], { name: 'r_1' });
+                       var r2 = board.create('slider', [[-7, -7], [5, -7], [0, 1, 4]], { name: 'r_2' });
+                       var rad1 = board.create('slider', [[-7, -8], [5, -8], [0, 0, 6.28]], { name: '\phi_1' });
+                       var rad2 = board.create('slider', [[-7, -9], [5, -9], [0, 2, 6.28]], { name: '\phi_2' });
+                       var az1 = board.create('slider', [[-7, -10], [5, -10], [0, 0, 3.14]], { name: '\psi_1' });
+                       var az2 = board.create('slider', [[-7, -11], [5, -11], [0, 1.57, 3.14]], { name: '\psi_2' });
+                       //var rad1 = Math.PI/2;
+                       //var rad2 = Math.PI;
+                       //var az1  = Math.PI/4;
+                       //var az2  = Math.PI-0.1;
+                        // Sphere
+                        var c1 = view.create('parametricsurface3d', [
+                            (u, v) => r1.Value() * Math.sin(u) * Math.cos(v),
+                            (u, v) => r1.Value() * Math.sin(u) * Math.sin(v),
+                            (u, v) => r1.Value() * Math.cos(u),
+                            () => [az1.Value(), az2.Value()],
+                            () => [rad1.Value(), rad2.Value()]
+                        ], { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } });
+                        var c2 = view.create('parametricsurface3d', [
+                            (u, v) => r2.Value() * Math.sin(u) * Math.cos(v),
+                            (u, v) => r2.Value() * Math.sin(u) * Math.sin(v),
+                            (u, v) => r2.Value() * Math.cos(u),
+                            () => [az1.Value(), az2.Value()],
+                            () => [rad1.Value(), rad2.Value()]
+                        ], { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } });
+                        var c3 = view.create('parametricsurface3d', [
+                            (u, v) => u * Math.sin(v) * Math.cos(rad1.Value()),
+                            (u, v) => u * Math.sin(v) * Math.sin(rad1.Value()),
+                            (u, v) => u * Math.cos(v),
+                            () => [r1.Value(), r2.Value()],
+                            () => [az1.Value(), az2.Value()]
+                        ], { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } });
+                        var c4 = view.create('parametricsurface3d', [
+                            (u, v) => u * Math.sin(v) * Math.cos(rad2.Value()),
+                            (u, v) => u * Math.sin(v) * Math.sin(rad2.Value()),
+                            (u, v) => u * Math.cos(v),
+                            () => [r1.Value(), r2.Value()],
+                            () => [az1.Value(), az2.Value()]
+                        ], { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } });
+                        var c5 = view.create('parametricsurface3d', [
+                            (u, v) => u * Math.sin(az1.Value()) * Math.cos(v),
+                            (u, v) => u * Math.sin(az1.Value()) * Math.sin(v),
+                            (u, v) => u * Math.cos(az1.Value()),
+                            () => [r1.Value(), r2.Value()],
+                            () => [rad1.Value(), rad2.Value()]
+                        ], { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } });
+                        var c6 = view.create('parametricsurface3d', [
+                            (u, v) => u * Math.sin(az2.Value()) * Math.cos(v),
+                            (u, v) => u * Math.sin(az2.Value()) * Math.sin(v),
+                            (u, v) => u * Math.cos(az2.Value()),
+                            () => [r1.Value(), r2.Value()],
+                            () => [rad1.Value(), rad2.Value()]
+                        ], { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } });
+                </script>
+            </div>
+            </div>
+            <p>
+                Wigand Rathmann, FAU
+                </p>
+                
+</body>
+
+</html> 

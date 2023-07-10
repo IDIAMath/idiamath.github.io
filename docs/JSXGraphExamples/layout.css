@@ -1,0 +1,82 @@
+body {
+    width: 90%;
+    max-width: 1024px;
+    margin: 1em auto;
+    font: .9em/1.2 Arial, Helvetica, sans-serif;
+}
+
+.container {
+    border-radius: 5px;
+    border: 0px dashed black;
+}
+
+header {
+    font-size: 150%;
+    text-align: center;
+    border-bottom: solid 10px black;
+    margin-bottom: 1ex;
+}
+
+footer {}
+
+
+/* Allgemeine Einstellungen für grid */
+.container {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    /* 1fr = 1/12 des container */
+    grid-gap: 10px;
+}
+
+header {
+    grid-row: 1;
+    grid-column: 1 / 13;
+}
+
+article {
+    grid-row: 2;
+    grid-column: 1 / 13;
+}
+
+footer {
+    grid-row: 3;
+    grid-column: 1 / 13;
+}
+
+/* Beipiele */
+div.example {
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    /* 1fr = 1/12 des container */
+}
+
+div.example h2 {
+    grid-row: 1;
+    grid-column: 1/7;
+    margin-top: 2em;
+    border-left: solid 0.8em black;
+    padding-left: 1em;
+}
+
+div.example p {
+    grid-row: 2;
+    grid-column: 1/3;
+    margin-top: 2em;
+    padding-left: 1em;
+}
+
+.construct {
+    grid-row: 2;
+    width: 800px;
+    height: 800px;
+    float: left;
+    grid-column: 3/12;
+}
+
+div.example pre {
+    grid-row: 3;
+    grid-column: 3/12;
+    border: 0px solid #888888;
+    font-size: 90%;
+}
