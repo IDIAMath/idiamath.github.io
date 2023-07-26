@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+    <script type="text/javascript" charset="UTF-8"
+            src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
+    <script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<title>Eigenvectors</title>
+
+</head>
+
+<body>
+    
+    <h2>Eigenvectors</h2>
+    <p>
+        </p>
+    </p>
+    <table style="width: 100;">
+    <tr>
+    <td>
+        <div id="jxgbox" class="jxgbox construct" style="width: 500px;height: 500px;"></div>
+    </td>
+    </tr>
+    </table>
+       
+    <script id="ex5">
+        var  b1 = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-2, 2, 2, -2],
+    grid: true,
+    axis: true
+  });
+
+  m1 = b1.create('point', [0, 0], {
+    name: 'M',
+    visible: false
+  });
+  p1 = b1.create('point', [1, 0], {
+    name: 'Ex',
+    visible: false
+  });
+  c1 = b1.create('circle', [m1, p1], {
+    name: 'Einheitskreis',
+    visible: true
+  });
+
+  b1.snapToGrid = true;
+  b1.suspendUpdate();
+
+  var but1 = b1.create("button",[-1.75,-1.75,"Example 1",() => {case1();}]);
+  var but2 = b1.create("button",[-0.8,-1.75,"Example 2",() => {case2();}]);
+  var but3 = b1.create("button",[0.25,-1.75,"Example 3",() => {case3();}]);
+  var but4 = b1.create("button",[1.1,-1.75,"Example 4",() => {case4();}]);
+
+  a = b1.create('slider', [
+    [-1.75, -1.25],
+    [-0.75, -1.25],
+    [-2, 1, 2]
+  ], {
+    name: '\ a_{11}', snapWidth:0.05
+  });
+  b = b1.create('slider', [
+    [-1.75, -1.5],
+    [-0.75, -1.5],
+    [-2, 0.5, 2]
+  ], {
+    name: '\  a_{21}', snapWidth:0.05
+  });
+  c = b1.create('slider', [
+    [0.25, -1.25],
+    [1.25, -1.25],
+    [-2, 0.5, 2]
+  ], {
+    name: '\ a_{12}', snapWidth:0.05
+  });
+  d = b1.create('slider', [
+    [0.25, -1.5],
+    [1.25, -1.5],
+    [-2, 1, 2]
+  ], {
+    name: '\ a_{22}', snapWidth:0.05
+  });
+
+  v = b1.create('glider', [0.8, 0.5, c1], {
+    name: 'v'
+  });
+  //  tv = b1.createElement('text',[ function(){ return v.X()+0.2;}, function(){ return v.Y()+0.2;}, v ],{fontSize:500});
+
+  va = b1.create('line', [
+    [0, 0], v
+  ], {
+    straightFirst: false,
+    straightLast: false,
+    lastArrow: true
+  });
+
+  v2 = b1.create('point', [
+    function() {
+      return a.Value() * v.X() + c.Value() * v.Y();
+    },
+    function() {
+      return b.Value() * v.X() + d.Value() * v.Y();
+    }
+  ], {
+    style: 7,
+    name: "Av",
+    trace: false
+  });
+
+  va1 = b1.create('line', [
+    [0, 0], v
+  ], {
+    straightFirst: true,
+    straightLast: true,
+    strokeColor: 'red',
+    strokeOpacity: 0.5,
+    visible: false
+  });
+  va2 = b1.create('line', [
+    [0, 0], v2
+  ], {
+    straightFirst: false,
+    straightLast: false,
+    lastArrow: true,
+    withTicks: true
+  });
+  va3 = b1.create('line', [
+    [0, 0], v2
+  ], {
+    straightFirst: true,
+    straightLast: true,
+    strokeColor: 'orange',
+    strokeOpacity: 0.5,
+    visible: false
+  });
+  b1.unsuspendUpdate();
+
+  function case1() {
+    a.setValue(1);
+    b.setValue(0.5);
+    c.setValue(0.5);
+    d.setValue(1);
+    b1.fullUpdate();
+  }
+
+  function case2() {
+    a.setValue(0.5);
+    b.setValue(1);
+    c.setValue(1);
+    d.setValue(2);
+    b1.fullUpdate();
+  }
+
+  function case3() {
+    a.setValue(0);
+    b.setValue(0);
+    c.setValue(0);
+    d.setValue(0);
+    b1.fullUpdate();
+  }
+
+  function case4() {
+    a.setValue(0);
+    b.setValue(1);
+    c.setValue(-1);
+    d.setValue(0);
+    b1.fullUpdate();
+  }
+
+</script>
+
+
+<p>
+Wigand Rathmann, FAU
+</p>
+</body>
+
+</html>

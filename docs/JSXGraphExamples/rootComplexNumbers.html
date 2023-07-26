@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+    <script type="text/javascript" charset="UTF-8"
+            src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
+    <script id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
+<title>Roots of complex numbers</title>
+
+</head>
+
+<body>
+    
+    <h2>Roots of complex numbers</h2>
+    <p>
+        </p>
+    </p>
+    <table style="width: 100;">
+    <tr>
+    <td>
+        <div id="jxgbox" class="jxgbox construct" style="width: 500px;height: 500px;"></div>
+    </td>
+    </tr>
+    </table>
+       
+    <script id="ex5">
+const brd = JXG.JSXGraph.initBoard('jxgbox', {
+    boundingbox: [-4, 4, 4, -4],
+    keepaspectratio: false,
+    axis: true
+});
+var bound = [-5, 5];
+
+brd.snapToGrid = true;
+var A = brd.create('point', [0,0], {fixed:true, name:'0', visible:false});
+var B = brd.create('point', [1,0], {fixed:true, visible:false});
+var C = brd.create('point', [1.41,1.41], {name:'z^N = z_R + z_Ii'});
+var alpha = brd.create('angle', [B,A,C], {name:'φ', type:'sector',  radius:1});
+
+    var Nmax = 10;
+    var pointsRoot =[]
+    var linesRoot =[]
+    var phi, phi0, phi1;
+    var Cabs;
+
+    var N2 = brd.create('slider',[[1,-3],[3,-3],[2,3,Nmax]],{name:'N',snapWidth:1});
+
+
+
+    var     C0 = brd.create('point', [
+        function() {
+                 if(C.X() >= 0 && C.Y() >= 0)
+        {
+                phi = Math.atan(C.Y()/C.X());
+        }
+        else if(C.X() >= 0 && C.Y() <= 0){
+                phi=((Math.atan(C.Y()/C.X())) + 2* Math.PI);
+        }
+        else if(C.X() <= 0){
+                phi=(Math.atan(C.Y()/C.X())) + Math.PI;
+        }
+        else
+        { phi=0;}
+        Cabs = Math.pow(C.X()*C.X()+C.Y()*C.Y(),1.0/(2*N2.Value()));
+        return Cabs*Math.cos(phi/N2.Value());
+        }, function(){
+        return Cabs*Math.sin(phi/N2.Value());
+        }   ], {name:'z_0'});
+
+var   alpha0 = brd.create('angle', [B,A,C0], {name:'φ_0', type:'sector', radius:0.75});
+var li = brd.create('line',[A,C], {straightFirst:false, straightLast:false,lastArrow:true, name:'r_1'});
+var li0 = brd.create('line',[A,C0], {straightFirst:false, straightLast:false,lastArrow:true,strokeColor:'lightblue', name:'r_2'});
+
+
+
+var updatePointVisibility2 = function() {
+	var Nint = N2.Value();
+
+	// Sichtbarkeit der Punkte setzen
+	for (var iloop2 = 1; iloop2 < Nint; iloop2++) {
+		(pointsRoot[iloop2]).setAttribute({visible:true});
+	}
+
+	for (iloop2 = Nint; iloop2 < Nmax; iloop2++) {
+		pointsRoot[iloop2].setAttribute({visible:false});
+	}
+}
+
+
+
+for (var iloop = 1; iloop < Nmax; iloop++) {
+		pointsRoot[iloop] = brd.create('point', 
+		       [(function(_i) { return function()
+		         {return Cabs*Math.cos(phi/N2.Value()+Math.PI*2/N2.Value()*_i);
+                 }})(iloop),
+                 (function(_i) {return function()
+                 {return Cabs*Math.sin(phi/N2.Value()+Math.PI*2/N2.Value()*_i);
+                }})(iloop)],
+                {name:'z_'+iloop});
+        linesRoot[iloop] = brd.create('line',[A,pointsRoot[iloop]], {straightFirst:false, 
+                                                                      straightLast:false,lastArrow:true ,
+                                                                      strokeColor:'lightblue',name:''});
+	}
+
+
+updatePointVisibility2();
+	
+var circle = brd.create('circle',[A,C0],{strokeColor:'lightblue'});
+
+var t1 = brd.create('text',[1,-0.8,function(){return 'a = '+C.X().toFixed(3);}],{id:'my_t'});
+var t2 = brd.create('text',[1,-1.1,function(){return 'b = '+C.Y().toFixed(3);}],{id:'my_t'});
+var t3 = brd.create('text',[1,-1.4,function(){return 'r = '+Math.sqrt(C.Y()*C.Y() + C.X()*C.X()).toFixed(3);}],{id:'my_t'});
+
+var t4 = brd.create('text',[1,-1.7,function()
+    {   if(C.X() >= 0 && C.Y() >= 0)
+        {
+        return 'φ = '+Math.atan(C.Y()/C.X()).toFixed(3);
+        }
+        else if(C.X() >= 0 && C.Y() <= 0){
+        return 'φ = '+(((Math.atan(C.Y()/C.X())) + 2* Math.PI).toFixed(3));
+        }
+        else if(C.X() < 0){
+        return 'φ = '+(((Math.atan(C.Y()/C.X())) + Math.PI).toFixed(3));
+        }
+        else
+        {  return 'φ = '+(((Math.atan(C.Y()/C.X())) + Math.PI).toFixed(3));}
+
+    }
+    ],{id:'my_t'});
+
+    brd.updateConditions = function() {
+    updatePointVisibility2();
+}
+</script>
+
+
+<p>
+Wigand Rathmann, FAU
+</p>
+</body>
+
+</html>

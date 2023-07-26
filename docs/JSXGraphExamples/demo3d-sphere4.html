@@ -7,6 +7,9 @@
     <script type="text/javascript" charset="UTF-8"
             src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
+    <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+</script>
     <title>Sphere in 3D</title>
 </head>
 
@@ -24,6 +27,7 @@
                 </p>
                 <div id="jxgbox7" class="jxgbox construct"></div>
                 <script id="ex7">
+                          JXG.Options.text.useMathJax = true;
                         var board = JXG.JSXGraph.initBoard('jxgbox7', {
                             boundingbox: [-8, 8, 8, -12],
                             keepaspectratio: false,
@@ -59,12 +63,12 @@
 
 
 
-                       var r1 = board.create('slider', [[-7, -6], [5, -6], [0, 2, 4]], { name: 'r_1' });
-                       var r2 = board.create('slider', [[-7, -7], [5, -7], [0, 1, 4]], { name: 'r_2' });
-                       var rad1 = board.create('slider', [[-7, -8], [5, -8], [0, 0, 6.28]], { name: '\phi_1' });
-                       var rad2 = board.create('slider', [[-7, -9], [5, -9], [0, 2, 6.28]], { name: '\phi_2' });
-                       var az1 = board.create('slider', [[-7, -10], [5, -10], [0, 0, 3.14]], { name: '\psi_1' });
-                       var az2 = board.create('slider', [[-7, -11], [5, -11], [0, 1.57, 3.14]], { name: '\psi_2' });
+                       var r1 = board.create('slider', [[-7, -6], [5, -6], [0, 2, 4]], { name: '\\(r_1\\)' });
+                       var r2 = board.create('slider', [[-7, -7], [5, -7], [0, 1, 4]], { name: '\\(r_2\\)' });
+                       var rad1 = board.create('slider', [[-7, -8], [5, -8], [0, 0, 6.28]], { name: '\\(\\phi_1\\)' });
+                       var rad2 = board.create('slider', [[-7, -9], [5, -9], [0, 2, 6.28]], { name: '\\(\\phi_2\\)' });
+                       var az1 = board.create('slider', [[-7, -10], [5, -10], [0, 0, 3.14]], { name: '\\(\\psi_1\\)' });
+                       var az2 = board.create('slider', [[-7, -11], [5, -11], [0, 1.57, 3.14]], { name: '\\(\\psi_2\\)' });
                        //var rad1 = Math.PI/2;
                        //var rad2 = Math.PI;
                        //var az1  = Math.PI/4;

@@ -5,22 +5,42 @@
 <head>
   <meta charset="utf-8" />
   <title>Name</title>
+  <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
 
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_HTML"></script>
 
+    <!--
     <script type="text/javascript" charset="UTF-8"
     src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
- 
+-->
+<!-- Devaloper Version Alfred Wassermann-->
+
+<link rel="stylesheet" type="text/css"
+href="https://jsxgraph.uni-bayreuth.de/~alfred/jsxgraph/distrib/jsxgraph.css" />
+<script type="text/javascript" charset="UTF-8" src="https://jsxgraph.uni-bayreuth.de/~alfred/jsxgraph/distrib/jsxgraphsrc.js">
+</script>
+<script type="text/javascript" charset="UTF-8" src="https://jsxgraph.uni-bayreuth.de/~alfred/jsxdev/3D/view3d.js"></script>
+<script type="text/javascript" charset="UTF-8" src="https://jsxgraph.uni-bayreuth.de/~alfred/jsxdev/3D/elements3d.js"></script> 
+
+   
+
 </head>
 
 <body>
+  <strong>NOT TO PUBLISH, NEW VERSION 1.5.1 or 1.6.0 is needed</strong>
     <header>
-      <h2>Name</h2>
+      <h2>Spherical Coordinates with cutting planes</h2>
     </header>
+    <p> This applets shows the part of the sphere resulting from intervals \([r_1,r_2]\), \([\phi_1,\phi_2]\), \([\psi_1,\psi_2]\). 
+      The blue one is hard coded in the applet, the red one can be adjusted by the sliders.</p>
+    <p> Additionaly the curves in the \((x,y)\) and \((x,z)\)-plane are shown.</p>
+    <p><strong>Remark:</strong> With JSXGraph 1.5.0 the applet crashes, if the interval length becomes zero.</p>
       <div id="jxgbox5" class="jxgbox" style="width:700px; height:918px"></div>
       <script>
+        JXG.Options.text.useMathJax = true;
+
         var board = JXG.JSXGraph.initBoard("jxgbox5", {
           boundingbox: [-8, 8, 8, -13],
           keepaspectratio: false,
@@ -99,27 +119,27 @@
         // Generate box, !!!! slider adjusted to the init of the board above//
         // Create Slider
         var u1 = board.create("slider", [[-7, -6], [5, -6], u1init], {
-          name: "r_1",
+          name: "\\(r_1\\)",
           snapWidth: 0.05,
         });
         var u2 = board.create("slider", [[-7, -7], [5, -7], u2init], {
-          name: "r_2",
+          name: "\\(r_2\\)",
           snapWidth: 0.05,
         });
         var v1 = board.create("slider", [[-7, -8], [5, -8], v1init], {
-          name: "\phi_1",
+          name: "\\(\\phi_1\\)",
           snapWidth: 0.05,
         });
         var v2 = board.create("slider", [[-7, -9], [5, -9], v2init], {
-          name: "\phi_2",
+          name: "\\(\\phi_2\\)",
           snapWidth: 0.05,
         });
         var w1 = board.create("slider", [[-7, -10], [5, -10], w1init], {
-          name: "\psi_1",
+          name: "\\(\\psi_1\\)",
           snapWidth: 0.05,
         });
         var w2 = board.create("slider", [[-7, -11], [5, -11], w2init], {
-          name: "\psi_2",
+          name: "\\(\\psi_2\\)",
           snapWidth: 0.05,
         });
 
@@ -182,7 +202,7 @@
             (t) => TF3(t, v1.Value(), Math.PI / 2),
             () => [u1.Value(), u2.Value()],
           ],
-          { strokeWidth: 3, strokeColor: "red", visible: true }
+          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
         );
 
         var curveRef2 = view.create(
@@ -204,7 +224,7 @@
             (t) => TF3(t, v2.Value(), Math.PI / 2),
             () => [u1.Value(), u2.Value()],
           ],
-          { strokeWidth: 3, strokeColor: "red", visible: true }
+          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
         );
 
         var curveRef3 = view.create(
@@ -226,7 +246,7 @@
             (t) => TF3(u1.Value(), t, Math.PI / 2),
             () => [v1.Value(), v2.Value()],
           ],
-          { strokeWidth: 3, strokeColor: "red", visible: true }
+          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
         );
 
         var curveRef4 = view.create(
@@ -248,7 +268,7 @@
             (t) => TF3(u2.Value(), t, Math.PI / 2),
             () => [v1.Value(), v2.Value()],
           ],
-          { strokeWidth: 3, strokeColor: "red", visible: true }
+          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
         );
 
         // curves in xz plane
@@ -271,7 +291,7 @@
             (t) => TF3(t, 0, w1.Value()),
             () => [u1.Value(), u2.Value()],
           ],
-          { strokeWidth: 3, strokeColor: "red", visible: true }
+          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
         );
 
         var curveRefXZ2 = view.create(
@@ -293,7 +313,7 @@
             (t) => TF3(t, 0, w2.Value()),
             () => [u1.Value(), u2.Value()],
           ],
-          { strokeWidth: 3, strokeColor: "red", visible: true }
+          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
         );
 
         var curveRefXZ3 = view.create(
@@ -315,7 +335,7 @@
             (t) => TF3(u1.Value(), 0, t),
             () => [w1.Value(), w2.Value()],
           ],
-          { strokeWidth: 3, strokeColor: "red", visible: true }
+          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
         );
 
         var curveRefXZ4 = view.create(
@@ -337,7 +357,7 @@
             (t) => TF3(u2.Value(), 0, t),
             () => [w1.Value(), w2.Value()],
           ],
-          { strokeWidth: 3, strokeColor: "red", visible: true }
+          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
         );
 
         // generate info for xy-plane
@@ -507,7 +527,7 @@
               () => [u1.Value(), u2.Value()],
               () => [v1.Value(), v2.Value()],
             ],
-            { strokeWidth: 1, strokeOpacity: 1, mesh3d: { visible: true } }
+            { strokeWidth: 1,strokeColor: "#EE442F",  strokeOpacity: 1, mesh3d: { visible: true } }
           );
 
           cs2 = view.create(
@@ -519,7 +539,7 @@
               () => [u1.Value(), u2.Value()],
               () => [v1.Value(), v2.Value()],
             ],
-            { strokeWidth: 1, strokeOpacity: 1, mesh3d: { visible: false } }
+            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
           );
 
           cs3 = view.create(
@@ -531,7 +551,7 @@
               () => [u1.Value(), u2.Value()],
               () => [w1.Value(), w2.Value()],
             ],
-            { strokeWidth: 1, strokeOpacity: 1, mesh3d: { visible: false } }
+            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
           );
           cs4 = view.create(
             "parametricsurface3d",
@@ -542,7 +562,7 @@
               () => [u1.Value(), u2.Value()],
               () => [w1.Value(), w2.Value()],
             ],
-            { strokeWidth: 1, strokeOpacity: 1, mesh3d: { visible: false } }
+            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
           );
           cs5 = view.create(
             "parametricsurface3d",
@@ -553,7 +573,7 @@
               () => [v1.Value(), v2.Value()],
               () => [w1.Value(), w2.Value()],
             ],
-            { strokeWidth: 1, strokeOpacity: 1, mesh3d: { visible: false } }
+            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
           );
           cs6 = view.create(
             "parametricsurface3d",
@@ -564,7 +584,7 @@
               () => [v1.Value(), v2.Value()],
               () => [w1.Value(), w2.Value()],
             ],
-            { strokeWidth: 1, strokeOpacity: 1, mesh3d: { visible: false } }
+            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
           );
         }
       </script>
