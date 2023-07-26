@@ -54,7 +54,12 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 + Question [Hessian positive definit](question/2D_function_negative_definite_hessian.md) 
 + Question [Hessian negative definit](question/2D_function_negative_definite_hessian.md) 
 
-### Integration Domains
+### Integration Domains in 3D
++ Question [Cylindrical Coordinates (Matching)](./question/3D_cylindrical_coordinates_matching.md) (fit the reference volume by dragging sliders)
++ Question [General Coordinate Transformation](./question/3D_cylindrical_coordinates_matching.md) (this is like a template for 3D Transform)
++ Question [Spherical Coordinates (Matching)](./question/3D_spherical_coordinates_matching.md) (fit the reference volume by dragging sliders)
++ Question [Spherical Coordinates (Rotating)](./question/3D_spherical_coordinates_rotating.md) (fit the reference volume by entering parameter intevals)
+
 
 ## Visualising solids in 3D
 
