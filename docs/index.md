@@ -3,6 +3,7 @@
 # To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
 
 title: IDIAMath
+usemathjax: true
 theme: minima
 permalink: /
 ---
@@ -54,11 +55,15 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 + Question [Hessian positive definit](question/2D_function_negative_definite_hessian.md) 
 + Question [Hessian negative definit](question/2D_function_negative_definite_hessian.md) 
 
+### Integration Domains in 2D
++ Question [Polar Coordinates (Matching)](question/2D_polar_coordinates_matching_algebraic.md) (fit the reference volume by entering intervals for $r$ and $\phi$
+
+
 ### Integration Domains in 3D
-+ Question [Cylindrical Coordinates (Matching)](./question/3D_cylindrical_coordinates_matching.md) (fit the reference volume by dragging sliders)
-+ Question [General Coordinate Transformation](./question/3D_cylindrical_coordinates_matching.md) (this is like a template for 3D Transform)
-+ Question [Spherical Coordinates (Matching)](./question/3D_spherical_coordinates_matching.md) (fit the reference volume by dragging sliders)
-+ Question [Spherical Coordinates (Rotating)](./question/3D_spherical_coordinates_rotating.md) (fit the reference volume by entering parameter intevals)
++ Question [Cylindrical Coordinates (Matching)](question/3D_cylindrical_coordinates_matching.md) (fit the reference volume by dragging sliders)
++ Question [General Coordinate Transformation](question/3D_cylindrical_coordinates_matching.md) (this is like a template for 3D Transform)
++ Question [Spherical Coordinates (Matching)](question/3D_spherical_coordinates_matching.md) (fit the reference volume by dragging sliders)
++ Question [Spherical Coordinates (Rotating)](question/3D_spherical_coordinates_rotating.md) (fit the reference volume by entering parameter intervals)
 
 
 ## Visualising solids in 3D
@@ -69,7 +74,7 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 
 ## Examples JSXGraph
 
-Here will find some applets demonstrating JSXGraph in different applications. [JSXGraph Examples](./JSXGraphExamples/JSXGraphExamples.md)
+Here will find some applets demonstrating JSXGraph in different applications. [JSXGraph Examples](JSXGraphExamples/JSXGraphExamples.md)
 
 A huge collection you will find at the [JSXGraph homepage](https://jsxgraph.org) and the example data base [there](https://jsxgraph.uni-bayreuth.de/share/).
 ## HTML test
