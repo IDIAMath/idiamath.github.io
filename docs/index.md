@@ -56,7 +56,7 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 + Question [Hessian negative definit](question/2D_function_negative_definite_hessian.md) 
 
 ### Integration Domains in 2D
-+ Question [Polar Coordinates (Matching)](question/2D_polar_coordinates_matching_algebraic.md) (fit the reference volume by entering intervals for $r$ and $\phi$
++ Question [Polar Coordinates (Matching)](question/2D_polar_coordinates_matching_algebraic.md) (fit the reference volume by entering intervals for $$r$$ and $$\phi$$
 
 
 ### Integration Domains in 3D
