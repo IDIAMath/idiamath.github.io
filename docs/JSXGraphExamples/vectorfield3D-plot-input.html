@@ -1,0 +1,212 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!--
+    <script type="text/javascript" charset="UTF-8"
+    src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js">
+    </script>
+    -->
+    <script type="text/javascript" charset="UTF-8"
+    src="https://jsxgraph.org/beta/jsxgraphcore.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+  
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+  <style>
+    body {
+  font-family: sans-serif;
+  }
+  </style>
+
+    <title>Vector field 3D</title>
+</head>
+
+<body>
+
+    <h1>Show vector fields</h1>
+    				
+					
+				<div id="jxgbox" class="jxgbox" style="width:600px; height:600px;"></div>
+    <br clear="all">
+    <script language="JavaScript">
+var jxgbox = document.getElementById('jxgbox');
+
+var s;
+var board, point, view, bFieldS, bFieldT,bTraject,bSetTraject;
+var fx, fy, fz, field = [];
+var inputfx, inputfy, inputfz;
+var curveN, curveh, curveC;
+
+var init = function() {
+  board = JXG.JSXGraph.initBoard('jxgbox', {
+    axis: false, grid:false,
+    boundingbox: [-5, 5, 5, -5]
+  });
+  inputfx = board.create('input', [-4.1, 4.4, 'cos(y)', 'f_1(x,y)=']);
+  inputfy = board.create('input', [-4.1, 4.0, 'sin(x)', 'f_2(x,y)=']);
+  inputfz = board.create('input', [-4.1, 3.6, '0', 'f_3(x,y)=']);
+  s = board.create('slider', [
+    [1.1, 4.4],
+    [3.1, 4.4],
+    [0, 0.5, 1]
+  ], {
+    name: 'length'
+  });
+  // init 3d
+  var bound = [-5, 5];
+  view = board.create('view3d',
+  [
+    [-3, -2.5],
+    [5, 5],
+    [bound, bound, bound]
+  ], {});
+
+  // trajectory
+  point = view.create('point3d', [0,0,0], {name:'(x_0,y_0,z_0)', color:'blue'});
+  curveN = board.create('slider', [
+    [1.1, 4.0],
+    [3.1, 4.0],
+    [20, 100, 200]
+  ], {
+    name: 'N',snapWidth:1
+  });
+  curveh = board.create('slider', [
+    [1.1, 3.6],
+    [3.1, 3.6],
+    [0.05, 0.1, 0.8]
+  ], {
+    name: 'h',snapWidth:0.05
+  });
+  bFieldT = board.create('button',[-4.1,-3.7,"vector field",
+            function () {toggleList(field);},
+          ],
+          { fixed: true }
+        );
+        
+  bFieldS = board.create(
+          "button",
+          [-4.1,3.2,"set vector field",
+            function () {plot();},
+          ],
+          { fixed: true }
+        );
+  bTraject = board.create("button",[-2.2,-4.1,"trajectory",
+            function () {toggleList([curveC,point]);},
+          ],
+          { fixed: true }
+        );
+  bSetTraject = board.create("button",[-4.1,-4.1,"set trajectory",
+            function () {trajectory();},
+          ],
+          { fixed: true }
+        );
+
+
+};
+
+// field is stored in global variable field
+function vectorField() {
+  var i, j, k, vx, vy;
+  field = [];
+  for (k = -3; k <= 3; k += 0.75) {
+    for (i = -3; i < 3; i += 0.75) {
+      for (j = -3; j < 3; j += 0.75) {
+        //var norm = Math.max((i*i+ j*j ),0.001);
+        var norm = 1;
+        field.push(view.create('line3d', [
+          [i, j, k],
+          [fx(i, j, k), fy(i, j, k), fz(i, j, k)],
+          [0, ()=>s.Value()]
+        ], {
+          point: {
+            withLabel: false
+          },
+          point1: {
+            visible: false,
+            size: 1,
+            color: 'red',
+            strokeColor: 'red',
+            strokeOpacity: 0.5,
+            withLabel: false
+          },
+          point2: {
+            visible: false,
+            withLabel: false
+          },
+          lastArrow: true,
+          fixed: true,
+          strokeColor: 'red',
+          highlight: false
+        }));
+
+      }
+    }
+  }
+  }
+
+function trajectory () {
+  board.removeObject(curveC);
+  let h = curveh.Value();
+  let N = curveN.Value();
+  var data = JXG.Math.Numerics.rungeKutta('heun', [point.X(),point.Y(),point.Z()], [0,h*N],N,f);
+  var X=[],Y=[], Z=[];
+  for(var i=0; i<data.length; i++){
+        X.push(data[i][0]);
+        Y.push(data[i][1]);
+        Z.push(data[i][2]);
+        }
+  curveC = view.create('curve3d', [X,Y,Z], {strokeWidth:2});
+}
+
+var plot = function() {
+  board.suspendUpdate()
+  board.removeObject(field);
+  board.unsuspendUpdate();
+  field=[];
+  board.removeObject(curveC);
+  fx = board.jc.snippet(inputfx.Value(), true, 'x,y,z');
+  fy = board.jc.snippet(inputfy.Value(), true, 'x,y,z');
+  fz = board.jc.snippet(inputfz.Value(), true, 'x,y,z');
+  ftxt = '['+inputfx.Value()+','+inputfy.Value()+','+inputfz.Value()+']';
+  ftxt = ftxt.replace(/x/g,"(x[0])");
+  ftxt = ftxt.replace(/y/g,"(x[1])");
+  ftxt = ftxt.replace(/z/g,"(x[2])");
+  f = board.jc.snippet(ftxt,true,'t,x');
+  
+  vectorField();
+};
+
+init();
+plot();
+
+
+function toggleList(inputList) {
+          for (let iloop = 0; iloop < inputList.length; iloop++) {
+            if (JXG.exists(inputList[iloop])) {
+              if (inputList[iloop].getAttribute("visible")) {
+                inputList[iloop].setAttribute({ visible: false });
+              } else {
+                inputList[iloop].setAttribute({ visible: true });
+                inputList[iloop].show();
+              }
+              inputList[iloop].update();
+            }
+          }
+        }
+
+
+var clearAll = function() {
+  JXG.JSXGraph.freeBoard(board);
+  //init();
+}
+
+    </script>
+
+    </p>
+
+</body>
+
+</html>

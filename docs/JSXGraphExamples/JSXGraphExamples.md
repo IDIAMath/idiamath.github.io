@@ -11,10 +11,11 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 ## Linear Algebra
 + [Linear Mapping $\mathbb{R}^2\to \mathbb{R}^2$ and Matrices](./LinMappingMatricies.html)
 + [Eigenvectors of a linear Mapping $\mathbb{R}^2\to \mathbb{R}^2$](./Eigenvectores.html)
-
+#
 
 ## Calculus 1d
 + [Sequences in 1d](./ConvergenceSequencesEps.html)
++ [Sequences in 2d](./ConvergenceSequences2D.html)
 + [Definition of Area functions](./Hyperbola.html)
 
 ## Calculus 2d
@@ -23,6 +24,14 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane-input.html): Function assigned in an input field.
 + [Function and Taylor 2nd order](./demo3d-pointOnSurface-Taylor2.html) Given function an sliders
 + [Function and Taylor 2nd order](./demo3d-pointOnSurface-Taylor2-input.html) Function assigned in an input field.
+
+## Vector Fields
++ [Slope Field](./slopefield-plot-input.html) Slopefield of a function $f:\mathbb{R}^2\to\mathbb{R}$ like $y'(x)=f(x,y)$ is plotted, a trajectory thru $(x,_0,y_0)$ is plotted. The function can be modified by an input field.
++ [Vector Field 2d](./slopefield-plot-input.html) given by a function $V:\mathbb{R}^2\to\mathbb{R}^2$, a trajectory thru $(x,_0,y_0)$ is plotted. The vector field can be modified by an input field.
++ [Vector Field 3d](./vectorfield-plot-input.html) given by a function $V:\mathbb{R}^3\to\mathbb{R}^3$, a trajectory thru $(x,_0,y_0)$ is plotted. The components of vector field can be modified by input boxes.
++ [Vector Field 3d at function plot](./vectorfield3d-functionplot-input.html)  Given a function $f:\mathbb{R}^2\to\mathbb{R}$ and the vectorfield $V:\mathbb{R}^3\to\mathbb{R}^3$, the vectofield is plotted at the graph of the function $f$.
++ [Vector Field 3d at surface](./vectorfield3d-surface-input.html) Surface given by a function $s:[-1,1]^2\to\mathbb{R}^3$ and the vectorfield $V:\mathbb{R}^3\to\mathbb{R}^3$, the vectofield is plotted at the surface.
++ [Vector Field 3d at curve](./vectorfield3d-curve-input.html) Curve given by a function $c:[-1,1]\to\mathbb{R}^3$ and the vectorfield $V:\mathbb{R}^3\to\mathbb{R}^3$, the vectofield is plotted at the curve.
 
 ## Transformations
 + [Polar coordinates](./IntArea2D-polarKoord.html)

@@ -1,0 +1,209 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <!--
+    <script type="text/javascript" charset="UTF-8"
+    src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js">
+    </script>
+    -->
+    <script type="text/javascript" charset="UTF-8"
+    src="https://jsxgraph.org/distrib/jsxgraphcore.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+  
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+  <style>
+    body {
+  font-family: sans-serif;
+  }
+  </style>
+
+    <title>Vector field 3D at a function plot</title>
+</head>
+
+<body>
+
+    <h1>Show vector fields</h1>
+    				
+					
+				<div id="jxgbox" class="jxgbox" style="width:600px; height:600px;"></div>
+    <br clear="all">
+    <script language="JavaScript">
+var jxgbox = document.getElementById('jxgbox');
+
+var s,o,surfo;
+var board, bound, view, bFieldS, bFieldT,bTraject,bSetTraject;
+var fx, fy, fz, field = [],surffx,surffy,surffz,surfsurf;
+var inputfx, inputfy, inputfz,inputsurfx,inputsurfy,inputsurfz;
+
+var init = function() {
+  board = JXG.JSXGraph.initBoard('jxgbox', {
+    axis: false, grid:false,
+    boundingbox: [-5, 5, 5, -5]
+  });
+  inputfx = board.create('input', [-4.1, 4.4, 'cos(y)', 'V_1(x,y,z)=']);
+  inputfy = board.create('input', [-4.1, 4.0, 'sin(x)', 'V_2(x,y,z)=']);
+  inputfz = board.create('input', [-4.1, 3.6, 'z', 'V_3(x,y,z)=']);
+  inputsurfx = board.create('input', [-4.1, -3.3, '3*sin(PI*u)+sin(PI*u)*cos(PI*v)/2', 's_x(u,v)=']);
+  inputsurfy = board.create('input', [-4.1, -3.7, '3*cos(PI*u)+cos(PI*u)*cos(PI*v)/2', 's_y(u,v)=']);
+  inputsurfz = board.create('input', [-4.1, -4.1, 'sin(PI*v)/2', 's_z(u,v)=']);
+  s = board.create('slider', [
+    [1.1, 4.4],
+    [3.1, 4.4],
+    [0, 0.5, 1]
+  ], {
+    name: 'length'
+  });
+  // init 3d
+  bound = [-5, 5];
+  view = board.create('view3d',
+  [
+    [-3, -2.5],
+    [5, 5],
+    [bound, bound, bound]
+  ], {});
+
+  // opacity
+  o = board.create('slider', [
+    [1.1, 4.0],
+    [3.1, 4.0],
+    [0, 0.5, 1]
+  ], {
+    name: 'Opacity',snapWidth:0.1
+  });
+  surfo = board.create('slider', [
+    [-0.2, -4.1],
+    [1.5, -4.1],
+    [0, 0.5, 1]
+  ], {
+    name: 'Opacity',snapWidth:0.1
+  });
+  bFieldT = board.create('button',[1.1,3.6,"vector field",
+            function () {toggleList(field);},
+          ],
+          { fixed: true }
+        );
+        
+  bFieldS = board.create(
+          "button",
+          [-4.1,3.2,"update plot",
+            function () {plot();},
+          ],
+          { fixed: true }
+        );
+  bTraject = board.create("button",[3.8,-4.1,"surface",
+            function () {toggleList([surfsurf]);},
+          ],
+          { fixed: true }
+        );
+
+
+};
+
+// field is stored in global variable field
+function vectorField() {
+  var i,ih, j,jh, k, vx, vy;
+  field = [];
+  k=0;
+    for (ih = -1; ih <= 1; ih += 0.2) {
+      for (jh = -1; jh <= 1; jh += 0.2) {
+        //var norm = Math.max((i*i+ j*j ),0.001);
+        var norm = 1;
+        i = surffx(ih,jh);
+        j = surffy(ih,jh);
+        k = surffz(ih,jh);
+        field.push(view.create('line3d', [
+          [i, j, k],
+          [fx(i, j, k), fy(i, j, k), fz(i, j, k)],
+          [0, ()=>s.Value()]
+        ], {
+          point: {
+            withLabel: false
+          },
+          point1: {
+            visible: false,
+            size: 1,
+            color: 'red',
+            strokeColor: 'red',
+            strokeOpacity: 0.5,
+            withLabel: false
+          },
+          point2: {
+            visible: false,
+            withLabel: false
+          },
+          lastArrow: true,
+          fixed: true,
+          strokeColor: 'red',
+          strokeOpacity: ()=> o.Value(),
+          highlight: false
+        }));
+
+      }
+    }
+  }
+
+
+var plot = function() {
+  board.suspendUpdate()
+  board.removeObject(field);
+  board.removeObject(surfsurf);
+  board.unsuspendUpdate();
+  field=[];
+  fx = board.jc.snippet(inputfx.Value(), true, 'x,y,z');
+  fy = board.jc.snippet(inputfy.Value(), true, 'x,y,z');
+  fz = board.jc.snippet(inputfz.Value(), true, 'x,y,z');
+  surffx = board.jc.snippet(inputsurfx.Value(), true, 'u,v',true);
+  surffy = board.jc.snippet(inputsurfy.Value(), true, 'u,v',true);
+  surffz = board.jc.snippet(inputsurfz.Value(), true, 'u,v',true);
+  
+  surfsurf = view.create('parametricsurface3d', [
+    surffx,surffy,surffz,
+    [-1,1],
+    [-1,1]
+], {
+    strokeColor: 'blue',
+    stepsU: 30,
+    stepsV: 30,
+    strokeOpacity: ()=>surfo.Value(),
+    strokeWidth:0.5
+});
+
+  
+  vectorField();
+};
+
+init();
+plot();
+
+
+function toggleList(inputList) {
+          for (let iloop = 0; iloop < inputList.length; iloop++) {
+            if (JXG.exists(inputList[iloop])) {
+              if (inputList[iloop].getAttribute("visible")) {
+                inputList[iloop].setAttribute({ visible: false });
+              } else {
+                inputList[iloop].setAttribute({ visible: true });
+                inputList[iloop].show();
+              }
+              inputList[iloop].update();
+            }
+          }
+        }
+
+
+var clearAll = function() {
+  JXG.JSXGraph.freeBoard(board);
+  //init();
+}
+
+    </script>
+
+    </p>
+
+</body>
+
+</html>

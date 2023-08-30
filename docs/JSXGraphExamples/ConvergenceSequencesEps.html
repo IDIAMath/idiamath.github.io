@@ -5,7 +5,7 @@
 
     <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
     <script type="text/javascript" charset="UTF-8"
-            src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
+            src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
     
     <title>Convergence of sequences</title>
@@ -18,7 +18,6 @@
         height: 500px;
       }
     </style>
-  </body>
   <h2>Convergence of Sequences</h2>
   <p>
     This example shows the usage of interactrive applets without input fields in
@@ -247,10 +246,7 @@
     pol = board.create("polygon", [p3u, p4u, p4o, p3o], {});
 
     function updateInputAn(newstring) {
-      board.removeObject(inputan);
-      inputan = board.create("input", [5, -1.2, newstring, "a_n="], {
-        cssStyle: "width: 100px",
-      });
+      inputan.set(newstring);
     }
 
     var seq_add = function () {
@@ -303,6 +299,8 @@
       clearTimeout(TO);
     };
   </script>
+  </body>
+
   <footer>
     Based on
     <a

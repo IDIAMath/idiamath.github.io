@@ -1,0 +1,209 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+	
+		<link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+		<script type="text/javascript" charset="UTF-8"
+				src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+		<script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+		<title>Convergence of sequences</title>
+	  </head>
+	
+<body>
+
+		<h2>Convergence of Seqences in \(\mathbb{R}^2\)</h2>
+			<p>
+			</p>
+
+<div id='box' class='jxgbox' style='width:500px; height:500px;'></div>
+<p>
+
+</p>
+<script type='text/javascript'>
+	var board = JXG.JSXGraph.initBoard('box', {axis:true, boundingbox: [-2, 2, 2, -2]});
+ 	var seq = board.create('curve', [[], []], {strokeColor: 'blue',visible:false});
+ 	var n;
+	var eps = board.create('slider', [[-1.5,-1.2],[-0.5,-1.2],[0,0.3,0.4]],{name:'&epsilon;'});
+
+
+	var p1 = board.create('point', [0,0], {style:1, name:'a',strokeColor:'green',
+        fillColor:'lightblue',
+        snapSizeX:0.05,snapSizeY:0.05,snapToGrid:true});
+	var circeps2 = board.create('circle',[p1,function(){return eps.Value();}],{style:7,strokeColor:'green',fillColor:'lightblue',fillOpacity:0.2});
+	var v2 = board.create('point',[1,1],{style:7,name:"a_n",trace:true});
+
+	// input control
+	var inputan = board.create("input", [-1.5, -1.5, "2 / n*cos(n)", "x_n="], {
+      cssStyle: "width: 100px",
+    });
+	var inputbn = board.create("input", [-1.5, -1.7, "(-1)^n+1/n*sin(n)", "y_n="], {
+      cssStyle: "width: 100px",
+    });
+    var inputstart = board.create("input", [-0.5, -1.7, "1", "start at n="], {
+      cssStyle: "width: 50px",
+    });
+	var button1 = board.create(
+      "button",
+      [
+        -1.5,
+        -1.9,
+        "start",
+        function () {
+          start_approx();
+        },
+      ],
+      { fixed: true }
+    );
+    var button2 = board.create(
+      "button",
+      [
+        -1.1,
+        -1.9,
+        "stop",
+        function () {
+          clear_all();
+        },
+      ],
+      { fixed: true }
+    );
+        
+	var button3 = board.create(
+      "button",
+      [
+        -0.7,
+        -1.9,
+        "show",
+        function () {
+          showTrace();
+        },
+      ],
+      { fixed: true }
+    );
+    var button4 = board.create(
+      "button",
+      [
+        -0.3,
+        -1.9,
+        "hide",
+        function () {
+          hideTrace();
+        },
+      ],
+      { fixed: true }
+    );
+
+	// example list
+	var buttonex1 = board.create(
+      "button",
+      [
+        0.5,
+        -1,
+        "(2/n*cos(n) , (-1)^n+1/n*sin(n))",
+        function () {
+			inputan.set("2/n*cos(n)");
+			inputbn.set("(-1)^n+1/n*sin(n)");
+        },
+      ],
+      { fixed: true }
+    );
+    
+	var buttonex2 = board.create(
+      "button",
+      [
+        0.5,
+        -1.2,
+        "(cos(n) , sin(n))",
+        function () {
+			inputan.set("cos(n)");
+			inputbn.set("sin(n)");
+        },
+      ],
+      { fixed: true }
+    );
+    
+	var buttonex3 = board.create(
+      "button",
+      [
+        0.5,
+        -1.45,
+        "(-1/2+cos(n/2)/n , 1/2+sin(n/2)/n)",
+        function () {
+			inputan.set("-1/2+cos(n/2)/n");
+			inputbn.set("1/2+sin(n/2)/n");
+        },
+      ],
+      { fixed: true }
+    );
+    var buttonex4 = board.create(
+      "button",
+      [
+        0.5,
+        -1.7,
+        "(0.9^n , 1-0.8^n)",
+        function () {
+			inputan.set("0.9^n");
+			inputbn.set("1-0.8^n");
+        },
+      ],
+      { fixed: true }
+    );
+    
+var seq_add = function() {
+    var val = a_n(n);
+    var val2 = b_n(n);
+    seq.dataX.push(val);
+    seq.dataY.push(val2);
+    v2.setPosition(JXG.COORDS_BY_USER,[val,val2]);
+    n++;
+ };
+
+var txt1 = board.create('text', [15, 1.6, function() { return 'n=' + (seq.dataX.length-1) + ': value = ' + seq.dataY[seq.dataY.length - 1]; }], {strokeColor: 'blue'});
+
+var TO;
+
+var approx = function() {
+     seq_add();
+     board.update();
+     if (n <= 50) {
+         TO = setTimeout(approx, 500);
+     }
+};
+
+var a_n;
+var b_n;
+var start_approx = function() {
+  v2.clearTrace();
+  var txtraw = inputan.Value();
+  var txtraw2 = inputbn.Value();
+  a_n = board.jc.snippet(txtraw, true, 'n', true);
+  b_n = board.jc.snippet(txtraw2, true, 'n', true);
+  seq.dataX = [];
+  seq.dataY = [];
+  n = parseInt(inputstart.Value());
+  approx();
+}
+
+var showTrace = function(){
+    seq.setAttribute({visible:true});
+}
+
+var hideTrace = function(){
+    seq.setAttribute({visible:false});
+}
+
+
+var clear_all = function() {
+  clearTimeout(TO);
+};
+</script>
+</body>
+<footer>
+Based on <a href="https://jsxgraph.uni-bayreuth.de/wiki/index.php/Convergence_of_sequence">Dokumentation JSXGraph </a>
+<br/>
+Wigand Rathmann, FAU
+</footer>
+</html>

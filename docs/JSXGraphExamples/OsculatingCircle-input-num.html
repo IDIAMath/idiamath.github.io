@@ -1,0 +1,145 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <script type="text/javascript" charset="UTF-8"
+    src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+  
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+  <style>
+    body {
+  font-family: sans-serif;
+  }
+  </style>
+
+    <title>Tangent and osculating circle</title>
+</head>
+
+<body>
+
+    <h1 class="firstHeading">
+        Tangent and osculating circle</h1>
+    <p>
+        Given the function
+        \(f(x) = \frac18 ((x-2)(x+2))^2\)
+        with tangent and osculating circle at \((x_0,f(x_0))\) und der
+    </p>
+    <p>The function definition can be changed in the input filed, click on "plot" afterwards.<br/>
+      Tangent and circle can be (un)hided by clicking at "tangent" or "circe".</p>
+    \(f(x)=\)<input id="functionf" value="1/8*((x-2)*(x+2))^2" /> &nbsp;&nbsp;&nbsp;
+    <input value="Plot" onclick="plot()" type="button" /><br />
+<center>
+    <br/>
+<div id="box1" class="jxgbox" style="width:400px; height:300px; "></div>
+    </center>
+    <p>
+      <br/>
+    </p>
+
+    <br clear="all">
+    <script language="JavaScript">
+
+        var b1 = JXG.JSXGraph.initBoard('box1', { originX: 200, originY: 260, unitX: 50, unitY: 50, grid: true,axis: true });
+        b1.snapToGrid = true;
+        b1.suspendUpdate();
+        var f, graph, g, Df, D2fc, p1, tangentf, m1, c1,c;
+        var strf;
+        var circleList = [];
+
+        // toggle buttons
+        bTangent = b1.create(
+          "button",
+          [
+            2,
+            4.5,
+            "tangent",
+            function () {
+              toggleList([tangentf]);
+            },
+          ],
+          { fixed: true }
+        );
+        bCircle = b1.create(
+          "button",
+          [
+            2,
+            4,
+            "circle",
+            function () {
+              toggleList(circleList);
+            },
+          ],
+          { fixed: true }
+        );
+        // plot objects
+        plot();
+        // create list to toggle osculating circle
+        
+        function plot() {
+            b1.removeObject(c1)
+            b1.removeObject(m1)
+            b1.removeObject(tangentf)
+            b1.removeObject(p1)
+            b1.removeObject(c)
+            b1.removeObject(graph)
+            // read strings for the functions
+            strf = document.getElementById("functionf").value;
+            f = b1.jc.snippet(strf, true, 'x');
+            Df = JXG.Math.Numerics.D(f);
+            D2f = JXG.Math.Numerics.D(Df);
+            graph = b1.create('functiongraph', [f]);
+            c = b1.create('glider', [0, 0, graph], { name: '(x_0,f(x_0))' });
+            tangentf = b1.create('tangent', [c], { color: '#aaaaff' });
+            m1 = b1.create('point', [function () { a = mkreis(c.X()); return c.X() + a[0]; }, function () { a = mkreis(c.X()); return f(c.X()) + a[1]; }], { name: 'M', visible: true });
+            c1 = b1.create('circle', [m1, c], { name: 'Kr&uuml;umgskreis', visible: true });
+            // create list to toggle osculating circle
+            circleList.push(c1,m1);
+        }
+        
+        function mkreis(t) {
+            // funktionswert
+            var fvalue = f(t);
+            // wert der ableitung
+            var dfvalue = Df(t);
+            // Richtung der Normalen
+            var normalex = -dfvalue;
+            var normaley = 1;
+            var dfvalue2 = Math.pow(dfvalue, 2);
+            var ddfvalue = Math.min(D2f(t), 1000);
+            var ddfvalue = Math.max(ddfvalue, -1000);
+            var normvec = 1 + dfvalue2;
+            var radius = normvec / ddfvalue
+            var a = [];
+            a[0] = -radius * dfvalue;
+            a[1] = radius;
+            return a;
+        }
+
+        function toggleList(inputList) {
+          for (let iloop = 0; iloop < inputList.length; iloop++) {
+            if (JXG.exists(inputList[iloop])) {
+              if (inputList[iloop].getAttribute("visible")) {
+                inputList[iloop].setAttribute({ visible: false });
+              } else {
+                inputList[iloop].setAttribute({ visible: true });
+                inputList[iloop].show();
+              }
+              inputList[iloop].update();
+            }
+          }
+        }
+        
+        b1.unsuspendUpdate();
+
+    </script>
+    </center>
+
+    </p>
+
+</body>
+
+</html>
