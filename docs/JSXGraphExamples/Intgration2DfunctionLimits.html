@@ -1,0 +1,83 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+	
+		<link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+		<script type="text/javascript" charset="UTF-8"
+				src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+		<script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+		<title>Convergence of sequences</title>
+	  </head>
+	
+<body>
+			<h2>Functions as limits for a region in \(R^2\)</h2>
+				<p>
+				</p>
+	
+			<p>
+		upper limit function \(G_2(x)=\)<input  id="IntUpper" value="sin(x)/2+2" ><br>
+		lower limit function 
+		\(G_2(x)=\)<input cols="20" id="IntLower" value="(x^2-9)/10"><br>
+		<input value="show" onclick="plot()" type="button">
+		</p>
+		<div id='box' class='jxgbox' style='width:500px; height:500px;'></div>
+		<p>
+		
+		</p>
+		
+<script language="JavaScript">
+        var f,g,plotf, plotg, os, os2;
+	var brd = JXG.JSXGraph.initBoard('box',
+	{
+		axis:true, boundingbox: [-1, 4, 3, -1]
+	});
+
+	brd.snapToGrid =false;
+	brd.suspendUpdate();
+
+	var b1axisx=brd.create('axis', [[0,0], [1,0]], {});
+
+var s = brd.create('slider',[[0.25,3.5],[2.25,3.5],[1,10,100]],{name:'n',snapWidth:1});
+var a = brd.create('glider',[-0.8,0,b1axisx],{name:'a'});
+var b = brd.create('glider',[2.5,0,b1axisx],{name:'b'});
+htxt = brd.create('text',[2.35,3,function(){return 'h='+((b.X()-a.X())/Math.floor(s.Value())).toFixed(4)}]);
+
+var plot = function(){
+	brd.removeObject(plotf);
+	brd.removeObject(plotg);
+	brd.removeObject(os);
+
+	f = brd.jc.snippet(document.getElementById("IntUpper").value, true, 'x');
+	g = brd.jc.snippet(document.getElementById("IntLower").value, true, 'x');
+	plotf = brd.create('functiongraph',[f,function(){return a.X();}, function(){return b.X();}]);
+
+	plotg = brd.create('functiongraph',[g,function(){return a.X();}, function(){return b.X();}]);
+
+	os = brd.create('riemannsum',[[f,g],
+//	    function(){ return s.Value();}, function(){ return document.getElementById('sumtype').value;},
+    		function(){return s.Value();},'middle',
+    		function(){return a.X();},
+    		function(){return b.X();}
+    		],
+    	{	fillColor:'#ffff00', fillOpacity:0.3});
+
+}
+       plot();
+
+	brd.unsuspendUpdate();
+
+</script>
+
+                </center>
+
+                </p>
+		<footer>
+		Wigand Rathmann, FAU; Alfred Wassermann, Uni Bayreuth
+		</footer>
+</body>
+
+</html>
