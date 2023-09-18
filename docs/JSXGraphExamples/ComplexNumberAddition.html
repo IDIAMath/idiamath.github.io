@@ -1,0 +1,72 @@
+<html>
+<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+	
+		<link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+		<script type="text/javascript" charset="UTF-8"
+				src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+		<script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+		
+	<title>Complex Numbers - Addition</title>
+</head>
+
+<body>
+
+<p>This applet demonstrates the sum of two complex numbers 
+and shows the result in carteesean coordinats and polar coordinates.</p>
+
+<div id="box1" class="jxgbox" style="width:500px; height:500px; float:left;"></div>
+<script language="JavaScript">
+//brd = JXG.JSXGraph.initBoard('box1', {originX: 100, originY: 300, unitX: 80, unitY: 80, grid:true});
+var brd = JXG.JSXGraph.initBoard('box1', {boundingbox:[-3,3,3,-3], axis:true});
+brd.snapToGrid = true;
+
+var A = brd.create('point', [0,0], {fixed:true, name:'0', visible:false}),
+    B = brd.create('point', [1,0], {fixed:true, visible:false}),
+    C = brd.create('point', [1,0.5], {name:'z_1 = a_1 + b_1i'});
+//var    alpha = brd.create('angle', [B,A,C], {name:'φ_1', type:'sector', orthoType:'square', orthoSensitivity:2, radius:0.25});
+var     C2 = brd.create('point', [0.5,1], {name:'z_2 = a_2 + b_2i'});
+// var alpha2 = brd.create('angle', [B,A,C2], {name:'φ_2', type:'sector', orthoType:'square', orthoSensitivity:2, radius:0.5});
+var li = brd.create('line',[A,C], {straightFirst:false, straightLast:false,lastArrow:true, name:'r_1'});
+var li2 = brd.create('line',[A,C2], {straightFirst:false, straightLast:false,lastArrow:true, name:'r_2'});
+var     C3 = brd.create('point', [function() {return C.X()+C2.X();},
+                                  function() {return C.Y()+C2.Y();}],{name:'z_3 = z_1+z_2= a_3 + b_3i'});
+//var    alpha3 = brd.create('angle', [B,A,C3], {name:'φ_3', type:'sector', orthoType:'square', orthoSensitivity:2, radius:0.75});
+var li3 = brd.create('line',[A,C3], {straightFirst:false, straightLast:false,lastArrow:true, name:'r_3'});
+
+var li4 = brd.create('line',[C2,C3], {straightFirst:false, straightLast:false,lastArrow:true, strokeColor:'lightblue', name:''});
+var li5 = brd.create('line',[C,C3], {straightFirst:false, straightLast:false,lastArrow:true, strokeColor:'lightblue', name:''});
+
+
+var t1 = brd.create('text',[1,-0.8,function(){return 'a = '+C3.X().toFixed(3);}],{id:'my_t'});
+var t2 = brd.create('text',[1,-1,function(){return 'b = '+C3.Y().toFixed(3);}],{id:'my_t'});
+var t3 = brd.create('text',[1,-1.2,function(){return 'r = '+Math.sqrt(C3.Y()*C3.Y() + C3.X()*C3.X()).toFixed(3);}],{id:'my_t'});
+var t4 = brd.create('text',[1,-1.4,function()
+    {   if(C3.X() >= 0 && C3.Y() >= 0)
+        {
+        return 'φ = '+Math.atan(C3.Y()/C3.X()).toFixed(3);
+        }
+        if(C3.X() >= 0 && C3.Y() <= 0){
+        return 'φ = '+(((Math.atan(C3.Y()/C3.X())) + 2* Math.PI).toFixed(3));
+        }
+        if(C3.X() <= 0){
+        return 'φ = '+(((Math.atan(C3.Y()/C3.X())) + Math.PI).toFixed(3));
+        }
+
+    }
+    ],{id:'my_t'});
+
+</script>
+			</center></p>
+		</div> <!--bodyContent -->
+		</div><!--Content -->
+	</div><!--columnContent -->
+</div><!--GlobalWrapper -->
+</body>
+<footer>
+</footer>
+</html> 

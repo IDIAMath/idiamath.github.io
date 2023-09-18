@@ -1,0 +1,57 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+	
+		<link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+		<script type="text/javascript" charset="UTF-8"
+				src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+		<script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+		
+	<title>Complex Numbers - Polar Coordinates5</title>
+</head>
+
+<body>
+<div id="box1" class="jxgbox" style="width:500px; height:500px; float:left;"></div>
+			<script language="JavaScript">
+//brd = JXG.JSXGraph.initBoard('box1', {originX: 100, originY: 300, unitX: 80, unitY: 80, grid:true});
+var brd = JXG.JSXGraph.initBoard('box1', {boundingbox:[-2,2,2,-2], axis:true});
+brd.snapToGrid = true;
+
+var A = brd.create('point', [0,0], {fixed:true, name:'0', visible:false}),
+    B = brd.create('point', [1,0], {fixed:true, visible:false}),
+    C = brd.create('point', [1.3,1], {name:'z_1 = a_1 + b_1i', snapToGrid:true, snapSizeX:0.05, snapSizeY:0.05}),
+    alpha = brd.create('angle', [B,A,C], {name:'φ_1', type:'sector', orthoType:'square', orthoSensitivity:2, radius:1});
+var li = brd.create('line',[A,C], {straightFirst:false, straightLast:false,lastArrow:true, name:'r_1'});
+
+var Px = brd.create('point', [()=>C.X(),0], {name: 'real part(z)'})
+var Py = brd.create('point', [0,()=>C.Y()], {name: 'imaginary part(z)'})
+var lx = brd.create('line',[Px,C], {straightFirst:false, straightLast:false,lastArrow:true, name:'rx', dash:2, strokeOpacity:0.5});
+var ly = brd.create('line',[Py,C], {straightFirst:false, straightLast:false,lastArrow:true, name:'rx', dash:2, strokeOpacity:0.5});
+
+var t1 = brd.create('text',[1,-0.8,function(){return 'a = '+C.X().toFixed(2);}],{id:'my_t'});
+var t2 = brd.create('text',[1,-1,function(){return 'b = '+C.Y().toFixed(2);}],{id:'my_t2'});
+var t3 = brd.create('text',[1,-1.2,function(){return 'r = '+Math.sqrt(C.Y()*C.Y() + C.X()*C.X()).toFixed(3);}],{id:'my_t3'});
+var t4 = brd.create('text',[1,-1.4,function()
+    {   if(C.X() >= 0 && C.Y() >= 0)
+        {
+        return 'φ = '+Math.atan(C.Y()/C.X()).toFixed(3);
+        }
+        if(C.X() >= 0 && C.Y() <= 0){
+        return 'φ = '+(((Math.atan(C.Y()/C.X())) + 2* Math.PI).toFixed(3));
+        }
+        if(C.X() <= 0){
+        return 'φ = '+(((Math.atan(C.Y()/C.X())) + Math.PI).toFixed(3));
+        }
+
+    }
+    ],{id:'my_t4'});
+
+</script>
+</body>
+<footer>
+</footer>
+</html> 

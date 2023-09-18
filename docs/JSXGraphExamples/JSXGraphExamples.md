@@ -6,12 +6,19 @@ usemathjax: true
 
 In the section you will find some examples demonstrating JSXGraph in linear algebra and calculus. H
 ## Complex Numbers
++ [Complex numbers (polar coordinates)](./ComplexNumberPolar.html)
++ [Complex numbers (addition)](./ComplexNumberAddition.html)
++ [Complex numbers (multiplication)](./ComplexNumberMultiplication.html)
 + [Roots of Complex numbers](./rootComplexNumbers.html)
 
 ## Linear Algebra
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricies.html)
 + [Eigenvectors of a linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$](./Eigenvectores.html)
 #
+
+## Integration 1d
+
++ [Riemann Sums](./IntegrationRiemannSum.html)
 
 ## Calculus 1d
 + [Sequences in 1d](./ConvergenceSequencesEps.html)

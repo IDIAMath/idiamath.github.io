@@ -1,0 +1,91 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<script type="text/javascript" charset="UTF-8"
+		src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js">
+		</script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+	  
+		<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+			</script>
+	  <style>
+		body {
+	  font-family: sans-serif;
+	  }
+	  </style>
+	
+	
+	<title>Riemann-Summen</title>
+</head>
+
+<body>
+
+		<div id="box" class="jxgbox" style="width:800px; height:400px; "></div>
+
+<br clear="all">
+
+<script type='text/javascript'>
+JXG.Options.text.useMathJax = true;
+var brd = JXG.JSXGraph.initBoard('box', {axis:true, boundingbox: [-8, 4, 8, -4]});
+var plotf, os, ostext, f,inputf,buttonf,inputtype,seltype,seltext;
+const xaxis = brd.create('axis', [[0, 0], [1,0]],{visible:false});
+var s = brd.create('slider',[[1,3],[5,3],[1,10,50]],{name:'n',snapWidth:1});
+var a = brd.create('glider',[-1,0,xaxis],{name:'a'});
+var b = brd.create('glider',[3.14,0,xaxis],{name:'b'});
+
+// input 
+inputtype = brd.create('text',[-4,3.5,'<select id="sumtype">'+
+	'<option value="left" selected> left'+
+	'<option value="right"> right'+
+	'<option value="middle"> middle'+
+	'<option value="trapezoidal"> trapezoidal'+
+	'<option value="lower"> lower'+
+	'<option value="upper"> upper'+
+	'<option value="random"> random'+
+	'<option value="simpson"> simpson'+
+	'</select>'],{fixed:true});
+seltext = brd.create('text',[-6.2,3.5,'Riemann Sum Type'])
+seltype = document.querySelector('#sumtype');
+seltype.addEventListener("change", function() {
+  plot();
+})
+
+inputf = brd.create("input", [-6.1, 2.8, "sin(x)", "f(x)="], {
+      cssStyle: "width: 100px",
+    });
+buttonf = brd.create("button",[-3.2,2.8,'Apply',()=>plot()]);
+function plot(){
+    brd.removeObject(os);
+    brd.removeObject(plotf);
+	//brd.removeObject(f);
+    f = brd.jc.snippet(inputf.Value(), true, 'x');
+    plotf = brd.create('functiongraph',[f,()=>a.X(),() => b.X()]);
+
+    os = brd.create('riemannsum',[f,
+    ()=>s.Value(), () => seltype.value,
+    ()=>a.X(),
+    function(){return b.X();}
+    ],
+    {fillColor:'#ffff00', fillOpacity:0.3});
+
+}
+
+plot();
+ostext=brd.create('text',[-6,-3,
+	()=>'\\(\\int\\limits_a^b '+ inputf.Value() + '\  dx =\\) '+
++ os.Value().toFixed(4)]);
+
+
+</script>
+</p>
+
+
+<footer>
+Based on <a href="http://jsxgraph.uni-bayreuth.de/wiki/index.php/Riemann_sums">Riemann-Summe des Wikis zu JSXGraph</a>
+<br/>
+Wigand Rathmann, FAU</a></footer>
+
+
+
+</body></html>
