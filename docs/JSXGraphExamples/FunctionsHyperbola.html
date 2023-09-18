@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script type="text/javascript" charset="UTF-8"
+        src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js">
+        </script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+      
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+            </script>
+      <style>
+        body {
+            font-family: sans-serif;
+        }
+      </style>
+    
+        <title>Hyperbela</title>
+
+<body>
+
+        <H1>Hyperbela and Area function</H1>
+
+        <center>
+
+                <div id="box1" class="jxgbox" style="width:520px; height:420px; "></div>
+                <br clear="all">
+                <script language="JavaScript">
+                        var tmax = 2;
+                        var tmin = -2;
+                        var tN = 100;
+                        var th = (tmax - tmin) / tN;
+                        var xkurve1 = [];
+                        var xkurve2 = [];
+                        var ykurve = [];
+                        b1 = JXG.JSXGraph.initBoard('box1', { boundingbox:[-2.6,2.1,2.6,-2.1], grid: true });
+                        b1.snapToGrid = true;
+                        b1.suspendUpdate();
+                        b1axisx = b1.create('axis', [[0, 0], [1, 0]], {});
+                        b1axisy = b1.create('axis', [[0, 0], [0, 1]], {});
+                        
+                        // definition plane curves
+                        var kurvex = function (t) {
+                                // funktionswert
+                                var retval = 1;
+                                return Math.abs(t) + 1;
+                        }
+                        var kurvey = function (t) {
+                                // funktionswert
+                                var retval = 1;
+                                var thelp = (Math.abs(t) + 1) * Math.abs(t) + 1;
+                                return Math.sign(t) * Math.sqrt(thelp - 1);
+                        }
+
+                        var kurve = function () {
+                                var tloc = tmin;
+                                // funktionswert
+                                for (var iloop = 0; iloop <= tN; iloop++) {
+                                        xkurve1[iloop] = kurvex(tloc);
+                                        xkurve2[iloop] = -kurvex(tloc);
+                                        ykurve[iloop] = kurvey(tloc);
+                                        tloc = tloc + th;
+                                }
+
+                                xkurve1[iloop] = kurvex(tmin);
+                                ykurve[iloop] = kurvey(tmin);
+
+                                return 1;
+                        }
+
+                        // kurve berechnen
+                        var retval = kurve();
+                        curve1 = b1.create('curve', [xkurve1, ykurve], { strokeColor: '#0000bb', strokeWidth: '5px' });
+                        curve2 = b1.create('curve', [xkurve2, ykurve], { strokeColor: '#0000bb', strokeWidth: '5px' });
+
+
+                        var scaledown = 0.99;
+                        var scaleup = 1.01;
+
+
+                        p0 = b1.create('point', [0, 0], { visible: false });
+                        p1 = b1.create('glider', [2, 1, curve1], { name: "(cosh(A),sinh(A))" });
+                        p1d = b1.create('point', [
+                                function () {
+                                        return p1.X() * scaledown;
+                                },
+                                function () {
+                                        return p1.Y() * scaledown;
+                                }], { name: " ", visible: false });
+                        p1u = b1.create('point', [function () { return p1.X() * scaleup; }, function () { return p1.Y() * scaleup; }], { name: " ", visible: false });
+                        p2 = b1.create('point', [function () { return p1.X(); }, function () { return -p1.Y(); }], { visible: false });
+                        p2d = b1.create('point', [function () { return p2.X() * scaledown; }, function () { return p2.Y() * scaledown; }], { name: " ", visible: false });
+                        p2u = b1.create('point', [function () { return p2.X() * scaleup; }, function () { return p2.Y() * scaleup; }], { name: " ", visible: false });
+                        p3 = b1.create('point', [0, function () { return p1.Y(); }], { visible: false });
+                        p4 = b1.create('point', [function () { return p1.X(); }, 0], { visible: false });
+                        l1 = b1.create('line', [p3, p1], { straightFirst: false, straightLast: false });
+                        l1 = b1.create('line', [p4, p1], { straightFirst: false, straightLast: false });
+
+                        var pointsX = [p1.X(), 0, p2.X()];
+                        var pointsY = [p1.Y(), 0, p2.Y()];
+
+                        /*
+                        var curve3 = b1.create('curve',[pointsX,pointsY],{curveType:'plot'});
+                        curve3.updateDataArray = function() {
+                                    this.dataX[0] = p1.X();
+                                    this.dataX[2] = p2.X();
+                                    this.dataY[0] = p1.Y();
+                                    this.dataY[2] = p2.Y();
+                         }
+                         */
+                        var pointsX = [p1u.X(), p1d.X(), 0, p2d.X(), p2u.X(), p1u.X()];
+                        var pointsY = [p1u.Y(), p1d.Y(), 0, p2d.Y(), p2u.Y(), p1u.Y()];
+
+
+                        var curve4 = b1.create('curve', [pointsX, pointsY], { visible: false });
+
+
+
+
+                        curve4.updateDataArray = function () {
+                                this.dataX[0] = p1u.X();
+                                this.dataX[1] = p1d.X();
+                                this.dataX[3] = p2d.X();
+                                this.dataX[4] = p2u.X();
+                                this.dataX[5] = p1u.X();
+                                this.dataY[0] = p1u.Y();
+                                this.dataY[1] = p1d.Y();
+                                this.dataY[3] = p2d.Y();
+                                this.dataY[4] = p1d.Y();
+                                this.dataY[5] = p1d.Y();
+                        }
+
+
+
+                        var clip_path = b1.create('curve', [[], []], { strokeWidth: 3, fillColor: 'yellow', fillOpacity: 0.6 });
+
+                        clip_path.updateDataArray = function () {
+                                var a = JXG.Math.Clip.greinerHormann(curve4, curve1, 'difference', this.board);
+                                this.dataX = a[0];
+                                this.dataY = a[1];
+                        };
+                        /*
+                          */
+                        b1.unsuspendUpdate();
+
+                        t1 = b1.create("text", [0.5, 0.1, "A"]);
+
+                </script>
+
+                </script>
+
+        </center>
+
+</body>
+
+<footer>Wigand Rathmann, FAU</footer>
+
+</html>
+
+
+</body>
+
+</html>
