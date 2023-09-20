@@ -22,8 +22,8 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 
 ## Calculus 1d
 + [Sequences in 1d](./ConvergenceSequencesEps.html)
-+ [$$\epsilon-\delta$$-criterion for continious functions](./Functions-e-d-continuity.html)
-+ [Uniform continoity of functions](./Functions-uniform-continuity.html)
++ [$$\epsilon-\delta$$-criterion for continuous functions](./Functions-e-d-continuity.html)
++ [Uniform continuity of functions](./Functions-uniform-continuity.html)
 + [Definition of Area functions](./FunctionsHyperbola.html)
 
 ## Calculus 2d
