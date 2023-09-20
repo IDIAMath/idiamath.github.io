@@ -1,0 +1,176 @@
+<html>
+  <head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+	
+		<link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+		<script type="text/javascript" charset="UTF-8"
+				src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+		<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+		<script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+		
+
+	<title>
+		&epsilon;-&delta;-Continuity
+	</title></head>
+
+<body>
+		<h1>
+			&epsilon;-&delta;-Continuity
+		</h1>
+        <p>In this example, for a function \(f:\mathbb{R}\to\mathbb{R}\), the \(\epsilon-\delta-\)criterion of continuity can be
+            can be illustrated. The function \(f\) is given as a function of \(x\). \\epsilon\) and \(\delta\) can be set independently of each other using the sliders.<br/>
+            If the criterion is met, the box turns green, otherwise it turns red.</p>
+		<div id="box1" class="jxgbox" style="width:800px; height:600px;"></div>
+	<br clear="all">
+
+<center>
+<script language="JavaScript">
+
+//Initialisieren der Box, Slider und des Funktionsgraphen.
+  var f, delta, graph,xNull, fxNull, r, a, line, pol, min,max, samples;
+  r=[];
+  //JXG.Options.text.useMathJax = true;
+  var b1 = JXG.JSXGraph.initBoard('box1', {originX: 400, originY: 300, unitX: 50, unitY: 50, grid:true});
+  b1.snapToGrid = true;
+  b1.suspendUpdate();
+  b1.create('axis', [[0,0], [1,0]], {});
+  b1.create('axis', [[0,0], [0,1]], {});
+  var e = b1.create('slider', [[1,-4],[5,-4],[0,1,2.5]],{name:'&epsilon;'});
+  var d = b1.create('slider', [[1,-4.5],[5,-4.5],[0,0.5,2]],{name:'&delta;'});
+  var lix = b1.create('line', [[0,0], [1,0]],{visible:false});
+  var inputfx = b1.create('input', [-7.1, 4.8, '3*cos(2*x)', 'f(x)=']);
+  var buttonf = b1.create("button",[-6.5,4.3,'Apply',()=>plot()]);
+
+function plot(){
+  b1.removeObject(graph);
+  b1.removeObject(xNull);
+  b1.removeObject(fxNull);
+  if (r.length!=0){
+  b1.removeObject(r[0]);
+  b1.removeObject(r[1]);
+  b1.removeObject(r[2]);
+  b1.removeObject(r[3]);
+  b1.removeObject(a[0]);
+  b1.removeObject(a[1]);
+  b1.removeObject(a[2]);
+  b1.removeObject(a[3]);
+  b1.removeObject(line[0]);
+  b1.removeObject(line[1]);
+  b1.removeObject(line[2]);
+  b1.removeObject(line[3]);
+  }
+  b1.removeObject(pol);
+
+  f = b1.jc.snippet(inputfx.Value(), true, 'x');
+  xNull = b1.create('glider', [lix],{name:'x<sub>0</sub>', fillColor:'#ffffff', strokeColor:'#000000'});
+  fxNull = b1.create('point', [()=>xNull.X(), ()=>f(xNull.X())], {name:'f(x<sub>0</sub>)', fillColor:'#0000a0', strokeColor:'#0000a0'});
+  graph = b1.create('functiongraph', [f,-10,10], {strokeColor:'#0000a9'});
+  //Eventhandler
+  xNull.on('up', function(){
+				b1.suspendUpdate();
+				extremumUpdate();
+				colorUpdate();
+				b1.unsuspendUpdate();});
+
+// e-d box
+  r = [];
+  //-delta +epsilon
+  r[0] = b1.create('point', [()=> (xNull.X()-d.Value()),()=> ( f(xNull.X())+e.Value())],
+							{face:'+', size:0.1, showInfoBox:false, name:'', strokeColor:'#000000', fillColor:'#000000'});
+  //-delta -epsilon
+  r[1] = b1.create('point', [()=> (xNull.X()-d.Value()),()=> ( f(xNull.X())-e.Value())],
+							{face:'+', size:0.1, showInfoBox:false, name:'', strokeColor:'#000000', fillColor:'#000000'});
+  //+delta -epsilon
+  r[2] = b1.create('point', [()=> (xNull.X()+d.Value()),()=> ( f(xNull.X())-e.Value())],
+							{face:'+', size:0.1, showInfoBox:false, name:'', strokeColor:'#000000', fillColor:'#000000'});
+  //+delta +epsilon
+  r[3] = b1.create('point', [()=> (xNull.X()+d.Value()),()=> ( f(xNull.X())+e.Value())],
+							{face:'+', size:0.1, showInfoBox:false, name:'', strokeColor:'#000000', fillColor:'#000000'});
+
+//points on axis
+  a = [];
+  //-delta
+  a[0] = b1.create('point', [()=> ( xNull.X()-d.Value()),0], {strokeColor:'#000000', fillColor:'#000000', name:'x<sub>0</sub>-&delta;'});
+  //+delta
+  a[1] = b1.create('point', [()=> ( xNull.X()+d.Value()),0], {strokeColor:'#000000', fillColor:'#000000', name:'x<sub>0</sub>+&delta;'});
+  //-epsilon
+  a[2] = b1.create('point', [0,()=> ( f(xNull.X())-e.Value())], {strokeColor:'#000000', fillColor:'#000000', name:'f(x<sub>0</sub>)-&epsilon;'});
+  //+epsilon
+  a[3] = b1.create('point', [0,()=> ( f(xNull.X())+e.Value())], {strokeColor:'#000000', fillColor:'#000000', name:'f(x<sub>0</sub>)+&epsilon;'});
+
+//additional lines
+  line = [];
+  //-delta
+  line[0] = b1.create('line', [a[0],[()=> ( a[0].X()),1]], {strokeColor:'#000000', strokeColorOpacity:0, strokeWidth:1});
+  //+delta
+  line[1] = b1.create('line', [a[1],[()=> ( a[1].X()),1]], {strokeColor:'#000000', strokeColorOpacity:0, strokeWidth:1});
+  //-epsilon
+  line[2] = b1.create('line', [a[2],[1,()=> ( a[2].Y())]], {strokeColor:'#000000', strokeColorOpacity:0, strokeWidth:1});
+  //+epsilon
+  line[3] = b1.create('line', [a[3],[1,()=> ( a[3].Y())]], {strokeColor:'#000000', strokeColorOpacity:0, strokeWidth:1});
+
+//e-d-Rechteck
+  pol = b1.create('polygon', [r[0],r[1],r[2],r[3]], {withLines:false});
+  pol.setAttribute({fillColor:'#000000'});
+  min = 0;
+  max = 0;
+}
+plot();
+
+  samples = 1000;
+  function extremumUpdate(){
+	min = a[3].Y();
+	max = a[2].Y();
+	ds = (2*d.Value())/samples;
+	s = a[0].X();
+	smax = a[1].X();
+	while(s<=smax){
+	  if(f(s)>max){
+		max = f(s);
+	  } else if(f(s)<min){
+		min = f(s);
+	  }
+	  s+=ds;
+	}
+  }
+
+//update color in box
+  var color ='#000000';
+  function colorUpdate(){
+	if(min<=a[2].Y()||max>=a[3].Y()){
+	  color ='#800000';
+	} else {
+	  color ='#008000';
+	}
+	for(i=0; i<4; ++i){
+	  a[i].setAttribute({strokeColor:color, fillColor:color});
+	  line[i].setAttribute({strokeColor:color});
+	}
+	pol.setAttribute({fillColor:color});
+  }
+
+  b1.unsuspendUpdate();
+
+//Eventhandler
+  e.on('up', function(){
+				b1.suspendUpdate();
+				extremumUpdate();
+				colorUpdate();
+				b1.unsuspendUpdate();});
+  d.on('up', function(){
+				b1.suspendUpdate();
+				extremumUpdate();
+				colorUpdate();
+				b1.unsuspendUpdate();});
+
+ 
+
+</script>
+</center>
+</div>
+</body>
+<footer>Wigand Rathmann, FAU</footer>
+</html>

@@ -22,10 +22,12 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 
 ## Calculus 1d
 + [Sequences in 1d](./ConvergenceSequencesEps.html)
-+ [Sequences in 2d](./ConvergenceSequences2D.html)
++ [$$\epsilon-\delta$$-criterion for continious functions](./Functions-e-d-continuity.html)
++ [Uniform continoity of functions](./Functions-uniform-continuity.html)
 + [Definition of Area functions](./FunctionsHyperbola.html)
 
 ## Calculus 2d
++ [Sequences in 2d](./ConvergenceSequences2D.html)
 + [Areas with function limits](./Intgration2DfunctionLimits.html) Show 2D integration area with functions as limits 
 + [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane.html): Given function an sliders
 + [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane-input.html): Function assigned in an input field.
