@@ -68,6 +68,8 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 + Question [Spherical Coordinates (Matching)](question/3D_spherical_coordinates_matching.md) (fit the reference volume by dragging sliders)
 + Question [Spherical Coordinates (Rotating)](question/3D_spherical_coordinates_rotating.md) (fit the reference volume by entering parameter intervals)
 
+## Visualising curves in 3D
++ Question [Circular curve](question/3D_curve_matching_circular.md): Find the parameters of $$t \mapsto \begin{pmatrix} r \cdot \cos(t) \\ r \cdot \sin(t) \\ h \cdot \cos(n \cdot t - \phi) \end{pmatrix}.$$
 
 ## Visualising solids in 3D
 
