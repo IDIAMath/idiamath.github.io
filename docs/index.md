@@ -71,14 +71,15 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 ## Visualising curves in 3D
 + Question [Circular curve](question/3D_curve_matching_circular.md): Find the parameters of $$t \mapsto \begin{pmatrix} r \cdot \cos(t) \\ r \cdot \sin(t) \\ h \cdot \cos(n \cdot t - \phi) \end{pmatrix}.$$
 + Question [Elliptical curve (helix)](question/3D_curve_matching_elliptic_helix.md): Find the parameters of the curve given by $$t \mapsto \begin{pmatrix} 
-x_0+ a \cdot \cos(t) \cdot \cos(\alpha) - b \cdot \sin(t) \cdot \sin(\alpha) \\
-y_0+ a \cdot \cos(t) \cdot \sin(\alpha) + b \cdot \sin(t) \cdot \cos(\alpha) \\
+x_0+ a \cdot \cos(t) \cdot \cos(\alpha) - b \cdot \sin(t) \cdot \sin(\alpha) \\ 
+y_0+ a \cdot \cos(t) \cdot \sin(\alpha) + b \cdot \sin(t) \cdot \cos(\alpha) \\ 
 h \cdot t
 \end{pmatrix}.$$
 
-+ Question [Elliptical curve](question/3D_curve_matching_elliptic_helix.md): Find the parameters of the curve given by 
++ Question [Elliptical curve](question/3D_curve_matching_elliptic_helix.md): Find the parameters of the curve given by  $$t \mapsto \begin{pmatrix} x_0+ a \cdot \cos(t) \cdot \cos(\alpha) - b \cdot \sin(t) \cdot \sin(\alpha) \\ y_0+ a \cdot \cos(t) \cdot \sin(\alpha) + b \cdot \sin(t) \cdot \cos(\alpha) \\ h \cdot \cos(t)\end{pmatrix}.$$
 
-$$t \mapsto \begin{pmatrix} x_0+ a \cdot \cos(t) \cdot \cos(\alpha) - b \cdot \sin(t) \cdot \sin(\alpha) \\ y_0+ a \cdot \cos(t) \cdot \sin(\alpha) + b \cdot \sin(t) \cdot \cos(\alpha) \\h \cdot \cos(t)\end{pmatrix}.$$
++ Question [Rotating a curve about two axis](question/3D_rotation_two_axis_solo.md) This question trains the imagination of rotating objects around two axis of the coordinate system.
+
 ## Visualising solids in 3D
 
 + Question 8 [3d-cube-transformations](solids/3d-cube-transformations.md)
