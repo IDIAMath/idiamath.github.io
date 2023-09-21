@@ -43,6 +43,9 @@ on.
 + Question 7 [Select matching partial derivative](question/select-matching-partial-derivative.md)
 
 ## Calculus of functions in two variables
+
+### Functions of two variables
++ Question [Find the function term](question/2D_parametric_surfaces_graphs.md) when the graph is drawn
 ### Differentiation / stationary points / Hessian
 + Question [select-extremal](question/select-extremal.md)
   Select maxima/minima on a plot
