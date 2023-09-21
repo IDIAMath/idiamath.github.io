@@ -70,6 +70,11 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 
 ## Visualising curves in 3D
 + Question [Circular curve](question/3D_curve_matching_circular.md): Find the parameters of $$t \mapsto \begin{pmatrix} r \cdot \cos(t) \\ r \cdot \sin(t) \\ h \cdot \cos(n \cdot t - \phi) \end{pmatrix}.$$
++ Question [Circular curve](question/3D_curve_matching_circular.md): Find the parameters of the curve given by $$t \mapsto \begin{pmatrix} 
+x_0+ a \cdot \cos(t) \cdot \cos(\alpha) - b \cdot \sin(t) \cdot \sin(\alpha) \\
+y_0+ a \cdot \cos(t) \cdot \sin(\alpha) + b \cdot \sin(t) \cdot \cos(\alpha) \\
+h \cdot t
+\end{pmatrix}.$$
 
 ## Visualising solids in 3D
 
@@ -77,9 +82,9 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 
 ## Vector fields in 3D
 
-## Examples JSXGraph
+## Additional Material
 
-Here will find some applets demonstrating JSXGraph in different applications. [JSXGraph Examples](JSXGraphExamples/JSXGraphExamples.md)
+Here will find applets demonstrating JSXGraph in different applications. [JSXGraph Examples](JSXGraphExamples/JSXGraphExamples.md) This material is usefull for the HELM material as well.
 
 A huge collection you will find at the [JSXGraph homepage](https://jsxgraph.org) and the example data base [there](https://jsxgraph.uni-bayreuth.de/share/).
 ## HTML test

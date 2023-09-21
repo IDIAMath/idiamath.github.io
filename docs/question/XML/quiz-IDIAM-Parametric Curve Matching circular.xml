@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 1091  -->
+  <question type="stack">
+    <name>
+      <text>Parametric Curve Matching circular</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<p>Reconstruct the blue 3D curve dependent on a parameter \(t\).</p>
+<p>In order to do so, you need to find the correct radius \(r\), amplitude \(h\), phase shift \(\phi\) and number of oscillations \(n\).</p>
+<p> The curve is the trace of the function \( t \mapsto \begin{pmatrix} r \cdot \cos(t) \\ r \cdot \sin(t) \\ h \cdot \cos(n \cdot t - \phi) \end{pmatrix} \). </p>
+<p>Use the sliders in the JSXGraph applet or type in your reply right below it.</p>
+
+[[jsxgraph width="500px" height="500px" input-ref-ans1='ans1Ref' input-ref-ans2='ans2Ref' input-ref-ans3='ans3Ref' input-ref-ans4='ans4Ref' ]]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-10, 10, 10,-10], axis:false, shownavigation : false});
+                        var box = [-5,5];
+                        var view = board.create('view3d',
+		                            [[-6, -3], [8, 8],
+		                            [box, box, box]],
+		                            {});
+			
+			//curve from STACK values
+			var r = {#radiusr#};
+			var h = {#ampr#};
+			var p = {#phase#};
+			var n = {#numr#};
+			var c_base = view.create('curve3d', [
+				(t) => r* Math.cos(t),
+				(t) => r* Math.sin(t),
+				(t) => h* Math.cos(n *t-p),
+				[-Math.PI, Math.PI]], {strokeWidth: 2, strokeColor: "#1f84bc"});
+
+			//slider-based curve 
+
+			var rslide = board.create('slider', [[-7,-6], [3,-6], [0,5,10]], {name: "r", snapwidth:0.1, highline: {strokeColor: '#EE442F'}, baseline: {strokeColor: '#EE442F'}});
+			var hslide = board.create('slider', [[-7,-7],[3,-7],[0,2,4]], {name: 'h', snapwidth:0.05, highline: {strokeColor: '#EE442F'}, baseline: {strokeColor: '#EE442F'}});
+			var nslide = board.create('slider', [[-7,-9],[3,-9],[0,4,7]], {name: 'n', snapWidth:1, highline: {strokeColor: '#EE442F'}, baseline: {strokeColor: '#EE442F'}});
+			var sslide = board.create('slider', [[-7,-8],[3,-8],[0,2,Math.PI]], {name: 'phase shift', snapwidth:0.05, highline: {strokeColor: '#EE442F'}, baseline: {strokeColor: '#EE442F'}});
+			stack_jxg.bind_slider(ans1Ref,rslide);
+			stack_jxg.bind_slider(ans2Ref,hslide);
+			stack_jxg.bind_slider(ans3Ref,sslide);
+			stack_jxg.bind_slider(ans4Ref,nslide);
+			
+			var c = view.create('curve3d', [
+				(t) => rslide.Value()* Math.cos(t),
+				(t) => rslide.Value()* Math.sin(t),
+				(t) => hslide.Value()* Math.cos(nslide.Value()*t- sslide.Value()),
+				[-Math.PI, Math.PI]], {strokeWidth: 2, strokeColor: '#EE442F'});
+
+                       /* axis labels*/
+                       var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+                       var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+                       var zlabel=view.create('point3d',[
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.9*box[1]], 
+                           {size:0,name:"z"});
+
+[[/ jsxgraph]]
+<p>\(r=\) [[input:ans1]] [[validation:ans1]]</p>
+<p>\(h=\) [[input:ans2]] [[validation:ans2]]</p>
+<p>\(\phi=\) [[input:ans3]] [[validation:ans3]]</p>
+<p>\(n=\) [[input:ans4]] [[validation:ans4]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text><![CDATA[<hr>
+<p>This is an example for a 3D curve. It is the image of a 3D application with only one variable - the parameter. Its other variables are fixed and determine the exact resulting function. This way, one can produce many curves of a similar kind.</p>
+<p> In this special case, the curve ends exactly where it started. That's why it forms a loop.<br>In general however, curves have a starting point and an end point depending both on the function and the intervall used for the parameter.<br></p>]]></text>
+    </generalfeedback>
+    <defaultgrade>2</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023010400</text>
+    </stackversion>
+    <questionvariables>
+      <text>/*randomize radius, amplitude, phase shift, number of oscillations*/
+
+radiusr: 1+rand(6)/2;
+ampr: 1/4+rand(10)/4; 
+phaser : rand([1/6, 1/4, 1/3, 1/2, 2/3, 3/4, 5/6 ,1]);
+numr: 1+rand(5);
+
+/* prepare numerical values for JSXGraph */
+numer:true
+phase:phaser*%pi;
+numer:false
+
+/*symbolic data for checking*/
+phaser: phaser*%pi</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]
+[[feedback:prt2]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>This is a 3D curve. It is the image of a 3D application with only one variable - the parameter. 
+
+r={@radiusr@}, n = {@numr@}, phase = {@phaser@}, amp = {@ampr@}
+{@ampr: 1/4+rand(10)/4@}
+{@phaser@}
+{@numr: rand(5)+1@}
+Its other parameters are randomly selected.</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done!]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>numerical</type>
+      <tans>radiusr</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>numerical</type>
+      <tans>ampr</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>numerical</type>
+      <tans>phaser</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>numerical</type>
+      <tans>numr</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>radiusans: ans1
+ampans: ans2</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>radiusans</sans>
+        <tans>radiusr</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Nice! You found the correct radius \(r\). Good job!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The radius \(r\) is not yet correct. Check, whether the curves align, when you slide "r" to this value.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ampans</sans>
+        <tans>ampr</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! You also found the correct amplitude a. Good job!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The amplitude a is not yet correct. Check, whether the curves align, when you slide "h" to this value.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ampans</sans>
+        <tans>ampr</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! You found the correct amplitude a. Good job!</p> <p> Check whether the curves align perfectly to get the radius right as well! </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The amplitude a is not yet correct as well. Check, whether the curves align, when you slide "h" to this value.</p> <p> If the orange and blue curve overlap, the answer will be correct! </p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>phaseans: ans3
+numans: ans4</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>phaseans</sans>
+        <tans>phaser</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! You found the correct phase shift \(\phi\). Good job!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The phase shift \(\phi\) is not yet correct. Check, whether the curves align, when you slide "phase shift" to this value.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>numans</sans>
+        <tans>numr</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! You also found the correct number of oscillations \(n\). Good job!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The number of oscillations \(n\) is not yet correct. Check, whether the curves align, when you slide "n" to this value. Note, that you can count the maxima of the curve and try again.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>numans</sans>
+        <tans>numr</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! You also found the correct number of oscillations \(n\). Good job!</p><p> Make sure to get the phase shift right as well by matching the curves! </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The number of oscillations \(n\) is also not yet correct. Check, whether the curves align, when you slide "n" to this value. Note, that you can count the maxima of the curve and try again.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>96</deployedseed>
+    <deployedseed>842609460</deployedseed>
+    <deployedseed>1789364536</deployedseed>
+    <deployedseed>172714497</deployedseed>
+    <deployedseed>687664107</deployedseed>
+    <deployedseed>529746819</deployedseed>
+    <deployedseed>982383790</deployedseed>
+    <deployedseed>1973793941</deployedseed>
+    <deployedseed>500986955</deployedseed>
+    <deployedseed>473740671</deployedseed>
+    <deployedseed>1005636523</deployedseed>
+  </question>
+
+</quiz>
