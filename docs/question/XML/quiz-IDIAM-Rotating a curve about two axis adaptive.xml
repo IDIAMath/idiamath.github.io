@@ -1,0 +1,1527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 1090  -->
+  <question type="stack">
+    <name>
+      <text>Rotating a curve about two axis adaptive</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<div id = "task"> 
+    <p>The blue curve below \(c(t) = \begin{pmatrix} r\cdot \cos(t) \\ r\cdot \sin(t) \\ 0 \end{pmatrix}\) has been rotated about two of the coordinate axis. The result of the rotation is the orange curve. Find the correct order of operations.</p><p> The rotational angles about the \(x\)-, \(y\)-, and \(z\)-axis are \(\alpha = {@alphar@}, \beta = {@betar@}\) and \(\gamma = {@gammar@}\), respectively. Note: \(x-y\) means rotation about the \(x\)-axis first and \(y\)-axis second. </p>
+    [[jsxgraph width="500px" height="500px"]]
+    var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+    var box = [-3,3]
+    var view = board.create('view3d',
+        [[-6, -3], [8, 8],
+        [box, box, box]],
+        {
+            /*planes*/
+            xPlaneRear: {visible:false},
+            yPlaneRear: {visible:false}	
+        });
+    var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+    var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+    var zlabel=view.create('point3d',[
+            0.7*(0.6*box[0]+0.4*box[1]),
+            0.7*(0.6*box[0]+0.4*box[1]),
+            0.9*box[1]], 
+            {size:0,name:"z"});    
+           
+    
+    /* define curve */
+    
+    var c_base = view.create('curve3d', [
+        (t) =>2* Math.cos(t),
+        (t) =>2*  Math.sin(t),
+        (t)=> 0,
+        [0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});    
+    var xcoordraw =  '{#res[1]#}';
+    var ycoordraw =  '{#res[2]#}';
+    var zcoordraw =  '{#res[3]#}';	
+                
+    var xcurve = board.jc.snippet(xcoordraw, true, 't');
+    var ycurve = board.jc.snippet(ycoordraw, true, 't');
+    var zcurve = board.jc.snippet(zcoordraw, true, 't'); 
+    
+   var c_result = view.create('curve3d', [
+    (t) => xcurve(t),
+    (t) => ycurve(t),
+    (t) => zcurve(t),
+    [0, Math.PI]], {strokeWidth:2, strokeColor: '#EE442F'}); 
+    
+    
+    
+    [[/jsxgraph]]
+    
+    <p>[[input:ans1]] [[validation:ans1]]</p>
+<br>
+    [[feedback:prt1]]
+    
+    </div>
+    
+    <div id= "input1" style="display:none;">
+       <br>
+       <p>Let's repeat, what exactly rotating a curve means. First of all, a curve is represented by a vector as a function of its parameter. As with any vector, it can be multiplied with a matrix to rotate. <br>
+     This matrix is called the rotational matrix. <br>
+    In a 3D vector-space with euklidian base, one can easily define 3 rotations \(R_x ,R_y, R_z\) about the axis.
+    
+    \[
+    R_x =\begin{pmatrix}
+        1 &0 &0\\
+        0& \cos(\alpha) & -\sin(\alpha)\\
+        0& \sin(\alpha) &\cos(\alpha) 
+    \end{pmatrix},
+    \quad
+    R_y =\begin{pmatrix}
+        \cos(\alpha) &0 &\sin(\alpha)\\
+        0&1  & 0\\
+         -\sin(\alpha) &0&\cos(\alpha) 
+    \end{pmatrix} ,
+    \quad
+    R_z =\begin{pmatrix}
+        \cos(\alpha) & -\sin(\alpha) &0\\
+         \sin(\alpha) &\cos(\alpha) &0\\
+        0 &0&1
+    \end{pmatrix} .
+    \]
+    A rotation of angle \(\alpha\) is performed by multiplying the vector \(v\) with the desired rotational matrix in the form \(v_\text{rotated} = R_i \cdot v\).
+    <br> Go on to the next task to look at an easy rotation.
+    <p>
+        <button type="button" onclick="hide('input1');show('task1');">Continue</button>
+    </p>
+    </div>
+    
+    <div id = 'task1' style="display:none;">
+    <p> The curve below \(c(t) =  \begin{pmatrix} r\cdot \cos(t) \\ r\cdot \sin(t) \\ 0 \end{pmatrix}\) has been rotated about the \(x\)-axis. The associated rotational matrix is 
+    \[
+    R_x =\begin{pmatrix}
+        1 &0 &0\\
+        0& \cos(\alpha) & -\sin(\alpha)\\
+        0& \sin(\alpha) &\cos(\alpha) 
+    \end{pmatrix} .
+    \] <br>
+    Find the angle of rotation by using the slider that moves the orange curve. </p>
+    
+    [[jsxgraph width="500px" height="500px" input-ref-ans2='ans2ref']]
+    
+    /* prefix "or" is short for "one rotation" */
+    
+    var or_board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis: false, shownavigation: false, keepaspectratio: true});
+    var or_box = [-3,3]
+    var or_view = or_board.create('view3d',
+        [[-6, -3], [8, 8],
+        [or_box, or_box, or_box]],
+        {
+            /*planes*/
+            xPlaneRear: {visible:false},
+            yPlaneRear: {visible:false}	
+        });
+    
+    var or_xlabel=or_view.create('point3d',[0.9*or_box[1],0,(0.6*or_box[0]+0.4*or_box[1])], {size:0,name:"x"});
+    var or_ylabel=or_view.create('point3d',[0,0.9*or_box[1],(0.6*or_box[0]+0.4*or_box[1])], {size:0,name:"y"});
+    var or_zlabel=or_view.create('point3d',[
+            0.7*(0.6*or_box[0]+0.4*or_box[1]),
+            0.7*(0.6*or_box[0]+0.4*or_box[1]),
+            0.9*or_box[1]], 
+            {size:0,name:"z"});
+       
+    /* define curve */
+    
+    var one_rot_slider = or_board.create('slider', [[-7,-6],[3,-6], [0, 0, 1.5 * Math.PI]], {name: "alpha", snapwidth: 0.05, highline: {strokeColor: '#EE442F'}, baseline: {strokeColor: '#EE442F'}});
+    
+    
+    
+    var or_c_student = or_view.create('curve3d', [
+        (t) =>2* Math.cos(t),
+        (t) =>2* Math.cos(one_rot_slider.Value()) * Math.sin(t),
+        (t)=> 2* Math.sin(one_rot_slider.Value()) * Math.sin(t),
+        [0, Math.PI]], {strokeWidth: 2, strokeColor: '#EE442F'});  
+    
+    var or_xcoordraw = '{#or_res[1]#}';
+    var or_ycoordraw = '{#or_res[2]#}';
+    var or_zcoordraw = '{#or_res[3]#}';
+    
+    var or_xcurve = or_board.jc.snippet(or_xcoordraw, true, 't');
+    var or_ycurve = or_board.jc.snippet(or_ycoordraw, true, 't');
+    var or_zcurve = or_board.jc.snippet(or_zcoordraw, true, 't');
+    
+    
+    var or_c_result = or_view.create('curve3d', [
+    (t) => or_xcurve(t),
+    (t) => or_ycurve(t),
+    (t) => or_zcurve(t),
+    [0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'}); 
+    
+    var or_c_base = or_view.create('curve3d', [
+        (t) =>2* Math.cos(t) ,
+        (t) =>2* Math.sin(t) ,
+        (t) => 0,
+        [0, Math.PI]], {strokeWidth: 1, strokeColor: '#1f84bc'});   
+    
+    stack_jxg.bind_slider(ans2ref, one_rot_slider);
+    
+    [[/jsxgraph]]
+  <p> \(\alpha = \)  [[input:ans2]][[validation:ans2]] </p>
+<br>
+    [[feedback:prt2]]
+    
+   
+   
+    </div>
+    
+    <div id= "input2" style="display:none;">
+    <br>
+    <p>If a rotation is performed about multiple, say 2 axis, the corresponding rotational axis are multiplied. To execute the first rotation, the matrix is multiplied to the vecotr from the left. All consecutive rotational matrices are multiplied from the left, as well. This way, if you have rotations 1,2 and 3, the resulting rotational matrix is \(R_\text{res} = R_3\cdot R_2\cdot R_1\).
+    <br> However, since matrix multiplication is not commutative, the order of execution matters.
+    <br>
+    For example, for a rotation about the \(x\)-axis with an angle of \(\alpha=60^\circ\) and a rotation about the \(y\)-axis with an angle of \(\beta=45^\circ\), we get the following results
+    
+    \[R_x(60^\circ) \cdot R_y(45^\circ) =
+        \begin{pmatrix}
+            \cos{\left(\beta \right)} & 0 & \sin{\left(\beta \right)}\\
+            \sin{\left(\alpha \right)} \sin{\left(\beta \right)} & \cos{\left(\alpha \right)} & - \sin{\left(\alpha \right)} \cos{\left(\beta \right)}\\
+            -\sin{\left(\beta \right)} \cos{\left(\alpha \right)} & \sin{\left(\alpha \right)} & \cos{\left(\alpha \right)} \cos{\left(\beta \right)}
+        \end{pmatrix}= 
+        \begin{pmatrix}
+            \frac{\sqrt{2}}{2} & 0 & \frac{\sqrt{2}}{2}\\
+            \frac{\sqrt{6}}{4} & \frac{1}{2} & - \frac{\sqrt{6}}{4}\\
+            -\frac{\sqrt{2}}{4} & \frac{\sqrt{3}}{2} & \frac{\sqrt{2}}{4}
+        \end{pmatrix}
+    \]
+    
+    and with the switched order of operation
+    
+    \[R_y(45^\circ) \cdot R_x(60^\circ) =
+        \begin{pmatrix}
+            \cos{\left(\beta \right)} & \sin{\left(\alpha \right)} \sin{\left(\beta \right)} & \sin{\left(\beta \right)} \cos{\left(\alpha \right)}\\
+            0 & \cos{\left(\alpha \right)} & -\sin{\left(\alpha \right)}\\
+            -\sin{\left(\beta \right)} & \sin{\left(\alpha \right)} \cos{\left(\beta \right)} & \cos{\left(\alpha \right)} \cos{\left(\beta \right)}
+        \end{pmatrix}= 
+        \begin{pmatrix}
+            \frac{\sqrt{2}}{2} & \frac{\sqrt{6}}{4} & \frac{\sqrt{2}}{4}\\
+            0 & \frac{1}{2} & - \frac{\sqrt{3}}{2}\\
+            -\frac{\sqrt{2}}{2} & \frac{\sqrt{6}}{4} & \frac{\sqrt{2}}{4}
+        \end{pmatrix}.
+    \]
+    
+    Therefore, the resulting vector will be different.
+    <br>
+    In the next task, you can get familiar with a rotation about two axis.
+    <p>
+        <button type="button" onclick="hide('input2');show('task2a');">Continue</button>
+    </p>
+    </div>
+    
+    <div id= "task2a" style="display:none;">
+    <p> The curve below \(c(t) =  \begin{pmatrix} r\cdot \cos(t) \\ r\cdot \sin(t) \\ 0 \end{pmatrix}\) has been rotated about the \(y\)-axis with angle \(\alpha\), first, and the \(z\)-axis with angle \(\beta\) second. You can use the sliders to rotate the orange curve using the same rotational matrix. Match the orange curve to the blue one to find the angles of rotation.  </p>
+    [[jsxgraph width="500px" height="500px" input-ref-ans3 = 'ans3ref' input-ref-ans4 = 'ans4ref' ]]     
+    
+    /* prefix "trm" is short for "two rotations matching" */
+    
+    var trm_board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+    var trm_box = [-3,3];
+    var trm_view = trm_board.create('view3d',
+        [[-6, -3], [8, 8],
+        [trm_box, trm_box, trm_box]],
+        {
+            /*planes*/
+            xPlaneRear: {visible:false},
+            yPlaneRear: {visible:false}	
+        });
+    var trm_xlabel=trm_view.create('point3d',[0.9*trm_box[1],0,(0.6*trm_box[0]+0.4*trm_box[1])], {size:0,name:"x"});
+    var trm_ylabel=trm_view.create('point3d',[0,0.9*trm_box[1],(0.6*trm_box[0]+0.4*trm_box[1])], {size:0,name:"y"});
+    var trm_zlabel=trm_view.create('point3d',[
+            0.7*(0.6*trm_box[0]+0.4*trm_box[1]),
+            0.7*(0.6*trm_box[0]+0.4*trm_box[1]),
+            0.9*trm_box[1]], 
+            {size:0,name:"z"});  
+    
+    var trm_c_base = trm_view.create('curve3d', [
+        (t) =>2* Math.cos(t) ,
+        (t) =>2* Math.sin(t) ,
+        (t) => 0,
+        [0, Math.PI]], {strokeWidth: 1, strokeColor: '#1f84bc'}); 
+    
+    var trm_xcoordraw = '{#trm_res[1]#}';
+    var trm_ycoordraw = '{#trm_res[2]#}';
+    var trm_zcoordraw = '{#trm_res[3]#}';
+    
+    var trm_xcurve = trm_board.jc.snippet(trm_xcoordraw, true, 't');
+    var trm_ycurve = trm_board.jc.snippet(trm_ycoordraw, true, 't');
+    var trm_zcurve = trm_board.jc.snippet(trm_zcoordraw, true, 't');
+    
+    
+    var trm_c_result = trm_view.create('curve3d', [
+    (t) => trm_xcurve(t),
+    (t) => trm_ycurve(t),
+    (t) => trm_zcurve(t),
+    [0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});
+    
+    var trm_alpha = trm_board.create('slider', [[-7,-6],[3,-6], [0, 0,  Math.PI]], {name: "alpha", snapwidth: 0.05, highline: {strokeColor: '#EE442F'}, baseline: {strokeColor: '#EE442F'}});
+    var trm_beta   = trm_board.create('slider', [[-7,-7],[3,-7], [0, 0, Math.PI]], {name: "beta", snapwidth: 0.05, highline: {strokeColor: '#EE442F'}, baseline: {strokeColor: '#EE442F'}});
+    
+    var trm_c_student = trm_view.create('curve3d', [
+    (t) => 2* Math.cos(trm_alpha.Value())* Math.cos(trm_beta.Value()) * Math.cos(t) -2* Math.sin(trm_beta.Value()) * Math.sin(t), 
+    (t) => 2* Math.sin(trm_beta.Value())* Math.cos(trm_alpha.Value())* Math.cos(t)+ 2*Math.sin(t) *Math.cos(trm_beta.Value()),
+    (t) => -2* Math.sin(trm_alpha.Value()) * Math.cos(t),
+    [0, Math.PI]], {strokeWidth: 2, strokeColor: '#EE442F'});
+    
+    stack_jxg.bind_slider(ans3ref, trm_alpha);
+    stack_jxg.bind_slider(ans4ref, trm_beta);
+    
+    [[/jsxgraph]]
+    <p>\(\alpha = \) [[input:ans3]][[validation:ans3]] </p>
+    <p>\(\beta = \) [[input:ans4]][[validation:ans4]] </p>
+    <br>
+    [[feedback:prt3]]
+
+    
+    
+    </div>
+    
+    <div id='task2b' style="display:none;">
+    <p>  The curve below \(c(t) = \begin{pmatrix} r\cdot \cos(t) \\ r\cdot \sin(t) \\ 0 \end{pmatrix}\) has been rotated about the \(z\)-axis with angle \(\alpha\), first, and the \(x\)-axis with angle \(\beta\) second. Find the angles of rotation by looking at the curves from different perspectives. </p>
+    <p> Give your answer in the format <code> 4*pi/2 </code>.</p>
+    [[jsxgraph width="500px" height="500px"]]     
+    
+    /* prefix "tro" is short for "two rotations observing" */
+    
+    var tro_board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+    var tro_box = [-3,3];
+    var tro_view = tro_board.create('view3d',
+        [[-6, -3], [8, 8],
+        [tro_box, tro_box, tro_box]],
+        {
+            /*planes*/
+            xPlaneRear: {visible:false},
+            yPlaneRear: {visible:false}	
+        });
+    var tro_xlabel=tro_view.create('point3d',[0.9*tro_box[1],0,(0.6*tro_box[0]+0.4*tro_box[1])], {size:0,name:"x"});
+    var tro_ylabel=tro_view.create('point3d',[0,0.9*tro_box[1],(0.6*tro_box[0]+0.4*tro_box[1])], {size:0,name:"y"});
+    var tro_zlabel=tro_view.create('point3d',[
+            0.7*(0.6*tro_box[0]+0.4*tro_box[1]),
+            0.7*(0.6*tro_box[0]+0.4*tro_box[1]),
+            0.9*tro_box[1]], 
+            {size:0,name:"z"});  
+    
+    var tro_c_base = tro_view.create('curve3d', [
+        (t) =>2* Math.cos(t) ,
+        (t) =>2* Math.sin(t) ,
+        (t) => 0,
+        [0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'}); 
+    
+    var tro_xcoordraw = '{#tro_res[1]#}';
+    var tro_ycoordraw = '{#tro_res[2]#}';
+    var tro_zcoordraw = '{#tro_res[3]#}';
+    
+    var tro_xcurve = tro_board.jc.snippet(tro_xcoordraw, true, 't');
+    var tro_ycurve = tro_board.jc.snippet(tro_ycoordraw, true, 't');
+    var tro_zcurve = tro_board.jc.snippet(tro_zcoordraw, true, 't');
+    
+    
+    var tro_c_result = tro_view.create('curve3d', [
+    (t) => tro_xcurve(t),
+    (t) => tro_ycurve(t),
+    (t) => tro_zcurve(t),
+    [0, Math.PI]], {strokeWidth: 2, strokeColor: '#EE442F'});
+   
+    
+    [[/jsxgraph]]
+    <p>\(\alpha = \) [[input:ans5]][[validation:ans5]] </p>
+    <p>\(\beta = \) [[input:ans6]][[validation:ans6]] </p>
+<br>
+    [[feedback:prt4]]
+
+    
+    </div>
+
+<div id='task3' style="display:none;">
+ <p>  The blue curve below \(c(t) = \begin{pmatrix} r\cdot \cos(t) \\ r\cdot \sin(t) \\ 0 \end{pmatrix}\) has been rotated about the \(y\)-axis and \(z\)-axis. The angles of rotation for \(R_y\) and \(R_z\) are \(\alpha = {@alphar@}\) and \(\beta = {@ap_betar@}\), respectively. Find the order of operations.</p>
+
+   [[jsxgraph width="500px" height="500px"]]     
+    
+    /* prefix "ap" is short for "axis pair" */
+    
+    var ap_board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+    var ap_box = [-3,3];
+    var ap_view = ap_board.create('view3d',
+        [[-6, -3], [8, 8],
+        [ap_box, ap_box, ap_box]],
+        {
+            /*planes*/
+            xPlaneRear: {visible:false},
+            yPlaneRear: {visible:false}	
+        });
+    var ap_xlabel=ap_view.create('point3d',[0.9*ap_box[1],0,(0.6*ap_box[0]+0.4*ap_box[1])], {size:0,name:"x"});
+    var ap_ylabel=ap_view.create('point3d',[0,0.9*ap_box[1],(0.6*ap_box[0]+0.4*ap_box[1])], {size:0,name:"y"});
+    var ap_zlabel=ap_view.create('point3d',[
+            0.7*(0.6*ap_box[0]+0.4*ap_box[1]),
+            0.7*(0.6*ap_box[0]+0.4*ap_box[1]),
+            0.9*ap_box[1]], 
+            {size:0,name:"z"});  
+    
+    var ap_c_base = ap_view.create('curve3d', [
+        (t) =>2* Math.cos(t) ,
+        (t) =>2* Math.sin(t) ,
+        (t) => 0,
+        [0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'}); 
+    
+    var ap_xcoordraw = '{#ap_res[1]#}';
+    var ap_ycoordraw = '{#ap_res[2]#}';
+    var ap_zcoordraw = '{#ap_res[3]#}';
+    
+    var ap_xcurve = ap_board.jc.snippet(ap_xcoordraw, true, 't');
+    var ap_ycurve = ap_board.jc.snippet(ap_ycoordraw, true, 't');
+    var ap_zcurve = ap_board.jc.snippet(ap_zcoordraw, true, 't');
+    
+    
+    var ap_c_result = ap_view.create('curve3d', [
+    (t) => ap_xcurve(t),
+    (t) => ap_ycurve(t),
+    (t) => ap_zcurve(t),
+    [0, Math.PI]], {strokeWidth: 2, strokeColor: '#EE442F'});
+   
+    [[/jsxgraph]]
+[[input:ans7]][[validation:ans7]]
+<br>
+    [[feedback:prt5]]
+
+
+    </div>
+
+<div id = 'taskagain' style="display:none;">
+<p>The blue curve below \(c(t) = \begin{pmatrix} r\cdot \cos(t) \\ r\cdot \sin(t) \\ 0 \end{pmatrix}\) has been rotated about two of the coordinate axis. The result of the rotation is the orange curve. Find the correct order of operations.</p><p> The rotational angles about the \(x\)-, \(y\)-, and \(z\)-axis are \(\alpha = {@alphar@}, \beta = {@betar@}\) and \(\gamma = {@gammar@}\), respectively. Note: \(x-y\) means rotation about the \(x\)-axis first and \(y\)-axis second. </p>
+   [[jsxgraph width="500px" height="500px"]]
+    var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+    var box = [-3,3]
+    var view = board.create('view3d',
+        [[-6, -3], [8, 8],
+        [box, box, box]],
+        {
+            /*planes*/
+            xPlaneRear: {visible:false},
+            yPlaneRear: {visible:false}	
+        });
+    var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+    var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+    var zlabel=view.create('point3d',[
+            0.7*(0.6*box[0]+0.4*box[1]),
+            0.7*(0.6*box[0]+0.4*box[1]),
+            0.9*box[1]], 
+            {size:0,name:"z"});    
+           
+    
+    /* define curve */
+    
+    var c_base = view.create('curve3d', [
+        (t) =>2* Math.cos(t),
+        (t) =>2*  Math.sin(t),
+        (t)=> 0,
+        [0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});    
+    var xcoordraw =  '{#res[1]#}';
+    var ycoordraw =  '{#res[2]#}';
+    var zcoordraw =  '{#res[3]#}';	
+                
+    var xcurve = board.jc.snippet(xcoordraw, true, 't');
+    var ycurve = board.jc.snippet(ycoordraw, true, 't');
+    var zcurve = board.jc.snippet(zcoordraw, true, 't'); 
+    
+    c_result = view.create('curve3d', [
+    (t) => xcurve(t),
+    (t) => ycurve(t),
+    (t) => zcurve(t),
+    [0, Math.PI]], {strokeWidth:2, strokeColor: '#EE442F'}); 
+    
+  
+    [[/jsxgraph]]
+[[input:ans8]][[validation:ans8]]
+<br>
+    [[feedback:prt6]]
+
+</div>
+
+<script src="https://www.rub.de/ak-mathe-digital/stackselbstlern.js"></script>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>3</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023010400</text>
+    </stackversion>
+    <questionvariables>
+      <text><![CDATA[/* implement the creation of matrices from lists */
+
+listtomat(L):=block(
+ [i, M], 
+ M:matrix(), 
+ for i:1 thru length(L) do M:addrow(M,L[i]),
+ return(M)
+);
+mattolist(M):=makelist(M[i],i,1,length(M));
+
+/* specify the lists to be turnt into matrices */
+r: 2;
+L1: [[1,0,0],[0,cos(a),-sin(a)],[0, sin(a), cos(a)]];
+L2: [[cos(b),0,sin(b)],[0,1,0],[-sin(b), 0, cos(b)]];
+L3: [[cos(c),-sin(c),0],[sin(c),cos(c),0],[0, 0, 1]];
+Lv: [[r*cos(t),0,0],[r*sin(t),0,0],[0,0,0]];
+
+/* create matrices */
+
+M1: listtomat(L1);
+M2: listtomat(L2);
+M3:listtomat(L3);
+v: listtomat(Lv);
+
+matlist: [M1,M2,M3];
+
+/* randomize the order of operations for initial task */
+indexr: 1+rand(6)
+ta: [[string(x-y),false],[string(y-x),false],[string(x-z),false],[string(z-x),false],[string(y-z),false],[string(z-y), false]];
+ta[indexr][2]:true;
+tans: ta[indexr];
+
+/* select matrices for multiplication for initial task */
+
+indexlist:[[1,2],[2,1],[1,3],[3,1],[2,3],[3,2]];
+indices: indexlist[indexr];
+
+M1r: matlist[indices[1]];
+M2r: matlist[indices[2]];
+
+alphar: rand([1/6,1/4,1/3,1/2,2/3,3/4])*%pi;
+betar:  rand([1/6,1/4,1/3,1/2,2/3,3/4])*%pi;
+gammar: rand([1/6,1/4,1/3,1/2,2/3,3/4])*%pi;
+deltar: rand([1/6,1/4,1/3,2/3,3/4,5/4,4/3])*%pi;
+
+/* numerical values */
+numer: true
+alpha: alphar;
+beta: betar;
+gamma: gammar;
+delta: deltar;
+numer: false
+
+/* calculate matrix product and evalutate angles for initial task */
+matres: ev(M2r.M1r.v, a:alphar, b:betar, c: gammar);
+
+/* turn matrix to list for export*/
+res: [mattolist(matres)[1][1],mattolist(matres)[2][1],mattolist(matres)[3][1]];
+
+
+
+
+/* Rotation about one axis */
+or_matres: ev(M1.v, a:deltar);
+or_res: [mattolist(or_matres)[1][1],mattolist(or_matres)[2][1],mattolist(or_matres)[3][1]];
+
+
+
+/* Rotation about two axis matching */
+trm_matres: ev(M3.M2.v, b:betar, c: gammar);
+trm_res: [mattolist(trm_matres)[1][1],mattolist(trm_matres)[2][1],mattolist(trm_matres)[3][1]];
+
+/* Rotation about two axis observing */
+tro_matres: ev(M1.M3.v, a:alphar, c:gammar);
+tro_res: [mattolist(tro_matres)[1][1],mattolist(tro_matres)[2][1],mattolist(tro_matres)[3][1]];
+
+/* Rotation about two known axis in unknown order - "ap" is short for "axis pair"*/
+ap_betar: rand([1/6,1/4,1/3,1/2,2/3,3/4])*%pi;
+while ap_betar = alphar do ap_betar: rand([1/6,1/4,1/3,1/2,2/3,3/4])*%pi;
+ap_in: rand([1,2]);
+ap_matlist:[[M2,M3],[M3,M2]];
+ap_M1r: ap_matlist[ap_in][1];
+ap_M2r: ap_matlist[ap_in][2];
+
+ap_ta: [[string(y-z),false],[string(z-y), false]];
+ap_ta[ap_in][2]:true;
+ap_tans: ap_ta[ap_in];
+ap_matres: ev(ap_M2r.ap_M1r.v, b: alphar, c: ap_betar);
+ap_res: [mattolist(ap_matres)[1][1],mattolist(ap_matres)[2][1],mattolist(ap_matres)[3][1]];]]></text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text></text>
+    </specificfeedback>
+    <questionnote>
+      <text>{@tans@}, {@alphar@}, {@betar@}, {@gammar@}, {@ap_betar@}</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span>  Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>radio</type>
+      <tans>ta</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>numerical</type>
+      <tans>deltar</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>numerical</type>
+      <tans>betar</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>numerical</type>
+      <tans>gammar</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans5</name>
+      <type>algebraic</type>
+      <tans>alphar</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans6</name>
+      <type>algebraic</type>
+      <tans>gammar</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans7</name>
+      <type>radio</type>
+      <tans>ap_ta</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans8</name>
+      <type>radio</type>
+      <tans>ta</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>checker: ans1;
+for i:1 thru length(ta) step 1 do(if member(checker, [ta[i][1]]) then location:i);
+location;
+
+studentindices: indexlist[location];
+
+M1s: matlist[studentindices[1]];
+M2s: matlist[studentindices[2]];
+
+/* calculate matrix product and evalutate angles */
+studentmatres: ev(M2s.M1s.v, a:alphar, b:betar, c: gammar);
+
+/* turn matrix to list for export*/
+studentres: [mattolist(studentmatres)[1][1],mattolist(studentmatres)[2][1],mattolist(studentmatres)[3][1]];
+</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>String</answertest>
+        <sans>ans1</sans>
+        <tans>tans[1]</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Well done! You got the order of operations right! Will you dare to try again for a different set of angles?</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> Unfortunately, this is not the correct order of operations. <br>  In the following applet, you can see, how your answer would have looked like with the angles provided. The blue and orange curves are the way they were presented before. Your solution is displayed in purple. </p>
+<p> Note: sometimes there are other correct solutions. If there is only a purple curve, it overlaps with the orange and your answer is correct, as well.</p>
+[[jsxgraph width="500px" height="500px"]]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+var box = [-3,3]
+var view = board.create('view3d',
+	[[-6, -3], [8, 8],
+	[box, box, box]],
+	{
+		/*planes*/
+		xPlaneRear: {visible:false},
+		yPlaneRear: {visible:false}	
+	});
+var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+var zlabel=view.create('point3d',[
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.9*box[1]], 
+        {size:0,name:"z"});    
+       
+
+/* define curve */
+
+var c_base = view.create('curve3d', [
+	(t) =>2* Math.cos(t),
+	(t) =>2*  Math.sin(t),
+	(t)=> 0,
+	[0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});    
+
+
+
+/*curve in original applet*/
+
+var xcoordraw =  '{#res[1]#}';
+var ycoordraw =  '{#res[2]#}';
+var zcoordraw =  '{#res[3]#}';	
+			
+var xcurve = board.jc.snippet(xcoordraw, true, 't');
+var ycurve = board.jc.snippet(ycoordraw, true, 't');
+var zcurve = board.jc.snippet(zcoordraw, true, 't'); 
+
+var c_result = view.create('curve3d', [
+(t) => xcurve(t),
+(t) => ycurve(t),
+(t) => zcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#EE442F'}); 
+
+/* curve based on student answer */
+
+var sxcoordraw =  '{#studentres[1]#}';
+var sycoordraw =  '{#studentres[2]#}';
+var szcoordraw =  '{#studentres[3]#}';	
+			
+var sxcurve = board.jc.snippet(sxcoordraw, true, 't');
+var sycurve = board.jc.snippet(sycoordraw, true, 't');
+var szcurve = board.jc.snippet(szcoordraw, true, 't'); 
+
+var c_student = view.create('curve3d', [
+(t) => sxcurve(t),
+(t) => sycurve(t),
+(t) => szcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#601A4A'}); 
+
+[[/jsxgraph]]
+
+
+<p dir="ltr" style="text-align: left;">You will now be guided in the completion of the task step by step all the way to the solution.<br>Click the button to display the first intermediate task.<br></p>
+<p>
+    <button type="button" onclick="hide('task');show('input1');">Continue</button>
+</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>ans2;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans2</sans>
+        <tans>deltar</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Nice! You found the correct angle. Good job! </p>
+ <p> Let's have a look at the mathematics of multiple rotations. Click the button to go on.</p>
+ <p>
+        <button type="button" onclick="hide('task1');show('input2');">Continue</button>
+    </p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> You did not find the correct angle. The correct angle is {@deltar@}. Have a look, whether the curves really overlapped perfectly. </p>
+ <p> Let's have a look at the mathematics of multiple rotations. Click the button to go on.</p>
+ <p>
+        <button type="button" onclick="hide('task1');show('input2');">Continue</button>
+    </p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt3</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>ans3;
+ans4;</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans3</sans>
+        <tans>beta</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt3-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Nice! You found the correct angle \(\alpha\). Good job! </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt3-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> The value you gave for angle \(\alpha\) is not yet correct. The correct value is {@betar@}. </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans4</sans>
+        <tans>gamma</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Nice! You also found the correct angle \(\beta\). Good job! </p> <p> Perfect! You got both angles right! </p>
+<br>
+<p> In the next task, you can use your experience from this task, to find out the angles without sliders.
+    
+    <p>
+        <button type="button" onclick="hide('task2a');show('task2b');">Continue</button>
+    </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> The value you gave for angle \(\beta\) is not yet correct. The correct value is {@gammar@}.  Make sure the curves overlap perfectly.</p>
+<br>
+
+<p> In the next task, you can use your experience from this task, to find out the angles without sliders.
+    
+    <p>
+        <button type="button" onclick="hide('task2a');show('task2b');">Continue</button>
+    </p>not correct.<br></p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>ans4</sans>
+        <tans>gamma</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt3-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Nice! You found the correct angle \(\beta\). Good job! Check, whether you did anything differently for \(\alpha\). </p>
+<br>
+ <p> In the next task, you can use your experience from this task, to find out the angles without sliders.
+    
+    <p>
+        <button type="button" onclick="hide('task2a');show('task2b');">Continue</button>
+    </p>correct.<br></p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt3-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> The value you gave for angle \(\beta\) is also not yet correct. The correct value is {@gammar@}. Make sure the curves overlap perfectly using the sliders. This might take a bit of patience.</p>
+<br>
+<p> In the next task, you can use your experience from this task, to find out the angles without sliders.
+    
+    <p>
+        <button type="button" onclick="hide('task2a');show('task2b');">Continue</button>
+    </p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt4</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>ans5;
+ans6;
+
+
+/* calculate matrix product and evalutate angles */
+tro_studentmatres: ev(M1.M3.v, a:ans6, c: ans5);
+
+/* turn matrix to list for export*/
+tro_studentres: [mattolist(tro_studentmatres)[1][1],mattolist(tro_studentmatres)[2][1],mattolist(tro_studentmatres)[3][1]];
+</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans5</sans>
+        <tans>gammar</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt4-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Nice! You found the correct angle \(\alpha\). Good job! </p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt4-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> The value you gave for angle \(\alpha\) is not yet correct. The correct value is {@gammar@}. </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>alphar</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Nice! You also found the correct angle \(\beta\). Good job! </p> <p> Perfect! You got both angles right! </p>
+<br>
+
+<p> Now that you have a feel for the angles, let's look at the dependance of the result on the order of operations.
+    <p>
+        <button type="button" onclick="hide('task2b');show('task3');">Continue</button>
+    </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> The value you gave for angle \(\beta\) is not yet correct. The correct value is {@alphar@}.</p>
+<br> In the following applet, you can see, how your answer would have looked. The blue and orange curves are the way they were presented before. Your solution is displayed in purple. </p>
+[[jsxgraph width="500px" height="500px"]]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+var box = [-3,3]
+var view = board.create('view3d',
+	[[-6, -3], [8, 8],
+	[box, box, box]],
+	{
+		/*planes*/
+		xPlaneRear: {visible:false},
+		yPlaneRear: {visible:false}	
+	});
+var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+var zlabel=view.create('point3d',[
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.9*box[1]], 
+        {size:0,name:"z"});    
+       
+
+/* define curve */
+
+var c_base = view.create('curve3d', [
+	(t) =>2* Math.cos(t),
+	(t) =>2*  Math.sin(t),
+	(t)=> 0,
+	[0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});    
+
+
+
+/*curve in original applet*/
+
+var xcoordraw =  '{#tro_res[1]#}';
+var ycoordraw =  '{#tro_res[2]#}';
+var zcoordraw =  '{#tro_res[3]#}';	
+			
+var xcurve = board.jc.snippet(xcoordraw, true, 't');
+var ycurve = board.jc.snippet(ycoordraw, true, 't');
+var zcurve = board.jc.snippet(zcoordraw, true, 't'); 
+
+var c_result = view.create('curve3d', [
+(t) => xcurve(t),
+(t) => ycurve(t),
+(t) => zcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#EE442F'}); 
+
+/* curve based on student answer */
+
+var sxcoordraw =  '{#tro_studentres[1]#}';
+var sycoordraw =  '{#tro_studentres[2]#}';
+var szcoordraw =  '{#tro_studentres[3]#}';	
+			
+var sxcurve = board.jc.snippet(sxcoordraw, true, 't');
+var sycurve = board.jc.snippet(sycoordraw, true, 't');
+var szcurve = board.jc.snippet(szcoordraw, true, 't'); 
+
+var c_student = view.create('curve3d', [
+(t) => sxcurve(t),
+(t) => sycurve(t),
+(t) => szcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#601A4A'}); 
+
+[[/jsxgraph]]
+
+
+<br>
+
+<p> Now that you have a feel for the angles, let's look at the dependance of the result on the order of operations.
+    <p>
+        <button type="button" onclick="hide('task2b');show('task3');">Continue</button>
+    </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans6</sans>
+        <tans>alphar</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt4-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Nice! You found the correct angle \(\beta\). Good job! Check, whether you did anything differently for \(\alpha\). </p>
+<br> In the following applet, you can see, how your answer would have looked. The blue and orange curves are the way they were presented before. Your solution is displayed in purple. </p>
+[[jsxgraph width="500px" height="500px"]]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+var box = [-3,3]
+var view = board.create('view3d',
+	[[-6, -3], [8, 8],
+	[box, box, box]],
+	{
+		/*planes*/
+		xPlaneRear: {visible:false},
+		yPlaneRear: {visible:false}	
+	});
+var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+var zlabel=view.create('point3d',[
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.9*box[1]], 
+        {size:0,name:"z"});    
+       
+
+/* define curve */
+
+var c_base = view.create('curve3d', [
+	(t) =>2* Math.cos(t),
+	(t) =>2*  Math.sin(t),
+	(t)=> 0,
+	[0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});    
+
+
+
+/*curve in original applet*/
+
+var xcoordraw =  '{#tro_res[1]#}';
+var ycoordraw =  '{#tro_res[2]#}';
+var zcoordraw =  '{#tro_res[3]#}';	
+			
+var xcurve = board.jc.snippet(xcoordraw, true, 't');
+var ycurve = board.jc.snippet(ycoordraw, true, 't');
+var zcurve = board.jc.snippet(zcoordraw, true, 't'); 
+
+var c_result = view.create('curve3d', [
+(t) => xcurve(t),
+(t) => ycurve(t),
+(t) => zcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#EE442F'}); 
+
+/* curve based on student answer */
+
+var sxcoordraw =  '{#tro_studentres[1]#}';
+var sycoordraw =  '{#tro_studentres[2]#}';
+var szcoordraw =  '{#tro_studentres[3]#}';	
+			
+var sxcurve = board.jc.snippet(sxcoordraw, true, 't');
+var sycurve = board.jc.snippet(sycoordraw, true, 't');
+var szcurve = board.jc.snippet(szcoordraw, true, 't'); 
+
+var c_student = view.create('curve3d', [
+(t) => sxcurve(t),
+(t) => sycurve(t),
+(t) => szcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#601A4A'}); 
+
+[[/jsxgraph]]
+
+
+<br>
+
+<p> Now that you have a feel for the angles, let's look at the dependance of the result on the order of operations.
+    <p>
+        <button type="button" onclick="hide('task2b');show('task3');">Continue</button>
+    </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt4-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> The value you gave for angle \(\beta\) is also not yet correct. The correct value is {@alphar@}. </p>
+<br> In the following applet, you can see, how your answer would have looked. The blue and orange curves are the way they were presented before. Your solution is displayed in purple. </p>
+[[jsxgraph width="500px" height="500px"]]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+var box = [-3,3]
+var view = board.create('view3d',
+	[[-6, -3], [8, 8],
+	[box, box, box]],
+	{
+		/*planes*/
+		xPlaneRear: {visible:false},
+		yPlaneRear: {visible:false}	
+	});
+var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+var zlabel=view.create('point3d',[
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.9*box[1]], 
+        {size:0,name:"z"});    
+       
+
+/* define curve */
+
+var c_base = view.create('curve3d', [
+	(t) =>2* Math.cos(t),
+	(t) =>2*  Math.sin(t),
+	(t)=> 0,
+	[0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});    
+
+
+
+/*curve in original applet*/
+
+var xcoordraw =  '{#tro_res[1]#}';
+var ycoordraw =  '{#tro_res[2]#}';
+var zcoordraw =  '{#tro_res[3]#}';	
+			
+var xcurve = board.jc.snippet(xcoordraw, true, 't');
+var ycurve = board.jc.snippet(ycoordraw, true, 't');
+var zcurve = board.jc.snippet(zcoordraw, true, 't'); 
+
+var c_result = view.create('curve3d', [
+(t) => xcurve(t),
+(t) => ycurve(t),
+(t) => zcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#EE442F'}); 
+
+/* curve based on student answer */
+
+var sxcoordraw =  '{#tro_studentres[1]#}';
+var sycoordraw =  '{#tro_studentres[2]#}';
+var szcoordraw =  '{#tro_studentres[3]#}';	
+			
+var sxcurve = board.jc.snippet(sxcoordraw, true, 't');
+var sycurve = board.jc.snippet(sycoordraw, true, 't');
+var szcurve = board.jc.snippet(szcoordraw, true, 't'); 
+
+var c_student = view.create('curve3d', [
+(t) => sxcurve(t),
+(t) => sycurve(t),
+(t) => szcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#601A4A'}); 
+
+[[/jsxgraph]]
+
+
+<br>
+
+<p> Now that you have a feel for the angles, let's look at the dependance of the result on the order of operations.
+    <p>
+        <button type="button" onclick="hide('task2b');show('task3');">Continue</button>
+    </p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt5</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>ans7;
+
+ap_checker: ans7;
+for i:1 thru length(ap_ta) step 1 do(if member(ap_checker, [ap_ta[i][1]]) then ap_location:i);
+ap_location;
+
+ap_M1s: ap_matlist[ap_location][1];
+ap_M2s: ap_matlist[ap_location][2];
+
+/* calculate matrix product and evalutate angles */
+ap_studentmatres: ev(ap_M2s.ap_M1s.v,  b:alphar, c: ap_betar);
+
+/* turn matrix to list for export*/
+ap_studentres: [mattolist(ap_studentmatres)[1][1],mattolist(ap_studentmatres)[2][1],mattolist(ap_studentmatres)[3][1]];
+</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>String</answertest>
+        <sans>ans7</sans>
+        <tans>ap_tans[1]</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt5-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Well done! You got the order of operations right! </p>
+<br>
+<p> You are now presented with the same task as in the beginning. Good luck trying it again!
+  <p>
+        <button type="button" onclick="hide('task3');show('taskagain');">Continue</button>
+    </p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt5-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> Unfortunately, this is not the correct order of operations.  A correct answer is {@ap_tans[1]@}. </p>
+<br> In the following applet, you can see, how your answer would have looked like with the angles provided. The blue and orange curves are the way they were presented before. Your solution is displayed in purple. </p>
+<p> Note: sometimes there are other correct solutions. If there is only a purple curve, it overlaps with the orange and your answer is correct, as well.</p>
+[[jsxgraph width="500px" height="500px"]]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+var box = [-3,3]
+var view = board.create('view3d',
+	[[-6, -3], [8, 8],
+	[box, box, box]],
+	{
+		/*planes*/
+		xPlaneRear: {visible:false},
+		yPlaneRear: {visible:false}	
+	});
+var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+var zlabel=view.create('point3d',[
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.9*box[1]], 
+        {size:0,name:"z"});    
+       
+
+/* define curve */
+
+var c_base = view.create('curve3d', [
+	(t) =>2* Math.cos(t),
+	(t) =>2*  Math.sin(t),
+	(t)=> 0,
+	[0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});    
+
+
+
+/*curve in original applet*/
+
+var xcoordraw =  '{#ap_res[1]#}';
+var ycoordraw =  '{#ap_res[2]#}';
+var zcoordraw =  '{#ap_res[3]#}';	
+			
+var xcurve = board.jc.snippet(xcoordraw, true, 't');
+var ycurve = board.jc.snippet(ycoordraw, true, 't');
+var zcurve = board.jc.snippet(zcoordraw, true, 't'); 
+
+var c_result = view.create('curve3d', [
+(t) => xcurve(t),
+(t) => ycurve(t),
+(t) => zcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#EE442F'}); 
+
+/* curve based on student answer */
+
+var sxcoordraw =  '{#ap_studentres[1]#}';
+var sycoordraw =  '{#ap_studentres[2]#}';
+var szcoordraw =  '{#ap_studentres[3]#}';	
+			
+var sxcurve = board.jc.snippet(sxcoordraw, true, 't');
+var sycurve = board.jc.snippet(sycoordraw, true, 't');
+var szcurve = board.jc.snippet(szcoordraw, true, 't'); 
+
+var c_student = view.create('curve3d', [
+(t) => sxcurve(t),
+(t) => sycurve(t),
+(t) => szcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#601A4A'}); 
+
+[[/jsxgraph]]
+<p> You are now presented with the same task as in the beginning. Good luck trying it again!
+  <p>
+        <button type="button" onclick="hide('task3');show('taskagain');">Continue</button>
+    </p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt6</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>checker: ans8;
+for i:1 thru length(ta) step 1 do(if member(checker, [ta[i][1]]) then location:i);
+location;
+
+studentindices: indexlist[location];
+
+M1s: matlist[studentindices[1]];
+M2s: matlist[studentindices[2]];
+
+/* calculate matrix product and evalutate angles */
+studentmatres: ev(M2s.M1s.v, a:alphar, b:betar, c: gammar);
+
+/* turn matrix to list for export*/
+studentres: [mattolist(studentmatres)[1][1],mattolist(studentmatres)[2][1],mattolist(studentmatres)[3][1]];
+</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>String</answertest>
+        <sans>ans8</sans>
+        <tans>tans[1]</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt6-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Well done! You got the order of operations right! Will you dare to try again for a different set of angles?</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt6-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> Unfortunately, this is not the correct order of operations. <br>  A correct answer is {@ta[indexr][1]@}.<br> In the following applet, you can see, how your answer would have looked like with the angles provided. The blue and orange curves are the way they were presented before. Your solution is displayed in purple. </p>
+<p> Note: sometimes there are other correct solutions. If there is only a purple curve, it overlaps with the orange and your answer is correct, as well.</p>
+
+[[jsxgraph width="500px" height="500px"]]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-8, 8, 8, -10], axis:false, shownavigation: false, keepaspectratio:true});
+var box = [-3,3]
+var view = board.create('view3d',
+	[[-6, -3], [8, 8],
+	[box, box, box]],
+	{
+		/*planes*/
+		xPlaneRear: {visible:false},
+		yPlaneRear: {visible:false}	
+	});
+var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+var zlabel=view.create('point3d',[
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.7*(0.6*box[0]+0.4*box[1]),
+        0.9*box[1]], 
+        {size:0,name:"z"});    
+       
+
+/* define curve */
+
+var c_base = view.create('curve3d', [
+	(t) =>2* Math.cos(t),
+	(t) =>2*  Math.sin(t),
+	(t)=> 0,
+	[0, Math.PI]], {strokeWidth: 2, strokeColor: '#1f84bc'});    
+
+
+
+/*curve in original applet*/
+
+var xcoordraw =  '{#res[1]#}';
+var ycoordraw =  '{#res[2]#}';
+var zcoordraw =  '{#res[3]#}';	
+			
+var xcurve = board.jc.snippet(xcoordraw, true, 't');
+var ycurve = board.jc.snippet(ycoordraw, true, 't');
+var zcurve = board.jc.snippet(zcoordraw, true, 't'); 
+
+var c_result = view.create('curve3d', [
+(t) => xcurve(t),
+(t) => ycurve(t),
+(t) => zcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#EE442F'}); 
+
+/* curve based on student answer */
+
+var sxcoordraw =  '{#studentres[1]#}';
+var sycoordraw =  '{#studentres[2]#}';
+var szcoordraw =  '{#studentres[3]#}';	
+			
+var sxcurve = board.jc.snippet(sxcoordraw, true, 't');
+var sycurve = board.jc.snippet(sycoordraw, true, 't');
+var szcurve = board.jc.snippet(szcoordraw, true, 't'); 
+
+var c_student = view.create('curve3d', [
+(t) => sxcurve(t),
+(t) => sycurve(t),
+(t) => szcurve(t),
+[0, Math.PI]], {strokeWidth:2, strokeColor: '#601A4A'}); 
+
+[[/jsxgraph]]]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>
