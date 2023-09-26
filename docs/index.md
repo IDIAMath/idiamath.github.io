@@ -86,6 +86,10 @@ h \cdot t
 
 ## Vector fields in 3D
 
+## Adaptive Questions
++ Question [Rotating a curve about two axis](question/3D_rotation_two_axis_adaptive.md) This question trains the imagination of rotating objects and guides the student through the topic.
+
+
 ## Additional Material
 
 Here will find applets demonstrating JSXGraph in different applications. [JSXGraph Examples](JSXGraphExamples/JSXGraphExamples.md) This material is usefull for the HELM material as well.
