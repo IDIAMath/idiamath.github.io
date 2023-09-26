@@ -86,6 +86,11 @@ h \cdot t
 
 ## Vector fields in 3D
 
++ Question  [Curl of a vector field](question/3D_vectorfield_curl.md) Given is a vector field (as formula and plotted). The student has to choose the right representation for the curl. The filed is selected from a list of given fields.
+
++ Question  [Vector field of given curl](question/3D_vectorfield_curl_given.md) Given is a curl of a vector field (as formula and plotted). The student has to choose the right representation for a vector field, that is fits to the curl. The filed is selected from a list of given fields.
+
+
 ## Adaptive Questions
 + Question [Rotating a curve about two axis](question/3D_rotation_two_axis_adaptive.md) This question trains the imagination of rotating objects and guides the student through the topic.
 
