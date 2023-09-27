@@ -25,6 +25,7 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [$$\epsilon-\delta$$-criterion for continuous functions](./Functions-e-d-continuity.html)
 + [Uniform continuity of functions](./Functions-uniform-continuity.html)
 + [Definition of Area functions](./FunctionsHyperbola.html)
++ [h-Method and Sine](./FunctionsSinDamped.html) The influence of the parameters of the damped sine function are demonstrated.
 
 ## Calculus 2d
 + [Sequences in 2d](./ConvergenceSequences2D.html)

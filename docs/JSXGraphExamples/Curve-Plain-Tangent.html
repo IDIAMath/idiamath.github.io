@@ -1,0 +1,146 @@
+<head>
+   <meta charset="UTF-8" />
+
+   <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+   <script type="text/javascript" charset="UTF-8"
+      src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+   </script>
+   <title>Curves</title>
+</head>
+
+<body>
+   <h1>
+      St&uuml;ckweise definierte ebene Kurven</h1>
+   <p>
+      Die Kurve ist von der Form \( k_1(t) =( a \cos(t),\sin(t))^{\top}\),
+      \(k_2(t)= (a+t(b-a),0)^{\top}\),
+      \( k_3(t) = (-b \cos(t),b\sin(t))\),
+      \( k_4 (t) = (b+t(a-b),0)^{\top}\)
+      with a proper choise of \(t\in\mathbb{R}\) for each curve.
+   </p>
+
+   <div id="box1" class="jxgbox" style="width:600px; height:600px; "></div>
+
+   <center>
+      <script language="JavaScript">
+         var sliderx0 = -1.5;
+         var sliderx1 = 1.5;
+         var slidery0 = -1.5;
+         var sliderdy = -0.5
+         var slidery1 = slidery0 + sliderdy;
+         var slidery2 = slidery1 + sliderdy;
+         var tmax = 4 * Math.PI;
+         var tmin = 0;
+         var tN = 100;
+         var th = (tmax - tmin) / tN;
+         var xkurve = [];
+         var ykurve = [];
+         var b1 = JXG.JSXGraph.initBoard('box1', { boundingbox: [-3, 3, 3, -3], grid: true, axis: true });
+         b1.snapToGrid = true;
+         b1.suspendUpdate();
+         var a = b1.create('slider', [[sliderx0, slidery0], [sliderx1, slidery0], [0, 1.1, 2]], { name: 'a' });
+         var b = b1.create('slider', [[sliderx0, slidery1], [sliderx1, slidery1], [0, 0.8, 2]], { name: 'b' });
+         var t = b1.create('slider', [[sliderx0, slidery2], [sliderx1, slidery2], [0, 0.75, tmax]], { name: 't' });
+
+         // Definition der ebenen Kurve
+
+         var kurvex = function (t) {
+            // funktionswert
+            var retval = 1;
+            if (t <= 0) {
+               return a.Value();
+            }
+            else if (t <= Math.PI) {
+               return a.Value() * Math.cos(t);
+            }
+            else if (t <= 2 * Math.PI) {
+               return -a.Value() + (t - Math.PI) / Math.PI * (a.Value() - b.Value());
+            }
+            else if (t <= 3 * Math.PI) {
+               return -b.Value() * Math.cos(t);
+            }
+            else if (t <= 4 * Math.PI) {
+               return b.Value() + (t - 3 * Math.PI) / Math.PI * (a.Value() - b.Value());
+            } else {
+
+               return a.Value();
+            }
+         }
+
+
+         var kurvey = function (t) {
+            // funktionswert
+            var retval = 1;
+            if (t <= 0) {
+               return 0;
+            }
+            else if (t <= Math.PI) {
+               return a.Value() * Math.sin(t);
+            }
+            else if (t <= 2 * Math.PI) {
+               return 0;
+            }
+            else if (t <= 3 * Math.PI) {
+               return b.Value() * Math.sin(t);
+            }
+            else if (t <= 4 * Math.PI) {
+               return 0;
+            } else {
+
+               return 0;
+            }
+         }
+
+         var Dkx = JXG.Math.Numerics.D(kurvex);
+         var Dky = JXG.Math.Numerics.D(kurvey);
+
+         var kurve = function () {
+            var tloc = tmin;
+            // funktionswert
+            for (var iloop = 0; iloop <= tN; iloop++) {
+               xkurve[iloop] = kurvex(tloc);
+               ykurve[iloop] = kurvey(tloc);
+               tloc = tloc + th;
+            }
+            return 1;
+         }
+
+         // kurve berechnen
+         var retval = kurve();
+
+         var curve = b1.create('curve', [xkurve, ykurve], { strokeColor: '#0000bb', strokeWidth: '5px' });
+         curve.updateDataArray = function () {
+            // kurve neu berechnen
+            retval = kurve();
+            this.dataX = [];
+            this.dataY = [];
+            for (var i = 0; i < xkurve.length; i++) {
+               this.dataX[i] = xkurve[i];
+               this.dataY[i] = ykurve[i];
+            }
+
+         }
+         var p1 = b1.create('point', [function () { return kurvex(t.Value()); }, function () { return kurvey(t.Value()); }], { name: 'k(t)', visible: true });
+         var p2 = b1.create('point',
+            [() => kurvex(t.Value()) + Dkx(t.Value()),
+            () => kurvey(t.Value()) + Dky(t.Value())]
+            , { name: 'x', visible: false });
+         tangent1 = b1.create('arrow', [p1, p2], { name: "x", visible: true });
+
+         var t1 = b1.create('text', [1, 1,
+            function () {
+               var wert = Math.pow(Dkx(t.Value()), 2) + Math.pow(Dky(t.Value()), 2);
+               return "||k'(t)||^2=" + wert.toFixed(2)
+            }]);
+
+         b1.unsuspendUpdate();
+
+      </script>
+   </center>
+
+</body>
+<footer>Wigand Rathmann, FAU</footer>
+
+</html>
