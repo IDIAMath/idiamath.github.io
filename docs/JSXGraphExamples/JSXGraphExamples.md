@@ -27,7 +27,8 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Uniform continuity of functions](./Functions-uniform-continuity.html)
 + [Definition of Area functions](./FunctionsHyperbola.html) The idea of the area function is shown.
 + [h-Method and Sine](./FunctionsSinDamped.html) The influence of the parameters of the damped sine function are demonstrated.
-+ [Tangent and osculationg circle](./OsculatingCircle-input-num.html) For a given function the tangent and the osculating circle is drawn.
++ [Tangent and osculating circle (numerical)](./OsculatingCircle-input-num.html) For a given function the tangent and the osculating circle is drawn. The derivatives are approximated numericaly.
++ [Tangent and osculating circle (symbolic)](./OsculatingCircle-input-num.html) For a given function the tangent and the osculating circle is drawn. The derivatives are computed symbolicaly.
 
 ## Calculus 2d
 + [Sequences in 2d](./ConvergenceSequences2D.html)  

@@ -44,7 +44,7 @@
         var b1 = JXG.JSXGraph.initBoard('box1', { boundingbox:[-4,5,4,-1], grid: true,axis: true });
         b1.snapToGrid = true;
         var f, graph, g, Df, D2fc, p1, tangentf, m1, c1,c,inputf;
-        var strf;
+        var strf, strDf, strD2f;
         var circleList = [];
         var inputfx = b1.create('input', [-3.1, 4.5, '1/8*((x-2)*(x+2))^2', 'f(x)=']);
         var bplot = b1.create(
@@ -95,9 +95,13 @@
             b1.removeObject(c)
             b1.removeObject(graph)
             // read strings for the functions
-            f = b1.jc.snippet(inputfx.Value(), true, 'x');
-            Df = JXG.Math.Numerics.D(f);
-            D2f = JXG.Math.Numerics.D(Df);
+            // read strings for the functions
+            strf = inputfx.Value();
+            strDf = b1.jc.manipulate("D("+strf+",x);");
+            strD2f = b1.jc.manipulate("D("+strDf+",x);");
+            f = b1.jc.snippet(strf, true, 'x');
+            Df = b1.jc.snippet(strDf, true, 'x');
+            D2f = b1.jc.snippet(strD2f, true, 'x');
             graph = b1.create('functiongraph', [f]);
             c = b1.create('glider', [0, 0, graph], { name: '(x_0,f(x_0))' });
             tangentf = b1.create('tangent', [c], { color: '#aaaaff' });
