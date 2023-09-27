@@ -4,7 +4,8 @@ usemathjax: true
 ---
 # Overview JSXGraph Examples
 
-In the section you will find some examples demonstrating JSXGraph in linear algebra and calculus. H
+In the section you will find some examples demonstrating JSXGraph in linear algebra and calculus. Related HELM Workbooks will be added.
+
 ## Complex Numbers
 + [Complex numbers (polar coordinates)](./ComplexNumberPolar.html)
 + [Complex numbers (addition)](./ComplexNumberAddition.html)
@@ -24,11 +25,13 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Sequences in 1d](./ConvergenceSequencesEps.html)
 + [$$\epsilon-\delta$$-criterion for continuous functions](./Functions-e-d-continuity.html)
 + [Uniform continuity of functions](./Functions-uniform-continuity.html)
-+ [Definition of Area functions](./FunctionsHyperbola.html)
++ [Definition of Area functions](./FunctionsHyperbola.html) The idea of the area function is shown.
 + [h-Method and Sine](./FunctionsSinDamped.html) The influence of the parameters of the damped sine function are demonstrated.
++ [Tangent and osculationg circle](./OsculatingCircle-input-num.html) For a given function the tangent and the osculating circle is drawn.
 
 ## Calculus 2d
-+ [Sequences in 2d](./ConvergenceSequences2D.html)
++ [Sequences in 2d](./ConvergenceSequences2D.html)  
++ [Piecewise curve and tangent](./Curve-Plain-Tangent.html) A piecewise curve depending on sliders and the tangent of the curve are shown.
 + [Areas with function limits](./Intgration2DfunctionLimits.html) Show 2D integration area with functions as limits 
 + [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane.html): Given function an sliders
 + [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane-input.html): Function assigned in an input field.
