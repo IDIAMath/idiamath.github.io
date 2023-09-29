@@ -12,12 +12,13 @@
 
 <body>
    <h1>
-      St&uuml;ckweise definierte ebene Kurven</h1>
+      Piecewise defined curve</h1>
    <p>
-      Die Kurve ist von der Form \( k_1(t) =( a \cos(t),\sin(t))^{\top}\),
-      \(k_2(t)= (a+t(b-a),0)^{\top}\),
-      \( k_3(t) = (-b \cos(t),b\sin(t))\),
-      \( k_4 (t) = (b+t(a-b),0)^{\top}\)
+      The curve is given by <br />
+      \( k_1(t) =( a \cos(t),\sin(t))^{\top}\),<br />
+      \(k_2(t)= (a+t(b-a),0)^{\top}\),<br />
+      \( k_3(t) = (-b \cos(t),b\sin(t))^{\top}\),<br />
+      \( k_4 (t) = (b+t(a-b),0)^{\top}\)<br />
       with a proper choise of \(t\in\mathbb{R}\) for each curve.
    </p>
 
@@ -35,19 +36,18 @@
          var tmin = 0;
          var tN = 100;
          var th = (tmax - tmin) / tN;
-         var xkurve = [];
-         var ykurve = [];
+         var xcurve = [];
+         var ycurve = [];
          var b1 = JXG.JSXGraph.initBoard('box1', { boundingbox: [-3, 3, 3, -3], grid: true, axis: true });
-         b1.snapToGrid = true;
-         b1.suspendUpdate();
+
          var a = b1.create('slider', [[sliderx0, slidery0], [sliderx1, slidery0], [0, 1.1, 2]], { name: 'a' });
          var b = b1.create('slider', [[sliderx0, slidery1], [sliderx1, slidery1], [0, 0.8, 2]], { name: 'b' });
          var t = b1.create('slider', [[sliderx0, slidery2], [sliderx1, slidery2], [0, 0.75, tmax]], { name: 't' });
 
-         // Definition der ebenen Kurve
+         // definition plane curve
 
-         var kurvex = function (t) {
-            // funktionswert
+         var curvex = function (t) {
+            // x-coordinate of the curve
             var retval = 1;
             if (t <= 0) {
                return a.Value();
@@ -70,8 +70,8 @@
          }
 
 
-         var kurvey = function (t) {
-            // funktionswert
+         var curvey = function (t) {
+            // y-coordinate of the curve
             var retval = 1;
             if (t <= 0) {
                return 0;
@@ -93,39 +93,39 @@
             }
          }
 
-         var Dkx = JXG.Math.Numerics.D(kurvex);
-         var Dky = JXG.Math.Numerics.D(kurvey);
+         var Dkx = JXG.Math.Numerics.D(curvex);
+         var Dky = JXG.Math.Numerics.D(curvey);
 
-         var kurve = function () {
+         // get the data to generate the curve
+         var curvef = function () {
             var tloc = tmin;
-            // funktionswert
             for (var iloop = 0; iloop <= tN; iloop++) {
-               xkurve[iloop] = kurvex(tloc);
-               ykurve[iloop] = kurvey(tloc);
+               xcurve[iloop] = curvex(tloc);
+               ycurve[iloop] = curvey(tloc);
                tloc = tloc + th;
             }
             return 1;
          }
 
-         // kurve berechnen
-         var retval = kurve();
 
-         var curve = b1.create('curve', [xkurve, ykurve], { strokeColor: '#0000bb', strokeWidth: '5px' });
+         // generate curve in xcurve, ycurve
+         curvef();
+         var curve = b1.create('curve', [xcurve, ycurve], { strokeColor: '#0000bb', strokeWidth: '5px' });
          curve.updateDataArray = function () {
-            // kurve neu berechnen
-            retval = kurve();
+            // update curve 
+            curvef();
             this.dataX = [];
             this.dataY = [];
-            for (var i = 0; i < xkurve.length; i++) {
-               this.dataX[i] = xkurve[i];
-               this.dataY[i] = ykurve[i];
+            for (var i = 0; i < xcurve.length; i++) {
+               this.dataX[i] = xcurve[i];
+               this.dataY[i] = ycurve[i];
             }
 
          }
-         var p1 = b1.create('point', [function () { return kurvex(t.Value()); }, function () { return kurvey(t.Value()); }], { name: 'k(t)', visible: true });
+         var p1 = b1.create('point', [() => curvex(t.Value()), () => curvey(t.Value())], { name: 'k(t)', visible: true });
          var p2 = b1.create('point',
-            [() => kurvex(t.Value()) + Dkx(t.Value()),
-            () => kurvey(t.Value()) + Dky(t.Value())]
+            [() => curvex(t.Value()) + Dkx(t.Value()),
+            () => curvey(t.Value()) + Dky(t.Value())]
             , { name: 'x', visible: false });
          tangent1 = b1.create('arrow', [p1, p2], { name: "x", visible: true });
 
@@ -135,7 +135,7 @@
                return "||k'(t)||^2=" + wert.toFixed(2)
             }]);
 
-         b1.unsuspendUpdate();
+        
 
       </script>
    </center>

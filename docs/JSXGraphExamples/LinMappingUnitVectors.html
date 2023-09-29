@@ -1,0 +1,93 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+
+
+	<style type="text/css" media="screen, projection"></style>
+	<link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+	<script type="text/javascript" charset="UTF-8"
+		src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+	</script>
+	<title>Linear Mapping: Image of Unit vectors given</title>
+</head>
+
+<body>
+	<h1 class="firstHeading">Linear mappings - definition by the images of the coordinate unit vectors</h1>
+	<p></p>
+	<p>
+		It is sufficent to specify the images of the unit vectors. You can set the vectors \(\varphi(e_1)\) and
+		\(\varphi(e_2)\) by dragging them around.
+	</p>
+	<table>
+		<colgroup>
+			<col width="100">
+			<col width="600">
+			<col width="100">
+		</colgroup>
+		<tr>
+			<td></td>
+			<td>
+				<center>\(\varphi(\mathbf{v})= Av = v_1 \mathbf{a}_1+v_1 \mathbf{a}_1 = v_1 \varphi(e_1)+ v_2
+					\varphi(e_2)\)</center><br />
+				<center>Vektorraum \(V\)</center>
+				<div id="box1" class="jxgbox" style="width:600px; height:400px; float:left;"> </div>
+				<br /><br />
+				<center>Vektorraum \(W\)</center>
+				<br />
+				<div id="box2" class="jxgbox" style="width:600px; height:400px; float:left;"></div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+	<br clear="all">
+	<center>
+		<script language="JavaScript">
+			var b1 = JXG.JSXGraph.initBoard('box1', { boundingbox: [-7.5, 6, 7.5, -4], axis: true, grid: true, snapToGrid: true });
+			var b2 = JXG.JSXGraph.initBoard('box2', { boundingbox: [-7.5, 6, 7.5, -4], axis: true, grid: true, snapToGrid: true });
+			b1.addChild(b2)
+
+			var ve1 = b1.create('line', [[0, 0], [1, 0]], { straightFirst: false, straightLast: false, lastArrow: true });
+			var ve1 = b1.create('line', [[0, 0], [0, 1]], { straightFirst: false, straightLast: false, lastArrow: true });
+
+			// images of the unit vectors
+			var vphie1 = b2.create('point', [1.25, 0], { style: 5, name: '&phi;(<strong>e</strong><sub>1</sub>)' });
+			var vae1 = b2.create('line', [[0, 0], vphie1], { straightFirst: false, straightLast: false, lastArrow: true });
+			var vphie2 = b2.create('point', [0, 1.25], { style: 5, name: '&phi;(<strong>e</strong><sub>2</sub>)' });
+			var vae2 = b2.create('line', [[0, 0], vphie2], { straightFirst: false, straightLast: false, lastArrow: true });
+
+			var v1 = b1.create('point', [1, 1], { style: 5, name: '<strong>v_1</strong>' });
+			var v2 = b1.create('point', [2, 1], { style: 5, name: '<strong>v_2</strong>' });
+			var v3 = b1.create('point', [2, 2], { style: 5, name: '<strong>v_3</strong>' });
+			var v4 = b1.create('point', [1, 2], { style: 5, name: '<strong>v_4</strong>' });
+			var vp = b1.create('polygon', [v1, v2, v3, v4], { straightFirst: false, straightLast: false, lastArrow: true });
+
+			var va1 = b2.create('point', [
+				() => (v1.X() * vphie1.X() + v1.Y() * vphie2.X()),
+				() => (v1.X() * vphie1.Y() + v1.Y() * vphie2.Y()),],
+				{ style: 7, name: "&phi;(<strong>v_1</strong>)" });
+			var va2 = b2.create('point', [
+				() => (v2.X() * vphie1.X() + v2.Y() * vphie2.X()),
+				() => (v2.X() * vphie1.Y() + v2.Y() * vphie2.Y()),],
+				{ style: 7, name: "&phi;(<strong>v_2</strong>)" });
+			var va3 = b2.create('point', [
+				() => (v3.X() * vphie1.X() + v3.Y() * vphie2.X()),
+				() => (v3.X() * vphie1.Y() + v3.Y() * vphie2.Y()),],
+				{ style: 7, name: "&phi;(<strong>v_3</strong>)" });
+			var va4 = b2.create('point', [
+				() => (v4.X() * vphie1.X() + v4.Y() * vphie2.X()),
+				() => (v4.X() * vphie1.Y() + v4.Y() * vphie2.Y()),],
+				{ style: 7, name: "&phi;(<strong>v_4</strong>)" });
+
+			var vap = b2.create('polygon', [va1, va2, va3, va4], { straightFirst: false, straightLast: false, lastArrow: true });
+
+		</script>
+	</center>
+	</p>
+</body>
+<footer>Wigand Rathmann, FAU</footer>
+
+</html>

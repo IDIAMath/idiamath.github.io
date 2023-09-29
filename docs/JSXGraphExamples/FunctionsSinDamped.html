@@ -1,92 +1,90 @@
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-    <script type="text/javascript" charset="UTF-8"
-    src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js">
-    </script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
-  
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-        </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <script type="text/javascript" charset="UTF-8" src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js">
+  </script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
   <style>
     body {
-  font-family: sans-serif;
-  }
+      font-family: sans-serif;
+    }
   </style>
 
-	
-	<title>h-Methode am Beispiel einer gedämpften Schwingung</title>
+
+  <title>h-Method and </title>
 </head>
 
 
-<body >
-		<h1 >Derviative \(f(x)=ae^{-bt}\sin(\omega t+\phi)\)</h1>
-<p>
-                The h-Method is shown with the function \(f(t)=a e^{-bt}\sin(\omega t + \phi)\). 
-                The parameters \(a,b,\omega, \phi\in\mathbb{R}\) will influence the derivative.
-</p>
-<center>
-		<div id="box1" class="jxgbox" style="width:500px; height:400px; "></div>
+<body>
+  <h1>Derivative \(f(x)=ae^{-bt}\sin(\omega t+\phi)\)</h1>
+  <p>
+    The h-Method is shown with the function \(f(t)=a e^{-bt}\sin(\omega t + \phi)\).
+    The parameters \(a,b,\omega, \phi\in\mathbb{R}\) will influence the derivative.
+  </p>
+  <center>
+    <div id="box1" class="jxgbox" style="width:500px; height:400px; "></div>
 
-<br clear="all">
-<script language="JavaScript">
-var  b1 = JXG.JSXGraph.initBoard('box1', {boundingbox:[-1,3.5,9,-4.5], 
-	axis:true,grid:true});
-b1.snapToGrid =true;
+    <br clear="all">
+    <script language="JavaScript">
+      var b1 = JXG.JSXGraph.initBoard('box1', {
+        boundingbox: [-1, 3.5, 9, -4.5],
+        axis: true, grid: true
+      });
+      b1.setAttribute({snapToGrid: true}); 
 
-var fun = function(x) {
-	return a.Value()*Math.exp(-b.Value()*x)*Math.sin(c.Value()*x+d.Value());
-}
-var f = function(x) {
-       if (x<1) {
-          return 0.5*x*x;
-       } else {
-         return x+1;
-       }
+      var fun = function (x) {
+        return a.Value() * Math.exp(-b.Value() * x) * Math.sin(c.Value() * x + d.Value());
+      }
+      var f = function (x) {
+        if (x < 1) {
+          return 0.5 * x * x;
+        } else {
+          return x + 1;
+        }
       };
- var a = b1.create('slider', [[0,-2.5],[4,-2.5],[0,2,3]],{name:'a;'});
- var b = b1.create('slider', [[0,-3],[4,-3],[0,0.1,0.5]],{name:'b;'});
- var c = b1.create('slider', [[0,-3.5],[4,-3.5],[0,1,5]],{name:'&omega;'});
- var d = b1.create('slider', [[0,-4],[4,-4],[0,1.57,6.28]],{name:'&phi;'});
+      var a = b1.create('slider', [[0, -2.5], [4, -2.5], [0, 2, 3]], { name: 'a;' });
+      var b = b1.create('slider', [[0, -3], [4, -3], [0, 0.1, 0.5]], { name: 'b;' });
+      var c = b1.create('slider', [[0, -3.5], [4, -3.5], [0, 1, 5]], { name: '&omega;' });
+      var d = b1.create('slider', [[0, -4], [4, -4], [0, 1.57, 6.28]], { name: '&phi;' });
 
-var  graph = b1.create('functiongraph', [fun,0,10], 
-		{strokeColor:'orange',strokeWidth:6});
-//glider on the curve
-var p1x = b1.create('glider', [2.5,0,b1.defaultAxes.x], {style:1, name:'x_0'});
-var p1 = b1.create('glider', [()=> p1x.X(),
-			                 ()=>(fun(p1x.X())),graph], {style:6, name:'f(x_0)'});
+      var graph = b1.create('functiongraph', [fun, 0, 10],
+        { strokeColor: 'orange', strokeWidth: 6 });
+      //glider on the curve
+      var p1x = b1.create('glider', [2.5, 0, b1.defaultAxes.x], { style: 1, name: 'x_0' });
+      var p1 = b1.create('glider', [() => p1x.X(),
+      () => (fun(p1x.X())), graph], { style: 6, name: 'f(x_0)' });
 
-var t1 = b1.create('tangent', [p1]);
-//                                 variable x coordinate           variable y coordinate depending on the derivative of f at point p1.X()
-p2x = b1.create('glider', [4.5,0,b1.defaultAxes.x], {style:1, name:'x_0+h'});
-p2 = b1.create('point',  [()=>( p2x.X()),()=>(fun(p2x.X()))], 
-					{style:1, name:'f(x_0+h)'});
-//the secand
+      var t1 = b1.create('tangent', [p1]);
+      //                                 variable x coordinate           variable y coordinate depending on the derivative of f at point p1.X()
+      p2x = b1.create('glider', [4.5, 0, b1.defaultAxes.x], { style: 1, name: 'x_0+h' });
+      p2 = b1.create('point', [() => (p2x.X()), () => (fun(p2x.X()))],
+        { style: 1, name: 'f(x_0+h)' });
+      //the secand
 
- l1 = b1.create('line', [p1,p2],{});
-//a third point fpr the slope triangle
-var p3 = b1.create('point', [()=> p2.X(), () => p1.Y()],
-	{style:1, name:''});
-//the slope triangle
-var pol = b1.create('polygon', [p1,p2,p3], {});
+      l1 = b1.create('line', [p1, p2], {});
+      //a third point fpr the slope triangle
+      var p3 = b1.create('point', [() => p2.X(), () => p1.Y()],
+        { style: 1, name: '' });
+      //the slope triangle
+      var pol = b1.create('polygon', [p1, p2, p3], {});
 
-t= b1.create('text', [()=>( p2.X()+0.1),
-			()=> ((p2.Y()+p1.Y())/2),
-			()=>( "m="+((p2.Y()-p3.Y()).toFixed(2)))],{});
+      t = b1.create('text', [() => (p2.X() + 0.1),
+      () => ((p2.Y() + p1.Y()) / 2),
+      () => ("m=" + ((p2.Y() - p3.Y()).toFixed(2)))], {});
 
-</script>
-</center>
+    </script>
+  </center>
 
-</p>
+  </p>
 
-
-
-
-
-</div><!--GlobalWrapper -->
 
 
 </body>
 <footer>Wigand Rathmann, FAU</footer>
+
 </html>

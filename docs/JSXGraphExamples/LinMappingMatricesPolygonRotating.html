@@ -1,0 +1,157 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+
+
+	<title>Linear Mappings and Matrices</title>
+	<style type="text/css" media="screen, projection"></style>
+	<link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+	<script type="text/javascript" charset="UTF-8"
+		src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+	</script>
+</head>
+
+<body>
+
+	<body>
+
+		<table>
+			<colgroup>
+				<col width="200">
+				<col width="400">
+				<col width="200">
+			</colgroup>
+			<tr>
+				<td></td>
+				<td>
+					<center>\(\varphi(\mathbf{v})= Av = v_1 \mathbf{a}_1+v_2 \mathbf{a}_2 = v_1 \varphi(e_1)+ v_2
+						\varphi(e_2)\)</center><br />
+					<div id="box1" class="jxgbox" style="width:600px; height:600px; float:left;"></div>
+					<br />&nbsp;<br />
+					<center>
+						<form><input type="button" value="&phi;=0" onClick="case1()">
+							&nbsp;<input type="button" value="&phi;=&pi;/4" onClick="case2()">
+							&nbsp;<input type="button" value="&phi;=&pi;/2" onClick="case3()"> &nbsp;<input
+								type="button" value="&phi;=3&pi;/4" onClick="case4()"><br /><br/>
+							<input type="button" value="&phi;=&pi;" onClick="case5()">
+							&nbsp;<input type="button" value="&phi;=4&pi;/5" onClick="case6()">
+							&nbsp;<input type="button" value="&phi;=3&pi;/2" onClick="case7()">
+							&nbsp;<input type="button" value="&phi;=7&pi;/4" onClick="case8()">
+							<!---<br/><input type="button" value="clear" onClick="cleardiagram()">-->
+						</form>
+					</center>
+				</td>
+				<td>
+				</td>
+			</tr>
+		</table>
+
+		<br clear="all">
+		<center>
+			<script language="JavaScript">
+				b1 = JXG.JSXGraph.initBoard('box1', {
+					boundingbox: [-7.5, 7.5, 7.5, -7.5],
+					grid: true, axis: true, snapToGrid: true
+				});
+				var phi = b1.create('slider', [[-5, -3], [-2, -3], [0, 1.571, 6.283]], { name: '&phi;' });
+
+				var v1 = b1.create('point', [2, 1], { style: 5, name: '<strong>v_1</strong>' });
+				var v2 = b1.create('point', [5, 1], { style: 5, name: '<strong>v_2</strong>' });
+				var v3 = b1.create('point', [2, 5], { style: 5, name: '<strong>v_3</strong>' });
+				var v4 = b1.create('point', [2, 3], { style: 5, name: '<strong>v_4</strong>' });
+				var vp = b1.create('polygon', [v1, v2, v3, v4], { straightFirst: false, straightLast: false, lastArrow: true });
+
+				var va1 = b1.create('point', [
+					() => (Math.cos(phi.Value()) * v1.X() - Math.sin(phi.Value()) * v1.Y()),
+					() => (Math.sin(phi.Value()) * v1.X() + Math.cos(phi.Value()) * v1.Y()),],
+					{ style: 7, name: "A<strong>v_1</strong>" });
+				var va2 = b1.create('point', [
+					() => (Math.cos(phi.Value()) * v2.X() - Math.sin(phi.Value()) * v2.Y()),
+					() => (Math.sin(phi.Value()) * v2.X() + Math.cos(phi.Value()) * v2.Y()),],
+					{ style: 7, name: "A<strong>v_2</strong>" });
+				var va3 = b1.create('point', [
+					() => (Math.cos(phi.Value()) * v3.X() - Math.sin(phi.Value()) * v3.Y()),
+					() => (Math.sin(phi.Value()) * v3.X() + Math.cos(phi.Value()) * v3.Y()),],
+					{ style: 7, name: "A<strong>v_3</strong>" });
+				var va4 = b1.create('point', [
+					() => (Math.cos(phi.Value()) * v4.X() - Math.sin(phi.Value()) * v4.Y()),
+					() => (Math.sin(phi.Value()) * v4.X() + Math.cos(phi.Value()) * v4.Y()),],
+					{ style: 7, name: "A<strong>v_4</strong>" });
+
+				var vap = b1.create('polygon', [va1, va2, va3, va4], { straightFirst: false, straightLast: false, lastArrow: true, fillColor: 'blue' });
+
+				var text1 = b1.create('text', [3, -4.15,
+					function () {
+						var c1 = Math.cos(phi.Value());
+						return c1.toFixed(3);
+					}]);
+
+				var text2 = b1.create('text', [3, -4.75,
+					function () {
+						var s1 = Math.sin(phi.Value());
+						return s1.toFixed(3);
+					}]);
+				var text3 = b1.create('text', [4, -4.15,
+					function () {
+						var s1 = -Math.sin(phi.Value());
+						return s1.toFixed(3);
+					}]);
+
+				var text4 = b1.create('text', [4, -4.75,
+					function () {
+						var c1 = Math.cos(phi.Value());
+						return c1.toFixed(3);
+					}]);
+
+				function case1() {
+					phi.setValue(0);
+					b1.fullUpdate();
+				}
+
+
+				function case2() {
+					phi.setValue(0.7854);
+					b1.fullUpdate();
+				}
+
+				function case3() {
+					phi.setValue(1.571);
+					b1.fullUpdate();
+				}
+				function case4() {
+					phi.setValue(2.356);
+					b1.fullUpdate();
+				}
+
+				function case5() {
+					phi.setValue(3.141);
+					b1.fullUpdate();
+				}
+				function case6() {
+					phi.setValue(3.927);
+					b1.fullUpdate();
+				}
+
+				function case7() {
+					phi.setValue(4.712);
+					b1.fullUpdate();
+				}
+
+				function case8() {
+					phi.setValue(5.498);
+					b1.fullUpdate();
+				}
+			</script>
+		</center>
+
+		</p>
+
+		<footer>&copy; Wigand Rathmann, FAU</footer>
+
+	</body>
+
+</html>

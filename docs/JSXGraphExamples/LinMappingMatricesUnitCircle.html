@@ -1,0 +1,130 @@
+<html>
+<head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+  
+    
+    <title>Linear Mappings and Matrices</title>
+    <style type="text/css" media="screen, projection"></style>
+    <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+    <script type="text/javascript" charset="UTF-8"
+            src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+    
+	<title>Linear mapping and the unit circle</title>
+</head>
+
+<body>
+
+<table>
+ <colgroup>
+    <col width="50">
+    <col width="400">
+    <col width="400">
+    <col width="50">
+  </colgroup>
+  <tr>	
+	  <td></td>
+	<td>
+We consider the mapping \( \varphi:\mathbb{R}^2 \to \mathbb{R}^2 \) given by \( A\in\mathbb{R}^{2x2} \).
+<center>\(\varphi(\mathbf{v})= Av = v_1 \mathbf{a}_1+v_2 \mathbf{a}_2 = v_1 \varphi(e_1)+ v_2 \varphi(e_2)\)</center><br/> &nbsp;
+</td><td></td><td></td>
+</tr><tr>
+<td></td><td>
+  <center> \(V= \mathbb{R}^2\)</center><br/>
+<div id="box1" class="jxgbox" style="width:500px; height:400px; float:left;"></div>
+</td>
+	  <td>
+  <center> \(\operatorname{range}(A)\subset \mathbb{R}^2 \)</center> <br/>
+<div id="box2" class="jxgbox" style="width:500px; height:400px; float:left;"></div>
+</td><td>
+</td>
+  <tr>	
+	  <td></td>
+	<td>
+<br/>&nbsp;<br/>
+<center>
+<form><input type="button" value="clear" onClick="cleardiagram()">&nbsp;<input type="button" value="symmetric" onClick="case1()">
+&nbsp;<input type="button" value="rank 1" onClick="case2()">
+&nbsp;<input type="button" value="zero mapping" onClick="case3()">
+</form>
+</center>
+</td><td></td><td></td>
+
+  </tr>
+</table>
+
+<br clear="all">
+<center>
+<script language="JavaScript">
+var  b1 = JXG.JSXGraph.initBoard('box1', {boundingbox:[-6,5,6.5,-5], grid:true, axis:true});
+var  b2 = JXG.JSXGraph.initBoard('box2', {boundingbox:[-6,5,6.5,-5], grid:true, axis:true});
+  b1.addChild(b2);
+  b1.snapToGrid = true;
+  b2.snapToGrid = true;
+var  a = b1.create('slider',[[-5,-3],[-2,-3],[-2,1,2]],{name:'\ a_{11}'});
+var   b = b1.create('slider',[[-5,-4],[-2,-4],[-2,0.5,2]],{name:'\  a_{21}'});
+var   c = b1.create('slider',[[0.5,-3],[3.5,-3],[-2,0.5,2]],{name:'\ a_{12}'});
+var   d = b1.create('slider',[[0.5,-4],[3.5,-4],[-2,1,2]],{name:'\ a_{22}'});
+var   r = b1.create('slider',[[2,4],[5,4],[0.1,1,4]],{name:'r'});
+
+var m1 = b1.create('point', [0,0], {name:'M',visible:false,fixed:true});
+var p1 = b1.create('point', [1,0], {name:'Ex',visible:false});
+var c1 = b1.create('circle',[m1,()=> r.Value()], {name:'unit circle',visible:true});
+
+
+var v = b1.create('glider', [0.7071, 0.7071, c1] ,{name:'x'});
+
+var va = b1.create('line',[[0,0],v],{straightFirst:false, straightLast:false, lastArrow:true});
+
+var v2 = b2.create('point',[
+       ()=> (a.Value()*v.X()+c.Value()*v.Y()),
+       ()=> ( b.Value()*v.X()+d.Value()*v.Y())],
+       {style:7,name:"Av",trace:true});
+var  va2 = b2.create('line',[ [0,0],v2],{straightFirst:false, straightLast:false, lastArrow:true, withTicks: true});
+
+function cleardiagram(){
+   v.clearTrace();
+   v2.clearTrace();
+}
+
+function case1(){
+   cleardiagram();
+   a.setValue(1);
+   b.setValue(0.5);
+   c.setValue(0.5);
+   d.setValue(1);
+   b1.fullUpdate();
+}
+function case2(){
+   cleardiagram();
+   a.setValue(0.5);
+   b.setValue(1);
+   c.setValue(1);
+   d.setValue(2);
+   b1.fullUpdate();
+}
+
+function case3(){
+   cleardiagram();
+   a.setValue(0);
+   b.setValue(0);
+   c.setValue(0);
+   d.setValue(0);
+   b1.fullUpdate();
+}
+
+
+</script>
+</center>
+
+</p>
+
+
+</body>
+<footer>Wigand Rathmann, FAU</footer>
+</html>

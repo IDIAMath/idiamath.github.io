@@ -14,6 +14,9 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 
 ## Linear Algebra
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricies.html)
++ [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricesUnitCircle.html) Demonstrated at a circle.
++ [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricesPolygon.html) Demonstrated at a polygon.
++ [Rotation in  $$\mathbb{R}^2$$ ](./LinMappingMatricesPolygonRotating.html) Rotation of a polygon, matrix is displayed.
 + [Eigenvectors of a linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$](./Eigenvectores.html)
 
 
