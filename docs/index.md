@@ -93,6 +93,7 @@ h \cdot t
 
 ## Adaptive Questions
 + Question [Rotating a curve about two axis](question/3D_rotation_two_axis_adaptive.md) This question trains the imagination of rotating objects and guides the student through the topic.
++ Question [Curl of a given vector field](question/3D_vectorfield_curl_adaptive.md) This question trains the computation of the curl of a vector field. This implementation demonstrates the usaga of a single JSXGraph object in an adaptive setting.
 
 
 ## Additional Material

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 1401  -->
+  <question type="stack">
+    <name>
+      <text>Vectorfield curl adaptive (one JSXGraph div)</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[<div id="jsxbox1" >
+<p>Given is a vector field  \(V:\mathbb{R}^3\to\mathbb{R}^3\) by \(V(x,y,z):=\begin{pmatrix}{@Vx@} \\ {@Vy@} \\ {@Vz@} \end{pmatrix} \) as shown in the diagram.</p>
+
+[[jsxgraph width="500px" height="500px" input-ref-ans1='ans1Ref']]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [0, 10, 10,0], axis:false, shownavigation : false});
+var box = [-3,3]
+var view = board.create('view3d',
+            [[2,2.5], [6, 6],
+            [box, box, box]],
+            {});
+// Transform components of the vector function
+var TF1 = board.jc.snippet('{#Vx#}', true, 'x,y,z');
+var TF2 = board.jc.snippet('{#Vy#}', true, 'x,y,z');
+var TF3 = board.jc.snippet('{#Vz#}', true, 'x,y,z');
+
+var vector=[];
+var scaleVec = 0.5;
+
+/* Funktionen zum Plotten der Vektorfelder */
+function clearVectorField(){
+    board.removeObject(vector);
+    vector=[];
+}
+
+function vectorField(){
+    clearVectorField();
+    board.suspendUpdate();
+    var i,j,k,vx,vy;
+    var pout=[];
+    for(k=-2; k<2; k+=1){
+        for(i=-2; i<2; i+=1){
+            for(j=-2;j<2; j+=1){
+                                //var norm = Math.max((i*i+ j*j ),0.001);
+                               var norm =1;
+                 vector.push(view.create('line3d',[[i, j,k ],
+                                [TF1(i,j,k),TF2(i,j,k),TF3(i,j,k)],[0,scaleVec]],
+                                {point: { withLabel: false},
+                                point1: {visible: true, size: 1, color: '#EE442F',strokeColor: '#EE442F', withLabel: false},
+                                point2: {visible: false, withLabel: false},
+                                lastArrow:true, fixed: true, strokeColor:'#EE442F', highlight:false})
+                            );
+
+            }
+        }
+    }
+board.unsuspendUpdate();
+}
+/* end helper functions */
+vectorField();
+
+board.update();
+
+                      /* axis labels*/
+                       var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+                       var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+                       var zlabel=view.create('point3d',[
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.9*box[1]], 
+                           {size:0,name:"z"});
+
+[[/jsxgraph]]
+</div>
+<div id ="task">
+<p>Type in the vector field \(\hat V= \nabla \times V\). This is the vector field that results, when the curl operator is applied to \(V\).</p>
+<p> Give your answer in the form of a list, e.g. <code>[2,x,z]</code>.
+<p>\(\hat V=\) [[input:ans1]] [[validation:ans1]]</p>
+[[feedback:prt1]]
+</div>
+
+<div id="input" style="display:none;">
+<p>The curl is a measure for infinitesimal circulatios in a vector field. If a vector field has some kind of "swirlyness" to it, the curl operator will result in a non-zero vector field again. This has applications in flow of liquids, but also quite prominently in the theory of classical electrodynamics. This can be condensed to the famous Maxwell's equations, where the curl of the elctric and magnetic field play an important role. <br>
+The curl can be calculated by
+\[\nabla \times V= \begin{pmatrix} \frac{\partial V_z}{\partial y}- \frac{\partial V_y}{z}\\ \frac{\partial V_x}{\partial z}-\frac{\partial V_z}{\partial x} \\ \frac{\partial V_y}{\partial x}-\frac{\partial V_x}{\partial y} \end{pmatrix} \] <br>
+In the next task, you will be presented with a vector field and a list of possible resulting fields, when the curl operator is applied.</p>
+<p>
+    <button type="button" onclick="hide('input');show('jsxbox1');show('task2');">Continue</button>
+</p>
+</div>
+<div id="task2" style="display:none;">
+Select \(\hat V\).
+<p>[[input:ans2]] [[validation:ans2]]</p>
+[[feedback:prt2]]
+</div>
+
+<script src="https://www.rub.de/ak-mathe-digital/stackselbstlern.js"></script>]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>2</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023010400</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* define the list of vector fiels */
+Vlist:[[z,x,y],[y,-x,0],[x,y,z]];
+
+/* select one of the vector fields */
+lv:length(Vlist);
+Vindex:rand(lv)+1;
+Vselected:Vlist[Vindex];
+
+/* compute the curl of all vector fields in the list */
+Vcurlop(Vinp):=[diff(Vinp[3],y)-diff(Vinp[2],z),diff(Vinp[1],z)-diff(Vinp[3],x),diff(Vinp[2],x)-diff(Vinp[1],y)];
+for iv:1 step 1 thru lv do   
+    (Vlistcurl[iv]:Vcurlop(Vlist[iv])); 
+
+/* define Vx, Vy, Vz for rendering the vector field*/
+Vx:Vselected[1];
+Vy:Vselected[2];
+Vz:Vselected[3];
+
+
+/* build option list for selection */
+iv:0;
+/* ta out of for loop does not work, create the list manualy */
+ta:[[Vlistcurl[1],if Vindex=1 then true else false]];
+for iv:2 step 1 thru lv do ta:append(ta,[[Vlistcurl[iv],if Vindex=iv then true else false]]);
+/* ta:[[Vlistcurl[1],false],[Vlistcurl[2],false],[Vlistcurl[3],false]];*/
+
+/* set the selected vector field to 'true' */
+ta[Vindex][2]:true;
+
+tans:Vlistcurl[Vindex];</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text></text>
+    </specificfeedback>
+    <questionnote>
+      <text>Vector fields {@Vselected@}</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Richtige Antwort, gut gemacht!]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Ihre Antwort ist teilweise korrekt.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Falsche Antwort.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>tans</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>3</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>radio</type>
+      <tans>ta</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>tans</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! You found the correct vector field.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Selected vector field does not fit. Please compute \(\nabla \times V\) for the given field. You will be guided in doing so, when you click the button "continue".</p>
+<p>
+    <button type="button" onclick="hide('task');hide('jsxbox1');show('input');">Continue</button>
+</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>tans</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> Well done, you selected the correct vector field. You can now try to calculate the curl of more complicated vector fields. The process is always the same.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p> You did not select the correct vector field. Please compute \(\nabla \times V\) for the given field \(V(x,y,z):=\begin{pmatrix} {@Vx@} \\ {@Vy@} \\ {@Vz@} \end{pmatrix}\). </p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>

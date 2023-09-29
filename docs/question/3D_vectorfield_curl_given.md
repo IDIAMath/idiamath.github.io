@@ -12,6 +12,8 @@ theme: minima
 |:--:|
 | *First impression of the question* |
 
++ [XML Code](XML/quiz-IDIAM-Curl%20of%20a%20vector%20field%20(Curl%20given).xml)
+
 ## Question description
 
 A 3D vector field is plotted. It is the curl of another vector field. 
@@ -23,7 +25,6 @@ The student sees a plot of the 3D vector field. They can rotate their point of v
 
 
 | ![Click draw button](./images/curl_given_student_2023-05-29.PNG) |
-| ![Click draw button](./images/curl_given_student_2023-05-29.PNG) |
 |:--:|
 | *When the student solves the problem* |
 
@@ -33,7 +34,6 @@ The teacher can remove entries from or add entries to the list `Vlist` that cont
 
 **The rest of the Question variables should not be altered.**
 
-| ![values the teacher can change](./images/curl_given_teacher_2023-05-29.PNG) |
 | ![values the teacher can change](./images/curl_given_teacher_2023-05-29.PNG) |
 |:--:|
 | *The above image shows which values the teacher may wish to change* |
@@ -209,8 +209,5 @@ None needed, since `ans1` is selected by ticking a button.
 |:--:|
 | *Values of **node 1*** |
 
-## Todo:
-* [ ] More options for vector fields
-* [x] Display definition of curl in solution
-* [x] **fix JSXGraph-Applet, does not work currently**
+
 
