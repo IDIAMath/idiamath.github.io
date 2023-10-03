@@ -60,6 +60,8 @@ In optimization the local 2nd order behavior of a function hast to be analysed. 
 
 ### Integration Domains in 2D
 + Question [Polar Coordinates (Matching)](question/2D_polar_coordinates_matching_algebraic.md) (fit the reference volume by entering intervals for $$r$$ and $$\phi$$
++ Question [Area bounded by two functions](question/2D_boundary_integration_area_typeI.md) Find the formulation of the functions that bound the integration domain. Type 1 means that functions depends on $$x$$.
+
 
 
 ### Integration Domains in 3D

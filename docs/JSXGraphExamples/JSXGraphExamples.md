@@ -43,6 +43,16 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Function and Taylor 2nd order](./demo3d-pointOnSurface-Taylor2.html) Given function an sliders
 + [Function and Taylor 2nd order](./demo3d-pointOnSurface-Taylor2-input.html) Function assigned in an input field.
 
+## Integration domains 2d
++ [Curvilinear bounded domain (functions of $$y$$)](./IntArea2D-Input-xproj.html) You are given a domain and you have to reconstruct this domain by setting up four functions.
++ [Curvilinear bounded domain (functions of $$x$$)](./IntArea2D-Input-yproj.html) You are given a domain and you have to reconstruct this domain by setting up four functions.
++ [Curvilinear bounded domain](./IntArea2D-curved-Input.html) You are given a domain and you have to reconstruct this domain by setting up four functions.
+
+
+## Coordinate Transformations
++ [Polar coordinates](./IntArea2D-polarKoord.html)
++ [Spherical coordinates](./demo3d-sphere4.html)
+
 ## Vector Fields
 + [Slope Field](./slopefield-plot-input.html) Slopefield of a function $$f:\mathbb{R}^2\to\mathbb{R}$$ like $$y'(x)=f(x,y)$$ is plotted, a trajectory thru $$(x,_0,y_0)$$ is plotted. The function can be modified by an input field.
 + [Vector Field 2d](./vectorfield-plot-input.html) given by a function $$V:\mathbb{R}^2\to\mathbb{R}^2$$, a trajectory thru $$(x,_0,y_0)$$ is plotted. The vector field can be modified by an input field.
@@ -52,6 +62,3 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Vector Field 3d at curve](./vectorfield3D-curve-input.html) Curve given by a function $$c:[-1,1]\to\mathbb{R}^3$$ and the vectorfield $$V:\mathbb{R}^3\to\mathbb{R}^3$$, the vectofield is plotted at the curve.
 + [Vector Field 3d with slider](./vectorfield3D-curve-slider.html) Curve can be manipulated by sliders, the vectorfield as well. Both is hard coded in the applet.
 
-## Transformations
-+ [Polar coordinates](./IntArea2D-polarKoord.html)
-+ [Spherical coordinates](./demo3d-sphere4.html)
