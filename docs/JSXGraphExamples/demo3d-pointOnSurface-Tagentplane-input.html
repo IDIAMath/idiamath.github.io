@@ -5,31 +5,30 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
     <script type="text/javascript" charset="UTF-8"
-            src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
+        src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
-    <script id="MathJax-script" async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>    
-  <title>Tangent plane</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <title>Tangent plane</title>
 
 </head>
 
 <body>
     <article>
-    <h2>3D function graph with Tangentplane</h2>
-    <p>
-    Function: \(f:\mathbb{R}^2\to\mathbb{R}\)<br/>
-    </p>
-    <table style="width: 100;">
-<tr>
-<td>
-    <center>
-    <div id="jxgbox5" class="jxgbox construct" style="width: 500px;height: 500px;"></div>
-</center>
-</td>
-</tr>
-</table>
-<script>
+        <h2>3D function graph with Tangentplane</h2>
+        <p>
+            Function: \(f:\mathbb{R}^2\to\mathbb{R}\)<br />
+        </p>
+        <table style="width: 100;">
+            <tr>
+                <td>
+                    <center>
+                        <div id="jxgbox5" class="jxgbox construct" style="width: 500px;height: 500px;"></div>
+                    </center>
+                </td>
+            </tr>
+        </table>
+        <script>
             var board = JXG.JSXGraph.initBoard('jxgbox5', {
                 boundingbox: [-8, 8, 8, -10],
                 keepaspectratio: false,
@@ -50,26 +49,26 @@
                     yPlaneRearXAxis: { visible: false },
                     yPlaneRearZAxis: { visible: false },
                 });
-        //slider-based curve
-        var xlabel = view.create(
-          "point3d",
-          [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
-          { size: 0, name: "x" }
-        );
-        var Ylabel = view.create(
-          "point3d",
-          [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
-          { size: 0, name: "y" }
-        );
-        var Zlabel = view.create(
-          "point3d",
-          [
-            0.7 * (0.6 * box[0] + 0.4 * box[1]),
-            0.7 * (0.6 * box[0] + 0.4 * box[1]),
-            0.9 * box[1],
-          ],
-          { size: 0, name: "z" }
-        );
+            //slider-based curve
+            var xlabel = view.create(
+                "point3d",
+                [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
+                { size: 0, name: "x" }
+            );
+            var Ylabel = view.create(
+                "point3d",
+                [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
+                { size: 0, name: "y" }
+            );
+            var Zlabel = view.create(
+                "point3d",
+                [
+                    0.7 * (0.6 * box[0] + 0.4 * box[1]),
+                    0.7 * (0.6 * box[0] + 0.4 * box[1]),
+                    0.9 * box[1],
+                ],
+                { size: 0, name: "z" }
+            );
 
 
             // entries of quadratic form given from outside
@@ -78,83 +77,83 @@
             var a3g = 0;
             var h = 0.1;
             var F, Fdx, Fdy, c, Axy, A, dFx, dFx1, dFx2, dFx_vec, dFx_vecnorm;
-            var plane1,a,b;
+            var plane1, a, b;
             var inputFun = board.create("input", [-5, 7, "sin(x)*cos(y)", "f(x,y)="], {
-      cssStyle: "width: 100px",
-    });
-    var inputPlot = board.create("button", [-1.5, 7, "Plot", function() {plot();}], {
-      cssStyle: "width: 50px",
-    });
-    var inputFull = board.create("button", [4, 7, "Fullscreen",  ()=>{board.toFullscreen();}], {
-      cssStyle: "width: 75px",
-    });
-   
-//plot();
-
-function plot()  {
-    board.removeObject(Axy);
-    board.removeObject(A);
-    board.removeObject(c);
-    board.removeObject(plane1);
-    board.removeObject(a);
-    board.removeObject(b);
-            
-            // Function Fgiven to be plotted
-            F = board.jc.snippet(inputFun.Value(), true, "x,y", true);
-            Fdx = (x, y) =>  (F(x+h,y)-F(x,y))/h;
-            Fdy = (x, y) => (F(x,y+h)-F(x,y))/h;
-            // 3D surface
-            c = view.create('functiongraph3d', [
-                F,
-                box,
-                box,
-            ], { strokeWidth: 0.5, stepU: 70, stepsV: 70 });
-
-            // 3D points:
-            // Point on xy plane
-            Axy = view.create('point3d', [1, 1, -2], { withLabel: false });
-
-            // Project Axy to the surface
-            var A = view.create('point3d', [
-                () => [Axy.X(), Axy.Y(), F(Axy.X(), Axy.Y())]
-            ], { withLabel: false });
-            view.create('line3d', [Axy, A], { dash: 1 })
-
-            // Partial derivatives of F in point A
-            // should be provided form STACKD
-            dFx = () => Fdx(A.X(), A.Y()),
-                dFy = () => Fdy(A.X(), A.Y());
-            dFx_vecnorm = () => Math.sqrt(1 + Fdx(A.X(), A.Y()) ** 2),
-                dFy_vecnorm = () => Math.sqrt(1 + Fdy(A.X(), A.Y()) ** 2);
-
-            // var dFx1 = () => 1.0/Math.sqrt(1+Fdx(A.X(),A.Y())**2),
-            dFx1 = () => 1.0 / dFx_vecnorm(),
-            dFx2 = () => Fdx(A.X(), A.Y()) / Math.sqrt(1 + Fdx(A.X(), A.Y()) ** 2);
-            dFy1 = () => 1.0 / Math.sqrt(1 + Fdy(A.X(), A.Y()) ** 2),
-            dFy2 = () => Fdy(A.X(), A.Y()) / Math.sqrt(1 + Fdy(A.X(), A.Y()) ** 2);
-
-            dFx_vec = [dFx1, 0, dFx2],
-            dFy_vec = [0, dFy1, dFy2];
-
-            // Tangent plane
-            plane1 = view.create('plane3d', [
-                A,
-                dFx_vec, dFy_vec,
-                [-0.5, 0.5], [-0.5, 0.5]
-            ], {
-                fillOpacity: 0.8, fillColor: 'red'
+                cssStyle: "width: 100px",
             });
-            var a = view.create('line3d', [A, dFx_vec, [0, 1]]);
-            var b = view.create('line3d', [A, dFy_vec, [0, 1]]);
-        }
-    </script>
-</article>
+            var inputPlot = board.create("button", [-5, 6, "Plot", function () { plot(); }], {
+                cssStyle: "width: 50px",
+            });
+            var inputFull = board.create("button", [4, 7, "Fullscreen", () => { board.toFullscreen(); }], {
+                cssStyle: "width: 75px",
+            });
+
+            //plot();
+
+            function plot() {
+                board.removeObject(Axy);
+                board.removeObject(A);
+                board.removeObject(c);
+                board.removeObject(plane1);
+                board.removeObject(a);
+                board.removeObject(b);
+
+                // Function Fgiven to be plotted
+                F = board.jc.snippet(inputFun.Value(), true, "x,y", true);
+                Fdx = (x, y) => (F(x + h, y) - F(x, y)) / h;
+                Fdy = (x, y) => (F(x, y + h) - F(x, y)) / h;
+                // 3D surface
+                c = view.create('functiongraph3d', [
+                    F,
+                    box,
+                    box,
+                ], { strokeWidth: 0.5, stepU: 70, stepsV: 70 });
+
+                // 3D points:
+                // Point on xy plane
+                Axy = view.create('point3d', [1, 1, -2], { withLabel: false });
+
+                // Project Axy to the surface
+                var A = view.create('point3d', [
+                    () => [Axy.X(), Axy.Y(), F(Axy.X(), Axy.Y())]
+                ], { withLabel: false });
+                view.create('line3d', [Axy, A], { dash: 1 })
+
+                // Partial derivatives of F in point A
+                // should be provided form STACKD
+                dFx = () => Fdx(A.X(), A.Y()),
+                    dFy = () => Fdy(A.X(), A.Y());
+                dFx_vecnorm = () => Math.sqrt(1 + Fdx(A.X(), A.Y()) ** 2),
+                    dFy_vecnorm = () => Math.sqrt(1 + Fdy(A.X(), A.Y()) ** 2);
+
+                // var dFx1 = () => 1.0/Math.sqrt(1+Fdx(A.X(),A.Y())**2),
+                dFx1 = () => 1.0 / dFx_vecnorm(),
+                    dFx2 = () => Fdx(A.X(), A.Y()) / Math.sqrt(1 + Fdx(A.X(), A.Y()) ** 2);
+                dFy1 = () => 1.0 / Math.sqrt(1 + Fdy(A.X(), A.Y()) ** 2),
+                    dFy2 = () => Fdy(A.X(), A.Y()) / Math.sqrt(1 + Fdy(A.X(), A.Y()) ** 2);
+
+                dFx_vec = [dFx1, 0, dFx2],
+                    dFy_vec = [0, dFy1, dFy2];
+
+                // Tangent plane
+                plane1 = view.create('plane3d', [
+                    A,
+                    dFx_vec, dFy_vec,
+                    [-0.5, 0.5], [-0.5, 0.5]
+                ], {
+                    fillOpacity: 0.8, fillColor: 'red'
+                });
+                var a = view.create('line3d', [A, dFx_vec, [0, 1]]);
+                var b = view.create('line3d', [A, dFy_vec, [0, 1]]);
+            }
+        </script>
+    </article>
 
 
-<footer>
-Based on example of Alfred Wassermann, Uni Bayreuth,
-Wigand Rathmann, FAU
-</footer>
+    <footer>
+        Based on example of Alfred Wassermann, Uni Bayreuth,
+        Wigand Rathmann, FAU
+    </footer>
 </body>
 
 </html>

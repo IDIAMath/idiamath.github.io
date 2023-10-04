@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+    <script type="text/javascript" charset="UTF-8"
+        src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <title>Tangent plane</title>
+
+</head>
+
+<body>
+
+    <h2>3D function graph with Taylor 2nd order</h2>
+    <p>
+        Function: \(f:\mathbb{R}^2\to\mathbb{R}\) can be assigned in the input field. <br />
+        Click the "Plot"-Button to display the function.
+    </p>
+    The derivatives to compute the tangent plane are implemented analytically.
+    </p>
+    <table style="width: 100;">
+        <tr>
+            <td>
+                <div id="jxgbox5" class="jxgbox construct" style="width: 500px;height: 500px;"></div>
+            </td>
+        </tr>
+    </table>
+
+    <script id="ex5">
+        var board = JXG.JSXGraph.initBoard('jxgbox5', {
+            boundingbox: [-8, 8, 8, -10],
+            keepaspectratio: false,
+            axis: false
+        });
+        // step size for finite differences
+        var h = 0.1;
+        var A, Axy, a, b, c, c2;
+        var F, dFx, dFy, TF, dFx, dFy, dFx_vec, dFx_vecnorm, dFy_vec, dFy_vecnorm;
+        var Fdxx, Fdxy, Fdyy;
+        var box = [-2, 2];
+        var view = board.create('view3d',
+            [
+                [-6, -3], [8, 8],
+                [box, box, box]
+            ],
+            {
+                xPlaneRear: { visible: false },
+                xPlaneRearYAxis: { visible: false },
+                xPlaneRearZAxis: { visible: false },
+                yPlaneRear: { visible: false },
+                yPlaneRearXAxis: { visible: false },
+                yPlaneRearZAxis: { visible: false },
+            });
+        var inputFun = board.create("input", [-5, 7, "sin(x)*cos(y)", "f(x,y)="], {
+            cssStyle: "width: 100px",
+        });
+        var inputPlot = board.create("button", [-5, 6, "Plot", function () { plot(); }], {
+            cssStyle: "width: 50px",
+        });
+        var inputFull = board.create("button", [4, 7, "Fullscreen", () => { board.toFullscreen(); }], {
+            cssStyle: "width: 75px",
+        });
+
+        // entries of quadratic form given from outside
+        var a1g = 0;
+        var a2g = 0.5;
+        var a3g = 0;
+
+        //slider-based curve
+        var xlabel = view.create(
+            "point3d",
+            [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
+            { size: 0, name: "x" }
+        );
+        var Ylabel = view.create(
+            "point3d",
+            [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
+            { size: 0, name: "y" }
+        );
+        var Zlabel = view.create(
+            "point3d",
+            [
+                0.7 * (0.6 * box[0] + 0.4 * box[1]),
+                0.7 * (0.6 * box[0] + 0.4 * box[1]),
+                0.9 * box[1],
+            ],
+            { size: 0, name: "z" }
+        );
+
+
+
+        function plot() {
+            board.removeObject(F);
+
+            // Function Fgiven to be plotted
+            F = board.jc.snippet(inputFun.Value(), true, "x,y", true);
+            // 3D surface
+            c = view.create('functiongraph3d', [
+                F,
+                box,
+                box,
+            ], { strokeWidth: 0.5, stepU: 70, stepsV: 70 });
+
+        }
+    </script>
+
+
+    <p>
+        Based on example of Alfred Wassermann, Uni Bayreuth, <br />
+        Wigand Rathmann, FAU
+    </p>
+</body>
+
+</html>

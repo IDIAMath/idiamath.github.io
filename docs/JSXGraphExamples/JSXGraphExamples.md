@@ -38,6 +38,7 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Sequences in 2d](./ConvergenceSequences2D.html)  
 + [Piecewise curve and tangent](./Curve-Plain-Tangent.html) A piecewise curve depending on sliders and the tangent of the curve are shown.
 + [Areas with function limits](./Intgration2DfunctionLimits.html) Show 2D integration area with functions as limits 
++ [Function plot](./demo3d-function-plot-input.html): Plot a function provided in input box.
 + [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane.html): Given function an sliders
 + [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane-input.html): Function assigned in an input field.
 + [Function and Taylor 2nd order](./demo3d-pointOnSurface-Taylor2.html) Given function an sliders
