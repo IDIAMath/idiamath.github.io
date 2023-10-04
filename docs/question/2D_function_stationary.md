@@ -227,7 +227,9 @@ FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);
 | ![Node 1](./images/stationary_point_PRT_node_1_2023-03-29.jpg) |
 |:--:|
 | *Values of **node 1*** |
+
 ### Node 1
+
  |property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
@@ -241,6 +243,7 @@ FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);
 | *Values of **node 2*** |
 
 ### Node 2
+
  |property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
@@ -252,7 +255,9 @@ FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);
 | ![Node 3](./images/stationary_point_PRT_node_3_2023-03-29.jpg) |
 |:--:|
 | *Values of **node 3*** |
+
 ### Node 3
+
  |property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
@@ -260,7 +265,3 @@ FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);
 |TAns | `0`| 
 |Node 3 true feedback | `<p>Nice! In \(y\)-direction the slope is close to zero. Maybe you didn't select the point precisely enough in \(x\)-direction. Try again!</p>`|
 |Node 3 false feedback | `<p>In \(y\)-direction the slope is also not close enough to zero. This is not a stationary point. Remember the definition of a stationary point and have a look at the explanation below!</p>`|
-
-
-## Todo:
-* [ ] 

@@ -10,7 +10,7 @@ theme: minima
 + Student can predict how a curve will change graphically once a rotational matrix is applied (Representing mathematical entities, Making use of aids and tools)
 + Student can reconstruct the axis of rotation and the order of operations from a rotated curve (Representing mathematical entities)
 
-# Exercise layout
+## Exercise layout
 This is an adaptive tutorial task. That means, a relatively hard task is presented. When the task is answered incorrectly, a series of other tasks is activated. These tasks cover the fundamentals necessary to solve the initial problem. The next figure depicts the scheme.
 The tasks are documented seperately, but no in complete detail in this document. Some of the tasks are availabe as stand-alone exercises.
 

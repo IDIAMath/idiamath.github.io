@@ -19,6 +19,8 @@ This is an adaptive tutorial task. If the answer the student has given is not co
 
 A 3D vector field is plotted. The student has to enter the vector field, which represents the curl.
 
++ [XML Code](XML/quiz-IDIAM-Curl%20of%20a%20vector%20field%20(Curl%20given).xml)
+
 ### Student perspective
 
 The student sees a plot of the 3D vector field. They can rotate their point of view using the sliders and get a better idea of the vector field.
@@ -91,7 +93,7 @@ Here the general text is given.
 +	JSXGraph applet using the functions and variables defined in **Question variables** plotting the 3D vector field and its curl in a projected plane, the angle of projection can be changed such that the vector fields can be viewed from multiple directions.
 + The answers are placed in the tasks parts. This `<div>` is (un)hided using the "Continue" button.
 #### Question text code
-```javascript
+``` javascript
 <div id="jsxbox1">
 <p>Given is a vector field  \(V:\mathbb{R}^3\to\mathbb{R}^3\) by \( V(x,y,z) := \begin{pmatrix}{@Vx@} \\ {@Vy@} \\ {@Vz@}\end{pmatrix} \) as shown in the diagram.</p>
 
@@ -168,7 +170,7 @@ board.update();
 #### Question text code
 
 
-```javascript
+``` javascript
 <div id ="task">
 <p>Type in the vector field \(\hat V= \nabla \times V\). This is the vector field that results, when the curl operator is applied to \(V\).</p>
 <p> Give your answer in the form of a list, e.g. <code>[2,x,z]</code>.
@@ -193,6 +195,7 @@ none
 
 ### Potential response tree
 #### prt1
+
 | ![prt1](./images/curl_adaptive_PRT_1.PNG) |
 |:--:|
 | *Visualization of **prt1*** |
@@ -206,6 +209,7 @@ None needed, since `ans1` is selected by ticking a button.
 |:--:|
 | *Values of **node 1*** |
 ### Node 1
+
  |property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
