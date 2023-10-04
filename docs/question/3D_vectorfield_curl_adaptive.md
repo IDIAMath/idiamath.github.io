@@ -88,11 +88,13 @@ tans:Vlistcurl[Vindex];
 ### JSXGraph applet
 Here the general text is given.
 + ``` <div id="jsxbox1"> ```
-+	Given is a vector field  $V:\mathbb{R}^3\to\mathbb{R}^3$ by $V(x,y,z):=\begin{pmatrix}{@Vx@}\\{@Vy@}\\{@Vz@}\end{pmatrix}$ as shown in the diagram. Select the vector fields $\hat V$, so that $\hat V = \nabla \times V$ is valid.
++	Given is a vector field  $$V:\mathbb{R}^3\to\mathbb{R}^3$$ by $$V(x,y,z):=\begin{pmatrix}{@Vx@}\\{@Vy@}\\{@Vz@}\end{pmatrix}$$ as shown in the diagram. Select the vector fields $$\hat V$$, so that $$\hat V = \nabla \times V$$ is valid.
 
 +	JSXGraph applet using the functions and variables defined in **Question variables** plotting the 3D vector field and its curl in a projected plane, the angle of projection can be changed such that the vector fields can be viewed from multiple directions.
 + The answers are placed in the tasks parts. This `<div>` is (un)hided using the "Continue" button.
+
 #### Question text code
+
 ``` javascript
 <div id="jsxbox1">
 <p>Given is a vector field  \(V:\mathbb{R}^3\to\mathbb{R}^3\) by \( V(x,y,z) := \begin{pmatrix}{@Vx@} \\ {@Vy@} \\ {@Vz@}\end{pmatrix} \) as shown in the diagram.</p>
@@ -159,10 +161,11 @@ board.update();
 
 [[/jsxgraph]]
 </div>
+
 ```
 
 ### Question Text (Task 1)
-+ ``` <div id="task"> ```
++ ` <div id="task"> `
 + The question ist stated the first time here. Give your answer in the form of a list, e.g. <code>[2,x,z]</code>.
 +	$\hat V=$ `[[input:ans1]]` at the end of JSXGraph code to allow input of an answer of the student
 +	`[[validation:ans1]]` checking of answer
@@ -178,6 +181,7 @@ board.update();
 [[feedback:prt1]]
 </div>
 ```
+
 ### Answers
 #### Answer ans 1
 |property | setting| 
