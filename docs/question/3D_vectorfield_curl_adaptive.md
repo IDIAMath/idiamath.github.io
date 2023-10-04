@@ -200,7 +200,7 @@ none
 ### Potential response tree
 #### prt1
 
-| ![prt1](./images/curl_adaptive_PRT_1.PNG) |
+| ![prt1](./images/curl_adaptive_PRT_1.png) |
 |:--:|
 | *Visualization of **prt1*** |
 
@@ -209,7 +209,7 @@ Feedback variables:
 None needed, since `ans1` is selected by ticking a button.
 
 
-| ![Node 1](./images/curl_adaptive_PRT_1_node_1.PNG) |
+| ![Node 1](./images/curl_adaptive_PRT_1_node_1.png) |
 |:--:|
 | *Values of **node 1*** |
 ### Node 1
@@ -286,7 +286,7 @@ This generats only the lower part
 
 ### Potential response tree
 #### prt2
-| ![prt2](./images/curl_adaptive_PRT_2.PNG) |
+| ![prt2](./images/curl_adaptive_PRT_2.png) |
 |:--:|
 | *Visualization of **prt2*** |
 
@@ -295,7 +295,7 @@ Feedback variables:
 None needed, since `ans1` is selected by ticking a button.
 
 
-| ![Node 1](./images/curl_adaptive_PRT_1_node_1.PNG) |
+| ![Node 1](./images/curl_adaptive_PRT_1_node_1.png) |
 |:--:|
 | *Values of **node 1*** |
 ### Node 1
