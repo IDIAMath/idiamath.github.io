@@ -184,6 +184,7 @@ Select \( V\).
 
 ## Potential response tree
 ### prt1
+
 | ![prt1](./images/curl_given_PRT_2023-05-29.PNG) |
 |:--:|
 | *Visualization of **prt1*** |
@@ -196,8 +197,10 @@ None needed, since `ans1` is selected by ticking a button.
 | ![Node 1](./images/curl_given_PRT_node_1_2023-05-29.PNG) |
 |:--:|
 | *Values of **node 1*** |
+
 ### Node 1
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `ans1`|

@@ -13,6 +13,8 @@ theme: minima
 |:--:|
 | *First impression of the question* |
 
++ [XML Code](XML/quiz-IDIAM-Point%20with%20negative-definite%20Hessian.xml)
+
 ## Question description
 
 A 2D function is plotted and its Taylor approximation of second order is given at a moveable point $x= (x_1,x_2)$. 
@@ -213,8 +215,10 @@ board.update();
 <div style="display:none;">
 <p>[[input:ans1]] </p><p>[[validation:ans1]]</p></div>
 ```
+
 ## Answers
 ### Answer ans 1
+
 |property | setting| 
 |:---|:---|
 |Input type | Numerical |
@@ -223,9 +227,11 @@ board.update();
 | Forbid float | No |
 | Student must verify | Yes |
 | Show the validation | Yes, with variable list|
+
 --- 
 
 # General Feedback
+
 ```
 <hr>
 <p> The function displayed in the applet is \(f(x,y) = {@F@} \). </p>
@@ -279,7 +285,8 @@ if ev2s<0 then s2: -100;
 | *Visualization of **PRT 1*** |
 
 ### Node 1
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | s1|
@@ -292,7 +299,8 @@ if ev2s<0 then s2: -100;
 | *Values of **node 1*** |
 
 ### Node 2
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | s2|
@@ -305,7 +313,8 @@ if ev2s<0 then s2: -100;
 | *Values of **node 2*** |
 
 ### Node 3
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | s2|
@@ -313,9 +322,8 @@ if ev2s<0 then s2: -100;
 |Node 3 true feedback | ```<p>The second eigenvalue is smaller than zero. Since the first eigenvalue was not smaller than zero, your answer is not a point where the hessian is negative-definite. </p><p> The eigenvalues resulting for your point were: </p><p> \[\begin{align*} \lambda_1 &= {@ev1s@}\\ \lambda_2 &= {@ev2s@} \end{align*} \] </p>```|
 |Node 3 false feedback | ```<p>The second eigenvalue is smaller than zero. Since the first eigenvalue was not smaller than zero, your answer is not a point where the hessian is negative-definite. </p><p> The eigenvalues resulting for your point were: </p><p> \[\begin{align*} \lambda_1 &= {@ev1s@}\\\lambda_2 &= {@ev2s@} \end{align*} \] </p>```|
 
+
 | ![Node 3](./images/negative_hessian_PRT_1_node_3_2023-05-23.png) |
 |:--:|
 | *Values of **node 3*** |
 
-## Todo:
-* [x] Update figures

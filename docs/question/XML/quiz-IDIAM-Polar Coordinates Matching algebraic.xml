@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 1081  -->
+  <question type="stack">
+    <name>
+      <text>Polar Coordinates Matching algebraic</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Given is a 2D area with polar geometry. It is defined by the intervals for each of the polar coordinates \(r\) and \(\phi\). Here \(r\) is the radial coordinate and \(\phi\) is the angle starting at the \(x\)-axis oriented counterclockwise with \(\phi\in [0, 2 \pi]\). </p>
+
+<p> Reconstruct the intervals that define the given area by matching the areas using the cartesian coordinate system.  </p> 
+
+<p> Write the interval in the form \(r\in\)<code>[r1,r2]</code> and  \(\phi\in\)<code>[phi1,phi2]</code>, e.g. <code>[1/2,2]</code> and <code>[1/2*pi,2*pi]</code>.</p>
+
+
+<div style= 'float:left'> 
+[[ jsxgraph width="250px" height="250px"]] [[/ jsxgraph ]]
+</div>
+[[ jsxgraph width="250px" height="250px"]] [[/ jsxgraph ]]
+
+[[jsxgraph width='0px' height='0px' input-ref-ans3='ans3Ref']]
+
+//handling divids
+var divid3 = divid;
+console.log(divid3);
+var parts = divid.split('-');
+console.log(parts);
+
+parts[2] = parts[2] -1;
+var divid2 = parts.join('-');
+console.log(divid2);
+
+parts[2] = parts[2] -1;
+var divid1 = parts.join('-');
+console.log(divid1);
+
+//content
+var board = JXG.JSXGraph.initBoard(divid2,{boundingbox : [-5, 5, 5,-5], axis:true, shownavigation : false});
+
+var center =board.create("point",[0,0],{name : "",visible:false,fixed:true});
+var p1 = board.create("point",[{#p1x#},{#p1y#}],{name : "P1",visible:false,fixed:true,});
+var p2 = board.create("point",[{#p2x#},{#p2y#}],{name : "P2",visible:false,fixed:true});
+var p3 = board.create("point",[{#p3x#},{#p3y#}],{name : "P3",visible:false,fixed:true});
+var p4 = board.create("point",[{#p4x#},{#p4y#}],{name : "P4",visible:false,fixed:true});
+var c1 = board.create("arc",[center,p1,p4],{frozen:true, strokeColor: "#1f84bc"});
+var c2 = board.create("line",[p4,p3],{frozen:true, straightFirst:false, straightLast:false, strokeColor: "#1f84bc"});
+var c3 = board.create("arc",[center,p2,p3],{frozen:true, strokeColor: "#1f84bc"});
+var c4 = board.create("line",[p2,p1],{frozen:true, straightFirst:false, straightLast:false, strokeColor: "#1f84bc"});
+//stack_jxg.bind_point(ans1Ref,p1);
+
+
+var board2 = JXG.JSXGraph.initBoard(divid1,{boundingbox : [-1, 5, 5,-0.5], axis:true, 
+  defaultAxes: {
+    	y: {
+      	ticks: {
+        	scale: Math.PI,
+          scaleSymbol: '\u03c0',
+          ticksDistance: 0.5,
+          beautifulScientificTickLabels:true,
+          insertTicks: false
+        }}}, 
+      shownavigation : false});
+  board2.addChild(board);
+  board.suspendUpdate();
+  board2.suspendUpdate();
+
+// var center2 =board2.create("point",[0,0],{name : "",visible:false,fixed:true});
+var p12 = board2.create("point",[0.5,1.57],{name : "P1",visible:true});
+var p32 = board2.create("point",[2.5,3.14],{name : "P2",visible:true});
+
+var p22 = board2.create("point",[function () {return p32.X()},function () {return p12.Y()}],{name : "P3",visible:false});
+var p42 = board2.create("point",[function () {return p12.X()},function () {return p32.Y()}],{name : "P4",visible:false});
+var polyg1 = board2.create("polygon",[p12,p22,p32,p42],{name : ""});
+
+
+stack_jxg.bind_point_dual(ans3Ref,p12,p32);
+
+var p1p = board.create("point",[function () {return p12.X()*Math.cos(p12.Y());},
+                            function () {return p12.X()*Math.sin(p12.Y());}],
+                            {name : "P1",visible:false});
+var p2p = board.create("point",[function () {return p32.X()*Math.cos(p12.Y());},
+                            function () {return p32.X()*Math.sin(p12.Y());}],
+                            {name : "P2",visible:false});
+var p3p = board.create("point",[function () {return p32.X()*Math.cos(p32.Y());},
+                            function () {return p32.X()*Math.sin(p32.Y());}],
+                            {name : "P3",visible:false});
+var p4p = board.create("point",[function () {return p12.X()*Math.cos(p32.Y());},
+                            function () {return p12.X()*Math.sin(p32.Y());}],
+                            {name : "P4",visible:false});
+var c1p = board.create("arc",[center,p1p,p4p],{frozen:true,strokeColor: '#EE442F'});
+var c2p = board.create("line",[p4p,p3p],{frozen:true,strokeColor: '#EE442F', straightFirst:false, straightLast:false});
+var c3p = board.create("arc",[center,p2p,p3p],{frozen:true,strokeColor: '#EE442F'});
+var c4p = board.create("line",[p2p,p1p],{frozen:true,strokeColor: '#EE442F', straightFirst:false, straightLast:false});
+
+board.unsuspendUpdate();
+board2.unsuspendUpdate();
+
+[[/ jsxgraph]]
+
+<p>\(r\in\) [[input:ans1]] [[validation:ans1]]</p>
+<p>\(\phi\in\) [[input:ans2]] [[validation:ans2]]</p>
+
+<div id="storepoints" style="display:none">
+<p>Lager P1 [[input:ans3]] [[validation:ans3]]</p>
+</div>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<hr>
+
+<p> Once you know how to transform points from cartesian to polar coordinates graphically, you can have a look at the quantitative transformation from one system in the other. If you know this, it will be way easier to parametrize functions or solve problems with rotational symmetry. You can then use, what you used in this exercise to find suiting integration bounds and perform calculations you could not easily do with cartesian coordinates. </p>]]></text>
+    </generalfeedback>
+    <defaultgrade>2</defaultgrade>
+    <penalty>0</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023010400</text>
+    </stackversion>
+    <questionvariables>
+      <text>ranger:rand([1/6,1/4,1/3,1/2,2/3,3/4]);
+startr:rand([1/6,1/4,1/3,1/2,2/3,3/4]);
+/*radius*/
+radius1: (rand(5)+1)/2;
+radius2: radius1+(rand(4)+1)/2;
+
+
+/* prepare JSXGraph values */
+numer:true;
+start: startr*%pi;
+range: ranger*%pi;
+p1x:radius1*cos(start);
+p1y:radius1*sin(start);
+p2x:radius2*cos(start);
+p2y:radius2*sin(start);
+p3x:radius2*cos(start+range);
+p3y:radius2*sin(start+range);
+p4x:radius1*cos(start+range);
+p4y:radius1*sin(start+range);
+
+numer:false;
+
+/* symbolic values for checking*/
+startr: startr*%pi;
+ranger: ranger*%pi;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]
+[[feedback:prt2]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>{@radius1@}, {@radius2@}, {@startr@}, {@ranger@}</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>[radius1, radius2]</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>1</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>[startr,startr+ranger]</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>numerical</type>
+      <tans>1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans4</name>
+      <type>numerical</type>
+      <tans>1</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>r1:ans1[1]
+r2:ans1[2]
+
+</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>r1</sans>
+        <tans>radius1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice, you found the correct value for \(r_1\)! Good job!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The value you gave for \(r_1\) is not correct.  </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>r2</sans>
+        <tans>radius2</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice, you found the correct value for \(r_2\)! Good job!</p> <p> Perfect! You got both radiuses right! </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The value you gave for \(r_2\) is not correct. Try matching the points perfectly and read the larger radius. This is the upper bound of the interval of possible radiuses. Make sure, you're giving the values in the format specified in the task explanation.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>r2</sans>
+        <tans>radius2</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[`<p>Nice, you found the correct value for \(r_2\)! Good job!</p> <p>Check whether you did anything different here than for \(r_1\) and try again. </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The value you gave for \(r_2\) is also not correct. Try matching the points perfectly and read the radiuses. The smaller radius is the lower bound of the interval. The larger radius is the upper bound of the interval. Make sure, you're giving the values in the format specified in the task explanation.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <prt>
+      <name>prt2</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>phi1:ans2[1]
+phi2:ans2[2]</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>phi1</sans>
+        <tans>startr</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt2-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice, you found the correct value for \(\phi_1\)! Good job!<p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt2-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The value you gave for \(\phi_1\) is not correct.  </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>phi2</sans>
+        <tans>startr + ranger</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice, you found the correct value for \(\phi_2\)! Good job!</p> <p> Perfect! You got both angles right! </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The value you gave for \(\phi_2\) is not correct. Try matching the points perfectly and read the bigger angle. This is the upper bound of the interval of possible angles. Make sure, you're giving the values in the format specified in the task explanation.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>phi2</sans>
+        <tans>startr+ ranger</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt2-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice, you found the correct value for \(r_2\)! Good job!</p> <p>Check whether you did anything different here than for \(r_1\) and try again. </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt2-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The value you gave for \(\phi_2\) is also not correct. Try matching the points perfectly and read the angles. The smaller angle is the lower bound of the interval. The larger angle is the upper bound of the interval. Make sure, you're giving the values in the format specified in the task explanation.</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+    <deployedseed>171743245</deployedseed>
+    <deployedseed>1568536248</deployedseed>
+    <deployedseed>1951522147</deployedseed>
+    <deployedseed>837869824</deployedseed>
+    <deployedseed>628044595</deployedseed>
+    <deployedseed>933473366</deployedseed>
+    <deployedseed>206541464</deployedseed>
+    <deployedseed>168462464</deployedseed>
+    <deployedseed>1795099827</deployedseed>
+    <deployedseed>1833187824</deployedseed>
+  </question>
+
+</quiz>

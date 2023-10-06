@@ -6,12 +6,17 @@ theme: minima
 # Integration region of type I
 
 ## Aim of task
+
 +	Student can formulate the function term and the domain for elementary functions given by a graph (Modelling, Handling mathematical symbols and formalism)
 +	Student can think of an area that is given by the area between to functions and is able to formulate the expressions for graphically given region (represent mathematical entities, posing and solving mathematical problems, making use of aids and tools)
 
 | ![First impression](images/region_typeI_01_preview.png) |
 |:--:|
 | *First impression of the question* |
+
++ [XML Code (1 PRT)](./XML/quiz-IDIAM-Boundary%20of%20a%202D%20integration%20area%20(type%20I).xml)
+
++ [XML Code (3 PRT)](./XML/quiz-IDIAM-Boundary%20of%20a%202D%20integration%20area%20(type%20I)%20alternative%20PRT.xml)
 
 ## Question description
 
@@ -142,8 +147,10 @@ var b1    = JXG.JSXGraph.initBoard(divid,{boundingbox: [-0.5,4.5,5.1,-4.5],grid:
 
 [[/ jsxgraph ]]
 ```
+
 ## Answers
 ### Answer ans 1
+
 |property | setting| 
 |:---|:---|
 |Input type | Algebraic input|
@@ -152,8 +159,11 @@ var b1    = JXG.JSXGraph.initBoard(divid,{boundingbox: [-0.5,4.5,5.1,-4.5],grid:
 | Forbid float | Yes |
 | Student must verify | Yes |
 | Show the validation | Yes, with variable list|
+
 ---
+
 ### Answer ans 2
+
 |property | setting| 
 |:---|:---|
 |Input type | Algebraic input|
@@ -162,8 +172,11 @@ var b1    = JXG.JSXGraph.initBoard(divid,{boundingbox: [-0.5,4.5,5.1,-4.5],grid:
 | Forbid float | Yes |
 | Student must verify | Yes |
 | Show the validation | Yes, with variable list|
+
 ---
+
 ### Answer ans 3
+
 |property | setting| 
 |:---|:---|
 |Input type | Algebraic input|
@@ -194,6 +207,7 @@ r2:ans1[2]
 
 ```
 #### Node 6
+
  |property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|

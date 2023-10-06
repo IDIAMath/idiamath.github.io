@@ -165,15 +165,15 @@ board.update();
 ```
 
 ### Question Text (Task 1)
-+ ` <div id="task"> `
-+ The question ist stated the first time here. Give your answer in the form of a list, e.g. <code>[2,x,z]</code>.
-+	$\hat V=$ `[[input:ans1]]` at the end of JSXGraph code to allow input of an answer of the student
++ ```div id="task"```
++ The question ist stated the first time here. Give your answer in the form of a list, e.g. ```[2,x,z]```.
++ $ \hat V= $   `[[input:ans1]]` at the end of JSXGraph code to allow input of an answer of the student
 +	`[[validation:ans1]]` checking of answer
 
 #### Question text code
 
 
-``` javascript
+``` 
 <div id ="task">
 <p>Type in the vector field \(\hat V= \nabla \times V\). This is the vector field that results, when the curl operator is applied to \(V\).</p>
 <p> Give your answer in the form of a list, e.g. <code>[2,x,z]</code>.
@@ -184,6 +184,7 @@ board.update();
 
 ### Answers
 #### Answer ans 1
+
 |property | setting| 
 |:---|:---|
 |Input type |Algebraic input|
@@ -192,6 +193,7 @@ board.update();
 | Forbid float | Yes |
 | Student must verify | Yes |
 | Show the validation | Yes, compact|
+
 --- 
 ## General feedback
 
@@ -212,6 +214,7 @@ None needed, since `ans1` is selected by ticking a button.
 | ![Node 1](./images/curl_adaptive_PRT_1_node_1.png) |
 |:--:|
 | *Values of **node 1*** |
+
 ### Node 1
 
  |property | setting| 
@@ -238,7 +241,7 @@ In the next task, you will be presented with a vector field and a list of possib
 
 #### Question text code
 
-``` javascript
+``` 
 <div id="input" style="display:none;">
 <p>The curl is a measure for infinitesimal circulatios in a vector field. If a vector field has some kind of "swirlyness" to it, the curl operator will result in a non-zero vector field again. This has applications in flow of liquids, but also quite prominently in the theory of classical electrodynamics. This can be condensed to the famous Maxwell's equations, where the curl of the elctric and magnetic field play an important role. <br>
 The curl can be calculated by
@@ -263,7 +266,7 @@ In the next task, you will be presented with a vector field and a list of possib
 #### Question text code
 
 
-```javascript
+```
 <div id="task2" style="display:none;">
 Select \(\hat V\).
 <p>[[input:ans2]] [[validation:ans2]]</p>
@@ -275,6 +278,7 @@ This generats only the lower part
 
 ### Answers
 #### Answer ans 2
+
 |property | setting| 
 |:---|:---|
 |Input type |radio|
@@ -286,6 +290,7 @@ This generats only the lower part
 
 ### Potential response tree
 #### prt2
+
 | ![prt2](./images/curl_adaptive_PRT_2.png) |
 |:--:|
 | *Visualization of **prt2*** |
@@ -298,12 +303,15 @@ None needed, since `ans1` is selected by ticking a button.
 | ![Node 1](./images/curl_adaptive_PRT_1_node_1.png) |
 |:--:|
 | *Values of **node 1*** |
+
 ### Node 1
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `ans2`|
 |TAns | `tans`| 
 |Node 1 true feedback | `<p> Well done, you selected the correct vector field. You can now try to calculate the curl of more complicated vector fields. The process is always the same.</p>`|
 |Node 1 false feedback | `<p> You did not select the correct vector field. Please compute \(\nabla \times V\) for the given field \(V(x,y,z):=\begin{pmatrix} {@Vx@} \\ {@Vy@} \\ {@Vz@} \end{pmatrix}\). </p>`|
+
 --- 

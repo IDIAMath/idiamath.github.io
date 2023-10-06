@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 1541  -->
+  <question type="stack">
+    <name>
+      <text>Boundary of a 2D integration area (type I)</text>
+    </name>
+    <questiontext format="moodle_auto_format">
+      <text><![CDATA[Given is a region of type
+\[G =\{(x,y)\in\mathbb{R}^2\, |\, a < x < b,\, y_2(x) < y < y_1(x)\}\]
+as shown in the diagram. Determine the interval \([a,b]\) and the expressions for the graphs of functions \(y_1\) and \(y_2\).
+
+Give all numerical values as fractions instead of decimal numbers e.g. <code>1/2</code> instead of <code>0.5</code>.
+<div  style='float:right'>
+<p>\([a,b]\)=[[input:ans1]] [[validation:ans1]]</p>
+<p>\(y_1(x)\)=[[input:ans2]] [[validation:ans2]]</p>
+<p>\(y_2(x)\)=[[input:ans3]] [[validation:ans3]]</p>
+</div>
+[[ jsxgraph width="250px" height="400px"]] 
+var b1    = JXG.JSXGraph.initBoard(divid,{boundingbox: [-0.5,4.5,5.1,-4.5],grid:true, axis:true,keepAspectRatio:true});
+               // some variables
+               var nSubDivCurv = 51; // number of points to represent a curve -1
+               var cIntArea // Integration area to be plotted by curves of the entered functions
+               var yLower, yUpper;
+               var txtraw;
+
+               var xlp = b1.jc.snippet('{#x1#}', false, 'x', false); // random left interval
+               var xup = b1.jc.snippet('{#x2#}', false, 'x', false); // random right interval
+                    b1.suspendUpdate();
+
+                   // to be replace be function from STACK
+                    txtraw = '{#ylowerfun#}';
+                    //txtraw = '0';
+                    txtraw = txtraw.replace(/\s/g, "");
+                    yLower = b1.jc.snippet(txtraw, true, 'x', false);
+
+                    // to be replace be function from STACK
+                    txtraw = '{#yupperfun#}';
+                    //txtraw = '1';
+                    txtraw = txtraw.replace(/\s/g, "");
+                    yUpper = b1.jc.snippet(txtraw, true, 'x', false);
+
+                    cIntArea = b1.create('curve', [[], []], { strokeWidth: 1, fillColor: 'yellow', fillOpacity: 0.5 });
+                    cIntArea.updateDataArray = function () {
+                         // generate upper curve
+                         var hx = (xup - xlp) / (nSubDivCurv);
+                         var pt = xlp;
+                         this.dataX = [xlp];
+                         this.dataY = [yUpper(xlp)];
+
+                         for (let i = 1; i <= nSubDivCurv; i++) {
+                              pt = xlp + i*hx;
+                              this.dataX.push(pt);
+                              this.dataY.push(yUpper(pt));
+                         }
+
+                         // add yLower between xu and xl
+                         var hx = (xup - xlp) / (nSubDivCurv);
+                         var pt = xup;
+                         for (let i = 0 ; i <=  nSubDivCurv ; i++) {
+                              pt = xup - i*hx;
+                              this.dataX.push(pt);
+                              this.dataY.push(yLower(pt));
+                         }
+                         
+                         // close the curve
+                         this.dataX.push(this.dataX[0]);
+                         this.dataY.push(this.dataY[0]);
+                    }; // end cIntArea.updateDataArray
+
+                    b1.unsuspendUpdate();
+
+
+[[/ jsxgraph ]]]]></text>
+    </questiontext>
+    <generalfeedback format="moodle_auto_format">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023010400</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* interval [x1,x2] */
+x1:rand(4)/2;
+x2:(rand(4)+3)/2+x1;
+yupperlist:[x,(x-x1)^2/2+1,sin(4*x)+2];
+ylowerlist:[-x,-(x-x1)^2/2+2,-sin(4*x)];
+yupperfun:rand(yupperlist);
+ylowerfun:rand(ylowerlist);</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>[{@x1@},{@x2@}], \(y_2(x)={@ylowerfun@}, y_1(x)={@yupperfun@}\)</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>[x1,x2]</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans2</name>
+      <type>algebraic</type>
+      <tans>yupperfun</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <input>
+      <name>ans3</name>
+      <type>algebraic</type>
+      <tans>ylowerfun</tans>
+      <boxsize>15</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>0</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1[1]</sans>
+        <tans>x1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>Please check the left endpoint of the interval.</text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1[2]</sans>
+        <tans>x2</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>2</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>Please check the right endpoint of the interval.</text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>yupperfun</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.4</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text>You have used \(y_1(x)={@ans2@}\) for the upper limit. Well done!</text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>4</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>ylowerfun</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.4</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text>You have used \(y_2(x)={@ans3@}\) for the lower limit. Well done!</text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>6</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>4</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans2</sans>
+        <tans>ylowerfun</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>3</truenextnode>
+        <trueanswernote>prt1-5-T</trueanswernote>
+        <truefeedback format="html">
+          <text>You have used \(y_1(x)={@ans2@}\) as answer for the lower graph. Please check the diagram above.</text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>3</falsenextnode>
+        <falseanswernote>prt1-5-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>Your estimate for  \(y_1\) does not fit. See the comparison in the diagram.</text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>5</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>0</sans>
+        <tans>1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>0</truenextnode>
+        <trueanswernote>prt1-6-T</trueanswernote>
+        <truefeedback format="html">
+          <text></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>0</falsenextnode>
+        <falseanswernote>prt1-6-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[This diagram shows the domain you have entered and the domain asked for. The given area is colored yellow, the red area results from your answer. The functions \(y_1\) and \(y_2\) have been labeled according to your input.
+[[ jsxgraph width="250px" height="500px"]] 
+   var b2    = JXG.JSXGraph.initBoard(divid,{boundingbox: [-0.5,5,5.1,-5],grid:true, axis:true});
+// students answer: Interval ans1, y_1 = ans2 (upper limit), y_2 = ans3 (lower limit)
+   var xlp2, xup2, txtraw2;
+  // get intervals from question variables and students answer
+   var nSubDivCurv = 20;
+   xlp2 = b2.jc.snippet('{#x1#}', false, 'x', false); // random left interval
+   xup2 = b2.jc.snippet('{#x2#}', false, 'x', false); // random right interval
+  var xlpStud2 = b2.jc.snippet('{#ans1[1]#}', false, 'x', false); 
+  var xupStud2 = b2.jc.snippet('{#ans1[2]#}', false, 'x', false); 
+
+   // get lower functions from question variables and student's answer
+   txtraw2 = '{#ylowerfun#}';
+   txtraw2 = txtraw2.replace(/\s/g, "");
+   var  yLower2 = b2.jc.snippet(txtraw2, true, 'x', false);
+   txtraw2 = '{#ans3#}';
+   txtraw2 = txtraw2.replace(/\s/g, "");
+   var  yLowerStud2 = b2.jc.snippet(txtraw2, true, 'x', false);
+
+   // get upper functions from question variables and student's answer
+   txtraw2 = '{#yupperfun#}';
+   txtraw2 = txtraw2.replace(/\s/g, "");
+   var yUpper2 = b2.jc.snippet(txtraw2, true, 'x', false);
+   txtraw2 = '{#ans2#}'; 
+   txtraw2 = txtraw2.replace(/\s/g, "");
+   var yUpperStud2 = b2.jc.snippet(txtraw2, true, 'x', false);
+
+// add text to show student's answer
+var textx2 = xupStud2+0.5;
+var texty2 = yLowerStud2(xupStud2) + 0.1;
+var textf2 = b2.create('text', [textx2, texty2, 'y_2'], {
+  strokeColor: '#EE442F',fontsize:14
+});
+var textx3 = xupStud2+0.5;
+var texty3 = yUpperStud2(xupStud2) + 0.1;
+var textf3 = b2.create('text', [textx3, texty3, 'y_1'], {
+  strokeColor: '#EE442F',fontsize:14
+});
+
+// b2.suspendUpdate();   
+ var cIntArea2 = b2.create('curve', [[], []], { strokeWidth: 1, fillColor: 'yellow', fillOpacity: 0.2 });
+ var cIntAreaStud2 = b2.create('curve', [ [], []], {  strokeWidth: 1,  fillColor: 'red',  fillOpacity: 0.5});
+                       
+   cIntArea2.updateDataArray = function () {
+                         // generate upper curve
+                         let hx = (xup2 - xlp2) / (nSubDivCurv);
+                         let pt = xlp2;
+                         this.dataX = [xlp2];
+                         this.dataY = [yUpper2(xlp2)];
+ 
+                         for (let i = 1; i <= nSubDivCurv; i++) {
+                              let pt = xlp2 + i*hx;
+                              this.dataX.push(pt);
+                              this.dataY.push(yUpper2(pt));
+                         }
+
+                         // add yLower between xu and xl
+                         hx = (xup2 - xlp2) / (nSubDivCurv);
+                         pt = xup2;
+                         for (let i = 0 ; i <=  nSubDivCurv ; i++) {
+                              pt = xup2 - i*hx;
+                              this.dataX.push(pt);
+                              this.dataY.push(yLower2(pt));
+                         }
+                         // close the curve
+                         this.dataX.push(this.dataX[0]);
+                         this.dataY.push(this.dataY[0]);
+                    }; // end cIntArea.updateDataArray
+
+   cIntAreaStud2.updateDataArray = function () {
+                         // generate upper curve
+                         let hx = (xupStud2 - xlpStud2) / (nSubDivCurv);
+                         let pt = xlpStud2;
+                         this.dataX = [xlpStud2];
+                         this.dataY = [yUpperStud2(xlpStud2)];
+ 
+                         for (let i = 1; i <= nSubDivCurv; i++) {
+                              let pt = xlpStud2 + i*hx;
+                              this.dataX.push(pt);
+                              this.dataY.push(yUpperStud2(pt));
+                         }
+
+                         // add yLower between xu and xl
+                         hx = (xupStud2 - xlpStud2) / (nSubDivCurv);
+                         pt = xupStud2;
+                         for (let i = 0 ; i <=  nSubDivCurv ; i++) {
+                              pt = xupStud2 - i*hx;
+                              this.dataX.push(pt);
+                              this.dataY.push(yLowerStud2(pt));
+                         }
+                         // close the curve
+                         this.dataX.push(this.dataX[0]);
+                         this.dataY.push(this.dataY[0]);
+                    }; // end cIntArea.updateDataArray
+
+
+   b2.unsuspendUpdate(); 
+[[/jsxgraph]]]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>6</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans3</sans>
+        <tans>yupperfun</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-7-T</trueanswernote>
+        <truefeedback format="html">
+          <text>You have used \(y_2(x)={@ans3@}\) as answer for the upper graph. Please check the diagram above.</text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-7-F</falseanswernote>
+        <falsefeedback format="html">
+          <text>Your estimate for  \(y_2\) does not fit. See the comparison in the diagram.</text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>

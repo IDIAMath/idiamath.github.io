@@ -11,6 +11,8 @@ theme: minima
 |:--:|
 | *First impression of the question* |
 
++ [XML Code](XML/quiz-IDIAM-Spherical%20Coordinates%20Matching.xml)
+
 ## Question description
 
 A 3D volume is plotted. It is a randomly generated section of a ball in spherical coordinates.
@@ -496,9 +498,3 @@ psi2:ans6;
 | ![Node 3](./images/Spherical_matching_PRT_3_node_3_2023-05-25.png) |
 |:--:|
 | *Values of **node 3*** |
-
-## Todo:
-
-* [ ] Print JSXGraph applet bigger
-* [x] make square appear as such
-* [x] Update Images

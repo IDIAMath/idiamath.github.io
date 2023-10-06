@@ -12,6 +12,8 @@ theme: minima
 |:--:|
 | *First impression of the question* |
 
++ [XML Code](XML/quiz-IDIAM-Parametric%20surfaces%20and%20graphs.xml)
+
 ## Question description
 
 A 2D function $f$ is plotted resulting in a surface embedded in 3D. This surface is the graph og the function an contains the points in the set $A= \{(x,y,f(x,y))\mid x,y \in D_f \}$. It is the task of the students to find a parametrisation of this surface or put differently: to reconstruct $f$. They will be provided with graphical feedback to help them solving problems with their inital ideas.

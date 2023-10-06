@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 1383  -->
+  <question type="stack">
+    <name>
+      <text>Point with negative-definite Hessian</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Given is the graph of a function and its quadratic approximation around a point. You can move that point by moving its projected point in \(x,y\)-direction. You can rotate the coordinate system using the sliders.</p>
+<p>Find a point with a negative-definite Hessian of the function at this point.</p>
+
+
+[[jsxgraph width="500px" height="500px" input-ref-ans1='ans1Ref']]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-10, 10, 10,-10], axis:false, shownavigation : true});
+
+   var box = [-2, 2];
+		    var view = board.create('view3d',
+		        [
+		            [-6, -3], [8, 8],
+		            [box, box, box]
+		        ],
+		        {
+		            xPlaneRear: {visible: false},
+		            xPlaneRearYAxis: {visible: false},
+		            xPlaneRearZAxis: {visible: false},
+		            yPlaneRear: {visible: false},
+		            yPlaneRearXAxis: {visible: false},
+		            yPlaneRearZAxis: {visible: false},
+		        });
+
+                               var txtraw = '{#F#}';
+                               txtraw=txtraw.replace(/%pi/g, "PI");
+                               //txtraw=txtraw.replace(/pi/g, "PI");
+                               var F =  board.jc.snippet(txtraw, true, 'x,y');
+                               txtraw = '{#Fdx#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdx =  board.jc.snippet(txtraw, true, 'x,y');
+                               var txtraw = '{#Fdy#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdy =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#Fdxx#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdxx =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#Fdyy#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdyy =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#Fdxy#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdxy =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#evs[1]#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var evs1 =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#evs[2]#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var evs2 =  board.jc.snippet(txtraw, true, 'x,y');
+
+    var c = view.create('functiongraph3d', [
+        F,
+        box,
+        box,
+    ], { strokeWidth: 0.5, stepU: 70, stepsV: 70, strokeColor: '#1f84bc'});
+
+  // 3D points:
+    // Point on xy plane
+    var Axy = view.create('point3d', [1, 1, -2], { withLabel: false });
+
+    // Project Axy to the surface
+    var A = view.create('point3d', [
+        () => [Axy.X(), Axy.Y(), F(Axy.X(), Axy.Y())]
+        ], { withLabel: false, fixed: true});
+    view.create('line3d', [Axy, A], { dash: 1 });
+
+
+
+   var TF = (x,y) => F(Axy.X(),Axy.Y())+Fdx(Axy.X(),Axy.Y())*(x-Axy.X())
+                                         +Fdy(Axy.X(),Axy.Y())*(y-Axy.Y())
+                                         +Fdxx(Axy.X(),Axy.Y())*(x-Axy.X())*(x-Axy.X())
+                                         +Fdyy(Axy.X(),Axy.Y())*(y-Axy.Y())*(y-Axy.Y())
+                                         +2*Fdxy(Axy.X(),Axy.Y())*(y-Axy.Y())*(x-Axy.X());
+   var c2 = view.create('functiongraph3d', [
+       TF,
+       () => [Axy.X()-0.5,Axy.X()+0.5],
+       () => [Axy.Y()-0.5,Axy.Y()+0.5,],
+   ], { strokeWidth: 0.25, stepU: 50, stepsV: 50, strokeColor: '#EE442F'});
+
+
+board.update()
+
+var p1 =board.create('point',[function () {return Axy.X();} ,function () {return Axy.Y();}],{visible:false}); 
+stack_jxg.bind_point(ans1Ref,p1); 
+var stateInput = document.getElementById(ans1Ref);
+stateInput.style.display = 'none';
+
+
+board.update(); 
+
+ /* axis labels*/
+                       var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+                       var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+                       var zlabel=view.create('point3d',[
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.9*box[1]], 
+                           {size:0,name:"z"});
+
+[[/jsxgraph]]
+<div style="display:none;">
+<p>[[input:ans1]] </p><p>[[validation:ans1]]</p></div>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<hr>
+<p> The function displayed in the applet is \(f(x,y) = {@F@} \). </p>
+<p> The eigenvalues of the hessian matrix are determined by calculating the characterisitcal polynomial function and nullify it. In this case, we find 
+\[\begin{align*} 
+\chi &= \text{det} 
+      \begin{pmatrix} 
+      \frac{\partial ^2 f}{\partial x^2}- \lambda &  \frac{\partial ^2 f}{\partial x \partial y} \\ 
+     \frac{\partial ^2 f}{\partial x \partial y} & \frac{\partial ^2 f}{\partial y^2}- \lambda
+      \end{pmatrix}\\ 
+       &= \left( \frac{\partial ^2 f}{\partial x^2}- \lambda \right) \cdot \left( \frac{\partial ^2 f}{\partial y^2}- \lambda \right) - \left( \frac{\partial ^2 f}{\partial x \partial y} \right)^2\\ 
+       &= \left( {@Fdxx@}- \lambda \right)\\
+       & \cdot \left( {@Fdyy@}- \lambda \right) \\
+       &- \left( {@Fdxy@} \right)^2 
+\end{align*} \] .</p>
+<p> Nullifying and solving the equation leads to the eigenvalues \(\lambda_1\) and \(\lambda_2\). They can be evaluated for a point \((x,y)\). </p>
+<p> If these expressions become smaller than zero for the point \((x,y)\), we say the hessian is negative-definite. This gives a possibility to check, whether a stationary point is actually a maximum. The procedure is comparable to the confirmation of maxima using the second derivative of a 1D function. </p>
+<p> Let's check for the stationary point \(({@ev(x0, numer)@},{@ev(y0, numer)@})\)! The resulting eigenvalues are:
+\[\begin{align*}
+\lambda_1 &= {@ev(lamb, ev(evs[1], numer, x= x0, y = y0))@} \\
+\lambda_2 &= {@ev(lamb, ev(evs[2], numer, x= x0, y = y0))@}
+\end{align*} \]
+</p>
+<p> Now we know this stationary point is a maximum, since its Hessian is negative-definite! </p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023010400</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* generate function */
+a1: rand([2,4,6,8,10])/5;
+a2: rand([1,2,4,5])/5;
+a3: rand([1,3,5])/5;
+x0: rand([-3,-2,-1,1,2,3])/5;
+y0: rand([-3,-2,-1,1,2,3])/5;
+
+/* define the function */
+F:a1 * cos(%pi*a2 * (x-x0))* cos(%pi* a3 * (y-y0));
+Fdx:diff(F,x);
+Fdy:diff(F,y);
+Fdxx:diff(Fdx,x);
+Fdxy:diff(Fdy,x);
+Fdyy:diff(Fdy,y);
+
+eq : (Fdxx - lamb)*(Fdyy-lamb)- Fdxy^2 = 0;
+evs: solve(eq,lamb);
+
+/* generate reference solution*/
+
+stat_eq1: Fdx = 0;
+stat_eq2: Fdy = 0;
+
+stat1: ev(x,solve(stat_eq1, x));
+stat2: ev(y,solve(stat_eq2, y));
+
+numer: true;
+RefSolx: stat1;
+RefSoly: stat2;
+numer: false;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>Negative-definite Hessian
+a1 = {@a1@}, a2 = {@a2@}, a3= {@a2@}, x0= {@x0@}, y0 = {@y0@}</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>numerical</type>
+      <tans>[RefSolx,RefSoly]</tans>
+      <boxsize>30</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>1</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>0</mustverify>
+      <showvalidation>0</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text><![CDATA[ev1: ev(evs[1], numer, x= ans1[1], y= ans1[2]);
+ev2: ev(evs[2], numer, x= ans1[1], y= ans1[2]);
+
+ev1s: ev(lamb, ev1);
+ev2s: ev(lamb, ev2);
+
+s1: 100;
+s2: 100;
+
+if ev1s<0 then s1: -100;
+if ev2s<0 then s2: -100;]]></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>s1</sans>
+        <tans>-100</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The first eigenvalue is smaller than zero.  </p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The first eigenvalue is not smaller than zero. </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>s2</sans>
+        <tans>-100</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The second eigenvalue is also smaller than zero. You found a point with negative-definite hessian!</p>
+<p>Congratulations!</p>
+
+<p> The eigenvalues resulting for your point were: </p>
+<p> \[\begin{align*} 
+\lambda_1 &= {@ev1s@}\\
+\lambda_2 &= {@ev2s@}
+ \end{align*} \] </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>The second eigenvalue is not smaller than zero. Unfortunately, your answer is not a point where the hessian is negative-definite. </p>
+<p> The eigenvalues resulting for your point were: </p>
+<p> \[\begin{align*} 
+\lambda_1 &= {@ev1s@}\\
+\lambda_2 &= {@ev2s@}
+ \end{align*} \] </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>s2</sans>
+        <tans>-100</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>The second eigenvalue is smaller than zero. Since the first eigenvalue was not smaller than zero, your answer is not a point where the hessian is negative-definite. </p>
+<p> The eigenvalues resulting for your point were: </p>
+<p> \[\begin{align*} 
+\lambda_1 &= {@ev1s@}\\
+\lambda_2 &= {@ev2s@}
+ \end{align*} \] </p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Both of the eigenvalues are not smaller than zero. Unfortunately, your answer is not a point where the hessian is negative-definite.</p>
+<p> The eigenvalues resulting for your point were: </p>
+<p> \[\begin{align*} 
+\lambda_1 &= {@ev1s@}\\
+\lambda_2 &= {@ev2s@}
+ \end{align*} \] </p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>3</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>0</truenextnode>
+        <trueanswernote>prt1-4-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[[[jsxgraph width="500px" height="500px" input-ref-ans1='ans1Ref']]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-10, 10, 10,-10], axis:false, shownavigation : true});
+
+   var box = [-2, 2];
+		    var view = board.create('view3d',
+		        [
+		            [-6, -3], [8, 8],
+		            [box, box, box]
+		        ],
+		        {
+		            xPlaneRear: {visible: false},
+		            xPlaneRearYAxis: {visible: false},
+		            xPlaneRearZAxis: {visible: false},
+		            yPlaneRear: {visible: false},
+		            yPlaneRearXAxis: {visible: false},
+		            yPlaneRearZAxis: {visible: false},
+		        });
+
+                               var txtraw = '{#F#}';
+                               txtraw=txtraw.replace(/%pi/g, "PI");
+                               //txtraw=txtraw.replace(/pi/g, "PI");
+                               var F =  board.jc.snippet(txtraw, true, 'x,y');
+                               txtraw = '{#Fdx#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdx =  board.jc.snippet(txtraw, true, 'x,y');
+                               var txtraw = '{#Fdy#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdy =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#Fdxx#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdxx =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#Fdyy#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdyy =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#Fdxy#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var Fdxy =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#evs[1]#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var evs1 =  board.jc.snippet(txtraw, true, 'x,y');
+var txtraw = '{#evs[2]#}';
+                               txtraw=txtraw.replace(/%/g, "");
+                               txtraw=txtraw.replace(/pi/g, "PI");
+                               var evs2 =  board.jc.snippet(txtraw, true, 'x,y');
+
+    var c = view.create('functiongraph3d', [
+        F,
+        box,
+        box,
+    ], { strokeWidth: 0.5, stepU: 70, stepsV: 70, strokeColor: '#1f84bc'});
+
+  // 3D points:
+    // Point on xy plane
+    var Axy = view.create('point3d', [board.jc.snippet('{#ans1[1]#}', false, 'x'), board.jc.snippet('{#ans1[2]#}', false, 'x'), -2], { withLabel: false, fixed:true });
+
+    // Project Axy to the surface
+    var A = view.create('point3d', [
+        () => [Axy.X(), Axy.Y(), F(Axy.X(), Axy.Y())]
+        ], { withLabel: false, fixed: true});
+    view.create('line3d', [Axy, A], { dash: 1 });
+
+
+
+   var TF = (x,y) => F(Axy.X(),Axy.Y())+Fdx(Axy.X(),Axy.Y())*(x-Axy.X())
+                                         +Fdy(Axy.X(),Axy.Y())*(y-Axy.Y())
+                                         +Fdxx(Axy.X(),Axy.Y())*(x-Axy.X())*(x-Axy.X())
+                                         +Fdyy(Axy.X(),Axy.Y())*(y-Axy.Y())*(y-Axy.Y())
+                                         +2*Fdxy(Axy.X(),Axy.Y())*(y-Axy.Y())*(x-Axy.X());
+   var c2 = view.create('functiongraph3d', [
+       TF,
+       () => [Axy.X()-0.5,Axy.X()+0.5],
+       () => [Axy.Y()-0.5,Axy.Y()+0.5,],
+   ], { strokeWidth: 0.25, stepU: 50, stepsV: 50, strokeColor: '#EE442F'});
+
+
+board.update()
+
+
+
+[[/jsxgraph]]]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>0</falsenextnode>
+        <falseanswernote>prt1-4-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>

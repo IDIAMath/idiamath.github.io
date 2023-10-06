@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 605  -->
+  <question type="stack">
+    <name>
+      <text>Stationary point of a 2D function</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Given is the graph of a function and its tangent plane in a point. You can move that point by moving its projected point in \(x,y\)-direction. You can rotate the coordinate system using the sliders.</p>
+<p> Select a stationary point of the function.</p>
+
+
+[[jsxgraph width="500px" height="500px" input-ref-ans1='ans1Ref']]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-10, 10, 10,-10], axis:false, shownavigation : true});
+
+	    var box = [-2, 2];
+		    var view = board.create('view3d',
+		        [
+		            [-6, -3], [8, 8],
+		            [box, box, box]
+		        ],
+		        {
+		            xPlaneRear: {visible: false},
+		            xPlaneRearYAxis: {visible: false},
+		            xPlaneRearZAxis: {visible: false},
+		            yPlaneRear: {visible: false},
+		            yPlaneRearXAxis: {visible: false},
+		            yPlaneRearZAxis: {visible: false},
+		        });
+
+                               var txtraw = '{#F#}';
+                               txtraw=txtraw.replace(/%pi/g, "PI");
+                              var F =  board.jc.snippet(txtraw, true, 'x,y');
+
+                               txtraw = '{#Fdx#}';
+                              txtraw=txtraw.replace(/%pi/g, "PI");
+                               var Fdx =  board.jc.snippet(txtraw, true, 'x,y');
+
+                               var txtraw = '{#Fdy#}';
+                             txtraw=txtraw.replace(/%pi/g, "PI");
+                              var Fdy =  board.jc.snippet(txtraw, true, 'x,y');
+
+    var c = view.create('functiongraph3d', [
+        F,
+        box,
+        box,
+    ], { strokeWidth: 1, strokeColor: "#1f84bc", stepU: 70, stepsV: 70 });
+
+  // 3D points:
+    // Point on xy plane
+    var Axy = view.create('point3d', [1, 1, -2], { withLabel: false });
+
+    // Project Axy to the surface
+    var A = view.create('point3d', [
+       () => [Axy.X(), Axy.Y(), F(Axy.X(), Axy.Y())]
+        ], { withLabel: false });
+    view.create('line3d', [Axy, A], { dash: 1 });
+    // Partial derivatives of F in point A
+    // should be provided form STACK
+    var dFx = () => Fdx(A.X(),A.Y()),
+        dFy = () => Fdy(A.X(),A.Y());
+    var dFx_vecnorm = () => Math.sqrt(1+Fdx(A.X(),A.Y())**2),
+        dFy_vecnorm = () => Math.sqrt(1+Fdy(A.X(),A.Y())**2);
+
+    // var dFx1 = () => 1.0/Math.sqrt(1+Fdx(A.X(),A.Y())**2),
+     var dFx1 = () => 1.0/dFx_vecnorm(),
+        dFx2 = () => Fdx(A.X(),A.Y())/Math.sqrt(1+Fdx(A.X(),A.Y())**2);
+    var dFy1 = () => 1.0/Math.sqrt(1+Fdy(A.X(),A.Y())**2),
+        dFy2 = () => Fdy(A.X(),A.Y())/Math.sqrt(1+Fdy(A.X(),A.Y())**2);
+
+    var dFx_vec = [dFx1, 0, dFx2],
+        dFy_vec = [0, dFy1, dFy2];
+
+    // Tangent plane
+    var plane1 = view.create('plane3d', [
+        A,
+        dFx_vec, dFy_vec,
+        [-0.5,0.5], [-0.5,0.5]
+    ], {
+        fillOpacity: 1, fillColor: '#EE442F'
+    });
+    var a = view.create('line3d', [A, dFx_vec, [0, 1]]);
+    var b = view.create('line3d', [A, dFy_vec, [0, 1]]);
+
+board.update(); 
+
+var p1 =board.create('point', [function () {return A.X();} ,function () {return A.Y();}],{visible: false}); 
+stack_jxg.bind_point(ans1Ref,p1);
+var stateInput = document.getElementById(ans1Ref);
+stateInput.style.display = 'none';
+
+board.update(); 
+
+/* axis labels*/
+                       var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+                       var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+                       var zlabel=view.create('point3d',[
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.9*box[1]], 
+                           {size:0,name:"z"});
+
+[[/jsxgraph]]
+<p>[[input:ans1]] </p><p>[[validation:ans1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[<hr>
+
+<p>A stationary point is a point on the graph of a function, where the function's derivative is zero. Since this is a 2D-function both the partial derivative in \(x\) and \(y\)-direction must be zero. </p>
+
+<p>The plane tangent to a  function \(f\) in the location \(u_0 =(x_0,y_0)\) is defined at  a location \(u= (x,y)\) by the equation \(T_1 (u) = f(u_0) + \langle \nabla f(u_0), u-u_0 \rangle \).
+The tangent plane in a stationary point is exactly horizontal, since the gradient is zero. </p>]]></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023010400</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* generate function */
+a1: rand([-10,-8,-6,-4,-2,2,4,6,8,10])/5;
+a2: rand([1,2,4,6,8,10])/5;
+a3: rand([4,5,6,8,10])/5;
+x0: rand([-3,-2,-1,1,2,3])/5;
+y0: rand([-3,-2,-1,1,2,3])/5;
+
+/* define the function */
+F:a1 * cos(%pi*a2 * (x-x0) )* cos( a3 * (y-y0));
+Fdx:diff(F,x);
+Fdy:diff(F,y);
+
+/* generate reference solution*/
+FdyRefSol:y0;
+FdxRefSol:x0;</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>Stationary point at {@F@}.</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>numerical</type>
+      <tans>[FdxRefSol,FdyRefSol]</tans>
+      <boxsize>30</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>1</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>0</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text>FdxSAns:ev(Fdx,numer,x=ans1[1],y=ans1[2]);
+FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);</text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>FdxSAns</sans>
+        <tans>0</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! In \(x\)-direction the slope is close to zero.</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>2</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>In \(x\)-direction the slope is not close enough to zero.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>FdySAns</sans>
+        <tans>0</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! In \(y\)-direction the slope is also close to zero. You found a stationary point!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>In \(y\)-direction the slope is not close enough to zero. Maybe you didn't select the point precisely enough. Try again!</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>2</name>
+        <answertest>NumAbsolute</answertest>
+        <sans>FdySAns</sans>
+        <tans>0</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0.5</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-3-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! In \(y\)-direction the slope is close to zero. Maybe you didn't select the point precisely enough in \(x\)-direction. Try again!</p>]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-3-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>In \(y\)-direction the slope is also not close enough to zero. This is not a stationary point. Remember the definition of a stationary point and have a look at the explanation below!</p>]]></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>

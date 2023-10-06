@@ -12,6 +12,8 @@ theme: minima
 |:--:|
 | *First impression of the question* |
 
++ [XML Code](XML/quiz-IDIAM-Stationary%20point%20of%20a%202D%20function%20(Legendre).xml)
+
 ## Question description
 
 A 2D function is plotted and its Taylor approximation of first order is given at a moveable location $u_0= (x_0,y_0)$. 
@@ -233,7 +235,8 @@ FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);
 
 
 ### Node 1
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | `FdxSAns`|
@@ -246,7 +249,8 @@ FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);
 | *Values of **node 1*** |
 
 ### Node 2
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | `FdySAns`|
@@ -259,7 +263,8 @@ FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);
 | *Values of **node 2*** |
 
 ### Node 3
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | `FdySAns`|
@@ -271,6 +276,5 @@ FdySAns:ev(Fdy,numer,x=ans1[1],y=ans1[2]);
 |:--:|
 | *Values of **node 3*** |
 
-## Todo:
-* []
+
 

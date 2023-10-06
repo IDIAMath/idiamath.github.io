@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 1639  -->
+  <question type="stack">
+    <name>
+      <text>Parametric surfaces and graphs</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>Given is the graph of a function \(f\) as a parametric surface. It consists of the points in the set \[A= \{(x,y,f(x,y))\mid x,y \in D_f \} .\]<br>
+Find the correct function of the variables \(x\) and \(y\) and type it in the input box. </p>
+
+
+[[jsxgraph width="500px" height="500px" input-ref-ans1='ans1Ref']]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-10, 10, 10,-10], axis:false, shownavigation : true});
+
+	    var box = [-3, 3];
+            var a1loc = {#a1#}+1;
+            var boxplot = [-a1loc,a1loc];
+		    var view = board.create('view3d',
+		        [
+		            [-6, -3], [8, 8],
+		            [box, box, box]
+		        ],
+		        {
+		            xPlaneRear: {visible: true},
+		            xPlaneRearYAxis: {visible: true},
+		            xPlaneRearZAxis: {visible: true},
+		            yPlaneRear: {visible: true},
+		            yPlaneRearXAxis: {visible: true},
+		            yPlaneRearZAxis: {visible: true},
+		        });
+
+                               var txtraw = '{#F#}';
+                               txtraw=txtraw.replace(/%pi/g, "PI");
+                              txtraw=txtraw.replace(/%exp/g,"Math.exp");
+                              var F =  board.jc.snippet(txtraw, true, 'x,y');
+
+                              
+
+    var c = view.create('functiongraph3d', [
+        F,
+        box,
+        box,
+    ], { strokeWidth: 1, strokeColor: "#1f84bc", stepU: 70, stepsV: 70 });
+
+ 
+board.update(); 
+
+
+
+/* axis labels*/
+                       var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+                       var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+                       var zlabel=view.create('point3d',[
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.9*box[1]], 
+                           {size:0,name:"z"});
+
+[[/jsxgraph]]
+<p>\(f(x,y)=\)[[input:ans1]] </p><p>[[validation:ans1]]</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>0.1</penalty>
+    <hidden>0</hidden>
+    <idnumber></idnumber>
+    <stackversion>
+      <text>2023010400</text>
+    </stackversion>
+    <questionvariables>
+      <text>/* generate parameters */
+a1: rand([1,2,3]);
+
+
+/* define the function */
+funclist:[a1 * cos(%pi*x)* cos(y), x^2+a1*y^2,((a1+1)^2-x^2-y^2)^(1/2),(a1^2+x^2-y^2)^(1/2),(a1^2+x^2+y^2)^(1/2), a1*x+y];/* (a1+1)*exp(-(x^2+y^2)/2)];*/
+F: rand(funclist);
+</text>
+    </questionvariables>
+    <specificfeedback format="html">
+      <text>[[feedback:prt1]]</text>
+    </specificfeedback>
+    <questionnote>
+      <text>random parameter a1 = {#a1#}, F(x,y)={@F@}</text>
+    </questionnote>
+    <questionsimplify>1</questionsimplify>
+    <assumepositive>0</assumepositive>
+    <assumereal>0</assumereal>
+    <prtcorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:green;"><i class="fa fa-check"></i></span> Correct answer, well done.]]></text>
+    </prtcorrect>
+    <prtpartiallycorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:orange;"><i class="fa fa-adjust"></i></span> Your answer is partially correct.]]></text>
+    </prtpartiallycorrect>
+    <prtincorrect format="html">
+      <text><![CDATA[<span style="font-size: 1.5em; color:red;"><i class="fa fa-times"></i></span> Incorrect answer.]]></text>
+    </prtincorrect>
+    <multiplicationsign>dot</multiplicationsign>
+    <sqrtsign>1</sqrtsign>
+    <complexno>i</complexno>
+    <inversetrig>cos-1</inversetrig>
+    <logicsymbol>lang</logicsymbol>
+    <matrixparens>[</matrixparens>
+    <variantsselectionseed></variantsselectionseed>
+    <input>
+      <name>ans1</name>
+      <type>algebraic</type>
+      <tans>F</tans>
+      <boxsize>30</boxsize>
+      <strictsyntax>1</strictsyntax>
+      <insertstars>0</insertstars>
+      <syntaxhint></syntaxhint>
+      <syntaxattribute>1</syntaxattribute>
+      <forbidwords></forbidwords>
+      <allowwords></allowwords>
+      <forbidfloat>1</forbidfloat>
+      <requirelowestterms>0</requirelowestterms>
+      <checkanswertype>0</checkanswertype>
+      <mustverify>1</mustverify>
+      <showvalidation>1</showvalidation>
+      <options></options>
+    </input>
+    <prt>
+      <name>prt1</name>
+      <value>1.0000000</value>
+      <autosimplify>1</autosimplify>
+      <feedbackstyle>1</feedbackstyle>
+      <feedbackvariables>
+        <text></text>
+      </feedbackvariables>
+      <node>
+        <name>0</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>ans1</sans>
+        <tans>F</tans>
+        <testoptions>0.1</testoptions>
+        <quiet>0</quiet>
+        <truescoremode>=</truescoremode>
+        <truescore>1</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-1-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p>Nice! You found the correct function. Will you dare to try again?</p>]]></text>
+        </truefeedback>
+        <falsescoremode>=</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>1</falsenextnode>
+        <falseanswernote>prt1-1-F</falseanswernote>
+        <falsefeedback format="html">
+          <text><![CDATA[<p>Sadly, you did not find the correct function.</p>]]></text>
+        </falsefeedback>
+      </node>
+      <node>
+        <name>1</name>
+        <answertest>AlgEquiv</answertest>
+        <sans>1</sans>
+        <tans>1</tans>
+        <testoptions></testoptions>
+        <quiet>0</quiet>
+        <truescoremode>+</truescoremode>
+        <truescore>0</truescore>
+        <truepenalty></truepenalty>
+        <truenextnode>-1</truenextnode>
+        <trueanswernote>prt1-2-T</trueanswernote>
+        <truefeedback format="html">
+          <text><![CDATA[<p> In the following applet, you can compare the graph of your solution with the correct graph. Have a look and try to find the errors! </p>
+
+[[jsxgraph width="500px" height="500px" input-ref-ans1='ans1Ref']]
+var board = JXG.JSXGraph.initBoard(divid,{boundingbox : [-10, 10, 10,-10], axis:false, shownavigation : true});
+
+	    var box = [-2, 2];
+		    var view = board.create('view3d',
+		        [
+		            [-6, -3], [8, 8],
+		            [box, box, box]
+		        ],
+		        {
+		            xPlaneRear: {visible: false},
+		            xPlaneRearYAxis: {visible: false},
+		            xPlaneRearZAxis: {visible: false},
+		            yPlaneRear: {visible: false},
+		            yPlaneRearXAxis: {visible: false},
+		            yPlaneRearZAxis: {visible: false},
+		        });
+
+                               var txtraw = '{#F#}';
+                               txtraw=txtraw.replace(/%pi/g, "PI");
+txtraw=txtraw.replace(/%exp/g,"Math.exp");
+                              var F =  board.jc.snippet(txtraw, true, 'x,y');
+
+                              var txtraw = '{#ans1#}';
+                               txtraw=txtraw.replace(/%pi/g, "PI");
+txtraw=txtraw.replace(/%exp/g,"Math.exp");
+                              var F_student =  board.jc.snippet(txtraw, true, 'x,y');
+                              
+
+    var c = view.create('functiongraph3d', [
+        F,
+        box,
+        box,
+    ], { strokeWidth: 1, strokeColor: '#1f84bc', stepU: 70, stepsV: 70 });
+
+  var c_student = view.create('functiongraph3d', [
+        F_student,
+        box,
+        box,
+    ], { strokeWidth: 1, strokeColor: '#EE442F', stepU: 70, stepsV: 70 });
+ 
+board.update(); 
+
+
+
+/* axis labels*/
+                       var xlabel=view.create('point3d',[0.9*box[1],0,(0.6*box[0]+0.4*box[1])], {size:0,name:"x"});
+                       var ylabel=view.create('point3d',[0,0.9*box[1],(0.6*box[0]+0.4*box[1])], {size:0,name:"y"});
+                       var zlabel=view.create('point3d',[
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.7*(0.6*box[0]+0.4*box[1]),
+                           0.9*box[1]], 
+                           {size:0,name:"z"});
+
+[[/jsxgraph]]]]></text>
+        </truefeedback>
+        <falsescoremode>-</falsescoremode>
+        <falsescore>0</falsescore>
+        <falsepenalty></falsepenalty>
+        <falsenextnode>-1</falsenextnode>
+        <falseanswernote>prt1-2-F</falseanswernote>
+        <falsefeedback format="html">
+          <text></text>
+        </falsefeedback>
+      </node>
+    </prt>
+  </question>
+
+</quiz>

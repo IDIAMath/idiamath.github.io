@@ -13,6 +13,8 @@ theme: minima
 |:--:|
 | *First impression of the question* |
 
++ [XML Code](XML/quiz-IDIAM-Point%20with%20positive-definite%20Hessian.xml)
+
 ## Question description
 
 A 2D function is plotted and its Taylor approximation of second order is given at a moveable point $x= (x_1,x_2)$. 
@@ -217,6 +219,7 @@ board.update();
 ```
 ## Answers
 ### Answer ans 1
+
 |property | setting| 
 |:---|:---|
 |Input type | Numerical |
@@ -225,6 +228,7 @@ board.update();
 | Forbid float | No |
 | Student must verify | Yes |
 | Show the validation | Yes, with variable list|
+
 --- 
 
 # General Feedback
@@ -281,7 +285,8 @@ if ev2s>0 then s2: +100;
 | *Visualization of **PRT 1*** |
 
 ### Node 1
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | s1|
@@ -289,12 +294,14 @@ if ev2s>0 then s2: +100;
 |Node 1 true feedback | `<p>The first eigenvalue is larger than zero.  </p>`|
 |Node 1 false feedback | `<p>The first eigenvalue is not larger than zero. </p>`|
 
+
 | ![Node 1](./images/positive_hessian_PRT_1_node_1_2023-05-23.png) |
 |:--:|
 | *Values of **node 1*** |
 
 ### Node 2
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | s2|
@@ -307,7 +314,8 @@ if ev2s>0 then s2: +100;
 | *Values of **node 2*** |
 
 ### Node 3
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | NumAbsolute|
 |SAns | s2|
@@ -319,5 +327,3 @@ if ev2s>0 then s2: +100;
 |:--:|
 | *Values of **node 3*** |
 
-## Todo:
-* [x] Update figures

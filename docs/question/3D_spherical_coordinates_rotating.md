@@ -11,6 +11,8 @@ theme: minima
 |:--:|
 | *First impression of the question* |
 
++ [XML Code](XML/quiz-IDIAM-Spherical%20Coordinates%20Rotating.xml)
+
 ## Question description
 
 A 3D volume is plotted. It is a randomly generated section of a ball in spherical coordinates.
@@ -199,6 +201,7 @@ board.update();
 ```
 ## Answers
 ### Answer ans 1
+
 |property | setting| 
 |:---|:---|
 |Input type | Algebraic input|
@@ -207,8 +210,11 @@ board.update();
 | Forbid float | No |
 | Student must verify | Yes |
 | Show the validation | Yes, with variable list|
+
 ---
+
 ### Answer ans 2
+
 |property | setting| 
 |:---|:---|
 |Input type | Algebraic input|
@@ -217,8 +223,11 @@ board.update();
 | Forbid float | Yes |
 | Student must verify | Yes |
 | Show the validation | Yes, with variable list|
+
 ---
+
 ### Answer ans 3
+
 |property | setting| 
 |:---|:---|
 |Input type | Algebraic input|
@@ -245,6 +254,7 @@ r2:ans1[2]
 
 
 ### Node 1
+
 |property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
@@ -259,7 +269,8 @@ r2:ans1[2]
 | *Values of **node 1*** |
 
 ### Node 2
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `r2`|
@@ -273,7 +284,8 @@ r2:ans1[2]
 
 
 ### Node 3
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `r2`|
@@ -302,6 +314,7 @@ phi2:ans2[2]
 
 
 ### Node 1
+
 |property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
@@ -315,7 +328,8 @@ phi2:ans2[2]
 | *Values of **node 1*** |
 
 ### Node 2
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `phi2`|
@@ -328,7 +342,8 @@ phi2:ans2[2]
 | *Values of **node 2*** |
 
 ### Node 3
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `phi2`|
@@ -356,6 +371,7 @@ psi2:ans3[2]
 
 
 ### Node 1
+
 |property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
@@ -370,7 +386,8 @@ psi2:ans3[2]
 
 
 ### Node 2
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `psi2`|
@@ -384,7 +401,8 @@ psi2:ans3[2]
 | *Values of **node 2*** |
 
 ### Node 3
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `psi2`|
@@ -739,10 +757,10 @@ board.update();
 
 [[/jsxgraph]]
 ```
+
 | ![Feedback_applet](./images/Spherical_rotating_student_feedback_2023-05-22.png) |
 |:--:|
 | *Feedback applet with the reference volume, student volume and cross sections with coordinate planes.* |
 
 
-## Todo:
-* [x] Improve PRT
+

@@ -161,8 +161,10 @@ board.update();
 Select \(\hat V\).
 <p>[[input:ans1]] [[validation:ans1]]</p>
 ```
+
 ## Answers
 ### Answer ans 1
+
 |property | setting| 
 |:---|:---|
 |Input type |Radio|
@@ -171,7 +173,9 @@ Select \(\hat V\).
 | Forbid float | No |
 | Student must verify | Yes |
 | Show the validation | Yes, compact|
+
 --- 
+
 ## General feedback
 
 ```
@@ -183,6 +187,7 @@ Select \(\hat V\).
 
 ## Potential response tree
 ### prt1
+
 | ![prt1](./images/curl_PRT_2023-05-29.PNG) |
 |:--:|
 | *Visualization of **prt1*** |
@@ -195,8 +200,10 @@ None needed, since `ans1` is selected by ticking a button.
 | ![Node 1](./images/curl_PRT_node_1_2023-05-29.PNG) |
 |:--:|
 | *Values of **node 1*** |
+
 ### Node 1
- |property | setting| 
+
+|property | setting| 
 |:---|:---|
 |Answer Test | AlgEquiv|
 |SAns | `ans1`|
@@ -204,10 +211,4 @@ None needed, since `ans1` is selected by ticking a button.
 |Node 1 true feedback | `<p> Well done, you selected the correct vector field. You can now try to calculate the curl of more complicated vector fields. The process is always the same.</p>`|
 |Node 1 false feedback | `<p> You did not select the correct vector field. Please compute \(\nabla \times V\) for the given field \(V(x,y,z):=\begin{pmatrix}{@Vx@}\\{@Vy@}\\{@Vz@}\end{pmatrix}\). </p>`|
 
-
-## Todo:
-* [ ] More options for vector fields
-* [ ] Display student answer graphically
-* [x] Display definition of curl in solution
-* [x] **fix JSXGraph-Applet, does not work currently**
 

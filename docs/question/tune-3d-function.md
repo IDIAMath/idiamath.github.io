@@ -10,7 +10,7 @@ usemathjax: true
 > The student needs to find the values of the parameters that makes the 
 > two surfaceplots coincide
 
-- [XML Code](XML/tune-3d-function-xml)
+- [XML Code](XML/tune-3d-function.xml)
 
 ## Question description
 
