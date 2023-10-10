@@ -7,10 +7,11 @@ usemathjax: true
 In the section you will find some examples demonstrating JSXGraph in linear algebra and calculus. Related HELM Workbooks will be added.
 
 ## Complex Numbers
-+ [Complex numbers (polar coordinates)](./ComplexNumberPolar.html)
-+ [Complex numbers (addition)](./ComplexNumberAddition.html)
++ [Complex numbers (polar coordinates)](./ComplexNumberPolar.html) (HELM WB 10 Complex Numbers, 10.2.2)
++ [Complex numbers (addition)](./ComplexNumberAddition.html)(HELM WB 10 Complex Numbers, 10.1.2, 10.2.1, )
 + [Complex numbers (multiplication)](./ComplexNumberMultiplication.html)
 + [Roots of Complex numbers](./rootComplexNumbers.html)
+(HELM WB 10 Complex Numbers, 10.3.2)
 
 ## Linear Algebra
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and coordinate unit vectors](./LinMappingUnitVectors.html) Just see the effect of setting the image of the unit vectors.
@@ -18,7 +19,7 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricesUnitCircle.html) Demonstrated at a circle.
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricesPolygon.html) Demonstrated at a polygon.
 + [Rotation in  $$\mathbb{R}^2$$ ](./LinMappingMatricesPolygonRotating.html) Rotation of a polygon, matrix is displayed.
-+ [Eigenvectors of a linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$](./Eigenvectores.html)
++ [Eigenvectors of a linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$](./Eigenvectores.html) (HELM WB 22  Eigenvalues and Eigenvectors, 22.1.2)
 
 
 ## Integration 1d
@@ -53,6 +54,7 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 ## Coordinate Transformations
 + [Polar coordinates](./IntArea2D-polarKoord.html)
 + [Spherical coordinates](./demo3d-sphere4.html)
++ [Spherical coordinates](./SphericalCoordinatesWithCuttingPlane.html) One set is hard coded in the applet, now try to fit the other on. It is possible to  
 
 ## Vector Fields
 + [Slope Field](./slopefield-plot-input.html) Slopefield of a function $$f:\mathbb{R}^2\to\mathbb{R}$$ like $$y'(x)=f(x,y)$$ is plotted, a trajectory thru $$(x,_0,y_0)$$ is plotted. The function can be modified by an input field.
