@@ -15,7 +15,7 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 
 ## Linear Algebra
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and coordinate unit vectors](./LinMappingUnitVectors.html) Just see the effect of setting the image of the unit vectors.
-+ [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricies.html)
++ [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricies.html) (HELM Workbook 8 Matrix solution of Equations 8.2, 8.3)
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricesUnitCircle.html) Demonstrated at a circle.
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricesPolygon.html) Demonstrated at a polygon.
 + [Rotation in  $$\mathbb{R}^2$$ ](./LinMappingMatricesPolygonRotating.html) Rotation of a polygon, matrix is displayed.
@@ -24,37 +24,37 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 
 ## Integration 1d
 
-+ [Riemann Sums](./IntegrationRiemannSum.html)
++ [Riemann Sums](./IntegrationRiemannSum.html) (HELM Workbook 13 Integration, 13.3.1)
 
 ## Calculus 1d
-+ [Sequences in 1d](./ConvergenceSequencesEps.html)
++ [Sequences in 1d](./ConvergenceSequencesEps.html) (HELM WB 16 Sequences and Series 1.)
 + [$$\epsilon-\delta$$-criterion for continuous functions](./Functions-e-d-continuity.html)
 + [Uniform continuity of functions](./Functions-uniform-continuity.html)
 + [Definition of Area functions](./FunctionsHyperbola.html) The idea of the area function is shown.
-+ [h-Method and Sine](./FunctionsSinDamped.html) The influence of the parameters of the damped sine function are demonstrated.
-+ [Tangent and osculating circle (numerical)](./OsculatingCircle-input-num.html) For a given function the tangent and the osculating circle is drawn. The derivatives are approximated numericaly.
-+ [Tangent and osculating circle (symbolic)](./OsculatingCircle-input-num.html) For a given function the tangent and the osculating circle is drawn. The derivatives are computed symbolicaly.
++ [h-Method and Sine](./FunctionsSinDamped.html) The influence of the parameters of the damped sine function are demonstrated. (HELM Workbook 11 Differentiantion 1.,4. )
++ [Tangent and osculating circle (numerical)](./OsculatingCircle-input-num.html) For a given function the tangent and the osculating circle is drawn. The derivatives are approximated numericaly. (HELM Workbook 11 Differentiantion 1.,4. )
++ [Tangent and osculating circle (symbolic)](./OsculatingCircle-input-num.html) For a given function the tangent and the osculating circle is drawn. The derivatives are computed symbolicaly. (HELM Workbook 11 Differentiantion 1.,4. )
 
 ## Calculus 2d
-+ [Sequences in 2d](./ConvergenceSequences2D.html)  
++ [Sequences in 2d](./ConvergenceSequences2D.html)  (HELM WB 16 Sequences and Series 1.)
 + [Piecewise curve and tangent](./Curve-Plain-Tangent.html) A piecewise curve depending on sliders and the tangent of the curve are shown.
 + [Areas with function limits](./Intgration2DfunctionLimits.html) Show 2D integration area with functions as limits 
-+ [Function plot](./demo3d-function-plot-input.html): Plot a function provided in input box.
-+ [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane.html): Given function an sliders
-+ [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane-input.html): Function assigned in an input field.
++ [Function plot](./demo3d-function-plot-input.html): Plot a function provided in input box. (HELM Workbook 18 Functions of Several Variables, 18.1)
++ [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane.html): Given function an sliders (HELM Workbook 18 Functions of Several Variables, 18.3)
++ [Function and Tangent Plane](./demo3d-pointOnSurface-Tagentplane-input.html): Function assigned in an input field.  (HELM Workbook 18 Functions of Several Variables, 18.3)
 + [Function and Taylor 2nd order](./demo3d-pointOnSurface-Taylor2.html) Given function an sliders
 + [Function and Taylor 2nd order](./demo3d-pointOnSurface-Taylor2-input.html) Function assigned in an input field.
 
 ## Integration domains 2d
-+ [Curvilinear bounded domain (functions of $$y$$)](./IntArea2D-Input-xproj.html) You are given a domain and you have to reconstruct this domain by setting up four functions.
-+ [Curvilinear bounded domain (functions of $$x$$)](./IntArea2D-Input-yproj.html) You are given a domain and you have to reconstruct this domain by setting up four functions.
++ [Curvilinear bounded domain (functions of $$y$$)](./IntArea2D-Input-xproj.html) You are given a domain and you have to reconstruct this domain by setting up four functions. (HELM Workbook 27 Multiple Integration 27.2)
++ [Curvilinear bounded domain (functions of $$x$$)](./IntArea2D-Input-yproj.html) You are given a domain and you have to reconstruct this domain by setting up four functions. (HELM Workbook 27 Multiple Integration 27.2)
 + [Curvilinear bounded domain](./IntArea2D-curved-Input.html) You are given a domain and you have to reconstruct this domain by setting up four functions.
 
 
 ## Coordinate Transformations
-+ [Polar coordinates](./IntArea2D-polarKoord.html)
-+ [Spherical coordinates](./demo3d-sphere4.html)
-+ [Spherical coordinates](./SphericalCoordinatesWithCuttingPlane.html) One set is hard coded in the applet, now try to fit the other on. It is possible to  
++ [Polar coordinates](./IntArea2D-polarKoord.html)  (HELM Workbook 27 Multiple Integration 27.2.3, 27.4)
++ [Spherical coordinates](./demo3d-sphere4.html) (HELM Workbook 27 Multiple Integration 27.4.3)
++ [Spherical coordinates](./SphericalCoordinatesWithCuttingPlane.html) One set is hard coded in the applet, now try to fit the other on. (HELM Workbook 27 Multiple Integration 27.4.3)
 
 ## Vector Fields
 + [Slope Field](./slopefield-plot-input.html) Slopefield of a function $$f:\mathbb{R}^2\to\mathbb{R}$$ like $$y'(x)=f(x,y)$$ is plotted, a trajectory thru $$(x,_0,y_0)$$ is plotted. The function can be modified by an input field.
