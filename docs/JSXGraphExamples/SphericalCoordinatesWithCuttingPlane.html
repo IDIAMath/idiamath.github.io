@@ -1,591 +1,614 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <html lang="en">
-  
+
 <head>
   <meta charset="utf-8" />
-  <title>Name</title>
-  <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+  <title>Kugelkoordinaten</title>
 
   <script type="text/javascript"
     src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_HTML"></script>
 
-    <!--
-    <script type="text/javascript" charset="UTF-8"
+  <script type="text/javascript" charset="UTF-8"
     src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
-   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
--->
-<!-- Devaloper Version Alfred Wassermann-->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+  <!-- Devaloper Version Alfred Wassermann-->
+  <!--
 
 <link rel="stylesheet" type="text/css"
+  <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
 href="https://jsxgraph.uni-bayreuth.de/~alfred/jsxgraph/distrib/jsxgraph.css" />
 <script type="text/javascript" charset="UTF-8" src="https://jsxgraph.uni-bayreuth.de/~alfred/jsxgraph/distrib/jsxgraphsrc.js">
 </script>
 <script type="text/javascript" charset="UTF-8" src="https://jsxgraph.uni-bayreuth.de/~alfred/jsxdev/3D/view3d.js"></script>
 <script type="text/javascript" charset="UTF-8" src="https://jsxgraph.uni-bayreuth.de/~alfred/jsxdev/3D/elements3d.js"></script> 
+-->
 
-   
+
 
 </head>
 
 <body>
-    <header>
-      <h2>Spherical Coordinates with cutting planes</h2>
-    </header>
-    <p> This applets shows the part of the sphere resulting from intervals \([r_1,r_2]\), \([\phi_1,\phi_2]\), \([\psi_1,\psi_2]\). 
-      The blue one is hard coded in the applet, the red one can be adjusted by the sliders.</p>
-    <p> Additionaly the curves in the \((x,y)\) and \((x,z)\)-plane are shown.</p>
-          <div id="jxgbox5" class="jxgbox" style="width:700px; height:918px"></div>
-      <script>
-        JXG.Options.text.useMathJax = true;
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+  </style>
+  <header>
+    <h2>Spherical Coordinates with cutting planes</h2>
+  </header>
+  <p> This applets shows the part of the sphere resulting from intervals \([r_1,r_2]\), \([\phi_1,\phi_2]\),
+    \([\psi_1,\psi_2]\).
+    The blue one is hard coded in the applet, the red one can be adjusted by the sliders.</p>
+  <p> Additionaly the curves in the \((x,y)\) and \((x,z)\)-plane are shown.</p>
+  <div id="jxgbox5" class="jxgbox" style="width:700px; height:918px"></div>
+  <script>
+    JXG.Options.text.useMathJax = true;
 
-        var board = JXG.JSXGraph.initBoard("jxgbox5", {
-          boundingbox: [-8, 8, 8, -13],
-          keepaspectratio: false,
-          axis: false,
-        });
-        var vector = [];
-        var objectListXYPlane = [];
-        var objectListXZPlane = [];
-        var listRefVolume = [];
-        var listStudVolume = [];
-        var scaleVec = 0.5;
-        var box = [-2, 2];
-        var c1, c2, c3, c4, c5, c6;
-        var cs1, cs2, cs3, cs4, cs5, cs6;
+    var board = JXG.JSXGraph.initBoard("jxgbox5", {
+      boundingbox: [-8, 8, 8, -13],
+      keepaspectratio: false,
+      axis: false,
+    });
+    var vector = [];
+    var objectListXYPlane = [];
+    var objectListXZPlane = [];
+    var listRefVolume = [];
+    var listStudVolume = [];
+    var scaleVec = 0.5;
+    var box = [-2, 2];
+    var c1, c2, c3, c4, c5, c6;
+    var cs1, cs2, cs3, cs4, cs5, cs6;
 
-        var view = board.create(
-          "view3d",
-          [
-            [-6, -3],
-            [8, 8],
-            [box, box, box],
-          ],
-          {
-            xPlaneRear: { visible: true },
-            xPlaneRearYAxis: { visible: false },
-            xPlaneRearZAxis: { visible: false },
-            yPlaneRear: { visible: true },
-            yPlaneRearXAxis: { visible: false },
-            yPlaneRearZAxis: { visible: false },
-          }
-        );
+    var view = board.create(
+      "view3d",
+      [
+        [-6, -3],
+        [8, 8],
+        [box, box, box],
+      ],
+      {
+        xPlaneRear: { visible: true },
+        xPlaneRearYAxis: { visible: false },
+        xPlaneRearZAxis: { visible: false },
+        yPlaneRear: { visible: true },
+        yPlaneRearXAxis: { visible: false },
+        yPlaneRearZAxis: { visible: false },
+      }
+    );
 
-        //slider-based curve
-        var xlabel = view.create(
-          "point3d",
-          [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
-          { size: 0, name: "x" }
-        );
-        var Ylabel = view.create(
-          "point3d",
-          [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
-          { size: 0, name: "y" }
-        );
-        var Zlabel = view.create(
-          "point3d",
-          [
-            0.7 * (0.6 * box[0] + 0.4 * box[1]),
-            0.7 * (0.6 * box[0] + 0.4 * box[1]),
-            0.9 * box[1],
-          ],
-          { size: 0, name: "z" }
-        );
+    //slider-based curve
+    var xlabel = view.create(
+      "point3d",
+      [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
+      { size: 0, name: "x" }
+    );
+    var Ylabel = view.create(
+      "point3d",
+      [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
+      { size: 0, name: "y" }
+    );
+    var Zlabel = view.create(
+      "point3d",
+      [
+        0.7 * (0.6 * box[0] + 0.4 * box[1]),
+        0.7 * (0.6 * box[0] + 0.4 * box[1]),
+        0.9 * box[1],
+      ],
+      { size: 0, name: "z" }
+    );
 
-        // set transformation
-        // Transform components of the vector function
+    // set transformation
+    // Transform components of the vector function
 
-        var TF1 = (u, v, w) => u * Math.cos(v) * Math.sin(w);
-        var TF2 = (u, v, w) => u * Math.sin(v) * Math.sin(w);
-        var TF3 = (u, v, w) => u * Math.cos(w);
-        // define range for reference configuration
-        var u1ref = 0.5;
-        var u2ref = 2;
-        var v1ref = 0.7071;
-        var v2ref = 4.14;
-        var w1ref = 0.7071;
-        var w2ref = 2.43;
+    var TF1 = (u, v, w) => u * Math.cos(v) * Math.sin(w);
+    var TF2 = (u, v, w) => u * Math.sin(v) * Math.sin(w);
+    var TF3 = (u, v, w) => u * Math.cos(w);
+    // define range for reference configuration
+    var u1ref = 0.5;
+    var u2ref = 2;
+    var v1ref = 0.7071;
+    var v2ref = 4.14;
+    var w1ref = 0.7071;
+    var w2ref = 2.43;
 
-        // define Variables init=[xlower, xinit, xupper]
-        var u1init = [0, 1, 4];
-        var u2init = [0, 2, 4];
-        var v1init = [0, 0, 6.28];
-        var v2init = [0, 2, 6.28];
-        var w1init = [0, 0, 3.14];
-        var w2init = [0, 2, 3.14];
+    // define Variables init=[xlower, xinit, xupper]
+    var u1init = [0, 1, 4];
+    var u2init = [0, 2, 4];
+    var v1init = [0, 0, 6.28];
+    var v2init = [0, 2, 6.28];
+    var w1init = [0, 0, 3.14];
+    var w2init = [0, 2, 3.14];
 
-        // Generate box, !!!! slider adjusted to the init of the board above//
-        // Create Slider
-        var u1 = board.create("slider", [[-7, -6], [5, -6], u1init], {
-          name: "\\(r_1\\)",
-          snapWidth: 0.05,
-        });
-        var u2 = board.create("slider", [[-7, -7], [5, -7], u2init], {
-          name: "\\(r_2\\)",
-          snapWidth: 0.05,
-        });
-        var v1 = board.create("slider", [[-7, -8], [5, -8], v1init], {
-          name: "\\(\\phi_1\\)",
-          snapWidth: 0.05,
-        });
-        var v2 = board.create("slider", [[-7, -9], [5, -9], v2init], {
-          name: "\\(\\phi_2\\)",
-          snapWidth: 0.05,
-        });
-        var w1 = board.create("slider", [[-7, -10], [5, -10], w1init], {
-          name: "\\(\\psi_1\\)",
-          snapWidth: 0.05,
-        });
-        var w2 = board.create("slider", [[-7, -11], [5, -11], w2init], {
-          name: "\\(\\psi_2\\)",
-          snapWidth: 0.05,
-        });
+    // Generate box, !!!! slider adjusted to the init of the board above//
+    // Create Slider
+    var u1 = board.create("slider", [[-7, -6], [5, -6], u1init], {
+      name: "\\(r_1\\)",
+      snapWidth: 0.05,
+    });
+    var u2 = board.create("slider", [[-7, -7], [5, -7], u2init], {
+      name: "\\(r_2\\)",
+      snapWidth: 0.05,
+    });
+    var v1 = board.create("slider", [[-7, -8], [5, -8], v1init], {
+      name: "\\(\\phi_1\\)",
+      snapWidth: 0.05,
+    });
+    var v2 = board.create("slider", [[-7, -9], [5, -9], v2init], {
+      name: "\\(\\phi_2\\)",
+      snapWidth: 0.05,
+    });
+    var w1 = board.create("slider", [[-7, -10], [5, -10], w1init], {
+      name: "\\(\\psi_1\\)",
+      snapWidth: 0.05,
+    });
+    var w2 = board.create("slider", [[-7, -11], [5, -11], w2init], {
+      name: "\\(\\psi_2\\)",
+      snapWidth: 0.05,
+    });
 
-        // create reference volume
-        createRefVolume();
-        // create volume
-        // listVolSurfs=createVolume([TF1,TF2,TF2],[u1,u2,v1,v2,w3,w4],attributes)
+    // create reference volume
+    createRefVolume();
+    // create volume
+    // listVolSurfs=createVolume([TF1,TF2,TF2],[u1,u2,v1,v2,w3,w4],attributes)
 
-        createStudVolume();
+    createStudVolume();
 
-        // list for toggeling
-        listRefVolume.push(c1, c2, c3, c4, c5, c6);
-        listStudVolume.push(cs1, cs2, cs3, cs4, cs5, cs6);
+    // list for toggeling
+    listRefVolume.push(c1, c2, c3, c4, c5, c6);
+    listStudVolume.push(cs1, cs2, cs3, cs4, cs5, cs6);
 
-        var XYPlane = view.create(
-          "plane3d",
-          [
-            [0, 0, 0],
-            [1, 0, 0],
-            [0, 1, 0],
-          ],
-          {
-            fillOpacity: 0.5,
-            fillColor: "blue",
-            visible: true,
-          }
-        );
+    var XYPlane = view.create(
+      "plane3d",
+      [
+        [0, 0, 0],
+        [1, 0, 0],
+        [0, 1, 0],
+      ],
+      {
+        fillOpacity: 0.5,
+        fillColor: "blue",
+        visible: true,
+      }
+    );
 
-        var XZPlane = view.create(
-          "plane3d",
-          [
-            [0, 0, 0],
-            [1, 0, 0],
-            [0, 0, 1],
-          ],
-          {
-            fillOpacity: 0.5,
-            fillColor: "blue",
-            visible: true,
-          }
-        );
+    var XZPlane = view.create(
+      "plane3d",
+      [
+        [0, 0, 0],
+        [1, 0, 0],
+        [0, 0, 1],
+      ],
+      {
+        fillOpacity: 0.5,
+        fillColor: "blue",
+        visible: true,
+      }
+    );
 
-        // curves in xy plane
-        var curveRef1 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(t, v1ref, Math.PI / 2),
-            (t) => TF2(t, v1ref, Math.PI / 2),
-            (t) => TF3(t, v1ref, Math.PI / 2),
-            [u1ref, u2ref],
-          ],
-          { strokeWidth: 3, visible: true }
-        );
+    // curves in xy plane
+    var curveRef1 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(t, v1ref, Math.PI / 2),
+        (t) => TF2(t, v1ref, Math.PI / 2),
+        (t) => TF3(t, v1ref, Math.PI / 2),
+        [u1ref, u2ref],
+      ],
+      { strokeWidth: 3, visible: true }
+    );
 
-        var curveStud1 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(t, v1.Value(), Math.PI / 2),
-            (t) => TF2(t, v1.Value(), Math.PI / 2),
-            (t) => TF3(t, v1.Value(), Math.PI / 2),
-            () => [u1.Value(), u2.Value()],
-          ],
-          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
-        );
+    var curveStud1 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(t, v1.Value(), Math.PI / 2),
+        (t) => TF2(t, v1.Value(), Math.PI / 2),
+        (t) => TF3(t, v1.Value(), Math.PI / 2),
+        () => [u1.Value(), u2.Value()],
+      ],
+      { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
+    );
 
-        var curveRef2 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(t, v2ref, Math.PI / 2),
-            (t) => TF2(t, v2ref, Math.PI / 2),
-            (t) => TF3(t, v2ref, Math.PI / 2),
-            [u1ref, u2ref],
-          ],
-          { strokeWidth: 3, visible: true }
-        );
+    var curveRef2 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(t, v2ref, Math.PI / 2),
+        (t) => TF2(t, v2ref, Math.PI / 2),
+        (t) => TF3(t, v2ref, Math.PI / 2),
+        [u1ref, u2ref],
+      ],
+      { strokeWidth: 3, visible: true }
+    );
 
-        var curveStud2 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(t, v2.Value(), Math.PI / 2),
-            (t) => TF2(t, v2.Value(), Math.PI / 2),
-            (t) => TF3(t, v2.Value(), Math.PI / 2),
-            () => [u1.Value(), u2.Value()],
-          ],
-          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
-        );
+    var curveStud2 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(t, v2.Value(), Math.PI / 2),
+        (t) => TF2(t, v2.Value(), Math.PI / 2),
+        (t) => TF3(t, v2.Value(), Math.PI / 2),
+        () => [u1.Value(), u2.Value()],
+      ],
+      { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
+    );
 
-        var curveRef3 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(u1ref, t, Math.PI / 2),
-            (t) => TF2(u1ref, t, Math.PI / 2),
-            (t) => TF3(u1ref, t, Math.PI / 2),
-            [v1ref, v2ref],
-          ],
-          { strokeWidth: 3, visible: true }
-        );
+    var curveRef3 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(u1ref, t, Math.PI / 2),
+        (t) => TF2(u1ref, t, Math.PI / 2),
+        (t) => TF3(u1ref, t, Math.PI / 2),
+        [v1ref, v2ref],
+      ],
+      { strokeWidth: 3, visible: true }
+    );
 
-        var curveStud3 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(u1.Value(), t, Math.PI / 2),
-            (t) => TF2(u1.Value(), t, Math.PI / 2),
-            (t) => TF3(u1.Value(), t, Math.PI / 2),
-            () => [v1.Value(), v2.Value()],
-          ],
-          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
-        );
+    var curveStud3 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(u1.Value(), t, Math.PI / 2),
+        (t) => TF2(u1.Value(), t, Math.PI / 2),
+        (t) => TF3(u1.Value(), t, Math.PI / 2),
+        () => [v1.Value(), v2.Value()],
+      ],
+      { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
+    );
 
-        var curveRef4 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(u2ref, t, Math.PI / 2),
-            (t) => TF2(u2ref, t, Math.PI / 2),
-            (t) => TF3(u2ref, t, Math.PI / 2),
-            [v1ref, v2ref],
-          ],
-          { strokeWidth: 3, visible: true }
-        );
+    var curveRef4 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(u2ref, t, Math.PI / 2),
+        (t) => TF2(u2ref, t, Math.PI / 2),
+        (t) => TF3(u2ref, t, Math.PI / 2),
+        [v1ref, v2ref],
+      ],
+      { strokeWidth: 3, visible: true }
+    );
 
-        var curveStud4 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(u2.Value(), t, Math.PI / 2),
-            (t) => TF2(u2.Value(), t, Math.PI / 2),
-            (t) => TF3(u2.Value(), t, Math.PI / 2),
-            () => [v1.Value(), v2.Value()],
-          ],
-          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
-        );
+    var curveStud4 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(u2.Value(), t, Math.PI / 2),
+        (t) => TF2(u2.Value(), t, Math.PI / 2),
+        (t) => TF3(u2.Value(), t, Math.PI / 2),
+        () => [v1.Value(), v2.Value()],
+      ],
+      { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
+    );
 
-        // curves in xz plane
-        var curveRefXZ1 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(t, 0, w1ref),
-            (t) => TF2(t, 0, w1ref),
-            (t) => TF3(t, 0, w1ref),
-            [u1ref, u2ref],
-          ],
-          { strokeWidth: 3, visible: true }
-        );
+    // curves in xz plane
+    var curveRefXZ1 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(t, 0, w1ref),
+        (t) => TF2(t, 0, w1ref),
+        (t) => TF3(t, 0, w1ref),
+        [u1ref, u2ref],
+      ],
+      { strokeWidth: 3, visible: true }
+    );
 
-        var curveStudXZ1 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(t, 0, w1.Value()),
-            (t) => TF2(t, 0, w1.Value()),
-            (t) => TF3(t, 0, w1.Value()),
-            () => [u1.Value(), u2.Value()],
-          ],
-          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
-        );
+    var curveStudXZ1 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(t, 0, w1.Value()),
+        (t) => TF2(t, 0, w1.Value()),
+        (t) => TF3(t, 0, w1.Value()),
+        () => [u1.Value(), u2.Value()],
+      ],
+      { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
+    );
 
-        var curveRefXZ2 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(t, 0, w2ref),
-            (t) => TF2(t, 0, w2ref),
-            (t) => TF3(t, 0, w2ref),
-            [u1ref, u2ref],
-          ],
-          { strokeWidth: 3, visible: true }
-        );
+    var curveRefXZ2 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(t, 0, w2ref),
+        (t) => TF2(t, 0, w2ref),
+        (t) => TF3(t, 0, w2ref),
+        [u1ref, u2ref],
+      ],
+      { strokeWidth: 3, visible: true }
+    );
 
-        var curveStudXZ2 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(t, 0, w2.Value()),
-            (t) => TF2(t, 0, w2.Value()),
-            (t) => TF3(t, 0, w2.Value()),
-            () => [u1.Value(), u2.Value()],
-          ],
-          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
-        );
+    var curveStudXZ2 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(t, 0, w2.Value()),
+        (t) => TF2(t, 0, w2.Value()),
+        (t) => TF3(t, 0, w2.Value()),
+        () => [u1.Value(), u2.Value()],
+      ],
+      { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
+    );
 
-        var curveRefXZ3 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(u1ref, 0, t),
-            (t) => TF2(u1ref, 0, t),
-            (t) => TF3(u1ref, 0, t),
-            [w1ref, w2ref],
-          ],
-          { strokeWidth: 3, visible: true }
-        );
+    var curveRefXZ3 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(u1ref, 0, t),
+        (t) => TF2(u1ref, 0, t),
+        (t) => TF3(u1ref, 0, t),
+        [w1ref, w2ref],
+      ],
+      { strokeWidth: 3, visible: true }
+    );
 
-        var curveStudXZ3 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(u1.Value(), 0, t),
-            (t) => TF2(u1.Value(), 0, t),
-            (t) => TF3(u1.Value(), 0, t),
-            () => [w1.Value(), w2.Value()],
-          ],
-          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
-        );
+    var curveStudXZ3 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(u1.Value(), 0, t),
+        (t) => TF2(u1.Value(), 0, t),
+        (t) => TF3(u1.Value(), 0, t),
+        () => [w1.Value(), w2.Value()],
+      ],
+      { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
+    );
 
-        var curveRefXZ4 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(u2ref, 0, t),
-            (t) => TF2(u2ref, 0, t),
-            (t) => TF3(u2ref, 0, t),
-            [w1ref, w2ref],
-          ],
-          { strokeWidth: 3, visible: true }
-        );
+    var curveRefXZ4 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(u2ref, 0, t),
+        (t) => TF2(u2ref, 0, t),
+        (t) => TF3(u2ref, 0, t),
+        [w1ref, w2ref],
+      ],
+      { strokeWidth: 3, visible: true }
+    );
 
-        var curveStudXZ4 = view.create(
-          "curve3d",
-          [
-            (t) => TF1(u2.Value(), 0, t),
-            (t) => TF2(u2.Value(), 0, t),
-            (t) => TF3(u2.Value(), 0, t),
-            () => [w1.Value(), w2.Value()],
-          ],
-          { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
-        );
+    var curveStudXZ4 = view.create(
+      "curve3d",
+      [
+        (t) => TF1(u2.Value(), 0, t),
+        (t) => TF2(u2.Value(), 0, t),
+        (t) => TF3(u2.Value(), 0, t),
+        () => [w1.Value(), w2.Value()],
+      ],
+      { strokeWidth: 3, strokeColor: "#EE442F", visible: true }
+    );
 
-        // generate info for xy-plane
-        objectListXYPlane.push(
-          XYPlane,
-          curveRef1,
-          curveRef2,
-          curveRef3,
-          curveRef4,
-          curveStud1,
-          curveStud2,
-          curveStud3,
-          curveStud4
-        );
-        objectListXZPlane.push(
-          XZPlane,
-          curveRefXZ1,
-          curveRefXZ2,
-          curveRefXZ3,
-          curveRefXZ4,
-          curveStudXZ1,
-          curveStudXZ2,
-          curveStudXZ3,
-          curveStudXZ4
-        );
-        var button1 = board.create(
-          "button",
-          [
-            -7,
-            -12.5,
-            "XY-plane",
-            function () {
-              toggleList(objectListXYPlane);
-            },
-          ],
-          { fixed: true }
-        );
-        var button2 = board.create(
-          "button",
-          [
-            -5,
-            -12.5,
-            "XZ-plane",
-            function () {
-              toggleList(objectListXZPlane);
-            },
-          ],
-          { fixed: true }
-        );
-        var button3 = board.create(
-          "button",
-          [
-            -3,
-            -12.5,
-            "Ref Volume",
-            function () {
-              toggleList(listRefVolume);
-            },
-          ],
-          { fixed: true }
-        );
-        var button4 = board.create(
-          "button",
-          [
-            -1,
-            -12.5,
-            "Fit Volume",
-            function () {
-              toggleList(listStudVolume);
-            },
-          ],
-          { fixed: true }
-        );
-        // function to toggle visible attribute given in a list
-        function toggleList(inputList) {
-          for (let iloop = 0; iloop < inputList.length; iloop++) {
-            if (JXG.exists(inputList[iloop])) {
-              if (inputList[iloop].getAttribute("visible")) {
-                inputList[iloop].setAttribute({ visible: false });
-              } else {
-                inputList[iloop].setAttribute({ visible: true });
-                inputList[iloop].show();
-              }
-              inputList[iloop].update();
+    // generate info for xy-plane
+    objectListXYPlane.push(
+      XYPlane,
+      curveRef1,
+      curveRef2,
+      curveRef3,
+      curveRef4,
+      curveStud1,
+      curveStud2,
+      curveStud3,
+      curveStud4
+    );
+    objectListXZPlane.push(
+      XZPlane,
+      curveRefXZ1,
+      curveRefXZ2,
+      curveRefXZ3,
+      curveRefXZ4,
+      curveStudXZ1,
+      curveStudXZ2,
+      curveStudXZ3,
+      curveStudXZ4
+    );
+    var button1 = board.create(
+      "button",
+      [
+        -7,
+        -12.5,
+        "XY-plane",
+        function () {
+          toggleList(objectListXYPlane);
+        },
+      ],
+      { fixed: true }
+    );
+    var button2 = board.create(
+      "button",
+      [
+        -5,
+        -12.5,
+        "XZ-plane",
+        function () {
+          toggleList(objectListXZPlane);
+        },
+      ],
+      { fixed: true }
+    );
+    var button3 = board.create(
+      "button",
+      [
+        -3,
+        -12.5,
+        "Ref Volume",
+        function () {
+          toggleList(listRefVolume);
+        },
+      ],
+      { fixed: true }
+    );
+    var button4 = board.create(
+      "button",
+      [
+        -1,
+        -12.5,
+        "Fit Volume",
+        function () {
+          toggleList(listStudVolume);
+        },
+      ],
+      { fixed: true }
+    );
+    // function to toggle visible attribute given in a list
+    function toggleList(inputList) {
+
+      let suspended = false;
+      let lboard = [];
+      for (let iloop = 0; iloop < inputList.length; iloop++) {
+        if (JXG.exists(inputList[iloop])) {
+          if (!(suspended)) {
+            if (inputList[iloop].is3D) {
+              lboard = inputList[iloop].view.board;
             }
+            else {
+              lboard = inputList[iloop].board;
+            }
+            lboard.suspendUpdate();
+            suspended = true;
+          }
+          if (inputList[iloop].getAttribute("visible")) {
+            inputList[iloop].setAttribute({
+              visible: false
+            });
+          } else {
+            inputList[iloop].setAttribute({
+              visible: true
+            });
+            inputList[iloop].show();
           }
         }
-        function createRefVolume() {
-          // Create transformed box
-          c1 = view.create(
-            "parametricsurface3d",
-            [
-              (u, v) => TF1(u, v, w1ref),
-              (u, v) => TF2(u, v, w1ref),
-              (u, v) => TF3(u, v, w1ref),
-              () => [u1ref, u2ref],
-              () => [v1ref, v2ref],
-            ],
-            { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: true } }
-          );
+      }
+      lboard.unsuspendUpdate();
+    }
+    function createRefVolume() {
+      // Create transformed box
+      c1 = view.create(
+        "parametricsurface3d",
+        [
+          (u, v) => TF1(u, v, w1ref),
+          (u, v) => TF2(u, v, w1ref),
+          (u, v) => TF3(u, v, w1ref),
+          () => [u1ref, u2ref],
+          () => [v1ref, v2ref],
+        ],
+        { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: true } }
+      );
 
-          c2 = view.create(
-            "parametricsurface3d",
-            [
-              (u, v) => TF1(u, v, w2ref),
-              (u, v) => TF2(u, v, w2ref),
-              (u, v) => TF3(u, v, w2ref),
-              () => [u1ref, u2ref],
-              () => [v1ref, v2ref],
-            ],
-            { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
-          );
+      c2 = view.create(
+        "parametricsurface3d",
+        [
+          (u, v) => TF1(u, v, w2ref),
+          (u, v) => TF2(u, v, w2ref),
+          (u, v) => TF3(u, v, w2ref),
+          () => [u1ref, u2ref],
+          () => [v1ref, v2ref],
+        ],
+        { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
+      );
 
-          c3 = view.create(
-            "parametricsurface3d",
-            [
-              (u, w) => TF1(u, v1ref, w),
-              (u, w) => TF2(u, v1ref, w),
-              (u, w) => TF3(u, v1ref, w),
-              () => [u1ref, u2ref],
-              () => [w1ref, w2ref],
-            ],
-            { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
-          );
-          c4 = view.create(
-            "parametricsurface3d",
-            [
-              (u, w) => TF1(u, v2ref, w),
-              (u, w) => TF2(u, v2ref, w),
-              (u, w) => TF3(u, v2ref, w),
-              () => [u1ref, u2ref],
-              () => [w1ref, w2ref],
-            ],
-            { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
-          );
-          c5 = view.create(
-            "parametricsurface3d",
-            [
-              (v, w) => TF1(u1ref, v, w),
-              (v, w) => TF2(u1ref, v, w),
-              (v, w) => TF3(u1ref, v, w),
-              () => [v1ref, v2ref],
-              () => [w1ref, w2ref],
-            ],
-            { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
-          );
-          c6 = view.create(
-            "parametricsurface3d",
-            [
-              (v, w) => TF1(u2ref, v, w),
-              (v, w) => TF2(u2ref, v, w),
-              (v, w) => TF3(u2ref, v, w),
-              () => [v1ref, v2ref],
-              () => [w1ref, w2ref],
-            ],
-            { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
-          );
-        }
-        function createStudVolume() {
-          // Create transformed box
-          cs1 = view.create(
-            "parametricsurface3d",
-            [
-              (u, v) => TF1(u, v, w1.Value()),
-              (u, v) => TF2(u, v, w1.Value()),
-              (u, v) => TF3(u, v, w1.Value()),
-              () => [u1.Value(), u2.Value()],
-              () => [v1.Value(), v2.Value()],
-            ],
-            { strokeWidth: 1,strokeColor: "#EE442F",  strokeOpacity: 1, mesh3d: { visible: true } }
-          );
+      c3 = view.create(
+        "parametricsurface3d",
+        [
+          (u, w) => TF1(u, v1ref, w),
+          (u, w) => TF2(u, v1ref, w),
+          (u, w) => TF3(u, v1ref, w),
+          () => [u1ref, u2ref],
+          () => [w1ref, w2ref],
+        ],
+        { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
+      );
+      c4 = view.create(
+        "parametricsurface3d",
+        [
+          (u, w) => TF1(u, v2ref, w),
+          (u, w) => TF2(u, v2ref, w),
+          (u, w) => TF3(u, v2ref, w),
+          () => [u1ref, u2ref],
+          () => [w1ref, w2ref],
+        ],
+        { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
+      );
+      c5 = view.create(
+        "parametricsurface3d",
+        [
+          (v, w) => TF1(u1ref, v, w),
+          (v, w) => TF2(u1ref, v, w),
+          (v, w) => TF3(u1ref, v, w),
+          () => [v1ref, v2ref],
+          () => [w1ref, w2ref],
+        ],
+        { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
+      );
+      c6 = view.create(
+        "parametricsurface3d",
+        [
+          (v, w) => TF1(u2ref, v, w),
+          (v, w) => TF2(u2ref, v, w),
+          (v, w) => TF3(u2ref, v, w),
+          () => [v1ref, v2ref],
+          () => [w1ref, w2ref],
+        ],
+        { strokeWidth: 1, strokeOpacity: 0.6, mesh3d: { visible: false } }
+      );
+    }
+    function createStudVolume() {
+      // Create transformed box
+      cs1 = view.create(
+        "parametricsurface3d",
+        [
+          (u, v) => TF1(u, v, w1.Value()),
+          (u, v) => TF2(u, v, w1.Value()),
+          (u, v) => TF3(u, v, w1.Value()),
+          () => [u1.Value(), u2.Value()],
+          () => [v1.Value(), v2.Value()],
+        ],
+        { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: true } }
+      );
 
-          cs2 = view.create(
-            "parametricsurface3d",
-            [
-              (u, v) => TF1(u, v, w2.Value()),
-              (u, v) => TF2(u, v, w2.Value()),
-              (u, v) => TF3(u, v, w2.Value()),
-              () => [u1.Value(), u2.Value()],
-              () => [v1.Value(), v2.Value()],
-            ],
-            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
-          );
+      cs2 = view.create(
+        "parametricsurface3d",
+        [
+          (u, v) => TF1(u, v, w2.Value()),
+          (u, v) => TF2(u, v, w2.Value()),
+          (u, v) => TF3(u, v, w2.Value()),
+          () => [u1.Value(), u2.Value()],
+          () => [v1.Value(), v2.Value()],
+        ],
+        { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
+      );
 
-          cs3 = view.create(
-            "parametricsurface3d",
-            [
-              (u, w) => TF1(u, v1.Value(), w),
-              (u, w) => TF2(u, v1.Value(), w),
-              (u, w) => TF3(u, v1.Value(), w),
-              () => [u1.Value(), u2.Value()],
-              () => [w1.Value(), w2.Value()],
-            ],
-            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
-          );
-          cs4 = view.create(
-            "parametricsurface3d",
-            [
-              (u, w) => TF1(u, v2.Value(), w),
-              (u, w) => TF2(u, v2.Value(), w),
-              (u, w) => TF3(u, v2.Value(), w),
-              () => [u1.Value(), u2.Value()],
-              () => [w1.Value(), w2.Value()],
-            ],
-            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
-          );
-          cs5 = view.create(
-            "parametricsurface3d",
-            [
-              (v, w) => TF1(u1.Value(), v, w),
-              (v, w) => TF2(u1.Value(), v, w),
-              (v, w) => TF3(u1.Value(), v, w),
-              () => [v1.Value(), v2.Value()],
-              () => [w1.Value(), w2.Value()],
-            ],
-            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
-          );
-          cs6 = view.create(
-            "parametricsurface3d",
-            [
-              (v, w) => TF1(u2.Value(), v, w),
-              (v, w) => TF2(u2.Value(), v, w),
-              (v, w) => TF3(u2.Value(), v, w),
-              () => [v1.Value(), v2.Value()],
-              () => [w1.Value(), w2.Value()],
-            ],
-            { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
-          );
-        }
-      </script>
+      cs3 = view.create(
+        "parametricsurface3d",
+        [
+          (u, w) => TF1(u, v1.Value(), w),
+          (u, w) => TF2(u, v1.Value(), w),
+          (u, w) => TF3(u, v1.Value(), w),
+          () => [u1.Value(), u2.Value()],
+          () => [w1.Value(), w2.Value()],
+        ],
+        { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
+      );
+      cs4 = view.create(
+        "parametricsurface3d",
+        [
+          (u, w) => TF1(u, v2.Value(), w),
+          (u, w) => TF2(u, v2.Value(), w),
+          (u, w) => TF3(u, v2.Value(), w),
+          () => [u1.Value(), u2.Value()],
+          () => [w1.Value(), w2.Value()],
+        ],
+        { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
+      );
+      cs5 = view.create(
+        "parametricsurface3d",
+        [
+          (v, w) => TF1(u1.Value(), v, w),
+          (v, w) => TF2(u1.Value(), v, w),
+          (v, w) => TF3(u1.Value(), v, w),
+          () => [v1.Value(), v2.Value()],
+          () => [w1.Value(), w2.Value()],
+        ],
+        { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
+      );
+      cs6 = view.create(
+        "parametricsurface3d",
+        [
+          (v, w) => TF1(u2.Value(), v, w),
+          (v, w) => TF2(u2.Value(), v, w),
+          (v, w) => TF3(u2.Value(), v, w),
+          () => [v1.Value(), v2.Value()],
+          () => [w1.Value(), w2.Value()],
+        ],
+        { strokeWidth: 1, strokeColor: "#EE442F", strokeOpacity: 1, mesh3d: { visible: false } }
+      );
+    }
+  </script>
 </body>
 
 </html>

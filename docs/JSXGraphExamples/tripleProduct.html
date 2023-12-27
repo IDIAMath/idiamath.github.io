@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
+  <script type="text/javascript" charset="UTF-8"
+    src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <title>Tangent plane</title>
+
+</head>
+
+<body>
+  <article>
+    <h2>Triple Product</h2>
+    <p>
+    </p>
+    The derivatives to compute the tangent plane are implemented analytically.
+    </p>
+    <table style="width: 100;">
+      <tr>
+        <td>
+          <div id="jxgbox5" class="jxgbox construct" style="width: 500px;height: 562px;"></div>
+        </td>
+      </tr>
+    </table>
+    <script>
+      var board = JXG.JSXGraph.initBoard('jxgbox5', {
+        boundingbox: [-8, 8, 8, -10],
+        keepaspectratio: false,
+        axis: false
+      });
+
+      var box = [-2, 2];
+      var view = board.create('view3d',
+        [
+          [-6, -3], [8, 8],
+          [box, box, box]
+        ],
+        {
+          xPlaneRear: { visible: true },
+          xPlaneRearYAxis: { visible: false },
+          xPlaneRearZAxis: { visible: false },
+          yPlaneRear: { visible: true },
+          yPlaneRearXAxis: { visible: false },
+          yPlaneRearZAxis: { visible: false },
+        });
+
+      //slider-based curve
+      var xlabel = view.create(
+        "point3d",
+        [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
+        { size: 0, name: "x" }
+      );
+      var Ylabel = view.create(
+        "point3d",
+        [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
+        { size: 0, name: "y" }
+      );
+      var Zlabel = view.create(
+        "point3d",
+        [
+          0.7 * (0.6 * box[0] + 0.4 * box[1]),
+          0.7 * (0.6 * box[0] + 0.4 * box[1]),
+          0.9 * box[1],
+        ],
+        { size: 0, name: "z" }
+      );
+
+
+
+      var opac1 = board.create('slider', [[-7, -6], [3, -6], [0, 0.8, 1]], { name: 'plane ABC' });
+      var opac2 = board.create('slider', [[-7, -6.8], [3, -6.8], [0, 0.8, 1]], { name: 'part 1 vol' });
+      var opac3 = board.create('slider', [[-7, -7.6], [3, -7.6], [0, 0.4, 1]], { name: 'part 2 vol' });
+
+
+
+      // 3D points:
+      var A = view.create('point3d', [0, 0, 0], { withLabel: true, name: "A", visible: true });
+      var B = view.create('point3d', [2, 0.4, -1], { withLabel: true, name: "B" });
+      var C = view.create('point3d', [1, 1.5, -0.5], { withLabel: true, name: "C" });
+      var D = view.create('point3d', [1, 0.5, 1.4], {
+        withLabel: true, name: "D",
+        visible: false
+      });
+
+      var lineAB = view.create('line3d', [A, B], { dash: 1, lastArrow: true })
+      var lineAC = view.create('line3d', [A, C], { dash: 1, lastArrow: true })
+      var lineAD = view.create('line3d', [A, D], {
+        dash: 1,
+        visible: false, lastArrow: true
+      })
+
+
+      // ABC plane
+      var dirAB = direction(A, B);
+      var dirAC = direction(A, C);
+      var dirAD = direction(A, D);
+
+      var planeABC = view.create('plane3d', [
+        A, dirAB, dirAC,
+        [0, () => (norm2(dirAB))],
+        [0, () => (norm2(dirAC))]
+      ], {
+        fillOpacity: () => opac1.Value(), fillColor: 'red'
+      });
+
+      // normal vector
+      var normalABC = () => planeABC.normal;
+      var footNormal = view.create('point3d',
+        [() => (B.X() + C.X()) / 2,
+        () => (B.Y() + C.Y()) / 2,
+        () => (B.Z() + C.Z()) / 2,],
+        { visible: false })
+      var N = view.create('point3d',
+        [() => (footNormal.X() + normalABC()[0]),
+        () => (footNormal.Y() + normalABC()[1]),
+        () => (footNormal.Z() + normalABC()[2])],
+        {
+          withLabel: true, name: "normal", strokeWidth: 0,
+          visible: false, size: 0.1
+        });
+
+      var lineFootNormal = view.create('line3d', [footNormal, N],
+        { visible: false, lastarrow: true })
+      var skpNormalD = () => planeABC.normal[0] * D.X() + planeABC.normal[1] * D.Y() + planeABC.normal[2] * D.Z();
+      var projectDonN = view.create('point3d',
+        [() => (skpNormalD() * normalABC()[0]),
+        () => (skpNormalD() * normalABC()[1]),
+        () => (skpNormalD() * normalABC()[2])],
+        {
+          withLabel: true,
+          name: "projection",
+          size: 0.1,
+          visible: false
+        });
+      var lineDprojectN = view.create('line3d', [D, projectDonN],
+        { visible: false, dash: true })
+      var lineAprojectDonN = view.create('line3d', [A, projectDonN],
+        { visible: false, lastArrow: true })
+
+      // volume
+      var planeABD = view.create('plane3d', [
+        A, dirAD, dirAB,
+        [0, () => (norm2(dirAD))],
+        [0, () => (norm2(dirAB))]
+      ], {
+        fillOpacity: () => opac2.Value(),
+        fillColor: 'red',
+        visible: false
+      });
+      var planeACD = view.create('plane3d', [
+        A, dirAC, dirAD,
+        [0, () => (norm2(dirAC))],
+        [0, () => (norm2(dirAD))]
+      ], {
+        fillOpacity: () => opac2.Value(),
+        fillColor: 'red',
+        visible: false
+      });
+      // complete the volume
+      var planeABCatD = view.create('plane3d', [
+        D, dirAB, dirAC,
+        [0, () => (norm2(dirAB))],
+        [0, () => (norm2(dirAC))]
+      ], {
+        fillOpacity: () => opac3.Value(),
+        fillColor: 'blue',
+        visible: false
+      });
+      var planeABDatC = view.create('plane3d', [
+        C, dirAD, dirAB,
+        [0, () => (norm2(dirAD))],
+        [0, () => (norm2(dirAB))]
+      ], {
+        fillOpacity: () => opac3.Value(),
+        fillColor: 'blue',
+        visible: false
+      });
+      var planeACDatB = view.create('plane3d', [
+        B, dirAC, dirAD,
+        [0, () => (norm2(dirAC))],
+        [0, () => (norm2(dirAD))]
+      ], {
+        fillOpacity: () => opac3.Value(),
+        fillColor: 'blue',
+        visible: false
+      });
+
+      // toggle visibility
+      var buttonN = view.create('button', [-7, -8.4, "normal", function () { toggleList([N, lineFootNormal]) }]);
+      var buttonProj = view.create('button', [-1, -8.4, "projection", function () { toggleList([projectDonN, lineAprojectDonN, lineDprojectN]) }]);
+      var buttonD = view.create('button', [-5, -8.4, "point D", function () { toggleList([D, lineAD]) }]);
+      var buttonVol = view.create('button', [-3, -8.4, "volume", function () { toggleList([planeABD, planeACD, planeABCatD, planeABDatC, planeACDatB]) }]);
+      var buttonB2C = view.create('button', [1.5, -8.4, "B <-> C", function () {
+        const tempB = [B.X(), B.Y(), B.Z()];
+        const tempC = [C.X(), C.Y(), C.Z()];
+        B.setPosition(tempC);
+        C.setPosition(tempB)
+      }]);
+      var example1 = view.create('button', [-7, -9.2, "example 1", function () { case1() }]);
+      var example2 = view.create('button', [-4.5, -9.2, "example 2", function () { case2() }]);
+      var example3 = view.create('button', [-2.0, -9.2, "example 3", function () { case3() }]);
+      // helper functions
+      // input point3d A, B, output: functions B-A, per coordinate
+      function direction(vec1, vec2) {
+        return [() => (vec2.X() - vec1.X()), () => (vec2.Y() - vec1.Y()), () => (vec2.Z() - vec1.Z())]
+      }
+      // input vector of 3 function, output length of the vector
+      function norm2(vec1) {
+        return Math.sqrt(vec1[0]() * vec1[0]() + vec1[1]() * vec1[1]() + vec1[2]() * vec1[2]())
+      }
+
+      // function to toggle visible attribute given in a list
+      function toggleList(inputList) {
+
+        let suspended = false;
+        let lboard = [];
+        for (let iloop = 0; iloop < inputList.length; iloop++) {
+          if (JXG.exists(inputList[iloop])) {
+            if (!(suspended)) {
+              if (inputList[iloop].is3D) {
+                lboard = inputList[iloop].view.board;
+              }
+              else {
+                lboard = inputList[iloop].board;
+              }
+              lboard.suspendUpdate();
+              suspended = true;
+            }
+            if (inputList[iloop].getAttribute("visible")) {
+              inputList[iloop].setAttribute({
+                visible: false
+              });
+            } else {
+              inputList[iloop].setAttribute({
+                visible: true
+              });
+              inputList[iloop].show();
+            }
+          }
+        }
+        lboard.unsuspendUpdate();
+      }
+      function case1() {
+        A.setPosition([0, 0, 0]);
+        B.setPosition([1, 0, 0]);
+        C.setPosition([0, 1, 0]);
+        D.setPosition([0.7, 0.7, 1]);
+      }
+      function case2() {
+        A.setPosition([0, 0, 0]);
+        B.setPosition([0, 1, 0]);
+        C.setPosition([1, 0, 0]);
+        D.setPosition([0.7, 0.7, 1]);
+      }
+      function case3() {
+        A.setPosition([0, 0, 0]);
+        B.setPosition([2, 0.4, -1]);
+        C.setPosition([1, 1.5, 0.5]);
+        D.setPosition([1, 0.5, 1.5]);
+      }
+
+    </script>
+  </article>
+
+
+  <footer>
+    Wigand Rathmann, FAU
+  </footer>
+</body>
+
+</html>

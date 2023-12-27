@@ -157,18 +157,35 @@ plot();
 
 
 function toggleList(inputList) {
-          for (let iloop = 0; iloop < inputList.length; iloop++) {
-            if (JXG.exists(inputList[iloop])) {
-              if (inputList[iloop].getAttribute("visible")) {
-                inputList[iloop].setAttribute({ visible: false });
-              } else {
-                inputList[iloop].setAttribute({ visible: true });
-                inputList[iloop].show();
-              }
-              inputList[iloop].update();
-            }
-          }
+  
+  let suspended = false;
+  let lboard=[];
+  for (let iloop = 0; iloop < inputList.length; iloop++) {
+    if (JXG.exists(inputList[iloop])) {
+      if (!(suspended)) {
+        if (inputList[iloop].is3D) {
+          lboard = inputList[iloop].view.board;
         }
+        else {
+          lboard = inputList[iloop].board;
+        }
+        lboard.suspendUpdate();
+        suspended = true;
+      }
+      if (inputList[iloop].getAttribute("visible")) {
+        inputList[iloop].setAttribute({
+          visible: false
+        });
+      } else {
+        inputList[iloop].setAttribute({
+          visible: true
+        });
+        inputList[iloop].show();
+      }
+    }
+  }
+  lboard.unsuspendUpdate();
+}
 
     </script>
 

@@ -8,7 +8,7 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 
 ## Complex Numbers
 + [Complex numbers (polar coordinates)](./ComplexNumberPolar.html) (HELM WB 10 Complex Numbers, 10.2.2)
-+ [Complex numbers (addition)](./ComplexNumberAddition.html)(HELM WB 10 Complex Numbers, 10.1.2, 10.2.1, )
++ [Complex numbers (addition)](./ComplexNumberAddition.html) (HELM WB 10 Complex Numbers, 10.1.2, 10.2.1, )
 + [Complex numbers (multiplication)](./ComplexNumberMultiplication.html)
 + [Roots of Complex numbers](./rootComplexNumbers.html)
 (HELM WB 10 Complex Numbers, 10.3.2)
@@ -20,6 +20,7 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$ and Matrices](./LinMappingMatricesPolygon.html) Demonstrated at a polygon.
 + [Rotation in  $$\mathbb{R}^2$$ ](./LinMappingMatricesPolygonRotating.html) Rotation of a polygon, matrix is displayed.
 + [Eigenvectors of a linear Mapping $$\mathbb{R}^2\to \mathbb{R}^2$$](./Eigenvectores.html) (HELM WB 22  Eigenvalues and Eigenvectors, 22.1.2)
++ [Triple Product](./tripleProduct.html) Given by three points a volume can be constructed. This applet shows the idea of the contstuction.
 
 
 ## Integration 1d
@@ -60,8 +61,9 @@ In the section you will find some examples demonstrating JSXGraph in linear alge
 + [Slope Field](./slopefield-plot-input.html) Slopefield of a function $$f:\mathbb{R}^2\to\mathbb{R}$$ like $$y'(x)=f(x,y)$$ is plotted, a trajectory thru $$(x,_0,y_0)$$ is plotted. The function can be modified by an input field.
 + [Vector Field 2d](./vectorfield-plot-input.html) given by a function $$V:\mathbb{R}^2\to\mathbb{R}^2$$, a trajectory thru $$(x,_0,y_0)$$ is plotted. The vector field can be modified by an input field.
 + [Vector Field 3d](./vectorfield3D-plot-input.html) given by a function $$V:\mathbb{R}^3\to\mathbb{R}^3$$, a trajectory thru $$(x,_0,y_0)$$ is plotted. The components of vector field can be modified by input boxes.
++ [Vector Field 3d and curl](./vectorfield3D-rot-input.html) given by a function $$V:\mathbb{R}^3\to\mathbb{R}^3$$ the curl $$\nabla\times V$$ is computed and shown. The components of vector field can be modified by input boxes.
 + [Vector Field 3d at function plot](./vectorfield3D-functionplot-input.html)  Given a function $$f:\mathbb{R}^2\to\mathbb{R}$$ and the vectorfield $$V:\mathbb{R}^3\to\mathbb{R}^3$$, the vectofield is plotted at the graph of the function $$f$$.
 + [Vector Field 3d at surface](./vectorfield3D-surface-input.html) Surface given by a function $$s:[-1,1]^2\to\mathbb{R}^3$$ and the vectorfield $$V:\mathbb{R}^3\to\mathbb{R}^3$$, the vectofield is plotted at the surface.
-+ [Vector Field 3d at curve](./vectorfield3D-curve-input.html) Curve given by a function $$c:[-1,1]\to\mathbb{R}^3$$ and the vectorfield $$V:\mathbb{R}^3\to\mathbb{R}^3$$, the vectofield is plotted at the curve.
++ [Vector Field 3d at curve](./vectorfield3D-curve-input.html) Curve given by a function $$c:[-1,1]\to\mathbb{R}^3$$ and the vectorfield $$V:\mathbb{R}^3\to\mathbb{R}^3$$, the vectorfield is plotted at the curve.
 + [Vector Field 3d with slider](./vectorfield3D-curve-slider.html) Curve can be manipulated by sliders, the vectorfield as well. Both is hard coded in the applet.
 
