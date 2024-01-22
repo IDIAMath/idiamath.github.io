@@ -12,6 +12,7 @@ theme: minima
 | *First impression of the question* |
 
 + [XML Code](XML/quiz-IDIAM-Polar%20Coordinates%20Matching%20algebraic.xml)
++ [XML Code (JSXGraph in iframe)](XML/quiz-IDIAM-Polar%20Coordinates%20Matching%20algebraic%20(Update%20multiple%20boards)-20240122-0953.xml) 
 
 ## Question description
 
@@ -115,6 +116,7 @@ ranger: ranger*%pi;
 <p> Write the interval in the form \(r\in\)<code>[r1,r2]</code> and  \(\phi\in\)<code>[phi1,phi2]</code>, e.g. <code>[1/2,2]</code> and <code>[1/2*pi,2*pi]</code>.</p>
 
 
+// version to handle multiple boards with older STACK
 <div style= 'float:left'> 
 [[ jsxgraph width="250px" height="250px"]] [[/ jsxgraph ]]
 </div>
@@ -135,9 +137,52 @@ console.log(divid2);
 parts[2] = parts[2] -1;
 var divid1 = parts.join('-');
 console.log(divid1);
+// end
+var board = JXG.JSXGraph.initBoard(divid2,{boundingbox : [-5, 5, 5,-5], axis:true, shownavigation : false});
+var board2 = JXG.JSXGraph.initBoard(divid1,{boundingbox : [-1, 5, 5,-0.5], axis:true, 
+  defaultAxes: {
+    	y: {
+      	ticks: {
+        	scale: Math.PI,
+          scaleSymbol: '\u03c0',
+          ticksDistance: 0.5,
+          beautifulScientificTickLabels:true,
+          insertTicks: false
+        }}}, 
+      shownavigation : false});
+
+// version to handle multiple boards with iframe
+[[jsxgraph  width="1000px" height="500px"  input-ref-ans3='ans3Ref']]
+document.getElementById(divid).classList.remove("jxgbox"); /* Remove the default style. */
+document.getElementById(divid).innerHTML = "<table style='width:100vw;height:100vh;'>"
++ "<tr><td><div id='box1'> </div></td><td><div id='box2'> </div></td></tr>"
++ "</table>";
+
+for(var i = 1; i <=2; i++) {
+ var el = document.getElementById("box"+i);
+ el.classList.add('jxgbox');
+ /* You will have to do some random tuning of the margins and sizes as the default iframe might not have enough space. */
+ el.style.width="48vw";
+ el.style.height="96vh";
+}
+
+
+var board = JXG.JSXGraph.initBoard("box2",{boundingbox : [-5, 5, 5,-5], axis:true, shownavigation : false});
+var board2 = JXG.JSXGraph.initBoard("box1",{boundingbox : [-1, 5, 5,-0.5], axis:true, 
+  defaultAxes: {
+    	y: {
+      	ticks: {
+        	scale: Math.PI,
+          scaleSymbol: '\u03c0',
+          ticksDistance: 0.5,
+          beautifulScientificTickLabels:true,
+          insertTicks: false
+        }}}, 
+      shownavigation : false});
+// end iframe
+
 
 //content
-var board = JXG.JSXGraph.initBoard(divid2,{boundingbox : [-5, 5, 5,-5], axis:true, shownavigation : false});
 
 var center =board.create("point",[0,0],{name : "",visible:false,fixed:true});
 var p1 = board.create("point",[{#p1x#},{#p1y#}],{name : "P1",visible:false,fixed:true,});
@@ -151,17 +196,6 @@ var c4 = board.create("line",[p2,p1],{frozen:true, straightFirst:false, straight
 //stack_jxg.bind_point(ans1Ref,p1);
 
 
-var board2 = JXG.JSXGraph.initBoard(divid1,{boundingbox : [-1, 5, 5,-0.5], axis:true, 
-  defaultAxes: {
-    	y: {
-      	ticks: {
-        	scale: Math.PI,
-          scaleSymbol: '\u03c0',
-          ticksDistance: 0.5,
-          beautifulScientificTickLabels:true,
-          insertTicks: false
-        }}}, 
-      shownavigation : false});
   board2.addChild(board);
   board.suspendUpdate();
   board2.suspendUpdate();
