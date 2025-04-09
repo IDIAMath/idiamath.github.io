@@ -15,7 +15,7 @@
 
 <body>
 
-    <h2>3D function graph with Taylor 2nd order</h2>
+    <h2>3D function graph </h2>
     <p>
         Function: \(f:\mathbb{R}^2\to\mathbb{R}\) can be assigned in the input field. <br />
         Click the "Plot"-Button to display the function.
@@ -34,7 +34,12 @@
         var board = JXG.JSXGraph.initBoard('jxgbox5', {
             boundingbox: [-8, 8, 8, -10],
             keepaspectratio: false,
-            axis: false
+            axis: false,
+            pan: {
+                enabled: true,
+                needTwoFingers: true,
+            },
+            browserPan: true
         });
         // step size for finite differences
         var h = 0.1;

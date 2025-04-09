@@ -28,30 +28,30 @@
     <h1>Show vector fields at curves with slider</h1>
 
     <p>
-This example demonstrates the usage of sliders in 'curve3D' objects and vector fields.
+        This example demonstrates the usage of sliders in 'curve3D' objects and vector fields.
 
-Definition curve: \(c(t):=\begin{pmatrix}
-c_1\cos(t)\\c_2\sin(t)\\c_3t-1
-\end{pmatrix}\).
-The parameters \(c_1,c_2,c_3\) are realized as slider objects.
-</p>
-<p>
-<code> var TC1 = (t) => parc1.Value() * Math.cos(t);<br/>
+        Definition curve: \(c(t):=\begin{pmatrix}
+        c_1\cos(t)\\c_2\sin(t)\\c_3t-1
+        \end{pmatrix}\).
+        The parameters \(c_1,c_2,c_3\) are realized as slider objects.
+    </p>
+    <p>
+        <code> var TC1 = (t) => parc1.Value() * Math.cos(t);<br/>
     var TC2 = (t) => parc2.Value() * Math.sin(t);<br/>
     var TC3 = (t) => parc3.Value() * t - 1;<br/>
 </code>
     </p>
-<p>
-    The vector field is defined as 
-    \(V(u,v,w)=\begin{pmatrix}
-    \dfrac{-v}{u^2 + v^2 + 0.0001} \sin(\alpha)    \\
-    \dfrac{u}{u^2 + v^2 + 0.0001} \cos(\alpha)\\
-    0
-    \end{pmatrix}
-    \)
-</p>
-Implented was this using functions:
-<code>
+    <p>
+        The vector field is defined as
+        \(V(u,v,w)=\begin{pmatrix}
+        \dfrac{-v}{u^2 + v^2 + 0.0001} \sin(\alpha) \\
+        \dfrac{u}{u^2 + v^2 + 0.0001} \cos(\alpha)\\
+        0
+        \end{pmatrix}
+        \)
+    </p>
+    Implented was this using functions:
+    <code>
     <p> 
         var TF1 = (u, v, w) => -v * Math.sin(vecs.Value()) / (u * u + v * v + 0.0001);<br/>
         var TF2 = (u, v, w) => u * Math.cos(vecs.Value()) / (u * u + v * v + 0.0001);<br/>
@@ -69,7 +69,13 @@ Implented was this using functions:
         var board = JXG.JSXGraph.initBoard('jxgbox', {
             boundingbox: [-8, 8, 8, -13],
             keepaspectratio: false,
-            axis: false
+            axis: false,
+            pan: {
+                enabled: true,
+                needTwoFingers: true,
+            },
+            browserPan: true
+
         });
         var vector = [];
         var scaleVec = 0.5;
@@ -248,6 +254,6 @@ Implented was this using functions:
         }
     </script>
 
-</body >
+</body>
 
-</html >
+</html>

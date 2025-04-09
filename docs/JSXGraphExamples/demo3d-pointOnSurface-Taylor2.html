@@ -5,37 +5,42 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
     <script type="text/javascript" charset="UTF-8"
-            src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
+        src="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraphcore.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
-    <script id="MathJax-script" async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
-<title>Tangent plane</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <title>Tangent plane</title>
 
 </head>
 
 <body>
-    
+
     <h2>3D function graph with Taylor 2nd order</h2>
     <p>
-        Function: \(f:\mathbb{R}^2\to\mathbb{R}\)<br/>
+        Function: \(f:\mathbb{R}^2\to\mathbb{R}\)<br />
         \(f(x):=a_{11}\cos(\pi a_{12}x)\cos(a_{13}y)\)
-        </p>
-        The derivatives to compute the tangent plane are implemented analytically.
+    </p>
+    The derivatives to compute the tangent plane are implemented analytically.
     </p>
     <table style="width: 100;">
-    <tr>
-    <td>
-        <div id="jxgbox5" class="jxgbox construct" style="width: 500px;height: 500px;"></div>
-    </td>
-    </tr>
+        <tr>
+            <td>
+                <div id="jxgbox5" class="jxgbox construct" style="width: 500px;height: 500px;"></div>
+            </td>
+        </tr>
     </table>
-       
+
     <script id="ex5">
         var board = JXG.JSXGraph.initBoard('jxgbox5', {
             boundingbox: [-8, 8, 8, -10],
             keepaspectratio: false,
-            axis: false
+            axis: false,
+            pan: {
+                enabled: true,
+                needTwoFingers: true,
+            },
+            browserPan: true
+
         });
 
         var box = [-2, 2];
@@ -55,23 +60,23 @@
 
         //slider-based curve
         var xlabel = view.create(
-          "point3d",
-          [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
-          { size: 0, name: "x" }
+            "point3d",
+            [0.9 * box[1], 0, 0.6 * box[0] + 0.4 * box[1]],
+            { size: 0, name: "x" }
         );
         var Ylabel = view.create(
-          "point3d",
-          [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
-          { size: 0, name: "y" }
+            "point3d",
+            [0, 0.9 * box[1], 0.6 * box[0] + 0.4 * box[1]],
+            { size: 0, name: "y" }
         );
         var Zlabel = view.create(
-          "point3d",
-          [
-            0.7 * (0.6 * box[0] + 0.4 * box[1]),
-            0.7 * (0.6 * box[0] + 0.4 * box[1]),
-            0.9 * box[1],
-          ],
-          { size: 0, name: "z" }
+            "point3d",
+            [
+                0.7 * (0.6 * box[0] + 0.4 * box[1]),
+                0.7 * (0.6 * box[0] + 0.4 * box[1]),
+                0.9 * box[1],
+            ],
+            { size: 0, name: "z" }
         );
 
 
@@ -156,10 +161,10 @@
     </script>
 
 
-<p>
-Based on example of Alfred Wassermann, Uni Bayreuth, <br/>
-Wigand Rathmann, FAU
-</p>
+    <p>
+        Based on example of Alfred Wassermann, Uni Bayreuth, <br />
+        Wigand Rathmann, FAU
+    </p>
 </body>
 
 </html>

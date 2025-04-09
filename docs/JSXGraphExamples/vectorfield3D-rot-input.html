@@ -40,7 +40,13 @@
       board = JXG.JSXGraph.initBoard('jxgbox', {
         axis: false,
         grid: false,
-        boundingbox: [-5, 5, 5, -5]
+        boundingbox: [-5, 5, 5, -5],
+        pan: {
+          enabled: true,
+          needTwoFingers: true,
+        },
+        browserPan: true
+
       });
       inputfx = board.create('input', [-4.1, 4.4, 'cos(y)', 'f_1(x,y,z)=']);
       inputfy = board.create('input', [-4.1, 4.0, 'sin(x)', 'f_2(x,y,z)=']);
