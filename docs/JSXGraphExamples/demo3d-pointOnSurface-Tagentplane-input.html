@@ -32,7 +32,13 @@
             var board = JXG.JSXGraph.initBoard('jxgbox5', {
                 boundingbox: [-8, 8, 8, -10],
                 keepaspectratio: false,
-                axis: false
+                axis: false,
+                pan: {
+                    enabled: true,
+                    needTwoFingers: true,
+                },
+                browserPan: true
+
             });
 
             var box = [-2, 2];
