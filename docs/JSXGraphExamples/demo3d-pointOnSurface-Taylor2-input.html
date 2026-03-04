@@ -138,9 +138,9 @@ function plot() {
         TF = (x, y) => F(A.X(), A.Y()) 
             + Fdx(A.X(), A.Y()) * (x - A.X())
             + Fdy(A.X(), A.Y()) * (y - A.Y())
-            + Fdxx(A.X(), A.Y()) * (x - A.X()) * (x - A.X())
-            + Fdyy(A.X(), A.Y()) * (y - A.Y()) * (y - A.Y())
-            + 2 * Fdxy(A.X(), A.Y()) * (y - A.Y()) * (x - A.X())
+            + Fdxx(A.X(), A.Y()) * (x - A.X()) * (x - A.X())/2
+            + Fdyy(A.X(), A.Y()) * (y - A.Y()) * (y - A.Y())/2
+            + Fdxy(A.X(), A.Y()) * (y - A.Y()) * (x - A.X())
             ;
             /*
             */
