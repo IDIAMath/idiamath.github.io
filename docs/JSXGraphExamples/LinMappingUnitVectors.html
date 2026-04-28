@@ -7,7 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="https://idiamath.github.io/JSXGraphExamples/layout.css" />
 	<script type="text/javascript" charset="UTF-8"
 		src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph@1.5.0/distrib/jsxgraph.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css" />
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
 	</script>
 	<title>Linear Mapping: Image of Unit vectors given</title>
@@ -19,23 +19,28 @@
 	<p>
 		It is sufficent to specify the images of the unit vectors. You can set the vectors \(\varphi(e_1)\) and
 		\(\varphi(e_2)\) by dragging them around.
+		<center>\(\varphi(\mathbf{v})= Av = v_1 \mathbf{a}_1+v_1 \mathbf{a}_1 = v_1 \varphi(e_1)+ v_2
+			\varphi(e_2)\)</center>
 	</p>
 	<table>
 		<colgroup>
 			<col width="100">
 			<col width="600">
+			<col width="600">
 			<col width="100">
 		</colgroup>
 		<tr>
 			<td></td>
+			<td><center>Vector space \(V\)</center></td>
+			<td><center>Vector space \(W\)</center></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
 			<td>
-				<center>\(\varphi(\mathbf{v})= Av = v_1 \mathbf{a}_1+v_1 \mathbf{a}_1 = v_1 \varphi(e_1)+ v_2
-					\varphi(e_2)\)</center><br />
-				<center>Vector space \(V\)</center>
 				<div id="box1" class="jxgbox" style="width:600px; height:400px; float:left;"> </div>
-				<br /><br />
-				<center>Vector space \(W\)</center>
-				<br />
+			</td>
+			<td>
 				<div id="box2" class="jxgbox" style="width:600px; height:400px; float:left;"></div>
 			</td>
 			<td></td>

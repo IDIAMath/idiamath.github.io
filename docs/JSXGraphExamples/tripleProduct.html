@@ -109,7 +109,7 @@
       });
 
       // normal vector
-      var normalABC = () => planeABC.normal;
+      var normalABC = () => planeABC.normal.slice(1);
       var footNormal = view.create('point3d',
         [() => (B.X() + C.X()) / 2,
         () => (B.Y() + C.Y()) / 2,
@@ -126,7 +126,7 @@
 
       var lineFootNormal = view.create('line3d', [footNormal, N],
         { visible: false, lastarrow: true })
-      var skpNormalD = () => planeABC.normal[0] * D.X() + planeABC.normal[1] * D.Y() + planeABC.normal[2] * D.Z();
+      var skpNormalD = () => planeABC.normal[1] * D.X() + planeABC.normal[2] * D.Y() + planeABC.normal[3] * D.Z();
       var projectDonN = view.create('point3d',
         [() => (skpNormalD() * normalABC()[0]),
         () => (skpNormalD() * normalABC()[1]),

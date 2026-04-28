@@ -80,10 +80,8 @@
 
             // Create a fixed text at position [0,1].
             var t1 = b1.create('text', [2, -5.2,
-               function () {
-                  var wert = detJ();
-                  return "det(A) = " + wert.toFixed(2)
-               }]);
+               () => ( "det(A) = " + detJ().toFixed(2))
+            ]);
 
 
             function case1() {
